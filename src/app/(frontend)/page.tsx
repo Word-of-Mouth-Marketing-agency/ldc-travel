@@ -11,7 +11,7 @@ export const metadata: Metadata = buildPageMetadata({
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   title: "LDC Travel | Tourism Marketing",
   description: "Explore thoughtful travel programs and memorable journeys curated by LDC Travel from Egypt.",
-  socialImageUrl: "https://images.unsplash.com/photo-1560703649-e3055f28bcf8?auto=format&fit=crop&w=1200&q=80",
+  socialImageUrl: "https://images.unsplash.com/photo-1580225495234-00e84e19c85e?auto=format&fit=crop&w=1200&q=80",
 });
 
 export default async function Home() {

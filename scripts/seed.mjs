@@ -173,7 +173,7 @@ if (!homepage.hero) {
       eyebrow: "Make room for the extraordinary",
       headline: "Explore the world with LDC Travel",
       supportingCopy: "Discover unforgettable destinations, thoughtful travel programs, and memories that last a lifetime.",
-      imageUrl: image("photo-1560703649-e3055f28bcf8"),
+      imageUrl: image("photo-1580225495234-00e84e19c85e"),
       primaryCta: { label: "Inquire on WhatsApp", kind: "whatsapp" },
       secondaryCta: { label: "Explore programs", kind: "internal", url: "/programs" },
     },
