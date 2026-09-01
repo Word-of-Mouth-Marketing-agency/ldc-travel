@@ -41,8 +41,8 @@ export function MobileNav({ items, whatsappHref }: { items: NavItem[]; whatsappH
             ))}
           </nav>
           <a className="button button-primary mobile-menu-cta" href={whatsappHref} target="_blank" rel="noreferrer">
+            <Icon name="chat" />
             Inquire on WhatsApp
-            <Icon name="arrow" />
           </a>
         </div>
       ) : null}

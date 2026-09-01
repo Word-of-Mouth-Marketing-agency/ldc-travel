@@ -28,7 +28,7 @@
 ## Phase 1 homepage
 
 - [x] Replace the foundation placeholder with the approved homepage composition at `/`.
-- [x] Implement responsive Header, Hero, Trust Benefits, Destinations, Programs, Offer, Events, Testimonials, Guides, FAQ, and Footer sections.
+- [x] Implement responsive Header, Hero, Destinations, Programs, Offer, Events, Testimonials, Guides, FAQ, and Footer sections.
 - [x] Use the shared WhatsApp helper for generic and contextual inquiry CTAs.
 - [x] Add a CMS-backed homepage adapter with an isolated demo fallback.
 - [x] Add optional remote demo image fields while preserving Payload Media relations.
@@ -42,6 +42,12 @@
 - [x] Align the supplied LDC contact details and social URLs across CMS defaults, demo data, seed data, footer, and docs.
 - [x] Prefer uploaded Payload Media and safely reject malformed or unapproved remote image URLs.
 - [x] Document the local PostgreSQL/Payload verification boundary without inventing credentials.
+
+## Homepage refinement
+
+- [x] Remove the Trust/Benefits module and its now-dead Homepage global field.
+- [x] Replace improvised UI glyphs and rating stars with the shared Lucide icon system and recognizable social marks.
+- [x] Add restrained CSS hover/entrance interactions and preserve prefers-reduced-motion behavior.
 
 ## Verification
 

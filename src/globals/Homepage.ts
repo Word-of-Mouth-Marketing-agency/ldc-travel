@@ -41,17 +41,6 @@ export const Homepage: GlobalConfig = {
         { name: "secondaryCta", type: "group", fields: ctaFields },
       ],
     },
-    {
-      name: "trustBenefits",
-      type: "array",
-      minRows: 3,
-      maxRows: 4,
-      fields: [
-        { name: "title", type: "text", required: true },
-        { name: "description", type: "textarea", required: true },
-        { name: "iconKey", type: "text", required: true },
-      ],
-    },
     { name: "featuredDestinations", type: "relationship", relationTo: "destinations", hasMany: true },
     { name: "popularPrograms", type: "relationship", relationTo: "travel-programs", hasMany: true },
     { name: "activeOffer", type: "relationship", relationTo: "offers" },

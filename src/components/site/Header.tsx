@@ -32,8 +32,8 @@ export function Header({ whatsappConfig }: { whatsappConfig: WhatsAppConfig }) {
           ))}
         </nav>
         <a className="header-cta" href={whatsappHref} target="_blank" rel="noreferrer">
+          <Icon name="chat" size={16} />
           <span>Inquire on WhatsApp</span>
-          <Icon name="arrow" />
         </a>
         <MobileNav items={navItems} whatsappHref={whatsappHref} />
       </div>

@@ -19,24 +19,9 @@ function CoverImage({ image, className = "" }: { image: ImageSource; className?:
   return <Image className={`cover-image ${className}`} src={image.src} alt={image.alt} fill sizes="(max-width: 767px) 92vw, (max-width: 1279px) 30vw, 240px" />;
 }
 
-export function TrustBenefits({ benefits }: { benefits: Array<{ title: string; description: string; iconKey: string }> }) {
-  return (
-    <section className="trust-section" aria-label="Why travel with LDC Travel">
-      <div className="site-container trust-grid">
-        {benefits.map((benefit) => (
-          <div className="trust-item" key={benefit.title}>
-            <span className="trust-icon"><Icon name={benefit.iconKey === "support" ? "support" : benefit.iconKey === "compass" ? "compass" : benefit.iconKey === "chat" ? "chat" : "spark"} /></span>
-            <div><h2>{benefit.title}</h2><p>{benefit.description}</p></div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 export function DestinationsSection({ items }: { items: DestinationViewModel[] }) {
   return (
-    <section className="content-section" aria-labelledby="destinations-heading">
+    <section className="content-section destinations-section" aria-labelledby="destinations-heading">
       <div className="site-container">
         <SectionHeading id="destinations-heading" title="Featured destinations" linkLabel="View all destinations" linkHref="/destinations" />
         <div className="destination-grid">
@@ -67,7 +52,7 @@ export function ProgramsSection({ items, whatsappConfig }: { items: ProgramViewM
         <div className="program-grid">
           {items.slice(0, 5).map((program) => (
             <article className="program-card" key={program.title}>
-              <div className="program-image"><CoverImage image={program.image} /><span className="duration-badge">{program.durationDays} days</span></div>
+              <div className="program-image"><CoverImage image={program.image} /><span className="duration-badge"><Icon name="clock" size={15} />{program.durationDays} days</span></div>
               <div className="program-card-body">
                 <p className="card-kicker">{program.destination}</p>
                 <h3>{program.title}</h3>
@@ -130,13 +115,12 @@ export function TestimonialsSection({ items }: { items: TestimonialViewModel[] }
         <div className="testimonial-grid">
           {items.slice(0, 3).map((testimonial) => (
             <figure className="testimonial-card" key={testimonial.displayName}>
-              <Icon name="quote" className="quote-mark" />
+              <Icon name="quote" className="quote-mark" size={38} strokeWidth={1.7} />
               <blockquote>{testimonial.quote}</blockquote>
-              <figcaption><span className="avatar-placeholder" aria-hidden="true">{testimonial.displayName.charAt(0)}</span><span><strong>{testimonial.displayName}</strong><small>{testimonial.location}</small></span><span className="rating" role="img" aria-label={`${testimonial.rating} out of 5 stars`}>{Array.from({ length: testimonial.rating }).map((_, index) => <span aria-hidden="true" key={index}>★</span>)}</span></figcaption>
+              <figcaption><span className="avatar-placeholder" aria-hidden="true">{testimonial.displayName.charAt(0)}</span><span><strong>{testimonial.displayName}</strong><small>{testimonial.location}</small></span><span className="rating" role="img" aria-label={`${testimonial.rating} out of 5 stars`}>{Array.from({ length: testimonial.rating }).map((_, index) => <Icon name="star" className="rating-star" size={15} key={index} />)}</span></figcaption>
             </figure>
           ))}
         </div>
-        <p className="demo-note">Demo testimonials shown for layout preview. They should be replaced with supplied customer feedback before launch.</p>
       </div>
     </section>
   );

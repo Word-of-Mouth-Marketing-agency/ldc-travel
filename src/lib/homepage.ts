@@ -270,7 +270,6 @@ export async function getHomepageData(): Promise<HomepageViewModel> {
     const whatsappConfig = buildWhatsappConfig(site);
     const homepageRecord = asRecord(homepage);
     const hero = asRecord(homepageRecord?.hero);
-    const benefits = asRecords(homepageRecord?.trustBenefits);
     const destinations = asRecords(homepageRecord?.featuredDestinations).filter((item) => isVisibleInMarket(item, marketId));
     const programs = asRecords(homepageRecord?.popularPrograms).filter((item) => isVisibleInMarket(item, marketId));
     const events = asRecords(homepageRecord?.upcomingEvents).filter((item) => isVisibleInMarket(item, marketId));
@@ -292,11 +291,6 @@ export async function getHomepageData(): Promise<HomepageViewModel> {
         primaryCta: ctaFromCms(hero?.primaryCta, demoHomepage.hero.primaryCta, whatsappConfig),
         secondaryCta: ctaFromCms(hero?.secondaryCta, demoHomepage.hero.secondaryCta, whatsappConfig),
       },
-      trustBenefits: benefits.length ? benefits.map((item, index) => ({
-        title: asString(item.title, demoHomepage.trustBenefits[index % demoHomepage.trustBenefits.length].title),
-        description: asString(item.description, demoHomepage.trustBenefits[index % demoHomepage.trustBenefits.length].description),
-        iconKey: asString(item.iconKey, "spark"),
-      })) : demoHomepage.trustBenefits,
       destinations: destinations.length ? destinations.map(mapDestination) : demoHomepage.destinations,
       programs: programs.length ? programs.map((item, index) => mapProgram(item, index, whatsappConfig)) : demoHomepage.programs,
       offer: activeOffer && isVisibleInMarket(activeOffer, marketId) ? mapOffer(activeOffer, whatsappConfig) ?? demoHomepage.offer : demoHomepage.offer,

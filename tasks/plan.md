@@ -25,6 +25,12 @@
 15. Prefer Payload Media, validate approved remote demo image URLs, and document the image policy.
 16. Re-run generated types and all repository checks; verify runtime boundaries without inventing database credentials.
 
+## Homepage refinement pass
+
+17. Remove the Trust/Benefits presentation and its dead CMS field without expanding homepage scope.
+18. Standardize interface icons, recognizable social marks, and small CSS interactions with reduced-motion support.
+19. Re-run Payload type generation and the full frontend validation suite; commit the refinement separately.
+
 ## Parallelizable work
 
 - Asset inventory/documentation can proceed independently from CMS field implementation.

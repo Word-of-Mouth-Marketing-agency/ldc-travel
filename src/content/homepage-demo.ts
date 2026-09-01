@@ -104,7 +104,6 @@ export type HomepageViewModel = {
     primaryCta: Cta;
     secondaryCta: Cta;
   };
-  trustBenefits: Array<{ title: string; description: string; iconKey: string }>;
   destinations: DestinationViewModel[];
   programs: ProgramViewModel[];
   offer?: OfferViewModel;
@@ -159,12 +158,6 @@ export const demoHomepage: HomepageViewModel = {
     primaryCta: whatsappCta("Inquire on WhatsApp"),
     secondaryCta: { label: "Explore programs", href: "/programs" },
   },
-  trustBenefits: [
-    { title: "Handpicked experiences", description: "Journeys chosen for the moments you will remember.", iconKey: "spark" },
-    { title: "Trusted travel support", description: "A helpful team from the first idea to the last detail.", iconKey: "support" },
-    { title: "Tailored programs", description: "Flexible plans shaped around your pace and priorities.", iconKey: "compass" },
-    { title: "Easy WhatsApp assistance", description: "Ask a question and start planning in a conversation.", iconKey: "chat" },
-  ],
   destinations: [
     { title: "Paris", country: "France", summary: "Art, food, and unforgettable city walks.", image: image("photo-1502602898657-3e91760cbb34", "Eiffel Tower at golden hour in Paris"), href: "/destinations" },
     { title: "Maldives", country: "Maldives", summary: "Slow mornings on clear water and white sand.", image: image("photo-1514282401047-d79a71a590e8", "Turquoise water and villas in the Maldives"), href: "/destinations" },

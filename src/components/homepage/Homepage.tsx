@@ -5,7 +5,7 @@ import type { HomepageViewModel } from "../../content/homepage-demo";
 import { Header } from "../site/Header";
 import { Footer } from "../site/Footer";
 import { Icon } from "./Icon";
-import { DestinationsSection, EventsSection, FaqSection, GuidesSection, OfferSection, ProgramsSection, TestimonialsSection, TrustBenefits } from "./HomepageSections";
+import { DestinationsSection, EventsSection, FaqSection, GuidesSection, OfferSection, ProgramsSection, TestimonialsSection } from "./HomepageSections";
 
 export function HomepageUnavailable() {
   return (
@@ -37,13 +37,12 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
               <h1 id="hero-heading">{headlineTail ? <>{headlineLead} <span>with {headlineTail}</span></> : data.hero.headline}</h1>
               <p className="hero-supporting-copy">{data.hero.supportingCopy}</p>
               <div className="hero-actions">
-                <a className="button button-primary" href={data.hero.primaryCta.href} target={data.hero.primaryCta.external ? "_blank" : undefined} rel={data.hero.primaryCta.external ? "noreferrer" : undefined}>{data.hero.primaryCta.label}<Icon name="arrow" /></a>
+                <a className="button button-primary" href={data.hero.primaryCta.href} target={data.hero.primaryCta.external ? "_blank" : undefined} rel={data.hero.primaryCta.external ? "noreferrer" : undefined}><Icon name="chat" />{data.hero.primaryCta.label}</a>
                 <Link className="button button-secondary" href={data.hero.secondaryCta.href}>{data.hero.secondaryCta.label}<Icon name="arrow" /></Link>
               </div>
             </div>
           </div>
         </section>
-        <TrustBenefits benefits={data.trustBenefits} />
         <DestinationsSection items={data.destinations} />
         <ProgramsSection items={data.programs} whatsappConfig={data.whatsappConfig} />
         <OfferSection offer={data.offer} />

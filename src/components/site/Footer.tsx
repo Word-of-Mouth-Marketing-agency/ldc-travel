@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
 import { Icon } from "../homepage/Icon";
+import { SocialIcon } from "./SocialIcon";
 import type { SiteViewModel } from "../../content/homepage-demo";
 
 const groups = [
@@ -23,10 +24,10 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
           <div className="social-links" aria-label="LDC Travel social links">
             {site.socialLinks.map((social) => social.url ? (
               <a key={social.label} href={social.url} aria-label={social.label} target="_blank" rel="noreferrer">
-                {social.label.slice(0, 2)}
+                <SocialIcon label={social.label} />
               </a>
             ) : (
-              <span key={social.label} aria-label={`${social.label} link pending`}>{social.label.slice(0, 2)}</span>
+              <span key={social.label} aria-label={`${social.label} link pending`}><SocialIcon label={social.label} /></span>
             ))}
           </div>
         </div>
@@ -40,13 +41,13 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
           <h2>Egypt office</h2>
           <p><Icon name="pin" /> {site.office}</p>
           <a href={createWhatsAppUrl(whatsappConfig)} target="_blank" rel="noreferrer"><Icon name="chat" /> {site.whatsappDisplay}</a>
-          <a href={`mailto:${site.reservationsEmail}`}><Icon name="arrow" /> {site.reservationsEmail}</a>
-          <a href={`mailto:${site.salesEmail}`}><Icon name="arrow" /> {site.salesEmail}</a>
+          <a href={`mailto:${site.reservationsEmail}`}><Icon name="mail" /> {site.reservationsEmail}</a>
+          <a href={`mailto:${site.salesEmail}`}><Icon name="mail" /> {site.salesEmail}</a>
         </div>
       </div>
       <div className="site-container footer-bottom">
         <p>© {new Date().getFullYear()} LDC Travel. All rights reserved.</p>
-        <p>Made for travelers with care <span aria-hidden="true">♥</span></p>
+        <p>Made for travelers with care <Icon name="heart" size={15} /></p>
       </div>
     </footer>
   );

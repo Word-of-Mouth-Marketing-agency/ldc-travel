@@ -14,7 +14,7 @@ Payload owns editorial and global configuration data. The collections and global
 
 ## Homepage content contract
 
-The Homepage global owns hero copy/image/CTAs, trust benefits, and ordered relationships for featured destinations, popular programs, active offer, upcoming events, testimonials, guides, and FAQs. This keeps an editor-friendly homepage composition without turning every visual fragment into an independent collection.
+The Homepage global owns hero copy/image/CTAs and ordered relationships for featured destinations, popular programs, active offer, upcoming events, testimonials, guides, and FAQs. This keeps an editor-friendly homepage composition without turning every visual fragment into an independent collection.
 
 ## WhatsApp seam
 
@@ -26,7 +26,7 @@ The Homepage global owns hero copy/image/CTAs, trust benefits, and ordered relat
 
 ## Homepage implementation
 
-The Phase 1 homepage modules are Header, MobileNav, Hero, SectionHeader, TrustBenefit, DestinationCard, TravelProgramCard, PromoBanner, EventCard, TestimonialCard, GuideCard, FAQAccordion, WhatsAppCTA, and Footer. They receive normalized view models from `src/lib/homepage.ts`; Payload response shapes do not leak into presentation components. The page is server-rendered and the mobile menu is the only client interaction island. FAQ uses native `details` disclosure for keyboard and screen-reader behavior.
+The Phase 1 homepage modules are Header, MobileNav, Hero, SectionHeader, DestinationCard, TravelProgramCard, PromoBanner, EventCard, TestimonialCard, GuideCard, FAQAccordion, WhatsAppCTA, and Footer. They receive normalized view models from `src/lib/homepage.ts`; Payload response shapes do not leak into presentation components. General interface icons use the shared Lucide wrapper, while the four configured social networks use small recognizable brand marks. The page is server-rendered and the mobile menu is the only client interaction island. FAQ uses native `details` disclosure for keyboard and screen-reader behavior.
 
 When `DATABASE_URL` is configured, the homepage reads the Homepage and Site Settings globals with relationship depth and uses their selected editorial records. If CMS access is unavailable, the isolated `src/content/homepage-demo.ts` view model is used only in development. Production throws a non-sensitive `HomepageDataError`, which the page-level unavailable state turns into an explicit retry view; the route error boundary remains for unexpected failures. Demo content is never silently served in production.
 

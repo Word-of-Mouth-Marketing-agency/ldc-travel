@@ -1165,14 +1165,6 @@ export interface Homepage {
       url?: string | null;
     };
   };
-  trustBenefits?:
-    | {
-        title: string;
-        description: string;
-        iconKey: string;
-        id?: string | null;
-      }[]
-    | null;
   featuredDestinations?: (number | Destination)[] | null;
   popularPrograms?: (number | TravelProgram)[] | null;
   activeOffer?: (number | null) | Offer;
@@ -1254,14 +1246,6 @@ export interface HomepageSelect<T extends boolean = true> {
               kind?: T;
               url?: T;
             };
-      };
-  trustBenefits?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        iconKey?: T;
-        id?: T;
       };
   featuredDestinations?: T;
   popularPrograms?: T;

@@ -43,7 +43,7 @@ The scope is bounded around an existing business, a defined launch market, a rea
 
 1. A visitor lands on the homepage from search, social, or referral.
 2. The hero establishes the LDC Travel proposition and sends the visitor to WhatsApp or the Programs route when that route is available.
-3. Destination/program/event/offer content builds confidence through photography, structured details, trust benefits, and testimonials.
+3. Destination/program/event/offer content builds confidence through photography, structured details, and testimonials.
 4. Contextual WhatsApp CTAs open a prefilled message containing the relevant content title where useful.
 5. A future Contact page adds a validated server-side inquiry form; the foundation does not implement that page or an Inquiries collection.
 
@@ -55,15 +55,14 @@ The composition to preserve:
 
 1. Header/navigation with LDC logo, compact desktop navigation, and a prominent WhatsApp CTA.
 2. Hero with large destination photography, strong navy/orange headline treatment, supporting copy, primary WhatsApp CTA, and secondary Programs CTA.
-3. Trust/benefits strip overlapping the hero transition.
-4. Featured Destinations.
-5. Popular Travel Programs.
-6. Promotional/seasonal offer banner.
-7. Upcoming Festivals & Events.
-8. Testimonials.
-9. Latest Travel Guides.
-10. FAQ.
-11. Footer with contact and social links.
+3. Featured Destinations.
+4. Popular Travel Programs.
+5. Promotional/seasonal offer banner.
+6. Upcoming Festivals & Events.
+7. Testimonials.
+8. Latest Travel Guides.
+9. FAQ.
+10. Footer with contact and social links.
 
 Implementation quality criteria for the Phase 1 implementation:
 
@@ -137,7 +136,7 @@ The public page layer should depend on normalized content view models rather tha
 ### Globals
 
 - **Site Settings** — site name/tagline, default market, canonical URL, contact details, WhatsApp settings, social links, default SEO, and footer copy.
-- **Homepage** — hero eyebrow/headline/copy/image and two CTAs; trust benefits; selected featured destinations/programs; selected active offer; upcoming events; testimonials; guides; FAQs.
+- **Homepage** — hero eyebrow/headline/copy/image and two CTAs; selected featured destinations/programs; selected active offer; upcoming events; testimonials; guides; FAQs.
 
 ### Market strategy
 
@@ -196,13 +195,14 @@ Store the base number and default message in Site Settings. Expose a single help
 
 ## Phase 1 implementation status
 
-- [x] Header, responsive mobile navigation, hero, trust benefits, destinations, programs, offer, events, testimonials, guides, FAQ, and footer implemented at `/`.
+- [x] Header, responsive mobile navigation, hero, destinations, programs, offer, events, testimonials, guides, FAQ, and footer implemented at `/`.
 - [x] Homepage sections consume a normalized Payload-backed view model with an isolated demo fallback when local CMS configuration is unavailable.
 - [x] Demo fallback is development-only; production CMS/configuration failures render an explicit unavailable state and never silently serve demo content.
 - [x] CMS image fields support approved remote demo imagery while preserving Payload Media upload relations for production editors.
 - [x] Uploaded Payload Media is preferred over optional remote demo image URLs, and remote URLs are restricted to the configured Unsplash/Pexels hosts.
 - [x] Repeatable seed mechanism added for Egypt-only demo content, homepage relationships, globals, and clearly marked placeholder testimonials.
 - [x] Shared WhatsApp helper used for generic, program, event, and offer inquiry CTAs.
+- [x] Homepage refinement removed the Trust/Benefits module, replaced improvised glyphs with Lucide icons and recognizable social marks, and added restrained CSS interaction motion with reduced-motion handling.
 - [x] No newsletter, booking/search widget, contact form, checkout, Saudi public content, or additional public page implemented.
 - [x] Responsive, accessibility, remote-image, type, lint, build, and local HTTP checks completed where infrastructure allowed.
 - [ ] Payload admin/database seed runtime verification remains pending a local `DATABASE_URL` and `PAYLOAD_SECRET`.
@@ -215,4 +215,4 @@ Store the base number and default message in Site Settings. Expose a single help
 
 ## Phase 1 homepage implementation scope
 
-Phase 1 ships only `/` using CMS-driven sections in this order: Header, Hero, TrustBenefits, FeaturedDestinations, PopularPrograms, ActiveOffer, UpcomingEvents, Testimonials, LatestGuides, FAQ, Footer. It includes the reusable WhatsApp CTA, responsive behavior at phone/tablet/desktop widths, accessible interaction states, metadata, and remote image configuration. All other routes remain navigation targets/placeholders until separately scoped.
+Phase 1 ships only `/` using CMS-driven sections in this order: Header, Hero, FeaturedDestinations, PopularPrograms, ActiveOffer, UpcomingEvents, Testimonials, LatestGuides, FAQ, Footer. It includes the reusable WhatsApp CTA, responsive behavior at phone/tablet/desktop widths, accessible interaction states, restrained CSS motion with reduced-motion handling, metadata, and remote image configuration. All other routes remain navigation targets/placeholders until separately scoped.

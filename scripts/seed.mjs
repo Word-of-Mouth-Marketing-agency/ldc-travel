@@ -177,12 +177,6 @@ if (!homepage.hero) {
       primaryCta: { label: "Inquire on WhatsApp", kind: "whatsapp" },
       secondaryCta: { label: "Explore programs", kind: "internal", url: "/programs" },
     },
-    trustBenefits: [
-      { title: "Handpicked experiences", description: "Journeys chosen for the moments you will remember.", iconKey: "spark" },
-      { title: "Trusted travel support", description: "A helpful team from the first idea to the last detail.", iconKey: "support" },
-      { title: "Tailored programs", description: "Flexible plans shaped around your pace and priorities.", iconKey: "compass" },
-      { title: "Easy WhatsApp assistance", description: "Ask a question and start planning in a conversation.", iconKey: "chat" },
-    ],
     featuredDestinations: Object.values(destinations).map((item) => item.id),
     popularPrograms: Object.values(programs).map((item) => item.id),
     activeOffer: offer.id,
