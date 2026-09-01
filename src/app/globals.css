@@ -51,13 +51,19 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .desktop-nav a:hover::after, .desktop-nav a.active::after { transform: scaleX(1); }
 .header-cta { display: none; align-items: center; gap: 0.6rem; flex: 0 0 auto; padding: 0.72rem 1rem; border-radius: var(--radius-pill); background: #0a9f5b; color: white; font-size: 0.75rem; font-weight: 800; box-shadow: 0 8px 20px rgb(10 159 91 / 0.18); transition: transform 180ms ease, background 180ms ease; }
 .header-cta:hover { background: #087d49; transform: translateY(-2px); }
-.mobile-nav { margin-left: auto; position: relative; }
+.mobile-nav { position: relative; z-index: 60; margin-left: auto; }
 .mobile-menu-button { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--line); border-radius: 0.75rem; background: white; color: var(--brand-primary); font-size: 1.75rem; cursor: pointer; }
-.mobile-menu-panel { position: absolute; top: calc(100% + 0.75rem); right: 0; width: min(18rem, calc(100vw - 2rem)); padding: 0.75rem; border: 1px solid var(--line); border-radius: 1rem; background: white; box-shadow: var(--shadow-float); animation: menu-in 180ms ease both; }
-.mobile-menu-panel nav { display: grid; gap: 0.15rem; }
-.mobile-menu-panel nav a { padding: 0.8rem 0.75rem; border-radius: 0.65rem; font-weight: 700; }
+.mobile-menu-backdrop { position: fixed; z-index: 0; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: rgb(0 24 52 / 0.52); cursor: pointer; animation: backdrop-in 180ms ease both; }
+.mobile-menu-panel { position: fixed; z-index: 1; inset: 0 0 0 auto; display: flex; flex-direction: column; width: min(23rem, calc(100vw - 1rem)); min-height: 100dvh; overflow-y: auto; padding: 1.25rem clamp(1rem, 5vw, 2rem) 2rem; border: 0; border-left: 1px solid rgb(226 234 240 / 0.9); border-radius: 1.25rem 0 0 1.25rem; background: white; box-shadow: -18px 0 48px rgb(0 24 52 / 0.18); animation: drawer-in 220ms cubic-bezier(.2,.8,.2,1) both; }
+.mobile-menu-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.mobile-menu-logo { width: 5rem; height: 5rem; object-fit: contain; }
+.mobile-menu-close { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--line); border-radius: 0.75rem; background: var(--soft-blue); color: var(--brand-primary); cursor: pointer; }
+.mobile-menu-panel nav { display: grid; gap: 0.25rem; margin-top: 2rem; }
+.mobile-menu-panel nav a { display: flex; align-items: center; min-height: 3.5rem; padding: 0.8rem 0.75rem; border-radius: 0.65rem; color: var(--brand-primary); font-size: 1.15rem; font-weight: 800; }
 .mobile-menu-panel nav a:hover { background: var(--soft-blue); color: var(--brand-primary); }
-.mobile-menu-cta { width: 100%; margin-top: 0.65rem; }
+.mobile-menu-cta { width: 100%; margin-top: 2rem; }
+.mobile-menu-footer { display: grid; gap: 0.25rem; margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.78rem; }
+.mobile-menu-footer strong { color: var(--brand-primary); font-size: 0.88rem; }
 
 .hero-section { position: relative; isolation: isolate; min-height: clamp(34rem, 64vw, 44rem); overflow: hidden; background: #c8e4ed; }
 .hero-photo, .hero-photo img { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -192,10 +198,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .footer-contact-column .ui-icon { flex: 0 0 auto; color: var(--brand-orange); }
 .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; padding-block: 1rem 1.5rem; border-top: 1px solid rgb(255 255 255 / 0.14); color: rgb(255 255 255 / 0.56); font-size: 0.7rem; }
 .footer-bottom p { margin: 0; }
-.footer-bottom .ui-icon { display: inline-block; vertical-align: -0.18rem; color: var(--brand-coral); }
+.footer-bottom .word-of-mouth-credit { display: inline-flex; align-items: center; gap: 0.3rem; color: white; font-weight: 800; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.2em; transition: color 180ms ease, text-decoration-color 180ms ease; }
+.footer-bottom .word-of-mouth-credit:hover { color: var(--brand-orange); text-decoration-color: currentColor; }
+.footer-bottom .word-of-mouth-credit .ui-icon { transition: transform 180ms ease; }
+.footer-bottom .word-of-mouth-credit:hover .ui-icon { transform: translate(0.1rem, -0.1rem); }
 
 @keyframes hero-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
-@keyframes menu-in { from { opacity: 0; transform: translateY(-0.35rem); } to { opacity: 1; transform: translateY(0); } }
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes drawer-in { from { opacity: 0; transform: translateX(1.5rem); } to { opacity: 1; transform: translateX(0); } }
 @keyframes faq-in { from { opacity: 0; transform: translateY(-0.3rem); } to { opacity: 1; transform: translateY(0); } }
 
 @media (min-width: 640px) {

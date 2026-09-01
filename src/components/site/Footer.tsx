@@ -1,15 +1,15 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
 import { Icon } from "../homepage/Icon";
 import { SocialIcon } from "./SocialIcon";
+import { PlaceholderLink } from "./PlaceholderLink";
 import type { SiteViewModel } from "../../content/homepage-demo";
 
 const groups = [
-  { title: "Explore", links: [{ label: "Destinations", href: "/destinations" }, { label: "Travel Programs", href: "/programs" }, { label: "Offers", href: "/offers" }] },
-  { title: "Discover", links: [{ label: "Festivals & Events", href: "/festivals" }, { label: "Travel Guides", href: "/blog" }, { label: "About Us", href: "/about" }] },
-  { title: "Connect", links: [{ label: "Contact Us", href: "/contact" }, { label: "Our Services", href: "/services" }] },
+  { title: "Explore", links: [{ label: "Destinations" }, { label: "Travel Programs" }, { label: "Offers" }] },
+  { title: "Discover", links: [{ label: "Festivals & Events" }, { label: "Travel Guides" }, { label: "About Us" }] },
+  { title: "Connect", links: [{ label: "Contact Us" }, { label: "Our Services" }] },
 ];
 
 export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
@@ -34,7 +34,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
         {groups.map((group) => (
           <div className="footer-link-column" key={group.title}>
             <h2>{group.title}</h2>
-            {group.links.map((link) => <Link key={link.href} href={link.href}>{link.label}</Link>)}
+            {group.links.map((link) => <PlaceholderLink key={link.label}>{link.label}</PlaceholderLink>)}
           </div>
         ))}
         <div className="footer-contact-column">
@@ -47,7 +47,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
       </div>
       <div className="site-container footer-bottom">
         <p>© {new Date().getFullYear()} LDC Travel. All rights reserved.</p>
-        <p>Made for travelers with care <Icon name="heart" size={15} /></p>
+        <p>Powered by <a className="word-of-mouth-credit" href="https://wordofmoutheg.com" target="_blank" rel="noopener noreferrer">WORD OF MOUTH <Icon name="external" size={13} /></a></p>
       </div>
     </footer>
   );

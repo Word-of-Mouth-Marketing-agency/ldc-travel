@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import { Icon } from "./Icon";
+import { PlaceholderLink } from "../site/PlaceholderLink";
 
 type SectionHeadingProps = {
   eyebrow?: string;
@@ -20,10 +19,10 @@ export function SectionHeading({ eyebrow, title, id, description, linkLabel, lin
         {description ? <p className="section-heading-copy">{description}</p> : null}
       </div>
       {linkLabel && linkHref ? (
-        <Link className="section-link" href={linkHref}>
+        <PlaceholderLink className="section-link">
           {linkLabel}
           <Icon name="arrow" />
-        </Link>
+        </PlaceholderLink>
       ) : null}
     </div>
   );

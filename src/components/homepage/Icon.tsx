@@ -3,7 +3,7 @@ import {
   CalendarDays,
   ChevronDown,
   Clock3,
-  Heart,
+  ExternalLink,
   Mail,
   MapPin,
   Menu,
@@ -22,7 +22,7 @@ type IconName =
   | "chevron"
   | "clock"
   | "close"
-  | "heart"
+  | "external"
   | "mail"
   | "menu"
   | "pin"
@@ -37,7 +37,7 @@ const icons: Record<IconName, LucideIcon> = {
   chevron: ChevronDown,
   clock: Clock3,
   close: X,
-  heart: Heart,
+  external: ExternalLink,
   mail: Mail,
   menu: Menu,
   pin: MapPin,

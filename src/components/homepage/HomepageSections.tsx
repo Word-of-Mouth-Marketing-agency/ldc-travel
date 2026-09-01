@@ -1,6 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
-
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
 import type {
   DestinationViewModel,
@@ -14,6 +12,7 @@ import type {
 } from "../../content/homepage-demo";
 import { Icon } from "./Icon";
 import { SectionHeading } from "./SectionHeading";
+import { PlaceholderLink } from "../site/PlaceholderLink";
 
 function CoverImage({ image, className = "" }: { image: ImageSource; className?: string }) {
   return <Image className={`cover-image ${className}`} src={image.src} alt={image.alt} fill sizes="(max-width: 767px) 92vw, (max-width: 1279px) 30vw, 240px" />;
@@ -26,7 +25,7 @@ export function DestinationsSection({ items }: { items: DestinationViewModel[] }
         <SectionHeading id="destinations-heading" title="Featured destinations" linkLabel="View all destinations" linkHref="/destinations" />
         <div className="destination-grid">
           {items.slice(0, 5).map((destination) => (
-            <Link className="destination-card" href={destination.href} key={`${destination.title}-${destination.country}`}>
+            <PlaceholderLink className="destination-card" key={`${destination.title}-${destination.country}`}>
               <CoverImage image={destination.image} />
               <span className="card-scrim" />
               <div className="destination-card-copy">
@@ -34,7 +33,7 @@ export function DestinationsSection({ items }: { items: DestinationViewModel[] }
                 <h3>{destination.title}</h3>
                 <p>{destination.summary}</p>
               </div>
-            </Link>
+            </PlaceholderLink>
           ))}
         </div>
       </div>
@@ -82,7 +81,7 @@ export function OfferSection({ offer }: { offer?: OfferViewModel }) {
           <p className="section-eyebrow">{offer.badge ?? offer.title}</p>
           <h2 id="offer-heading">{offer.headline}</h2>
           <p>{offer.description}</p>
-          <a className="button button-light" href={offer.cta.href} target={offer.cta.external ? "_blank" : undefined} rel={offer.cta.external ? "noreferrer" : undefined}>{offer.cta.label}<Icon name="arrow" /></a>
+          <a className="button button-light" href={offer.cta.external ? offer.cta.href : "#"} target={offer.cta.external ? "_blank" : undefined} rel={offer.cta.external ? "noopener noreferrer" : undefined}>{offer.cta.label}<Icon name="arrow" /></a>
         </div>
       </div>
     </section>
@@ -98,7 +97,7 @@ export function EventsSection({ items }: { items: EventViewModel[] }) {
           {items.slice(0, 5).map((event) => (
             <article className="event-card" key={event.title}>
               <div className="event-image"><CoverImage image={event.image} /><div className="date-tile"><span>{event.month}</span><strong>{event.day}</strong></div></div>
-              <div className="event-card-body"><h3>{event.title}</h3><p className="event-date"><Icon name="calendar" /> {event.date}</p><p>{event.location}</p><p className="event-summary">{event.summary}</p><a href={event.cta.href} target={event.cta.external ? "_blank" : undefined} rel={event.cta.external ? "noreferrer" : undefined}>{event.cta.label} <Icon name="arrow" /></a></div>
+              <div className="event-card-body"><h3>{event.title}</h3><p className="event-date"><Icon name="calendar" /> {event.date}</p><p>{event.location}</p><p className="event-summary">{event.summary}</p><a href={event.cta.external ? event.cta.href : "#"} target={event.cta.external ? "_blank" : undefined} rel={event.cta.external ? "noopener noreferrer" : undefined}>{event.cta.label} <Icon name="arrow" /></a></div>
             </article>
           ))}
         </div>
@@ -134,8 +133,8 @@ export function GuidesSection({ items }: { items: GuideViewModel[] }) {
         <div className="guide-grid">
           {items.slice(0, 3).map((guide) => (
             <article className="guide-card" key={guide.title}>
-              <Link className="guide-image" href={guide.href}><CoverImage image={guide.image} /></Link>
-              <div className="guide-card-body"><p className="card-kicker">{guide.category}</p><h3><Link href={guide.href}>{guide.title}</Link></h3><p>{guide.excerpt}</p><Link className="text-link" href={guide.href}>Read guide <Icon name="arrow" /></Link></div>
+              <PlaceholderLink className="guide-image"><CoverImage image={guide.image} /></PlaceholderLink>
+              <div className="guide-card-body"><p className="card-kicker">{guide.category}</p><h3><PlaceholderLink>{guide.title}</PlaceholderLink></h3><p>{guide.excerpt}</p><PlaceholderLink className="text-link">Read guide <Icon name="arrow" /></PlaceholderLink></div>
             </article>
           ))}
         </div>
