@@ -154,7 +154,7 @@ export const demoHomepage: HomepageViewModel = {
     eyebrow: "Make room for the extraordinary",
     headline: "Explore the world with LDC Travel",
     supportingCopy: "Discover unforgettable destinations, thoughtful travel programs, and memories that last a lifetime.",
-    image: image("photo-1570077188670-e3a8d69ac5ff", "Whitewashed island homes above the Aegean Sea at sunset"),
+    image: image("photo-1560703649-e3055f28bcf8", "Whitewashed Santorini buildings with blue domes above the Aegean Sea"),
     primaryCta: whatsappCta("Inquire on WhatsApp"),
     secondaryCta: { label: "Explore programs", href: "/programs" },
   },
