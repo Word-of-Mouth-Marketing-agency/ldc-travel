@@ -13,9 +13,10 @@ import type {
 import { Icon } from "./Icon";
 import { SectionHeading } from "./SectionHeading";
 import { PlaceholderLink } from "../site/PlaceholderLink";
+import { SafeImage } from "../site/SafeImage";
 
 function CoverImage({ image, className = "" }: { image: ImageSource; className?: string }) {
-  return <Image className={`cover-image ${className}`} src={image.src} alt={image.alt} fill sizes="(max-width: 767px) 92vw, (max-width: 1279px) 30vw, 240px" />;
+  return <SafeImage className={`cover-image ${className}`} src={image.src} alt={image.alt} sizes="(max-width: 767px) 92vw, (max-width: 1279px) 30vw, 240px" />;
 }
 
 export function DestinationsSection({ items }: { items: DestinationViewModel[] }) {

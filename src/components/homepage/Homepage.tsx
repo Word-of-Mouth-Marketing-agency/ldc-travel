@@ -4,7 +4,9 @@ import Link from "next/link";
 import type { HomepageViewModel } from "../../content/homepage-demo";
 import { Header } from "../site/Header";
 import { Footer } from "../site/Footer";
+import { FloatingWhatsApp } from "../site/FloatingWhatsApp";
 import { PlaceholderLink } from "../site/PlaceholderLink";
+import { WhatsAppIcon } from "../site/WhatsAppIcon";
 import { Icon } from "./Icon";
 import { DestinationsSection, EventsSection, FaqSection, GuidesSection, OfferSection, ProgramsSection, TestimonialsSection } from "./HomepageSections";
 
@@ -26,19 +28,18 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
 
   return (
     <>
-      <Header whatsappConfig={data.whatsappConfig} />
+      <Header socialLinks={data.site.socialLinks} whatsappConfig={data.whatsappConfig} />
       <main>
         <section className="hero-section" aria-labelledby="hero-heading">
           <div className="hero-photo"><Image src={data.hero.image.src} alt={data.hero.image.alt} fill priority sizes="(max-width: 767px) 100vw, 58vw" /></div>
           <div className="hero-wash" />
-          <div className="hero-ribbon hero-ribbon-teal" aria-hidden="true" /><div className="hero-ribbon hero-ribbon-orange" aria-hidden="true" />
           <div className="site-container hero-inner">
             <div className="hero-copy">
               <p className="hero-eyebrow"><Icon name="plane" /> {data.hero.eyebrow}</p>
               <h1 id="hero-heading">{headlineTail ? <>{headlineLead} <span>with {headlineTail}</span></> : data.hero.headline}</h1>
               <p className="hero-supporting-copy">{data.hero.supportingCopy}</p>
               <div className="hero-actions">
-                <a className="button button-primary" href={data.hero.primaryCta.external ? data.hero.primaryCta.href : "#"} target={data.hero.primaryCta.external ? "_blank" : undefined} rel={data.hero.primaryCta.external ? "noopener noreferrer" : undefined}><Icon name="chat" />{data.hero.primaryCta.label}</a>
+                <a className="button button-primary" href={data.hero.primaryCta.external ? data.hero.primaryCta.href : "#"} target={data.hero.primaryCta.external ? "_blank" : undefined} rel={data.hero.primaryCta.external ? "noopener noreferrer" : undefined}><WhatsAppIcon />{data.hero.primaryCta.label}</a>
                 {data.hero.secondaryCta.external ? <a className="button button-secondary" href={data.hero.secondaryCta.href} target="_blank" rel="noopener noreferrer">{data.hero.secondaryCta.label}<Icon name="arrow" /></a> : <PlaceholderLink className="button button-secondary">{data.hero.secondaryCta.label}<Icon name="arrow" /></PlaceholderLink>}
               </div>
             </div>
@@ -53,6 +54,7 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
         <FaqSection items={data.faqs} />
       </main>
       <Footer site={data.site} whatsappConfig={data.whatsappConfig} />
+      <FloatingWhatsApp whatsappConfig={data.whatsappConfig} />
     </>
   );
 }

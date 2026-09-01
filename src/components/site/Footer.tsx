@@ -4,6 +4,7 @@ import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
 import { Icon } from "../homepage/Icon";
 import { SocialIcon } from "./SocialIcon";
 import { PlaceholderLink } from "./PlaceholderLink";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 import type { SiteViewModel } from "../../content/homepage-demo";
 
 const groups = [
@@ -15,7 +16,6 @@ const groups = [
 export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
   return (
     <footer className="site-footer">
-      <div className="footer-wave" aria-hidden="true" />
       <div className="site-container footer-main">
         <div className="footer-brand-column">
           <Image src="/brand/white-logo.webp" alt="LDC Travel" width={88} height={88} className="footer-logo" />
@@ -40,14 +40,14 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
         <div className="footer-contact-column">
           <h2>Egypt office</h2>
           <p><Icon name="pin" /> {site.office}</p>
-          <a href={createWhatsAppUrl(whatsappConfig)} target="_blank" rel="noreferrer"><Icon name="chat" /> {site.whatsappDisplay}</a>
+          <a href={createWhatsAppUrl(whatsappConfig)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon /> {site.whatsappDisplay}</a>
           <a href={`mailto:${site.reservationsEmail}`}><Icon name="mail" /> {site.reservationsEmail}</a>
           <a href={`mailto:${site.salesEmail}`}><Icon name="mail" /> {site.salesEmail}</a>
         </div>
       </div>
       <div className="site-container footer-bottom">
         <p>© {new Date().getFullYear()} LDC Travel. All rights reserved.</p>
-        <p>Powered by <a className="word-of-mouth-credit" href="https://wordofmoutheg.com" target="_blank" rel="noopener noreferrer">WORD OF MOUTH <Icon name="external" size={13} /></a></p>
+        <p>Powered by <a className="word-of-mouth-credit" href="https://wordofmoutheg.com" target="_blank" rel="noopener noreferrer">WORD OF MOUTH</a></p>
       </div>
     </footer>
   );

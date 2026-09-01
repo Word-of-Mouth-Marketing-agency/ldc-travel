@@ -1,16 +1,17 @@
 import Image from "next/image";
 
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
-import { Icon } from "../homepage/Icon";
+import type { SocialLink } from "../../content/homepage-demo";
 import { MobileNav } from "./MobileNav";
 import { PlaceholderLink } from "./PlaceholderLink";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 
 const navItems = [
   { label: "Home", href: "#" },
   { label: "Contact", href: "#" },
 ];
 
-export function Header({ whatsappConfig }: { whatsappConfig: WhatsAppConfig }) {
+export function Header({ socialLinks, whatsappConfig }: { socialLinks: SocialLink[]; whatsappConfig: WhatsAppConfig }) {
   const whatsappHref = createWhatsAppUrl(whatsappConfig);
 
   return (
@@ -26,11 +27,11 @@ export function Header({ whatsappConfig }: { whatsappConfig: WhatsAppConfig }) {
             </PlaceholderLink>
           ))}
         </nav>
-        <a className="header-cta" href={whatsappHref} target="_blank" rel="noreferrer">
-          <Icon name="chat" size={16} />
+        <a className="header-cta" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+          <WhatsAppIcon size={17} />
           <span>Inquire on WhatsApp</span>
         </a>
-        <MobileNav items={navItems} whatsappHref={whatsappHref} />
+        <MobileNav items={navItems} socialLinks={socialLinks} whatsappHref={whatsappHref} />
       </div>
     </header>
   );

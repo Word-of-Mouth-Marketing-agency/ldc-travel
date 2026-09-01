@@ -55,7 +55,7 @@ const egypt = await ensure("markets", "code", "EG", {
 
 const marketId = egypt.id;
 const destinationSeeds = [
-  ["cairo", { title: "Cairo", country: "Egypt", regionOrCity: "Cairo", summary: "Layered history, generous hospitality, and a city that stays awake.", imageUrl: image("photo-1539650116574-75c0c6d73f6e"), featured: true }],
+  ["cairo", { title: "Cairo", country: "Egypt", regionOrCity: "Cairo", summary: "Layered history, generous hospitality, and a city that stays awake.", imageUrl: image("photo-1503177119275-0aa32b3a9368"), featured: true }],
   ["paris", { title: "Paris", country: "France", regionOrCity: "Paris", summary: "Art, food, and unforgettable city walks.", imageUrl: image("photo-1502602898657-3e91760cbb34"), featured: true }],
   ["maldives", { title: "Maldives", country: "Maldives", regionOrCity: "Malé Atoll", summary: "Slow mornings on clear water and white sand.", imageUrl: image("photo-1514282401047-d79a71a590e8"), featured: true }],
   ["dubai", { title: "Dubai", country: "United Arab Emirates", regionOrCity: "Dubai", summary: "Skyline energy, desert calm, and modern luxury.", imageUrl: image("photo-1512453979798-5ea266f8880c"), featured: true }],
@@ -100,9 +100,9 @@ const offer = await ensure("offers", "slug", "summer-escape", {
 
 const eventSeeds = [
   ["cairo-jazz-festival", "Cairo Jazz Festival", "Cairo, Egypt", "2026-10-10", "An easygoing evening of live music and city energy.", "photo-1514525253161-7a46d19cd819"],
-  ["giza-pyramids-sound-and-light", "Giza Pyramids Sound and Light", "Giza, Egypt", "2026-10-18", "A memorable night beside one of the world's great landmarks.", "photo-1539650116574-75c0c6d73f6e"],
+  ["giza-pyramids-sound-and-light", "Giza Pyramids Sound and Light", "Giza, Egypt", "2026-10-18", "A memorable night beside one of the world's great landmarks.", "photo-1503177119275-0aa32b3a9368"],
   ["el-gouna-film-festival", "El Gouna Film Festival", "El Gouna, Egypt", "2026-10-23", "Cinema, sea air, and a lively Red Sea atmosphere.", "photo-1540575467063-178a50c2df87"],
-  ["siwa-oasis-season", "Siwa Oasis Season", "Siwa, Egypt", "2026-11-05", "A slower cultural escape through palms, salt lakes, and desert light.", "photo-1539650116574-75c0c6d73f6e"],
+  ["siwa-oasis-season", "Siwa Oasis Season", "Siwa, Egypt", "2026-11-05", "A slower cultural escape through palms, salt lakes, and desert light.", "photo-1516026672322-bc52d61a55d5"],
   ["nile-valley-festival", "Nile Valley Festival", "Luxor, Egypt", "2026-11-20", "Local stories, open skies, and warm evenings along the Nile.", "photo-1500534623283-312aade485b7"],
 ];
 const events = [];

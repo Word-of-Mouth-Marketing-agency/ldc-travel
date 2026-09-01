@@ -3,11 +3,9 @@ import {
   CalendarDays,
   ChevronDown,
   Clock3,
-  ExternalLink,
   Mail,
   MapPin,
   Menu,
-  MessageCircle,
   Plane,
   Quote,
   Star,
@@ -18,11 +16,9 @@ import {
 type IconName =
   | "arrow"
   | "calendar"
-  | "chat"
   | "chevron"
   | "clock"
   | "close"
-  | "external"
   | "mail"
   | "menu"
   | "pin"
@@ -33,11 +29,9 @@ type IconName =
 const icons: Record<IconName, LucideIcon> = {
   arrow: ArrowRight,
   calendar: CalendarDays,
-  chat: MessageCircle,
   chevron: ChevronDown,
   clock: Clock3,
   close: X,
-  external: ExternalLink,
   mail: Mail,
   menu: Menu,
   pin: MapPin,
