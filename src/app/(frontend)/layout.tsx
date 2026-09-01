@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Montserrat } from "next/font/google";
 
 import "../globals.css";
+
+const montserrat = Montserrat({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["400", "600", "700"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
@@ -16,7 +24,7 @@ export const metadata: Metadata = {
 export default function FrontendLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={montserrat.variable}>{children}</body>
     </html>
   );
 }

@@ -29,7 +29,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--canvas); color: var(--ink); font-family: "Avenir Next", "Segoe UI", Arial, sans-serif; text-rendering: optimizeLegibility; }
+body { --font-ui: var(--font-montserrat), "Avenir Next", "Segoe UI", Arial, sans-serif; margin: 0; background: var(--canvas); color: var(--ink); font-family: "Avenir Next", "Segoe UI", Arial, sans-serif; text-rendering: optimizeLegibility; }
 a { color: inherit; text-decoration: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 3px solid var(--brand-orange); outline-offset: 4px; }
@@ -207,6 +207,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .footer-bottom p { margin: 0; }
 .footer-bottom .word-of-mouth-credit { color: white; font-weight: 800; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.2em; transition: color 180ms ease, text-decoration-color 180ms ease; }
 .footer-bottom .word-of-mouth-credit:hover { color: var(--brand-orange); text-decoration-color: currentColor; }
+
+.button, .header-cta, .desktop-nav a, .mobile-menu-panel nav a, .mobile-menu-social p, .mobile-menu-footer, .section-eyebrow, .section-link, .destination-country, .card-kicker, .duration-badge, .offer-badge, .date-tile, .program-card-footer, .event-card-body a, .text-link, .faq-item summary, .footer-tagline, .footer-link-column h2, .footer-link-column a, .footer-contact-column h2, .footer-contact-column a, .footer-contact-column p, .footer-bottom .word-of-mouth-credit, .floating-whatsapp, .image-fallback { font-family: var(--font-ui); }
 
 @keyframes hero-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
 @keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
