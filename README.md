@@ -13,10 +13,11 @@ This repository contains the application foundation, Payload CMS schema, officia
 - Payload CMS 3.88.0
 - PostgreSQL through `@payloadcms/db-postgres` 3.88.0
 - Lexical rich text through `@payloadcms/richtext-lexical` 3.88.0
+- GSAP 3.15.0 for coordinated homepage text reveals
 - Sharp 0.35.4 for media processing
 - pnpm 11.1.1
 
-The exact versions are pinned in `package.json` and `pnpm-lock.yaml`. GSAP, Motion, shadcn/ui, Supabase, Firebase, Prisma, and third-party CMS services are not installed.
+The exact versions are pinned in `package.json` and `pnpm-lock.yaml`. Motion, shadcn/ui, Supabase, Firebase, Prisma, and third-party CMS services are not installed.
 
 ## Local setup
 
@@ -48,7 +49,7 @@ pnpm generate:importmap
 ## Project map
 
 - `src/app/(frontend)` — public application route group and homepage route.
-- `src/components` — server-first homepage sections plus the small interactive mobile navigation island.
+- `src/components` — server-first homepage sections plus isolated mobile navigation and GSAP text-reveal islands.
 - `src/content/homepage-demo.ts` — isolated development-only fallback/demo view model used when a local CMS database is not configured.
 - `src/app/(payload)` — Payload admin/API integration.
 - `src/collections` — admin users, media, markets, and editorial collections.

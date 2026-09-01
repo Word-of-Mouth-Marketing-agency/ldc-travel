@@ -31,6 +31,10 @@
 18. Standardize interface icons, recognizable social marks, and small CSS interactions with reduced-motion support.
 19. Re-run Payload type generation and the full frontend validation suite; commit the refinement separately.
 
+## Homepage motion polish
+
+20. Add GSAP 3.15.0 selectively for coordinated hero and section-heading text entrance reveals, preserving server-first rendering and reduced-motion behavior.
+
 ## Parallelizable work
 
 - Asset inventory/documentation can proceed independently from CMS field implementation.

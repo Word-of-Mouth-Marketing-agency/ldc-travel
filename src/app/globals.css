@@ -70,7 +70,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .mobile-menu-footer { display: grid; gap: 0.25rem; margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.78rem; }
 .mobile-menu-footer strong { color: var(--brand-primary); font-size: 0.88rem; }
 .whatsapp-icon { display: block; flex: 0 0 auto; }
-.floating-whatsapp { position: fixed; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 40; display: grid; place-items: center; width: 3.5rem; height: 3.5rem; border: 2px solid white; border-radius: 50%; background: #25d366; color: white; box-shadow: 0 14px 30px rgb(13 45 82 / 0.22); transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease; }
+.floating-whatsapp { position: fixed; right: calc(1rem + env(safe-area-inset-right)); bottom: calc(1rem + env(safe-area-inset-bottom)); z-index: 40; display: grid; place-items: center; width: 3.5rem; height: 3.5rem; border: 2px solid white; border-radius: 50%; background: #25d366; color: white; box-shadow: 0 14px 30px rgb(13 45 82 / 0.22); transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease; }
 .floating-whatsapp:hover { transform: translateY(-3px) scale(1.04); background: #20bd5a; box-shadow: 0 18px 34px rgb(13 45 82 / 0.28); }
 .floating-whatsapp:active { transform: translateY(-1px) scale(0.98); }
 
@@ -79,14 +79,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero-photo img { object-fit: cover; object-position: 64% center; }
 .hero-wash { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(255 255 255 / 0.98) 0%, rgb(255 255 255 / 0.89) 31%, rgb(255 255 255 / 0.12) 70%, rgb(0 65 133 / 0.08) 100%); }
 .hero-inner { position: relative; z-index: 2; display: flex; align-items: center; min-height: clamp(34rem, 64vw, 44rem); padding-block: 5.5rem 4.5rem; }
-.hero-copy { max-width: 42rem; padding-top: 1rem; font-family: var(--font-ui); animation: hero-in 650ms cubic-bezier(.2,.8,.2,1) both; }
+.hero-copy { max-width: 42rem; padding-top: 1rem; font-family: var(--font-ui); }
 .hero-eyebrow { display: flex; align-items: center; gap: 0.45rem; margin: 0 0 1rem; color: var(--brand-primary); font-size: clamp(1rem, 1.8vw, 1.25rem); font-style: italic; }
 .hero-eyebrow .ui-icon { color: var(--brand-teal); }
 .hero-copy h1 { max-width: 11ch; margin: 0; color: var(--brand-primary); font-size: clamp(3.1rem, 7vw, 6.5rem); font-weight: 850; letter-spacing: -0.075em; line-height: 0.94; }
 .hero-copy h1 span { color: var(--brand-orange); }
-.hero-supporting-copy { max-width: 31rem; margin: 1.45rem 0 0; color: var(--ink); font-size: clamp(1rem, 1.6vw, 1.18rem); line-height: 1.65; animation: hero-in 650ms 90ms cubic-bezier(.2,.8,.2,1) both; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; animation: hero-in 650ms 170ms cubic-bezier(.2,.8,.2,1) both; }
-.button { display: inline-flex; align-items: center; justify-content: center; gap: 0.65rem; min-height: 3rem; padding: 0.8rem 1.2rem; border: 1px solid transparent; border-radius: var(--radius-pill); font-size: 0.88rem; font-weight: 800; transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease; }
+.hero-supporting-copy { max-width: 31rem; margin: 1.45rem 0 0; color: var(--ink); font-size: clamp(1rem, 1.6vw, 1.18rem); line-height: 1.65; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 0.65rem; min-height: 3rem; padding: 0.8rem 1.2rem; border: 1px solid transparent; border-radius: var(--radius-pill); font-size: 0.88rem; font-weight: 800; line-height: 1.2; transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease; }
 .button:hover { transform: translateY(-2px); }
 .button-primary { background: var(--brand-primary); color: white; box-shadow: 0 10px 24px rgb(0 65 133 / 0.22); }
 .button-primary:hover { background: #00336a; }
@@ -97,11 +97,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .content-section { padding-top: clamp(4rem, 7vw, 7rem); }
 .destinations-section { padding-top: clamp(3rem, 5vw, 4.75rem); }
 .programs-section { padding-top: clamp(3.5rem, 6vw, 5.5rem); }
-.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.35rem; }
+.section-heading { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 1.35rem; }
+.section-heading > div { min-width: 0; }
 .section-heading h2, .faq-intro h2 { margin: 0; color: var(--brand-primary); font-size: clamp(1.7rem, 3vw, 2.6rem); letter-spacing: -0.045em; line-height: 1.05; }
 .section-eyebrow { margin: 0 0 0.5rem; color: var(--brand-coral); font-size: 0.72rem; font-weight: 850; letter-spacing: 0.1em; text-transform: uppercase; }
 .section-heading-copy { max-width: 34rem; margin: 0.6rem 0 0; color: var(--muted); line-height: 1.6; }
-.section-link { display: inline-flex; align-items: center; flex: 0 0 auto; gap: 0.45rem; color: var(--brand-primary); font-size: 0.78rem; font-weight: 800; }
+.section-link { display: inline-flex; align-items: center; flex: 0 0 auto; gap: 0.45rem; color: var(--brand-primary); font-size: 0.78rem; font-weight: 800; white-space: nowrap; }
 .section-link:hover, .text-link:hover { color: var(--brand-coral); }
 .section-link .ui-icon, .text-link .ui-icon { flex: 0 0 auto; transition: transform 180ms ease; }
 .section-link:hover .ui-icon, .text-link:hover .ui-icon { transform: translateX(0.2rem); }
@@ -122,15 +123,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .destination-card p { max-width: 18rem; margin: 0.35rem 0 0; color: rgb(255 255 255 / 0.82); font-size: 0.8rem; line-height: 1.45; }
 
 .program-card, .event-card, .testimonial-card, .guide-card { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-card); background: white; box-shadow: 0 8px 28px rgb(13 45 82 / 0.045); transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease; }
+.program-card, .event-card, .guide-card { display: flex; flex-direction: column; }
 .program-card:hover, .event-card:hover, .testimonial-card:hover, .guide-card:hover { transform: translateY(-4px); border-color: rgb(17 177 191 / 0.36); box-shadow: 0 18px 38px rgb(13 45 82 / 0.11); }
 .program-image, .event-image, .guide-image { position: relative; overflow: hidden; }
 .program-image { min-height: 13rem; }
 .duration-badge { position: absolute; top: 0.8rem; left: 0.8rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.38rem 0.62rem; border-radius: 0.4rem; background: white; color: var(--brand-primary); font-size: 0.72rem; font-weight: 850; box-shadow: 0 5px 12px rgb(13 45 82 / 0.12); }
 .program-card-body { padding: 1rem; }
+.program-card-body, .event-card-body, .guide-card-body { display: flex; flex: 1; flex-direction: column; }
 .card-kicker { margin: 0; color: var(--brand-teal); font-size: 0.7rem; font-weight: 850; letter-spacing: 0.07em; text-transform: uppercase; }
 .program-card h3, .event-card h3, .guide-card h3 { margin: 0.35rem 0 0; color: var(--brand-primary); font-size: 1.08rem; line-height: 1.2; }
 .program-summary { min-height: 2.7rem; margin: 0.5rem 0 0; color: var(--muted); font-size: 0.8rem; line-height: 1.5; }
 .program-card-footer { display: flex; align-items: end; justify-content: space-between; gap: 0.75rem; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--line); }
+.program-card-footer, .event-card-body a, .guide-card-body .text-link { margin-top: auto; }
 .program-card-footer p { margin: 0; }
 .program-card-footer p span, .program-card-footer small { color: var(--muted); font-size: 0.7rem; }
 .program-card-footer strong { display: block; color: var(--brand-primary); font-size: 1.1rem; }
@@ -210,7 +214,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .button, .header-cta, .desktop-nav a, .mobile-menu-panel nav a, .mobile-menu-social p, .mobile-menu-footer, .section-eyebrow, .section-link, .destination-country, .card-kicker, .duration-badge, .offer-badge, .date-tile, .program-card-footer, .event-card-body a, .text-link, .faq-item summary, .footer-tagline, .footer-link-column h2, .footer-link-column a, .footer-contact-column h2, .footer-contact-column a, .footer-contact-column p, .footer-bottom .word-of-mouth-credit, .floating-whatsapp, .image-fallback { font-family: var(--font-ui); }
 
-@keyframes hero-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
 @keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes drawer-in { from { opacity: 0; transform: translateX(1.5rem); } to { opacity: 1; transform: translateX(0); } }
 @keyframes faq-in { from { opacity: 0; transform: translateY(-0.3rem); } to { opacity: 1; transform: translateY(0); } }
@@ -223,11 +226,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 @media (min-width: 768px) {
+  .section-heading { flex-direction: row; align-items: end; gap: 1rem; }
   .hero-photo img { object-position: 62% center; }
   .hero-wash { background: linear-gradient(90deg, rgb(255 255 255 / 0.98) 0%, rgb(255 255 255 / 0.88) 34%, rgb(255 255 255 / 0.08) 76%, rgb(0 65 133 / 0.08) 100%); }
-  .destination-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .destination-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .destination-card { min-height: 22rem; }
-  .program-grid, .event-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .program-grid, .event-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .guide-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .program-image { min-height: 12.5rem; }
   .event-image { min-height: 10.5rem; }
@@ -243,12 +247,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .hero-inner { min-height: clamp(38rem, 54vw, 46rem); padding-block: 4.5rem 5rem; }
   .hero-section { min-height: clamp(38rem, 54vw, 46rem); }
   .hero-copy h1 { font-size: clamp(4.5rem, 6.1vw, 6.75rem); }
+  .destination-grid, .program-grid, .event-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .faq-layout { grid-template-columns: minmax(14rem, 0.72fr) minmax(0, 1.35fr); gap: clamp(3rem, 8vw, 8rem); }
 }
 
 @media (min-width: 1280px) {
   .site-container { width: min(100% - 5rem, var(--content-width)); }
   .hero-copy { padding-left: 1rem; }
+  .destination-grid, .program-grid, .event-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

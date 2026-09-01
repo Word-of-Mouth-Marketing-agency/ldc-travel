@@ -14,6 +14,7 @@ import { Icon } from "./Icon";
 import { SectionHeading } from "./SectionHeading";
 import { PlaceholderLink } from "../site/PlaceholderLink";
 import { SafeImage } from "../site/SafeImage";
+import { RevealHeading } from "../motion/RevealHeading";
 
 function CoverImage({ image, className = "" }: { image: ImageSource; className?: string }) {
   return <SafeImage className={`cover-image ${className}`} src={image.src} alt={image.alt} sizes="(max-width: 767px) 92vw, (max-width: 1279px) 30vw, 240px" />;
@@ -77,13 +78,13 @@ export function OfferSection({ offer }: { offer?: OfferViewModel }) {
       <div className="offer-banner">
         {offer.image ? <Image className="offer-image" src={offer.image.src} alt={offer.image.alt} fill sizes="(max-width: 767px) 100vw, 60vw" /> : null}
         <div className="offer-overlay" />
-        <div className="offer-copy">
-          {offer.discountLabel ? <span className="offer-badge">{offer.discountLabel}</span> : null}
-          <p className="section-eyebrow">{offer.badge ?? offer.title}</p>
-          <h2 id="offer-heading">{offer.headline}</h2>
-          <p>{offer.description}</p>
-          <a className="button button-light" href={offer.cta.external ? offer.cta.href : "#"} target={offer.cta.external ? "_blank" : undefined} rel={offer.cta.external ? "noopener noreferrer" : undefined}>{offer.cta.label}<Icon name="arrow" /></a>
-        </div>
+        <RevealHeading className="offer-copy">
+          {offer.discountLabel ? <span className="offer-badge" data-reveal-heading>{offer.discountLabel}</span> : null}
+          <p className="section-eyebrow" data-reveal-heading>{offer.badge ?? offer.title}</p>
+          <h2 id="offer-heading" data-reveal-heading>{offer.headline}</h2>
+          <p data-reveal-heading>{offer.description}</p>
+          <a className="button button-light" data-reveal-heading href={offer.cta.external ? offer.cta.href : "#"} target={offer.cta.external ? "_blank" : undefined} rel={offer.cta.external ? "noopener noreferrer" : undefined}>{offer.cta.label}<Icon name="arrow" /></a>
+        </RevealHeading>
       </div>
     </section>
   );
@@ -148,7 +149,7 @@ export function FaqSection({ items }: { items: FaqViewModel[] }) {
   return (
     <section className="content-section faq-section" aria-labelledby="faq-heading">
       <div className="site-container faq-layout">
-        <div className="faq-intro"><p className="section-eyebrow">Need to know</p><h2 id="faq-heading">Questions, answered simply.</h2><p>Still planning? Start a conversation with the LDC Travel team on WhatsApp.</p></div>
+        <RevealHeading className="faq-intro"><p className="section-eyebrow" data-reveal-heading>Need to know</p><h2 id="faq-heading" data-reveal-heading>Questions, answered simply.</h2><p data-reveal-heading>Still planning? Start a conversation with the LDC Travel team on WhatsApp.</p></RevealHeading>
         <div className="faq-list">
           {items.map((item, index) => <details className="faq-item" key={item.question} open={index === 0}><summary>{item.question}<Icon name="chevron" /></summary><p>{item.answer}</p></details>)}
         </div>

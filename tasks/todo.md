@@ -48,6 +48,7 @@
 - [x] Remove the Trust/Benefits module and its now-dead Homepage global field.
 - [x] Replace improvised UI glyphs and rating stars with the shared Lucide icon system and recognizable social marks.
 - [x] Add restrained CSS hover/entrance interactions and preserve prefers-reduced-motion behavior.
+- [x] Add selective GSAP hero and section-heading text reveals with cleanup and reduced-motion fallback.
 
 ## Verification
 
