@@ -332,11 +332,23 @@ export interface TravelProgram {
   imageUrl?: string | null;
   gallery?: (number | Media)[] | null;
   durationDays: number;
+  /**
+   * Optional display label when the program uses nights or a days/nights format.
+   */
+  durationLabel?: string | null;
   startingPrice: {
     amount: number;
     currency: string;
     unit?: ('person' | 'group' | 'night') | null;
+    /**
+     * Optional qualifier such as For 2 people.
+     */
+    note?: string | null;
   };
+  /**
+   * Optional secondary pricing note for the homepage card.
+   */
+  priceNote?: string | null;
   itinerary?:
     | {
         day: number;
@@ -893,13 +905,16 @@ export interface TravelProgramsSelect<T extends boolean = true> {
   imageUrl?: T;
   gallery?: T;
   durationDays?: T;
+  durationLabel?: T;
   startingPrice?:
     | T
     | {
         amount?: T;
         currency?: T;
         unit?: T;
+        note?: T;
       };
+  priceNote?: T;
   itinerary?:
     | T
     | {

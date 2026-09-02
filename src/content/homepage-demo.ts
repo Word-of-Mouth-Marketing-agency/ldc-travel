@@ -44,9 +44,12 @@ export type ProgramViewModel = {
   destination: string;
   summary: string;
   durationDays: number;
+  durationLabel: string;
   amount: number;
   currency: string;
   unit: string;
+  priceQualifier?: string;
+  priceNote?: string;
   image: ImageSource;
   href: string;
 };
@@ -166,11 +169,11 @@ export const demoHomepage: HomepageViewModel = {
     { title: "Bangkok", country: "Thailand", summary: "Temple mornings, street food, and river nights.", image: image("photo-1508009603885-50cf7c579365", "Golden temple roof in Bangkok"), href: "/destinations" },
   ],
   programs: [
-    { title: "Nile and Pyramids Escape", destination: "Cairo and Luxor", summary: "Ancient wonders paired with relaxed river days.", durationDays: 7, amount: 28500, currency: "EGP", unit: "person", image: image("photo-1503177119275-0aa32b3a9368", "The Great Pyramids of Giza under a clear sky"), href: "/programs" },
-    { title: "Greek Islands Ease", destination: "Santorini and Athens", summary: "A bright island escape with time to wander.", durationDays: 8, amount: 42000, currency: "EGP", unit: "person", image: image("photo-1570077188670-e3a8d69ac5ff", "Blue domes and white homes in Santorini"), href: "/programs" },
-    { title: "Dubai City Break", destination: "Dubai", summary: "Shopping, skyline views, and desert evenings.", durationDays: 6, amount: 33500, currency: "EGP", unit: "person", image: image("photo-1512453979798-5ea266f8880c", "Dubai skyline at blue hour"), href: "/programs" },
-    { title: "Switzerland Panorama", destination: "Zurich and the Alps", summary: "Scenic rail journeys, lakeside stays, and mountain air.", durationDays: 10, amount: 69500, currency: "EGP", unit: "person", image: image("photo-1530789253388-582c481c54b0", "Mountain lake and alpine landscape in Switzerland"), href: "/programs" },
-    { title: "Bali Slow Days", destination: "Ubud and the coast", summary: "Green rice terraces, warm water, and room to breathe.", durationDays: 9, amount: 51500, currency: "EGP", unit: "person", image: image("photo-1537996194471-e657df975ab4", "Tropical temple and greenery in Bali"), href: "/programs" },
+    { title: "Phuket", destination: "Phuket, Thailand", summary: "Andakira Hotel Phuket Patong · Breakfast · 4 private sightseeing tours", durationDays: 6, durationLabel: "6 nights", amount: 35800, currency: "EGP", unit: "group", priceQualifier: "For 2 people", priceNote: "EGP 17,900 per person", image: image("photo-1507525428034-b723cf961d3e", "Clear tropical water for a Phuket, Thailand travel program"), href: "/programs" },
+    { title: "Istanbul Package", destination: "Istanbul, Turkey", summary: "Hotel + breakfast · Airport service · 4 sightseeing tours", durationDays: 8, durationLabel: "8 days / 7 nights", amount: 50900, currency: "EGP", unit: "group", priceQualifier: "For 2 people", image: image("photo-1524231757912-21f4fe3a7200", "Istanbul mosque domes and the Bosphorus"), href: "/programs" },
+    { title: "Georgia", destination: "Georgia", summary: "Tbilisi · Batumi · Bakuriani", durationDays: 7, durationLabel: "7 days", amount: 53000, currency: "EGP", unit: "group", priceQualifier: "For 2 people", image: image("photo-1569396116180-210c182bedb8", "Mountain landscape for a Georgia travel program"), href: "/programs" },
+    { title: "Trabzon", destination: "Trabzon, Turkey", summary: "Hotel + breakfast · Airport service · 4 sightseeing tours", durationDays: 8, durationLabel: "8 days / 7 nights", amount: 57700, currency: "EGP", unit: "group", priceQualifier: "For 2 people", priceNote: "One person in a double room from EGP 28,800", image: image("photo-1530789253388-582c481c54b0", "Lush mountain landscape for a Trabzon, Turkey travel program"), href: "/programs" },
+    { title: "Indonesia", destination: "Indonesia", summary: "Jakarta · Bali private pool villa · Prime-location hotel", durationDays: 6, durationLabel: "6 days", amount: 63000, currency: "EGP", unit: "group", priceQualifier: "For 2 people", image: image("photo-1537996194471-e657df975ab4", "Balinese temple and tropical greenery for an Indonesia travel program"), href: "/programs" },
   ],
   offer: {
     title: "Summer Escape",

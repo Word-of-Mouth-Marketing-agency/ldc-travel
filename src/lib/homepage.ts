@@ -171,14 +171,19 @@ function mapProgram(value: unknown, index: number, whatsappConfig: WhatsAppConfi
   const price = asRecord(record?.startingPrice);
   const title = asString(record?.title, fallback.title);
   const slug = asString(record?.slug);
+  const durationDays = asNumber(record?.durationDays, fallback.durationDays);
+  const unit = asString(price?.unit, fallback.unit);
   return {
     title,
     destination: asString(destination?.title, fallback.destination),
     summary: asString(record?.summary, fallback.summary),
-    durationDays: asNumber(record?.durationDays, fallback.durationDays),
+    durationDays,
+    durationLabel: asString(record?.durationLabel, fallback.durationLabel || `${durationDays} days`),
     amount: asNumber(price?.amount, fallback.amount),
     currency: asString(price?.currency, fallback.currency),
-    unit: asString(price?.unit, fallback.unit),
+    unit,
+    priceQualifier: asString(price?.note, fallback.priceQualifier || (unit === "person" ? "Per person" : unit)) || undefined,
+    priceNote: asString(record?.priceNote, fallback.priceNote) || undefined,
     image: readImage(record, fallback.image),
     href: slug ? createWhatsAppUrl(whatsappConfig, { title }) : fallback.href,
   };

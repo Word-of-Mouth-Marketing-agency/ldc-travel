@@ -14,6 +14,7 @@ import { Icon } from "./Icon";
 import { SectionHeading } from "./SectionHeading";
 import { PlaceholderLink } from "../site/PlaceholderLink";
 import { SafeImage } from "../site/SafeImage";
+import { WhatsAppIcon } from "../site/WhatsAppIcon";
 import { RevealHeading } from "../motion/RevealHeading";
 
 function CoverImage({ image, className = "" }: { image: ImageSource; className?: string }) {
@@ -44,6 +45,7 @@ export function DestinationsSection({ items }: { items: DestinationViewModel[] }
 }
 
 const formatPrice = (amount: number, currency: string) => `${currency} ${new Intl.NumberFormat("en-EG").format(amount)}`;
+const formatUnit = (unit: string) => unit === "person" ? "Per person" : unit === "group" ? "For the group" : `Per ${unit}`;
 
 export function ProgramsSection({ items, whatsappConfig }: { items: ProgramViewModel[]; whatsappConfig: WhatsAppConfig }) {
   return (
@@ -53,14 +55,14 @@ export function ProgramsSection({ items, whatsappConfig }: { items: ProgramViewM
         <div className="program-grid">
           {items.slice(0, 5).map((program) => (
             <article className="program-card" key={program.title}>
-              <div className="program-image"><CoverImage image={program.image} /><span className="duration-badge"><Icon name="clock" size={15} />{program.durationDays} days</span></div>
+              <div className="program-image"><CoverImage image={program.image} /><span className="duration-badge"><Icon name="clock" size={15} />{program.durationLabel}</span></div>
               <div className="program-card-body">
                 <p className="card-kicker">{program.destination}</p>
                 <h3>{program.title}</h3>
                 <p className="program-summary">{program.summary}</p>
                 <div className="program-card-footer">
-                  <p><span>From</span><strong>{formatPrice(program.amount, program.currency)}</strong><small>/ {program.unit}</small></p>
-                  <a href={createWhatsAppUrl(whatsappConfig, { title: program.title })} target="_blank" rel="noreferrer" aria-label={`Ask about ${program.title}`}><Icon name="arrow" /></a>
+                  <p><span>Starting from</span><strong>{formatPrice(program.amount, program.currency)}</strong><small>{program.priceQualifier ?? formatUnit(program.unit)}</small>{program.priceNote ? <small className="program-price-note">{program.priceNote}</small> : null}</p>
+                  <a className="program-card-inquiry" href={createWhatsAppUrl(whatsappConfig, { title: program.title })} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={16} /><span>Inquire on WhatsApp</span></a>
                 </div>
               </div>
             </article>

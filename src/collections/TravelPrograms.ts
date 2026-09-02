@@ -26,13 +26,27 @@ export const TravelPrograms: CollectionConfig = {
       admin: { position: "sidebar" },
     },
     {
+      name: "durationLabel",
+      type: "text",
+      admin: {
+        description: "Optional display label when the program uses nights or a days/nights format.",
+        position: "sidebar",
+      },
+    },
+    {
       name: "startingPrice",
       type: "group",
       fields: [
         { name: "amount", type: "number", min: 0, required: true },
         { name: "currency", type: "text", required: true, defaultValue: "EGP" },
         { name: "unit", type: "select", defaultValue: "person", options: ["person", "group", "night"] },
+        { name: "note", type: "text", admin: { description: "Optional qualifier such as For 2 people." } },
       ],
+    },
+    {
+      name: "priceNote",
+      type: "text",
+      admin: { description: "Optional secondary pricing note for the homepage card." },
     },
     {
       name: "itinerary",

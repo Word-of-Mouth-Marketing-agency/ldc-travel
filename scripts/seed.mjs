@@ -65,6 +65,11 @@ const destinationSeeds = [
   ["santorini", { title: "Santorini", country: "Greece", regionOrCity: "Cyclades", summary: "Blue domes, bright water, and unhurried island days.", imageUrl: image("photo-1570077188670-e3a8d69ac5ff"), featured: false }],
   ["zurich", { title: "Zurich", country: "Switzerland", regionOrCity: "Zurich", summary: "Lakeside calm with easy routes into the Alps.", imageUrl: image("photo-1530789253388-582c481c54b0"), featured: false }],
   ["bali", { title: "Bali", country: "Indonesia", regionOrCity: "Ubud", summary: "Green terraces, warm water, and room to breathe.", imageUrl: image("photo-1537996194471-e657df975ab4"), featured: false }],
+  ["phuket", { title: "Phuket", country: "Thailand", regionOrCity: "Phuket", summary: "Bright beaches, private sightseeing, and easy island days.", imageUrl: image("photo-1507525428034-b723cf961d3e"), featured: false }],
+  ["istanbul", { title: "Istanbul", country: "Turkey", regionOrCity: "Istanbul", summary: "Historic streets, Bosphorus views, and a well-paced city stay.", imageUrl: image("photo-1524231757912-21f4fe3a7200"), featured: false }],
+  ["georgia", { title: "Georgia", country: "Georgia", regionOrCity: "Tbilisi, Batumi, and Bakuriani", summary: "A three-stop journey across Tbilisi, Batumi, and Bakuriani.", imageUrl: image("photo-1569396116180-210c182bedb8"), featured: false }],
+  ["trabzon", { title: "Trabzon", country: "Turkey", regionOrCity: "Trabzon", summary: "Black Sea scenery, guided sightseeing, and a comfortable stay.", imageUrl: image("photo-1530789253388-582c481c54b0"), featured: false }],
+  ["indonesia", { title: "Indonesia", country: "Indonesia", regionOrCity: "Jakarta and Bali", summary: "A Jakarta and Bali escape with two distinct stays.", imageUrl: image("photo-1537996194471-e657df975ab4"), featured: false }],
 ];
 
 const destinations = {};
@@ -73,17 +78,19 @@ for (const [slug, data] of destinationSeeds) {
 }
 
 const programSeeds = [
-  ["nile-and-pyramids-escape", { title: "Nile and Pyramids Escape", summary: "Ancient wonders paired with relaxed river days.", destinations: [destinations.cairo.id], durationDays: 7, startingPrice: { amount: 28500, currency: "EGP", unit: "person" }, imageUrl: image("photo-1503177119275-0aa32b3a9368"), featured: true }],
-  ["greek-islands-ease", { title: "Greek Islands Ease", summary: "A bright island escape with time to wander.", destinations: [destinations.santorini.id], durationDays: 8, startingPrice: { amount: 42000, currency: "EGP", unit: "person" }, imageUrl: image("photo-1570077188670-e3a8d69ac5ff"), featured: true }],
-  ["dubai-city-break", { title: "Dubai City Break", summary: "Shopping, skyline views, and desert evenings.", destinations: [destinations.dubai.id], durationDays: 6, startingPrice: { amount: 33500, currency: "EGP", unit: "person" }, imageUrl: image("photo-1512453979798-5ea266f8880c"), featured: true }],
-  ["switzerland-panorama", { title: "Switzerland Panorama", summary: "Scenic rail journeys, lakeside stays, and mountain air.", destinations: [destinations.zurich.id], durationDays: 10, startingPrice: { amount: 69500, currency: "EGP", unit: "person" }, imageUrl: image("photo-1530789253388-582c481c54b0"), featured: true }],
-  ["bali-slow-days", { title: "Bali Slow Days", summary: "Green rice terraces, warm water, and room to breathe.", destinations: [destinations.bali.id], durationDays: 9, startingPrice: { amount: 51500, currency: "EGP", unit: "person" }, imageUrl: image("photo-1537996194471-e657df975ab4"), featured: true }],
+  ["phuket-thailand", { title: "Phuket", summary: "Andakira Hotel Phuket Patong · Breakfast · 4 private sightseeing tours", destinations: [destinations.phuket.id], durationDays: 6, durationLabel: "6 nights", startingPrice: { amount: 35800, currency: "EGP", unit: "group", note: "For 2 people" }, priceNote: "EGP 17,900 per person", accommodation: "Andakira Hotel Phuket Patong", included: [{ item: "Accommodation with Breakfast" }, { item: "4 Private Sightseeing Tours" }, { item: "Airport Pick-up & Drop-off" }], imageUrl: image("photo-1507525428034-b723cf961d3e"), featured: true }],
+  ["istanbul-package", { title: "Istanbul Package", summary: "Hotel + breakfast · Airport service · 4 sightseeing tours", destinations: [destinations.istanbul.id], durationDays: 8, durationLabel: "8 days / 7 nights", startingPrice: { amount: 50900, currency: "EGP", unit: "group", note: "For 2 people" }, included: [{ item: "Hotel accommodation with breakfast" }, { item: "Welcome & farewell airport service" }, { item: "4 sightseeing tours" }], imageUrl: image("photo-1524231757912-21f4fe3a7200"), featured: true }],
+  ["georgia", { title: "Georgia", summary: "Tbilisi · Batumi · Bakuriani", destinations: [destinations.georgia.id], durationDays: 7, durationLabel: "7 days", startingPrice: { amount: 53000, currency: "EGP", unit: "group", note: "For 2 people" }, itinerary: [{ day: 1, title: "Tbilisi", description: "3 days in Tbilisi." }, { day: 4, title: "Batumi", description: "3 days in Batumi." }, { day: 7, title: "Bakuriani", description: "1 day in Bakuriani." }], included: [{ item: "Private car with driver daily for transfers & tours" }, { item: "Free travel insurance" }, { item: "Free SIM card" }, { item: "Accommodation with breakfast" }], imageUrl: image("photo-1569396116180-210c182bedb8"), featured: true }],
+  ["trabzon", { title: "Trabzon", summary: "Hotel + breakfast · Airport service · 4 sightseeing tours", destinations: [destinations.trabzon.id], durationDays: 8, durationLabel: "8 days / 7 nights", startingPrice: { amount: 57700, currency: "EGP", unit: "group", note: "For 2 people" }, priceNote: "One person in a double room from EGP 28,800", included: [{ item: "Hotel with Breakfast" }, { item: "Welcome and Farewell Service" }, { item: "4 Sightseeing Tours" }], imageUrl: image("photo-1530789253388-582c481c54b0"), featured: true }],
+  ["indonesia", { title: "Indonesia", summary: "Jakarta · Bali private pool villa · Prime-location hotel", destinations: [destinations.indonesia.id], durationDays: 6, durationLabel: "6 days", startingPrice: { amount: 63000, currency: "EGP", unit: "group", note: "For 2 people" }, itinerary: [{ day: 1, title: "Jakarta", description: "3 days in Jakarta." }, { day: 4, title: "Bali private pool villa", description: "1 day in Bali at a private pool villa." }, { day: 5, title: "Bali prime location hotel", description: "2 days in Bali at a hotel in a prime location." }], included: [{ item: "Private car with driver daily for transfers & tours" }, { item: "Free travel insurance" }, { item: "Free SIM card" }, { item: "Accommodation with breakfast" }], imageUrl: image("photo-1537996194471-e657df975ab4"), featured: true }],
 ];
 
 const programs = {};
 for (const [slug, data] of programSeeds) {
   programs[slug] = await ensure("travel-programs", "slug", slug, { ...data, slug, status: "published", markets: [marketId] });
 }
+
+const legacyProgramSlugs = new Set(["nile-and-pyramids-escape", "greek-islands-ease", "dubai-city-break", "switzerland-panorama", "bali-slow-days"]);
 
 const offer = await ensure("offers", "slug", "summer-escape", {
   title: "Summer Escape",
@@ -94,7 +101,6 @@ const offer = await ensure("offers", "slug", "summer-escape", {
   discountLabel: "Up to 20% off",
   imageUrl: image("photo-1507525428034-b723cf961d3e"),
   ctaLabel: "Explore the offer",
-  program: programs["greek-islands-ease"].id,
   status: "published",
   markets: [marketId],
 });
@@ -168,6 +174,12 @@ if (!siteSettings.siteName) {
 }
 
 const homepage = await payload.findGlobal({ slug: "homepage", depth: 0 });
+const currentProgramIds = Array.isArray(homepage.popularPrograms)
+  ? homepage.popularPrograms.map((item) => typeof item === "object" && item !== null ? item.id : item).filter(Boolean).map(String)
+  : [];
+const legacyPrograms = await payload.find({ collection: "travel-programs", where: { slug: { in: Array.from(legacyProgramSlugs) } }, limit: 50, depth: 0 });
+const legacyProgramIds = new Set(legacyPrograms.docs.map((item) => String(item.id)));
+const canReplaceLegacyHomepagePrograms = currentProgramIds.length === 0 || currentProgramIds.every((id) => legacyProgramIds.has(id));
 if (!homepage.hero) {
   await payload.updateGlobal({ slug: "homepage", data: {
     hero: {
@@ -187,6 +199,9 @@ if (!homepage.hero) {
     faqs: faqs.map((item) => item.id),
   } });
   console.log("create global:homepage");
+} else if (canReplaceLegacyHomepagePrograms) {
+  await payload.updateGlobal({ slug: "homepage", data: { popularPrograms: Object.values(programs).map((item) => item.id) } });
+  console.log("update global:homepage popularPrograms");
 } else {
   console.log("skip global:homepage");
 }

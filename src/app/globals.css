@@ -218,13 +218,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .card-kicker { margin: 0; color: var(--brand-teal); font-size: 0.7rem; font-weight: 850; letter-spacing: 0.07em; text-transform: uppercase; }
 .program-card h3, .event-card h3, .guide-card h3 { margin: 0.35rem 0 0; color: var(--brand-primary); font-size: 1.08rem; line-height: 1.2; }
 .program-summary { min-height: 2.7rem; margin: 0.5rem 0 0; color: var(--muted); font-size: 0.8rem; line-height: 1.5; }
-.program-card-footer { display: flex; align-items: end; justify-content: space-between; gap: 0.75rem; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--line); }
+.program-card-footer { display: flex; flex-direction: column; align-items: stretch; gap: 0.8rem; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--line); }
 .program-card-footer, .event-card-body a, .guide-card-body .text-link { margin-top: auto; }
 .program-card-footer p { margin: 0; }
-.program-card-footer p span, .program-card-footer small { color: var(--muted); font-size: 0.7rem; }
+.program-card-footer p span, .program-card-footer small { display: block; color: var(--muted); font-size: 0.7rem; line-height: 1.35; }
 .program-card-footer strong { display: block; color: var(--brand-primary); font-size: 1.1rem; }
-.program-card-footer a { display: inline-grid; place-items: center; width: 2.45rem; height: 2.45rem; border-radius: 50%; background: var(--brand-orange); color: white; font-size: 1.2rem; transition: transform 180ms ease; }
-.program-card-footer a:hover { transform: rotate(8deg) scale(1.06); }
+.program-price-note { margin-top: 0.15rem; }
+.program-card-inquiry { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; min-height: 2.45rem; padding: 0.55rem 0.65rem; border-radius: 0.7rem; background: var(--brand-orange); color: white; font-size: 0.7rem; font-weight: 800; line-height: 1.2; white-space: nowrap; transition: transform 180ms ease, background 180ms ease; }
+.program-card-inquiry:hover { background: var(--brand-coral); transform: translateY(-2px); }
 
 .offer-section { padding-top: clamp(3.5rem, 6vw, 5rem); }
 .offer-banner { position: relative; isolation: isolate; min-height: 19rem; overflow: hidden; border-radius: 1.25rem; background: linear-gradient(105deg, var(--brand-teal), var(--brand-primary)); color: white; box-shadow: var(--shadow-card); }
