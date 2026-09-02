@@ -33,6 +33,8 @@ Requirements:
 4. Open `http://localhost:3000/admin` and create the first admin user.
 5. Use `pnpm generate:types` and `pnpm generate:importmap` after CMS schema changes.
 
+For a production-style local run, use `pnpm build` followed by `PORT=<runtime port> pnpm start`; the start script binds Next to `127.0.0.1` for a future same-host reverse proxy. Do not use `pnpm dev` in production. Set `PAYLOAD_MEDIA_DIR` to a deployment-managed persistent upload directory when deploying; the local `media` default must not be treated as release storage.
+
 The Payload config uses development schema push by default and disables it in production. Migrations and deployment decisions are intentionally deferred until the VPS stack is specified.
 
 ## Commands

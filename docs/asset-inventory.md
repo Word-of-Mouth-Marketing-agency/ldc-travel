@@ -18,7 +18,7 @@
 - The light header direction in the screenshot maps to `main-logo.webp` or `blue-logo.webp`.
 - The dark footer and any future dark/photographic hero overlay map to `white-logo.webp`.
 - The monochrome cyan and orange variants are available for intentional contrast/accent contexts; they should not be recolored or used as a default without a contrast check.
-- No icon-only source variant was provided. A favicon/app-icon decision should be made in a later brand asset pass rather than cropping a raster lockup by guesswork.
+- No icon-only source variant was provided. For small icon contexts, `src/app/icon.png` and `src/app/apple-icon.png` are derived from the emblem area of the official `blue-logo.webp`; the original source and copied brand assets remain unchanged.
 
 ## Source integrity
 

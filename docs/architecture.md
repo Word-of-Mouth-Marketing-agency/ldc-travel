@@ -42,6 +42,14 @@ Destination, program, event, guide, offer, and homepage hero records support an 
 
 The repeatable `pnpm seed` script creates missing Egypt market content, relationships, global configuration, and clearly marked demo testimonials. It never updates an existing record, so it cannot replace real editorial content on repeated runs.
 
+## Production-readiness boundaries
+
+The production start script uses Next's native server with `--hostname 127.0.0.1`; the port remains runtime-supplied through `PORT` for a future same-host OpenLiteSpeed reverse proxy. `pnpm dev` is for local development only.
+
+Payload Media uses a configurable `PAYLOAD_MEDIA_DIR` and defaults to the local `media` directory for development. A production deployment must provide a persistent upload path outside the replaceable application release directory. The final filesystem path and any object-storage adapter remain deployment decisions.
+
+The project intentionally does not enable Next standalone output, a process manager, Docker production files, or reverse-proxy configuration yet. Those choices should be revisited together with the final Payload upload-storage strategy and deployment method. `NEXT_PUBLIC_SITE_URL`, `DATABASE_URL`, `PAYLOAD_SECRET`, `PORT`, and the optional media path are named in `.env.example`; no production values are tracked.
+
 ## Local CMS runtime status
 
 The local PostgreSQL Windows service is running and accepting connections, but no safe local database credential is currently available in the repository environment. Therefore Payload admin access, the seed against PostgreSQL, and a CMS-backed homepage response remain unverified. The seed exits before importing Payload when `DATABASE_URL` or `PAYLOAD_SECRET` is absent.

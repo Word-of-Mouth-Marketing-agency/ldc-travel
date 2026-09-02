@@ -3,6 +3,7 @@ if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
   process.exit(1);
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const { default: config } = await import("../payload.config.ts");
 const { getPayload } = await import("payload");
 
@@ -150,7 +151,7 @@ if (!siteSettings.siteName) {
     siteName: "LDC Travel",
     tagline: "Tourism Marketing",
     defaultMarket: marketId,
-    canonicalUrl: "http://localhost:3000",
+    canonicalUrl: siteUrl,
     contact: { whatsappDisplay: "+20 12 11118118", whatsappNumber: "201211118118", office: "15 Mahmoud Essmat Hamdy, Sheraton", reservationsEmail: "reservations@ldc-tourism.com", salesEmail: "sales@ldc-tourism.com" },
     whatsapp: { defaultMessage: "Hi LDC Travel, I would like to know more about your travel programs.", contextTemplate: "Hi LDC Travel, I'm interested in {{title}} and would like more information." },
     footerCopy: "Your trusted travel partner for thoughtful journeys, memorable experiences, and places worth returning to.",

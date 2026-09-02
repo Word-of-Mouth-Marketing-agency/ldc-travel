@@ -6,6 +6,7 @@ export const Media: CollectionConfig = {
     group: "Configuration",
   },
   upload: {
+    staticDir: process.env.PAYLOAD_MEDIA_DIR?.trim() || "media",
     mimeTypes: ["image/*", "image/svg+xml"],
     adminThumbnail: "thumbnail",
     imageSizes: [
