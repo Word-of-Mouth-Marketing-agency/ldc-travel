@@ -2,7 +2,7 @@
 
 Production foundation for LDC Travel’s Egypt-first tourism marketing website.
 
-This repository contains the application foundation, Payload CMS schema, official brand assets, and the Phase 1 homepage implementation for `/`.
+This repository contains the application foundation, Payload CMS schema, official brand assets, the Phase 1 homepage implementation for `/`, and the Contact page/inquiry flow at `/contact`.
 
 ## Stack
 
@@ -48,7 +48,7 @@ pnpm generate:importmap
 
 ## Project map
 
-- `src/app/(frontend)` — public application route group and homepage route.
+- `src/app/(frontend)` — public application route group, homepage route, and Contact page/server action.
 - `src/components` — server-first homepage sections plus isolated mobile navigation and GSAP text-reveal islands.
 - `src/content/homepage-demo.ts` — isolated development-only fallback/demo view model used when a local CMS database is not configured.
 - `src/app/(payload)` — Payload admin/API integration.
@@ -60,6 +60,8 @@ pnpm generate:importmap
 - `specs/001-foundation/spec.md` — product, architecture, CMS, and Phase 1 acceptance criteria.
 - `tasks/plan.md` and `tasks/todo.md` — dependency-ordered implementation plan.
 - `scripts/seed.mjs` — repeatable, non-destructive demo seed for a configured local Payload database.
+
+The Contact page uses Site Settings for verified LDC contact/social details. Its inquiry form validates on the server and writes to the admin-only Inquiries collection through a server action when local Payload credentials are available. Without `DATABASE_URL` and `PAYLOAD_SECRET`, development shows the form but submission fails clearly with a WhatsApp fallback; inquiries are never stored in temporary files or treated as successfully submitted.
 
 ## Product boundaries
 

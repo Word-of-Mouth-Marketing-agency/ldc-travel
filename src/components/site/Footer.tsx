@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
 import { Icon } from "../homepage/Icon";
@@ -8,9 +9,9 @@ import { WhatsAppIcon } from "./WhatsAppIcon";
 import type { SiteViewModel } from "../../content/homepage-demo";
 
 const groups = [
-  { title: "Explore", links: [{ label: "Destinations" }, { label: "Travel Programs" }, { label: "Offers" }] },
-  { title: "Discover", links: [{ label: "Festivals & Events" }, { label: "Travel Guides" }, { label: "About Us" }] },
-  { title: "Connect", links: [{ label: "Contact Us" }, { label: "Our Services" }] },
+  { title: "Explore", links: [{ label: "Destinations", href: "#" }, { label: "Travel Programs", href: "#" }, { label: "Offers", href: "#" }] },
+  { title: "Discover", links: [{ label: "Festivals & Events", href: "#" }, { label: "Travel Guides", href: "#" }, { label: "About Us", href: "#" }] },
+  { title: "Connect", links: [{ label: "Contact Us", href: "/contact" }, { label: "Our Services", href: "#" }] },
 ];
 
 export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
@@ -34,7 +35,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
         {groups.map((group) => (
           <div className="footer-link-column" key={group.title}>
             <h2>{group.title}</h2>
-            {group.links.map((link) => <PlaceholderLink key={link.label}>{link.label}</PlaceholderLink>)}
+            {group.links.map((link) => link.href === "#" ? <PlaceholderLink key={link.label}>{link.label}</PlaceholderLink> : <Link key={link.label} href={link.href}>{link.label}</Link>)}
           </div>
         ))}
         <div className="footer-contact-column">

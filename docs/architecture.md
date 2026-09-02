@@ -2,7 +2,7 @@
 
 ## Product shape
 
-LDC Travel is a modular-monolith Next.js application with Payload embedded for admin-only editorial management. The public experience reads CMS content server-side; there is no booking or commerce subsystem.
+LDC Travel is a modular-monolith Next.js application with Payload embedded for admin-only editorial management. The public experience reads CMS content server-side; there is no booking or commerce subsystem. The homepage and the focused Contact page are the currently implemented public routes.
 
 ## Market model
 
@@ -15,6 +15,12 @@ Payload owns editorial and global configuration data. The collections and global
 ## Homepage content contract
 
 The Homepage global owns hero copy/image/CTAs and ordered relationships for featured destinations, popular programs, active offer, upcoming events, testimonials, guides, and FAQs. This keeps an editor-friendly homepage composition without turning every visual fragment into an independent collection.
+
+## Contact and inquiry seam
+
+`src/app/(frontend)/contact/page.tsx` is a server-rendered Contact page that reuses Site Settings, the shared Header/Footer/Floating WhatsApp components, and the existing GSAP hero reveal. `src/app/(frontend)/contact/actions.ts` is the server-only form mutation boundary. It validates the submitted fields, ignores client-controlled `source`/`status`, and creates a new record with `source: "contact-page"` and `status: "new"` through Payload's Local API with explicit access override.
+
+The `Inquiries` collection is admin-only for read, update, and delete operations and denies normal public create access. The server action is the only public application path that can create records. It uses bounded manual validation because Zod is not installed in the foundation, rejects a filled honeypot, does not log submitted PII, and returns a generic WhatsApp fallback when Payload/PostgreSQL credentials or persistence are unavailable. Payload timestamps provide `createdAt`/`updatedAt`; no duplicate timestamp fields are defined.
 
 ## WhatsApp seam
 
@@ -42,4 +48,4 @@ The local PostgreSQL Windows service is running and accepting connections, but n
 
 ## Deferred choices
 
-Motion beyond the selective GSAP text reveals, shadcn/ui, analytics, inquiry persistence, final deployment architecture, and a favicon/icon-only asset are deliberately deferred until their concrete requirements are known.
+Motion beyond the selective GSAP text reveals, shadcn/ui, analytics, final deployment architecture, and a favicon/icon-only asset are deliberately deferred until their concrete requirements are known. Multi-instance rate limiting and external anti-spam services remain deferred; the Contact page currently uses server validation, size bounds, and a honeypot.

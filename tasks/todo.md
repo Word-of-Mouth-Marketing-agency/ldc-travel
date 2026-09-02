@@ -6,7 +6,7 @@
 - [x] Record the no-homepage-UI and no-newsletter constraints.
 - [x] Record the Egypt-first / Saudi-ready market strategy.
 - [x] Record the WhatsApp-first conversion model.
-- [x] Record the deferred Inquiries recommendation.
+- [x] Record the Contact inquiry persistence decision and admin-only access model.
 
 ## Foundation
 
@@ -33,7 +33,7 @@
 - [x] Add a CMS-backed homepage adapter with an isolated demo fallback.
 - [x] Add optional remote demo image fields while preserving Payload Media relations.
 - [x] Add a repeatable, non-destructive Egypt-only demo seed script.
-- [x] Exclude newsletter, booking/search, contact form, Saudi public content, and all other public pages.
+- [x] Exclude newsletter, booking/search, Saudi public content, and all other public pages beyond the focused Contact route.
 - [x] Validate responsive CSS, semantic landmarks, keyboard states, alt text, reduced motion, and scope exclusions.
 
 ## Stabilization pass
@@ -49,6 +49,15 @@
 - [x] Replace improvised UI glyphs and rating stars with the shared Lucide icon system and recognizable social marks.
 - [x] Add restrained CSS hover/entrance interactions and preserve prefers-reduced-motion behavior.
 - [x] Add selective GSAP hero and section-heading text reveals with cleanup and reduced-motion fallback.
+
+## Contact page and inquiry flow
+
+- [x] Add `/contact` with compact hero, quick contact actions, form/details composition, WhatsApp fallback, socials, and reused site chrome.
+- [x] Update shared Header, mobile drawer, and Footer Contact links to `/contact`; keep future unbuilt routes as `#`.
+- [x] Add admin-only Inquiries collection with constrained status/type fields and Payload timestamps.
+- [x] Add server-side inquiry validation, honeypot handling, server action persistence, and clear database-unavailable behavior.
+- [x] Generate Payload types and verify the import-map generator after schema registration.
+- [ ] Verify live Contact persistence and Payload admin workflow after safe local credentials are configured.
 
 ## Verification
 

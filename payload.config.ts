@@ -10,6 +10,7 @@ import { Destinations } from "./src/collections/Destinations";
 import { Events } from "./src/collections/Events";
 import { FAQs } from "./src/collections/FAQs";
 import { Guides } from "./src/collections/Guides";
+import { Inquiries } from "./src/collections/Inquiries";
 import { Markets } from "./src/collections/Markets";
 import { Media } from "./src/collections/Media";
 import { Offers } from "./src/collections/Offers";
@@ -43,6 +44,7 @@ export default buildConfig({
     Guides,
     Testimonials,
     FAQs,
+    Inquiries,
   ],
   editor: lexicalEditor(),
   globals: [SiteSettings, Homepage],

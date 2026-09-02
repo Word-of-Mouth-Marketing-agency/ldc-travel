@@ -1,6 +1,7 @@
 import {
   ArrowRight,
   CalendarDays,
+  CheckCircle2,
   ChevronDown,
   Clock3,
   Mail,
@@ -16,6 +17,7 @@ import {
 type IconName =
   | "arrow"
   | "calendar"
+  | "check"
   | "chevron"
   | "clock"
   | "close"
@@ -29,6 +31,7 @@ type IconName =
 const icons: Record<IconName, LucideIcon> = {
   arrow: ArrowRight,
   calendar: CalendarDays,
+  check: CheckCircle2,
   chevron: ChevronDown,
   clock: Clock3,
   close: X,

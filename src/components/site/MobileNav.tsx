@@ -11,7 +11,7 @@ import { WhatsAppIcon } from "./WhatsAppIcon";
 
 type NavItem = { label: string; href: string };
 
-export function MobileNav({ items, socialLinks, whatsappHref }: { items: NavItem[]; socialLinks: SocialLink[]; whatsappHref: string }) {
+export function MobileNav({ activePath = "/", items, socialLinks, whatsappHref }: { activePath?: string; items: NavItem[]; socialLinks: SocialLink[]; whatsappHref: string }) {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -83,7 +83,7 @@ export function MobileNav({ items, socialLinks, whatsappHref }: { items: NavItem
             </div>
             <nav aria-label="Mobile navigation">
               {items.map((item) => (
-                <a key={item.label} href="#" onClick={(event) => { event.preventDefault(); setOpen(false); }}>
+                <a key={item.label} className={item.href === activePath ? "active" : ""} href={item.href} aria-current={item.href === activePath ? "page" : undefined} onClick={() => setOpen(false)}>
                   {item.label}
                 </a>
               ))}

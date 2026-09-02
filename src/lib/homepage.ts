@@ -108,7 +108,7 @@ function dateParts(value: string) {
   };
 }
 
-function buildSite(raw: unknown): SiteViewModel {
+export function buildSite(raw: unknown): SiteViewModel {
   const record = asRecord(raw);
   const contact = asRecord(record?.contact);
   const whatsapp = asRecord(record?.whatsapp);
@@ -133,7 +133,7 @@ function buildSite(raw: unknown): SiteViewModel {
   };
 }
 
-function buildWhatsappConfig(site: SiteViewModel): WhatsAppConfig {
+export function buildWhatsappConfig(site: SiteViewModel): WhatsAppConfig {
   return {
     phoneNumber: site.whatsappNumber,
     defaultMessage: site.defaultMessage,

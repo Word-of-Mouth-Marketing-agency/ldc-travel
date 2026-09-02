@@ -36,12 +36,12 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
           <div className="hero-wash" />
           <div className="site-container hero-inner">
             <HeroIntroAnimation>
-              <p className="hero-eyebrow"><Icon name="plane" /> {data.hero.eyebrow}</p>
-              <h1 id="hero-heading">{headlineTail ? <>{headlineLead} <span>with {headlineTail}</span></> : data.hero.headline}</h1>
-              <p className="hero-supporting-copy">{data.hero.supportingCopy}</p>
+              <p className="hero-eyebrow" data-hero-eyebrow><Icon name="plane" /> {data.hero.eyebrow}</p>
+              <h1 id="hero-heading" data-hero-heading>{headlineTail ? <>{headlineLead} <span>with {headlineTail}</span></> : data.hero.headline}</h1>
+              <p className="hero-supporting-copy" data-hero-supporting>{data.hero.supportingCopy}</p>
               <div className="hero-actions">
-                <a className="button button-primary" href={data.hero.primaryCta.external ? data.hero.primaryCta.href : "#"} target={data.hero.primaryCta.external ? "_blank" : undefined} rel={data.hero.primaryCta.external ? "noopener noreferrer" : undefined}><WhatsAppIcon />{data.hero.primaryCta.label}</a>
-                {data.hero.secondaryCta.external ? <a className="button button-secondary" href={data.hero.secondaryCta.href} target="_blank" rel="noopener noreferrer">{data.hero.secondaryCta.label}<Icon name="arrow" /></a> : <PlaceholderLink className="button button-secondary">{data.hero.secondaryCta.label}<Icon name="arrow" /></PlaceholderLink>}
+                <a className="button button-primary" data-hero-action href={data.hero.primaryCta.external ? data.hero.primaryCta.href : "#"} target={data.hero.primaryCta.external ? "_blank" : undefined} rel={data.hero.primaryCta.external ? "noopener noreferrer" : undefined}><WhatsAppIcon />{data.hero.primaryCta.label}</a>
+                {data.hero.secondaryCta.external ? <a className="button button-secondary" data-hero-action href={data.hero.secondaryCta.href} target="_blank" rel="noopener noreferrer">{data.hero.secondaryCta.label}<Icon name="arrow" /></a> : <PlaceholderLink className="button button-secondary" data-hero-action>{data.hero.secondaryCta.label}<Icon name="arrow" /></PlaceholderLink>}
               </div>
             </HeroIntroAnimation>
           </div>

@@ -35,6 +35,12 @@
 
 20. Add GSAP 3.15.0 selectively for coordinated hero and section-heading text entrance reveals, preserving server-first rendering and reduced-motion behavior.
 
+## Contact page implementation
+
+21. Add the focused `/contact` route using the established LDC visual system, Site Settings, shared navigation/footer, and WhatsApp conversion path.
+22. Add the admin-only `Inquiries` collection and server-action submission boundary with bounded validation, honeypot protection, and explicit database-unavailable behavior.
+23. Generate Payload types/import map, run the full validation suite, and record the local persistence limitation when credentials are unavailable.
+
 ## Parallelizable work
 
 - Asset inventory/documentation can proceed independently from CMS field implementation.

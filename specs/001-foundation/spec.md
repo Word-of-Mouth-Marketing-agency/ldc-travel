@@ -2,18 +2,18 @@
 
 ## Status
 
-Foundation and Phase 1 homepage implementation complete. The approved homepage screenshot is the visual direction and review reference for the shipped `/` route.
+Foundation, Phase 1 homepage, and Contact page implementation complete at source level. The approved homepage screenshot remains the visual direction and review reference for the shipped `/` route.
 
 ## Assumptions and decisions
 
 - LDC Travel is launching in Egypt only. The public site must not expose Saudi Arabia yet.
 - The product is a tourism marketing and lead-generation site. There is no booking engine, checkout, payment system, customer account, or customer login.
-- WhatsApp is the primary conversion. The future Contact page may add a contact form as a secondary conversion.
+- WhatsApp is the primary conversion. The Contact page adds a validated inquiry form as a secondary conversion.
 - English is the only public language in this phase. Content and layout must leave room for later Arabic/RTL support without adding an i18n UI now.
 - Payload CMS and the public Next.js site live in one modular monolith backed by PostgreSQL.
 - Admin users are the only CMS role needed now. Public CMS registration is disabled.
 - Remote demo travel imagery is permitted through explicitly configured image hosts. Assets supplied in `A:/Projects/Travel-content` are reference/source assets and remain untouched.
-- The current implementation phase includes the production homepage route, CMS view-model adapter, repeatable demo seed, responsive UI, and validation. Other public routes remain out of scope.
+- The current implementation phase includes the production homepage route, the focused Contact route, CMS view-model adapter, repeatable demo seed, responsive UI, and validation. Other public routes remain out of scope.
 
 ## Pre-build reality check
 
@@ -32,7 +32,7 @@ The scope is bounded around an existing business, a defined launch market, a rea
 
 ## Non-goals
 
-- Do not implement destinations, programs, festivals, offers, services, about, blog, or contact pages now.
+- Do not implement destinations, programs, festivals, offers, services, about, or blog pages in this pass.
 - Do not build booking/search widgets, date pickers, traveler selectors, checkout, payments, accounts, or public registration.
 - Do not expose Saudi Arabia in public navigation, content, or seeded public data.
 - Do not include a newsletter section or subscription flow.
@@ -45,7 +45,7 @@ The scope is bounded around an existing business, a defined launch market, a rea
 2. The hero establishes the LDC Travel proposition and sends the visitor to WhatsApp or the Programs route when that route is available.
 3. Destination/program/event/offer content builds confidence through photography, structured details, and testimonials.
 4. Contextual WhatsApp CTAs open a prefilled message containing the relevant content title where useful.
-5. A future Contact page adds a validated server-side inquiry form; the foundation does not implement that page or an Inquiries collection.
+5. The Contact page offers a validated server-side inquiry form; successful submissions are persisted to the admin-only Inquiries collection when Payload/PostgreSQL is configured.
 
 ## Approved homepage direction for Phase 1
 
@@ -142,9 +142,9 @@ The public page layer should depend on normalized content view models rather tha
 
 Use shared collections with a `markets` relationship for availability and market-scoped fields for values likely to vary. The first public query is constrained to the active/default market, currently Egypt, by server-side configuration. Contact/WhatsApp, currency, pricing, offers, availability, and SEO can be overridden through market-linked records/settings. This avoids duplicating every collection while preserving an explicit seam for future market-specific content. Saudi Arabia is not seeded into public content in this phase.
 
-### Inquiries recommendation
+### Inquiries collection
 
-Defer the `Inquiries` collection until the Contact page is implemented. The current product has only a WhatsApp conversion and no form submission contract, retention policy, spam controls, or admin workflow to justify storing inquiries now. The WhatsApp helper and site settings establish the necessary seam without creating unused personal-data storage.
+The Contact page uses an `Inquiries` collection with full name, optional email/phone (at least one required by the server contract), constrained inquiry type, optional subject, message, source, status, and Payload timestamps. Public collection create access is denied, while read/update/delete are limited to authenticated admins; the server action uses explicit Local API access override after validation and sets `source` and `status` itself. A honeypot and bounded fields provide lightweight abuse protection without a paid external service.
 
 ## WhatsApp architecture
 
@@ -203,9 +203,17 @@ Store the base number and default message in Site Settings. Expose a single help
 - [x] Repeatable seed mechanism added for Egypt-only demo content, homepage relationships, globals, and clearly marked placeholder testimonials.
 - [x] Shared WhatsApp helper used for generic, program, event, and offer inquiry CTAs.
 - [x] Homepage refinement removed the Trust/Benefits module, replaced improvised glyphs with Lucide icons and recognizable social marks, and added restrained CSS interaction motion with reduced-motion handling.
-- [x] No newsletter, booking/search widget, contact form, checkout, Saudi public content, or additional public page implemented.
+- [x] No newsletter, booking/search widget, checkout, Saudi public content, or unscoped public page implemented.
+- [x] Contact page at `/contact` with Site Settings contact data, accessible inquiry form, WhatsApp fallback, and admin-only Inquiries collection implemented.
 - [x] Responsive, accessibility, remote-image, type, lint, build, and local HTTP checks completed where infrastructure allowed.
 - [ ] Payload admin/database seed runtime verification remains pending a local `DATABASE_URL` and `PAYLOAD_SECRET`.
+
+## Contact page implementation status
+
+- [x] Compact internal hero, quick contact methods, inquiry form, contact details, WhatsApp CTA, social links, reused Header/Footer, and floating WhatsApp implemented at `/contact`.
+- [x] Server-side validation enforces bounded names, email/phone contact, inquiry type, subject, and message values.
+- [x] Successful form persistence uses a server action and Payload's admin-only `Inquiries` collection; missing credentials never produce a success state.
+- [ ] Live inquiry persistence and admin verification remain pending a safe local `DATABASE_URL` and `PAYLOAD_SECRET`.
 
 ## Stabilization status
 
@@ -215,4 +223,4 @@ Store the base number and default message in Site Settings. Expose a single help
 
 ## Phase 1 homepage implementation scope
 
-Phase 1 ships only `/` using CMS-driven sections in this order: Header, Hero, FeaturedDestinations, PopularPrograms, ActiveOffer, UpcomingEvents, Testimonials, LatestGuides, FAQ, Footer. It includes the reusable WhatsApp CTA, responsive behavior at phone/tablet/desktop widths, accessible interaction states, restrained CSS motion with reduced-motion handling, metadata, and remote image configuration. All other routes remain navigation targets/placeholders until separately scoped.
+Phase 1 ships `/` using CMS-driven sections in this order: Header, Hero, FeaturedDestinations, PopularPrograms, ActiveOffer, UpcomingEvents, Testimonials, LatestGuides, FAQ, Footer. The focused `/contact` route is now implemented as the next public conversion surface; all other routes remain navigation targets/placeholders until separately scoped.
