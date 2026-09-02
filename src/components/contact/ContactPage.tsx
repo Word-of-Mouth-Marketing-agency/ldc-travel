@@ -1,9 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import type { SiteViewModel } from "../../content/homepage-demo";
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
-import { HeroIntroAnimation } from "../motion/HeroIntroAnimation";
 import { Icon } from "../homepage/Icon";
 import { Footer } from "../site/Footer";
 import { FloatingWhatsApp } from "../site/FloatingWhatsApp";
@@ -11,8 +9,6 @@ import { Header } from "../site/Header";
 import { SocialIcon } from "../site/SocialIcon";
 import { WhatsAppIcon } from "../site/WhatsAppIcon";
 import { ContactForm } from "./ContactForm";
-
-const contactHeroImage = "https://images.unsplash.com/photo-1580225495234-00e84e19c85e?auto=format&fit=crop&w=1800&q=85";
 
 export function ContactUnavailable() {
   return (
@@ -99,19 +95,13 @@ export function ContactPage({ site, whatsappConfig }: { site: SiteViewModel; wha
     <>
       <Header activePath="/contact" socialLinks={site.socialLinks} whatsappConfig={whatsappConfig} />
       <main>
-        <section className="contact-hero" aria-labelledby="contact-hero-heading">
-          <div className="contact-hero-image"><Image src={contactHeroImage} alt="White Cycladic buildings and blue domes above the Aegean Sea" fill priority sizes="(max-width: 767px) 100vw, 50vw" /></div>
-          <div className="contact-hero-overlay" />
-          <div className="site-container contact-hero-inner">
-            <HeroIntroAnimation className="contact-hero-copy">
-              <p className="contact-hero-eyebrow" data-hero-eyebrow>Get in touch <Icon name="plane" /></p>
-              <h1 id="contact-hero-heading" data-hero-heading>Let’s plan your next journey.</h1>
-              <p className="contact-hero-supporting-copy" data-hero-supporting>Talk to LDC Travel about your next trip, travel program, festival, or custom travel request.</p>
-              <div className="contact-hero-actions">
-                <a className="button button-primary" data-hero-action href={whatsappHref} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />Chat on WhatsApp</a>
-                <a className="button button-light" data-hero-action href="#inquiry">Send an inquiry <Icon name="arrow" /></a>
-              </div>
-            </HeroIntroAnimation>
+        <section className="page-title-section" aria-labelledby="contact-page-title">
+          <div className="site-container page-title-inner">
+            <div className="page-title-copy">
+              <p className="section-eyebrow">Get in touch</p>
+              <h1 id="contact-page-title">Contact Us</h1>
+              <p>Let’s talk about your next journey.</p>
+            </div>
           </div>
         </section>
         <ContactMethods site={site} whatsappHref={whatsappHref} />
