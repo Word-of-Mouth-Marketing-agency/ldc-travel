@@ -1,6 +1,3 @@
-import { getPayload } from "payload";
-
-import config from "../../payload.config";
 import {
   demoHomepage,
   type Cta,
@@ -18,6 +15,7 @@ import {
 } from "../content/homepage-demo";
 import { createWhatsAppUrl, type WhatsAppConfig } from "./whatsapp";
 import { getLaunchMarketCode } from "./markets";
+import { isUiPreviewMode } from "./preview";
 
 type RecordValue = Record<string, unknown>;
 
@@ -31,7 +29,7 @@ export class HomepageDataError extends Error {
 }
 
 function developmentFallback() {
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV !== "development" && !isUiPreviewMode()) {
     throw new HomepageDataError("Homepage CMS content is unavailable.");
   }
 
@@ -259,9 +257,12 @@ function mapFaq(value: unknown, index: number): FaqViewModel {
 }
 
 export async function getHomepageData(): Promise<HomepageViewModel> {
+  if (isUiPreviewMode()) return demoHomepage;
   if (!process.env.DATABASE_URL) return developmentFallback();
 
   try {
+    const { getPayload } = await import("payload");
+    const { default: config } = await import("../../payload.config");
     const payload = await getPayload({ config });
     const [homepage, settings, marketResult] = await Promise.all([
       payload.findGlobal({ slug: "homepage", depth: 2 }),

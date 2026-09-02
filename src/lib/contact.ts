@@ -1,8 +1,6 @@
-import { getPayload } from "payload";
-
-import config from "../../payload.config";
 import { demoHomepage, type SiteViewModel } from "../content/homepage-demo";
 import { buildSite, buildWhatsappConfig } from "./homepage";
+import { isUiPreviewMode } from "./preview";
 import type { WhatsAppConfig } from "./whatsapp";
 
 export class ContactDataError extends Error {
@@ -18,7 +16,7 @@ export type ContactData = {
 };
 
 function developmentFallback(): ContactData {
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV !== "development" && !isUiPreviewMode()) {
     throw new ContactDataError("Contact settings are unavailable.");
   }
 
@@ -29,9 +27,12 @@ function developmentFallback(): ContactData {
 }
 
 export async function getContactData(): Promise<ContactData> {
+  if (isUiPreviewMode()) return developmentFallback();
   if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) return developmentFallback();
 
   try {
+    const { getPayload } = await import("payload");
+    const { default: config } = await import("../../payload.config");
     const payload = await getPayload({ config });
     const settings = await payload.findGlobal({ slug: "site-settings", depth: 1 });
     const site = buildSite(settings);

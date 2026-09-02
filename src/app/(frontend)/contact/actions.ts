@@ -1,9 +1,7 @@
 "use server";
 
-import { getPayload } from "payload";
-
-import config from "../../../../payload.config";
 import { validateInquiry, type ContactFormState } from "../../../lib/inquiry-validation";
+import { isUiPreviewMode } from "../../../lib/preview";
 
 export async function submitInquiry(_previousState: ContactFormState, formData: FormData): Promise<ContactFormState> {
   const validation = validateInquiry(formData);
@@ -16,6 +14,14 @@ export async function submitInquiry(_previousState: ContactFormState, formData: 
     };
   }
 
+  if (isUiPreviewMode()) {
+    return {
+      status: "error",
+      message: "Preview mode: this form is not connected to a database, so your inquiry was not sent. Please contact us on WhatsApp instead.",
+      fieldErrors: {},
+    };
+  }
+
   if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
     return {
       status: "error",
@@ -25,6 +31,8 @@ export async function submitInquiry(_previousState: ContactFormState, formData: 
   }
 
   try {
+    const { getPayload } = await import("payload");
+    const { default: config } = await import("../../../../payload.config");
     const payload = await getPayload({ config });
 
     await payload.create({
