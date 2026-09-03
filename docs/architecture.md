@@ -38,9 +38,9 @@ When `DATABASE_URL` is configured, the homepage reads the Homepage and Site Sett
 
 ## Demo image contract
 
-Destination, program, event, guide, offer, and homepage hero records support an optional `imageUrl` for approved remote demo imagery. Production editors should prefer the existing Payload Media upload relation; the normalized image reader uses a Media URL first and falls back to the remote field or isolated demo content. External URLs are accepted only over HTTPS from `images.unsplash.com` or `images.pexels.com`; malformed or unapproved values fall back safely. Next Image is restricted to these hosts in `next.config.mjs`.
+Destination, program, event, guide, offer, and homepage hero records support an optional `imageUrl` for approved demo imagery. Production editors should prefer the existing Payload Media upload relation; the normalized image reader uses a Media URL first and falls back to the same-app path or approved remote field. External URLs are accepted only over HTTPS from `images.unsplash.com` or `images.pexels.com`; malformed or unapproved values fall back safely. Next Image is restricted to these hosts in `next.config.mjs`.
 
-The repeatable `pnpm seed` script creates missing Egypt market content, relationships, global configuration, and clearly marked demo testimonials. It never updates an existing record, so it cannot replace real editorial content on repeated runs.
+The repeatable `pnpm seed` script creates missing Egypt market content, relationships, global configuration, and clearly marked demo testimonials. It preserves existing editorial records on repeated runs, while allowing narrowly scoped migrations of recognized legacy demo homepage references.
 
 ## Production-readiness boundaries
 

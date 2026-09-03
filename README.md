@@ -77,7 +77,7 @@ With `DATABASE_URL` and `PAYLOAD_SECRET` configured for a local database, run `p
 
 The demo view model is development-only by default. For a temporary database-free Vercel client UI preview, set the server-side `UI_PREVIEW_MODE=true`; this explicit flag allows the public homepage and Contact page to use the safe demo view model without PostgreSQL. Never enable it on the real production VPS site. In production without that flag, a missing database configuration, unavailable Payload connection, or missing public Egypt market causes the homepage to render an explicit unavailable state; it never silently serves demo content.
 
-The homepage prefers uploaded Payload Media for editorial imagery. Optional `imageUrl` fields are for approved demo imagery only and accept HTTPS images from `images.unsplash.com` or `images.pexels.com`; malformed or unapproved URLs are ignored safely.
+The homepage prefers uploaded Payload Media for editorial imagery. Optional `imageUrl` fields are for approved demo imagery only and accept same-app paths such as `/hero-travel.webp` or HTTPS images from `images.unsplash.com` and `images.pexels.com`; malformed or unapproved values are ignored safely.
 
 ## Verified LDC contact channels
 

@@ -4,6 +4,7 @@ if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
 }
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const heroImagePath = "/hero-travel.webp";
 const { default: config } = await import("../payload.config.ts");
 const { getPayload } = await import("payload");
 
@@ -180,13 +181,17 @@ const currentProgramIds = Array.isArray(homepage.popularPrograms)
 const legacyPrograms = await payload.find({ collection: "travel-programs", where: { slug: { in: Array.from(legacyProgramSlugs) } }, limit: 50, depth: 0 });
 const legacyProgramIds = new Set(legacyPrograms.docs.map((item) => String(item.id)));
 const canReplaceLegacyHomepagePrograms = currentProgramIds.length === 0 || currentProgramIds.every((id) => legacyProgramIds.has(id));
+const homepageHero = homepage.hero && typeof homepage.hero === "object" ? homepage.hero : {};
+const currentHeroImageUrl = typeof homepageHero.imageUrl === "string" ? homepageHero.imageUrl : "";
+const legacyHeroImageUrl = image("photo-1580225495234-00e84e19c85e");
+const canReplaceLegacyHero = !homepageHero.image && (!currentHeroImageUrl || currentHeroImageUrl === legacyHeroImageUrl);
 if (!homepage.hero) {
   await payload.updateGlobal({ slug: "homepage", data: {
     hero: {
       eyebrow: "Make room for the extraordinary",
       headline: "Explore the world with LDC Travel",
       supportingCopy: "Discover unforgettable destinations, thoughtful travel programs, and memories that last a lifetime.",
-      imageUrl: image("photo-1580225495234-00e84e19c85e"),
+      imageUrl: heroImagePath,
       primaryCta: { label: "Inquire on WhatsApp", kind: "whatsapp" },
       secondaryCta: { label: "Explore programs", kind: "internal", url: "/programs" },
     },
@@ -199,11 +204,18 @@ if (!homepage.hero) {
     faqs: faqs.map((item) => item.id),
   } });
   console.log("create global:homepage");
-} else if (canReplaceLegacyHomepagePrograms) {
-  await payload.updateGlobal({ slug: "homepage", data: { popularPrograms: Object.values(programs).map((item) => item.id) } });
-  console.log("update global:homepage popularPrograms");
 } else {
-  console.log("skip global:homepage");
+  const homepageUpdates = {};
+  if (canReplaceLegacyHero) homepageUpdates.hero = { ...homepageHero, imageUrl: heroImagePath };
+  if (canReplaceLegacyHomepagePrograms) homepageUpdates.popularPrograms = Object.values(programs).map((item) => item.id);
+
+  if (Object.keys(homepageUpdates).length > 0) {
+    await payload.updateGlobal({ slug: "homepage", data: homepageUpdates });
+    if (canReplaceLegacyHero) console.log("update global:homepage hero image");
+    if (canReplaceLegacyHomepagePrograms) console.log("update global:homepage popularPrograms");
+  } else {
+    console.log("skip global:homepage");
+  }
 }
 
 await payload.destroy();

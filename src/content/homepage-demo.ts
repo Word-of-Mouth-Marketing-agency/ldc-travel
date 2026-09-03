@@ -121,6 +121,8 @@ const image = (id: string, alt: string) => ({
   alt,
 });
 
+const localImage = (src: string, alt: string): ImageSource => ({ src, alt });
+
 const demoWhatsappConfig: WhatsAppConfig = {
   phoneNumber: "201211118118",
   defaultMessage: "Hi LDC Travel, I would like to know more about your travel programs.",
@@ -157,7 +159,7 @@ export const demoHomepage: HomepageViewModel = {
     eyebrow: "Make room for the extraordinary",
     headline: "Explore the world with LDC Travel",
     supportingCopy: "Discover unforgettable destinations, thoughtful travel programs, and memories that last a lifetime.",
-    image: image("photo-1580225495234-00e84e19c85e", "White and blue Santorini building above the Aegean Sea"),
+    image: localImage("/hero-travel.webp", "Mountain lake village framed by the Alps"),
     primaryCta: whatsappCta("Inquire on WhatsApp"),
     secondaryCta: { label: "Explore programs", href: "/programs" },
   },

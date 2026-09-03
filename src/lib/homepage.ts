@@ -70,7 +70,7 @@ function isVisibleInMarket(value: RecordValue, marketId: string) {
 
 function readImage(value: unknown, fallback: ImageSource): ImageSource {
   const record = asRecord(value);
-  const directUrl = readAllowedExternalImageUrl(asString(record?.imageUrl));
+  const directUrl = readSafeMediaUrl(asString(record?.imageUrl));
   const media = asRecord(record?.coverImage) ?? asRecord(record?.image) ?? record;
   const mediaUrl = readSafeMediaUrl(asString(media?.url)) || readSafeMediaUrl(asString(asRecord(media?.sizes)?.card && asRecord(asRecord(media?.sizes)?.card)?.url));
 
