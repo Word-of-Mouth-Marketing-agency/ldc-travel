@@ -33,7 +33,7 @@ This checklist contains unresolved human inputs and final operator gates. Do not
 - [ ] Localhost smoke test passes before OLS changes.
 - [ ] OLS config backup and rollback path are recorded before any approved edit.
 - [ ] Public HTTPS smoke test passes after approved proxy change.
-- [ ] `/`, `/contact`, `/destinations`, all six destination pages, `/admin`, WhatsApp, robots, sitemap, and favicons pass.
+- [ ] `/`, `/about`, `/contact`, `/destinations`, all six destination pages, `/admin`, WhatsApp, robots, sitemap, and favicons pass.
 - [ ] Representative existing websites remain healthy.
 - [ ] CPU, RAM, swap, disk, OLS, database, and application logs are reviewed after launch.
 

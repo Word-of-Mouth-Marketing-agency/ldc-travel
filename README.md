@@ -80,7 +80,7 @@ The Contact page uses Site Settings for verified LDC contact/social details. Its
 
 ## Public routes and product boundaries
 
-The public destination routes are `/destinations` and `/destinations/turkey`, `/destinations/russia`, `/destinations/bali`, `/destinations/georgia`, `/destinations/indonesia`, and `/destinations/thailand`. Detail pages use one reusable dynamic route and offer a destination-scoped Name, Email, and Phone inquiry form; there is no direct booking or payment flow.
+The public routes are `/`, `/about`, `/contact`, `/destinations`, and `/destinations/turkey`, `/destinations/russia`, `/destinations/bali`, `/destinations/georgia`, `/destinations/indonesia`, and `/destinations/thailand`. Detail pages use one reusable dynamic route and offer a destination-scoped Name, Email, and Phone inquiry form; there is no direct booking or payment flow.
 
 The site is destination-led lead generation only: no travel programs, package pricing, events, booking engine, checkout, payments, customer accounts, or public CMS registration are exposed on the public website. WhatsApp is the primary CTA. The launch market is Egypt; the current configured WhatsApp conversion number is `+9667277981053` in normalized `wa.me` form. The current language is English only, with logical layout choices preserved for later RTL support.
 

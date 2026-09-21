@@ -7,6 +7,7 @@ import { Icon } from "../homepage/Icon";
 import { Footer } from "../site/Footer";
 import { FloatingWhatsApp } from "../site/FloatingWhatsApp";
 import { Header } from "../site/Header";
+import { DesignYourTripProvider } from "../site/DesignYourTripModal";
 import { DestinationInquiryForm } from "./DestinationInquiryForm";
 import { DestinationExperiences, DestinationGallery, DestinationHero, DestinationHighlights, DestinationOverview, DestinationSeasonSection, RelatedDestinations } from "./DestinationDetailSections";
 
@@ -36,8 +37,8 @@ export function DestinationDetailPage({ destination, relatedDestinations, destin
   const whatsappHref = createWhatsAppUrl(whatsappConfig, { title: destination.title });
 
   return (
-    <>
-      <Header activePath="/destinations" socialLinks={site.socialLinks} whatsappConfig={whatsappConfig} />
+    <DesignYourTripProvider whatsappHref={createWhatsAppUrl(whatsappConfig)}>
+      <Header activePath="/destinations" socialLinks={site.socialLinks} />
       <main>
         <DestinationHero destination={destination} whatsappHref={whatsappHref} />
         <DestinationOverview destination={destination} />
@@ -51,6 +52,6 @@ export function DestinationDetailPage({ destination, relatedDestinations, destin
       </main>
       <Footer site={site} whatsappConfig={whatsappConfig} />
       <FloatingWhatsApp whatsappConfig={whatsappConfig} />
-    </>
+    </DesignYourTripProvider>
   );
 }

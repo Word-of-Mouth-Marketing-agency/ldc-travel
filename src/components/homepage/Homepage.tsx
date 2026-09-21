@@ -5,10 +5,12 @@ import type { HomepageViewModel } from "../../content/homepage-demo";
 import { Header } from "../site/Header";
 import { Footer } from "../site/Footer";
 import { FloatingWhatsApp } from "../site/FloatingWhatsApp";
+import { DesignYourTripProvider } from "../site/DesignYourTripModal";
 import { WhatsAppIcon } from "../site/WhatsAppIcon";
 import { Icon } from "./Icon";
 import { HeroIntroAnimation } from "../motion/HeroIntroAnimation";
 import { DestinationsSection, FaqSection, InspirationSection, DestinationCtaSection, WhyLdcSection } from "./HomepageSections";
+import { createWhatsAppUrl } from "../../lib/whatsapp";
 
 export function HomepageUnavailable() {
   return (
@@ -34,8 +36,8 @@ function HeroCta({ cta, primary = false }: { cta: HomepageViewModel["hero"]["pri
 
 export function Homepage({ data }: { data: HomepageViewModel }) {
   return (
-    <>
-      <Header socialLinks={data.site.socialLinks} whatsappConfig={data.whatsappConfig} />
+    <DesignYourTripProvider whatsappHref={createWhatsAppUrl(data.whatsappConfig)}>
+      <Header socialLinks={data.site.socialLinks} />
       <main>
         <section className="hero-section" aria-labelledby="hero-heading">
           <div className="hero-photo"><Image src={data.hero.image.src} alt={data.hero.image.alt} fill priority sizes="(max-width: 767px) 100vw, 62vw" /></div>
@@ -64,6 +66,6 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
       </main>
       <Footer site={data.site} whatsappConfig={data.whatsappConfig} />
       <FloatingWhatsApp whatsappConfig={data.whatsappConfig} />
-    </>
+    </DesignYourTripProvider>
   );
 }

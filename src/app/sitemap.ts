@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 
 const publicPaths = [
   "/",
+  "/about",
   "/destinations",
   "/destinations/turkey",
   "/destinations/russia",

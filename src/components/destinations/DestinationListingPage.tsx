@@ -6,6 +6,7 @@ import { Icon } from "../homepage/Icon";
 import { Footer } from "../site/Footer";
 import { FloatingWhatsApp } from "../site/FloatingWhatsApp";
 import { Header } from "../site/Header";
+import { DesignYourTripProvider } from "../site/DesignYourTripModal";
 import { DestinationCard } from "./DestinationCard";
 
 export function DestinationsUnavailable() {
@@ -25,8 +26,8 @@ export function DestinationsListingPage({ destinations, site, whatsappConfig }: 
   const whatsappHref = createWhatsAppUrl(whatsappConfig, { message: "Hi LDC Travel, I'd like help choosing a destination." });
 
   return (
-    <>
-      <Header activePath="/destinations" socialLinks={site.socialLinks} whatsappConfig={whatsappConfig} />
+    <DesignYourTripProvider whatsappHref={createWhatsAppUrl(whatsappConfig)}>
+      <Header activePath="/destinations" socialLinks={site.socialLinks} />
       <main>
         <section className="page-title-section destinations-masthead" aria-labelledby="destinations-page-title">
           <div className="site-container page-title-inner destinations-masthead-inner">
@@ -58,6 +59,6 @@ export function DestinationsListingPage({ destinations, site, whatsappConfig }: 
       </main>
       <Footer site={site} whatsappConfig={whatsappConfig} />
       <FloatingWhatsApp whatsappConfig={whatsappConfig} />
-    </>
+    </DesignYourTripProvider>
   );
 }

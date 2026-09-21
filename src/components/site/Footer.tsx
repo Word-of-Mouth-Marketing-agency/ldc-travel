@@ -9,7 +9,7 @@ import { WhatsAppIcon } from "./WhatsAppIcon";
 import type { SiteViewModel } from "../../content/homepage-demo";
 
 const groups = [
-  { title: "Explore", links: [{ label: "Destinations", href: "/destinations" }, { label: "Why LDC Travel", href: "/#why-ldc" }, { label: "Inspiration", href: "/#inspiration" }] },
+  { title: "Explore", links: [{ label: "Destinations", href: "/destinations" }, { label: "About", href: "/about" }, { label: "Why LDC Travel", href: "/#why-ldc" }, { label: "Inspiration", href: "/#inspiration" }] },
   { title: "Company", links: [{ label: "Home", href: "/" }, { label: "Contact", href: "/contact" }] },
 ];
 

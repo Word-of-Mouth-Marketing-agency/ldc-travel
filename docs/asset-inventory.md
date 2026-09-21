@@ -18,7 +18,7 @@ The existing five legacy brand files in `public/brand/` remain untouched for rol
 - Header: `ldc-logo-blue.webp` on white.
 - Mobile drawer: `ldc-logo-blue.webp` on white.
 - Footer: `ldc-logo-yellow.webp` on `#173C86` blue.
-- Favicon/app icon: retained existing icon-only asset because the supplied files are full lockups and no dedicated new emblem file was provided. The wordmark was not cropped or distorted.
+- Favicon/app icon: `src/app/icon.png` and `src/app/apple-icon.png` use a favicon-safe transparent crop of the emblem from `public/brand/ldc-logo-blue.webp`; the original full lockup remains unchanged.
 
 ## Remote imagery
 

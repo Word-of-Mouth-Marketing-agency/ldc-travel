@@ -9,6 +9,7 @@ import { Header } from "../site/Header";
 import { SocialIcon } from "../site/SocialIcon";
 import { WhatsAppIcon } from "../site/WhatsAppIcon";
 import { ContactForm } from "./ContactForm";
+import { DesignYourTripProvider } from "../site/DesignYourTripModal";
 
 export function ContactUnavailable() {
   return (
@@ -92,8 +93,8 @@ export function ContactPage({ site, whatsappConfig }: { site: SiteViewModel; wha
   const whatsappHref = createWhatsAppUrl(whatsappConfig, { message: "Hi LDC Travel, I'd like to ask about a travel inquiry." });
 
   return (
-    <>
-      <Header activePath="/contact" socialLinks={site.socialLinks} whatsappConfig={whatsappConfig} />
+    <DesignYourTripProvider whatsappHref={createWhatsAppUrl(whatsappConfig)}>
+      <Header activePath="/contact" socialLinks={site.socialLinks} />
       <main>
         <section className="page-title-section" aria-labelledby="contact-page-title">
           <div className="site-container page-title-inner">
@@ -121,6 +122,6 @@ export function ContactPage({ site, whatsappConfig }: { site: SiteViewModel; wha
       </main>
       <Footer site={site} whatsappConfig={whatsappConfig} />
       <FloatingWhatsApp whatsappConfig={whatsappConfig} />
-    </>
+    </DesignYourTripProvider>
   );
 }

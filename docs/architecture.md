@@ -4,7 +4,7 @@
 
 LDC Travel is a modular-monolith Next.js application with Payload embedded for admin-only editorial management. The public experience is now destination-first lead generation: visitors explore a focused set of international destinations, send an inquiry, and continue with a human conversation. There is no public programs catalog, package pricing, events/festivals surface, booking engine, checkout, payment system, or customer account system.
 
-The public routes implemented are `/`, `/contact`, `/destinations`, and the six approved destination detail routes under `/destinations/[slug]`.
+The public routes implemented are `/`, `/about`, `/contact`, `/destinations`, and the six approved destination detail routes under `/destinations/[slug]`.
 
 ## Current destination direction
 
@@ -27,7 +27,7 @@ The authoritative brand colors are `#336DD5` blue and `#FFD200` yellow, with coo
 - `ldc-logo-yellow.webp` — blue footer and strong blue surfaces
 - `ldc-logo-black.webp` — available for future light-background treatments
 
-The existing icon-only favicon remains in place because the new supplied files are full lockups rather than a dedicated icon mark; cropping a wordmark into a favicon would distort the approved asset.
+The favicon and Apple icon now use a transparent, square crop of the recognizable emblem from `ldc-logo-blue.webp`; the original full-lockup source remains untouched.
 
 ## CMS ownership
 
