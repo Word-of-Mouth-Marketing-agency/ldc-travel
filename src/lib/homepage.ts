@@ -2,16 +2,13 @@ import {
   demoHomepage,
   type Cta,
   type DestinationViewModel,
-  type EventViewModel,
   type FaqViewModel,
-  type GuideViewModel,
   type HomepageViewModel,
   type ImageSource,
-  type OfferViewModel,
-  type ProgramViewModel,
+  type InspirationItem,
   type SiteViewModel,
   type SocialLink,
-  type TestimonialViewModel,
+  type WhyLdcItem,
 } from "../content/homepage-demo";
 import { createWhatsAppUrl, type WhatsAppConfig } from "./whatsapp";
 import { getLaunchMarketCode } from "./markets";
@@ -42,9 +39,6 @@ const asRecord = (value: unknown): RecordValue | undefined =>
 const asString = (value: unknown, fallback = "") =>
   typeof value === "string" && value.trim() ? value.trim() : fallback;
 
-const asNumber = (value: unknown, fallback = 0) =>
-  typeof value === "number" && Number.isFinite(value) ? value : fallback;
-
 const asRecords = (value: unknown) =>
   Array.isArray(value) ? value.map(asRecord).filter((item): item is RecordValue => Boolean(item)) : [];
 
@@ -72,7 +66,9 @@ function readImage(value: unknown, fallback: ImageSource): ImageSource {
   const record = asRecord(value);
   const directUrl = readSafeMediaUrl(asString(record?.imageUrl));
   const media = asRecord(record?.coverImage) ?? asRecord(record?.image) ?? record;
-  const mediaUrl = readSafeMediaUrl(asString(media?.url)) || readSafeMediaUrl(asString(asRecord(media?.sizes)?.card && asRecord(asRecord(media?.sizes)?.card)?.url));
+  const sizes = asRecord(media?.sizes);
+  const cardSize = asRecord(sizes?.card);
+  const mediaUrl = readSafeMediaUrl(asString(media?.url)) || readSafeMediaUrl(asString(cardSize?.url));
 
   return {
     src: mediaUrl || directUrl || fallback.src,
@@ -88,22 +84,6 @@ function readRichText(value: unknown): string {
   if (text) return text;
 
   return asRecords(record.children).map(readRichText).filter(Boolean).join(" ");
-}
-
-function formatDate(value: string, fallback: string) {
-  if (!value) return fallback;
-  const date = new Date(value);
-  if (Number.isNaN(date.valueOf())) return fallback;
-  return new Intl.DateTimeFormat("en-EG", { month: "long", day: "numeric", year: "numeric" }).format(date);
-}
-
-function dateParts(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.valueOf())) return { month: "", day: "" };
-  return {
-    month: new Intl.DateTimeFormat("en-EG", { month: "short" }).format(date).toUpperCase(),
-    day: new Intl.DateTimeFormat("en-EG", { day: "2-digit" }).format(date),
-  };
 }
 
 export function buildSite(raw: unknown): SiteViewModel {
@@ -151,99 +131,70 @@ function ctaFromCms(value: unknown, fallback: Cta, whatsappConfig: WhatsAppConfi
 function mapDestination(value: unknown, index: number): DestinationViewModel {
   const record = asRecord(value);
   const fallback = demoHomepage.destinations[index % demoHomepage.destinations.length];
-  const slug = asString(record?.slug);
+
   return {
     title: asString(record?.title, fallback.title),
     country: asString(record?.country, fallback.country),
-    regionOrCity: asString(record?.regionOrCity) || undefined,
+    regionOrCity: asString(record?.regionOrCity, fallback.regionOrCity),
     summary: asString(record?.summary, fallback.summary),
     image: readImage(record, fallback.image),
-    href: slug ? `/destinations/${slug}` : fallback.href,
+    // Detail routes are intentionally deferred to Phase 2.
+    href: "#",
   };
 }
 
-function mapProgram(value: unknown, index: number, whatsappConfig: WhatsAppConfig): ProgramViewModel {
+function mapWhyLdc(value: unknown): HomepageViewModel["whyLdc"] {
   const record = asRecord(value);
-  const fallback = demoHomepage.programs[index % demoHomepage.programs.length];
-  const destination = asRecords(record?.destinations)[0];
-  const price = asRecord(record?.startingPrice);
-  const title = asString(record?.title, fallback.title);
-  const slug = asString(record?.slug);
-  const durationDays = asNumber(record?.durationDays, fallback.durationDays);
-  const unit = asString(price?.unit, fallback.unit);
+  const fallback = demoHomepage.whyLdc;
+  const items = asRecords(record?.items).map((item, index): WhyLdcItem => {
+    const fallbackItem = fallback.items[index % fallback.items.length];
+    return {
+      title: asString(item.title, fallbackItem.title),
+      description: asString(item.description, fallbackItem.description),
+      icon: asString(item.icon, fallbackItem.icon),
+    };
+  });
+
   return {
-    title,
-    destination: asString(destination?.title, fallback.destination),
-    summary: asString(record?.summary, fallback.summary),
-    durationDays,
-    durationLabel: asString(record?.durationLabel, fallback.durationLabel || `${durationDays} days`),
-    amount: asNumber(price?.amount, fallback.amount),
-    currency: asString(price?.currency, fallback.currency),
-    unit,
-    priceQualifier: asString(price?.note, fallback.priceQualifier || (unit === "person" ? "Per person" : unit)) || undefined,
-    priceNote: asString(record?.priceNote, fallback.priceNote) || undefined,
-    image: readImage(record, fallback.image),
-    href: slug ? createWhatsAppUrl(whatsappConfig, { title }) : fallback.href,
+    eyebrow: asString(record?.eyebrow, fallback.eyebrow),
+    headline: asString(record?.headline, fallback.headline),
+    description: asString(record?.description, fallback.description),
+    items: items.length ? items : fallback.items,
   };
 }
 
-function mapOffer(value: unknown, whatsappConfig: WhatsAppConfig): OfferViewModel | undefined {
+function mapInspiration(value: unknown): HomepageViewModel["inspiration"] {
   const record = asRecord(value);
-  if (!record) return undefined;
-  const title = asString(record.title, demoHomepage.offer?.title ?? "Seasonal offer");
-  const fallback = demoHomepage.offer;
-  if (!fallback) return undefined;
+  const fallback = demoHomepage.inspiration;
+  const items = asRecords(record?.items).map((item, index): InspirationItem => {
+    const fallbackItem = fallback.items[index % fallback.items.length];
+    return {
+      title: asString(item.title, fallbackItem.title),
+      label: asString(item.label, fallbackItem.label),
+      description: asString(item.description, fallbackItem.description),
+      image: readImage(item, fallbackItem.image),
+      href: "#",
+    };
+  });
+
   return {
-    title,
-    badge: asString(record.badge, fallback.badge),
-    headline: asString(record.headline, fallback.headline),
-    description: asString(record.description, fallback.description),
-    discountLabel: asString(record.discountLabel, fallback.discountLabel),
-    image: readImage(record, fallback.image ?? demoHomepage.hero.image),
-    cta: { label: asString(record.ctaLabel, fallback.cta.label), href: createWhatsAppUrl(whatsappConfig, { title }), external: true },
+    eyebrow: asString(record?.eyebrow, fallback.eyebrow),
+    headline: asString(record?.headline, fallback.headline),
+    description: asString(record?.description, fallback.description),
+    items: items.length ? items : fallback.items,
   };
 }
 
-function mapEvent(value: unknown, index: number, whatsappConfig: WhatsAppConfig): EventViewModel {
+function mapDestinationCta(value: unknown, whatsappConfig: WhatsAppConfig): HomepageViewModel["destinationCta"] {
   const record = asRecord(value);
-  const fallback = demoHomepage.events[index % demoHomepage.events.length];
-  const title = asString(record?.title, fallback.title);
-  const startDate = asString(record?.startDate);
-  const parts = dateParts(startDate);
-  return {
-    title,
-    location: asString(record?.location, fallback.location),
-    summary: asString(record?.summary, fallback.summary),
-    date: formatDate(startDate, fallback.date),
-    month: parts.month || fallback.month,
-    day: parts.day || fallback.day,
-    image: readImage(record, fallback.image),
-    cta: { label: "Ask about this event", href: createWhatsAppUrl(whatsappConfig, { title }), external: true },
-  };
-}
+  const fallback = demoHomepage.destinationCta;
 
-function mapTestimonial(value: unknown, index: number): TestimonialViewModel {
-  const record = asRecord(value);
-  const fallback = demoHomepage.testimonials[index % demoHomepage.testimonials.length];
   return {
-    displayName: asString(record?.displayName, fallback.displayName),
-    location: asString(record?.location, fallback.location),
-    quote: asString(record?.quote, fallback.quote),
-    rating: Math.min(5, Math.max(1, asNumber(record?.rating, fallback.rating))),
-  };
-}
-
-function mapGuide(value: unknown, index: number): GuideViewModel {
-  const record = asRecord(value);
-  const fallback = demoHomepage.guides[index % demoHomepage.guides.length];
-  const slug = asString(record?.slug);
-  return {
-    title: asString(record?.title, fallback.title),
-    category: asString(record?.category, fallback.category),
-    excerpt: asString(record?.excerpt, fallback.excerpt),
-    publishedAt: asString(record?.publishedAt, fallback.publishedAt),
-    image: readImage(record, fallback.image),
-    href: slug ? `/blog/${slug}` : fallback.href,
+    eyebrow: asString(record?.eyebrow, fallback.eyebrow),
+    headline: asString(record?.headline, fallback.headline),
+    description: asString(record?.description, fallback.description),
+    primaryCta: ctaFromCms(record?.primaryCta, fallback.primaryCta, whatsappConfig),
+    secondaryCta: ctaFromCms(record?.secondaryCta, fallback.secondaryCta, whatsappConfig),
   };
 }
 
@@ -271,17 +222,13 @@ export async function getHomepageData(): Promise<HomepageViewModel> {
     ]);
     const launchMarket = marketResult.docs[0];
     if (!launchMarket) return developmentFallback();
+
     const marketId = String(launchMarket.id);
     const site = buildSite(settings);
     const whatsappConfig = buildWhatsappConfig(site);
     const homepageRecord = asRecord(homepage);
     const hero = asRecord(homepageRecord?.hero);
     const destinations = asRecords(homepageRecord?.featuredDestinations).filter((item) => isVisibleInMarket(item, marketId));
-    const programs = asRecords(homepageRecord?.popularPrograms).filter((item) => isVisibleInMarket(item, marketId));
-    const events = asRecords(homepageRecord?.upcomingEvents).filter((item) => isVisibleInMarket(item, marketId));
-    const activeOffer = asRecord(homepageRecord?.activeOffer);
-    const testimonials = asRecords(homepageRecord?.featuredTestimonials);
-    const guides = asRecords(homepageRecord?.latestGuides);
     const faqs = asRecords(homepageRecord?.faqs);
 
     return {
@@ -298,11 +245,9 @@ export async function getHomepageData(): Promise<HomepageViewModel> {
         secondaryCta: ctaFromCms(hero?.secondaryCta, demoHomepage.hero.secondaryCta, whatsappConfig),
       },
       destinations: destinations.length ? destinations.map(mapDestination) : demoHomepage.destinations,
-      programs: programs.length ? programs.map((item, index) => mapProgram(item, index, whatsappConfig)) : demoHomepage.programs,
-      offer: activeOffer && isVisibleInMarket(activeOffer, marketId) ? mapOffer(activeOffer, whatsappConfig) ?? demoHomepage.offer : demoHomepage.offer,
-      events: events.length ? events.map((item, index) => mapEvent(item, index, whatsappConfig)) : demoHomepage.events,
-      testimonials: testimonials.length ? testimonials.map(mapTestimonial) : demoHomepage.testimonials,
-      guides: guides.length ? guides.map(mapGuide) : demoHomepage.guides,
+      whyLdc: mapWhyLdc(homepageRecord?.whyLdc),
+      inspiration: mapInspiration(homepageRecord?.inspiration),
+      destinationCta: mapDestinationCta(homepageRecord?.destinationCta, whatsappConfig),
       faqs: faqs.length ? faqs.map(mapFaq) : demoHomepage.faqs,
     };
   } catch (error) {

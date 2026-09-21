@@ -1,8 +1,19 @@
-# LDC Travel Foundation Specification
+# LDC Travel Foundation and Destination-First Phase 1 Specification
 
 ## Status
 
-Foundation, Phase 1 homepage, and Contact page implementation complete at source level. The approved homepage screenshot remains the visual direction and review reference for the shipped `/` route.
+Foundation and the original program-based homepage are complete at source level. The current authoritative Phase 1 direction is the destination-first homepage redesign described below; the original screenshot/composition is historical reference only.
+
+## Current authoritative direction
+
+- Public homepage content is destination-only: Turkey, Russia, Bali, Georgia, Indonesia, and Thailand.
+- Bali and Indonesia remain separate destinations.
+- Programs, package pricing, prices, events/festivals, seasonal offers, booking/search widgets, checkout, and accounts are not public homepage concepts.
+- Brand tokens are `#336DD5` blue and `#FFD200` yellow.
+- Homepage structure is Header, Hero, Destinations, Why LDC, Destination Inspiration, destination CTA, FAQ, and Footer.
+- Available demo testimonials and guides are not shown because they are placeholders and do not strengthen the redesign.
+- Destination detail/listing routes and destination inquiry forms remain Phase 2 scope.
+- The supplied logos are copied as `public/brand/ldc-logo-blue.webp`, `ldc-logo-yellow.webp`, and `ldc-logo-black.webp`.
 
 ## Assumptions and decisions
 
@@ -221,6 +232,15 @@ Store the base number and default message in Site Settings. Expose a single help
 - PostgreSQL is available locally, but Payload admin, seed, and CMS-backed homepage behavior remain pending safe local credentials; no credentials were invented.
 - The ignored `next-scaffold` temporary directory could not be removed because its contents remain locked; it is left untouched.
 
-## Phase 1 homepage implementation scope
+## Historical homepage implementation scope (superseded)
 
 Phase 1 ships `/` using CMS-driven sections in this order: Header, Hero, FeaturedDestinations, PopularPrograms, ActiveOffer, UpcomingEvents, Testimonials, LatestGuides, FAQ, Footer. The focused `/contact` route is now implemented as the next public conversion surface; all other routes remain navigation targets/placeholders until separately scoped.
+
+## Destination-first Phase 1 completion state
+
+- [x] Replaced the public homepage composition with Header, Hero, six Destinations, Why LDC, Destination Inspiration, destination CTA, FAQ, and Footer.
+- [x] Removed old programs, offers, events, prices, testimonials, and guides from homepage usage and preview data without deleting their collections.
+- [x] Added the destination-first Homepage global fields and regenerated Payload types.
+- [x] Added the supplied blue/yellow logo variants and updated shared header/footer usage.
+- [x] Preserved server-side preview mode and strict production CMS-unavailable behavior.
+- [x] Kept destination detail routes, destination research, destination inquiry forms, deployment, and production PostgreSQL out of scope.

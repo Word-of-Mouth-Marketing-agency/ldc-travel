@@ -59,6 +59,18 @@
 - [x] Generate Payload types and verify the import-map generator after schema registration.
 - [ ] Verify live Contact persistence and Payload admin workflow after safe local credentials are configured.
 
+## Destination-first Phase 1 redesign
+
+- [x] Review the current homepage and mobile experience through the UI/UX design route.
+- [x] Replace the old public homepage sections with destination-first structure.
+- [x] Include exactly Turkey, Russia, Bali, Georgia, Indonesia, and Thailand in preview/demo data.
+- [x] Remove public homepage usage and seed creation for programs, offers, events, testimonials, and guides.
+- [x] Add Why LDC, inspiration, and destination CTA CMS fields.
+- [x] Apply #336DD5 / #FFD200 tokens, scrollbar, shared chrome, SEO copy, and supplied logos.
+- [x] Keep legacy collections intact for a later explicit schema migration.
+- [x] Preserve UI_PREVIEW_MODE and strict production CMS-unavailable behavior.
+- [x] Keep destination detail/listing pages, research, forms, deployment, and production PostgreSQL out of scope.
+
 ## Verification
 
 - [x] Run dependency install successfully.

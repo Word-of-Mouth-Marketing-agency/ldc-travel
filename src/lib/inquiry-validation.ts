@@ -1,10 +1,7 @@
 export const inquiryTypeOptions = [
   { label: "General Inquiry", value: "general" },
-  { label: "Travel Program", value: "program" },
   { label: "Destination", value: "destination" },
-  { label: "Festival / Event", value: "event" },
-  { label: "Custom Trip", value: "custom-trip" },
-  { label: "Corporate / Group Travel", value: "corporate-group" },
+  { label: "Custom travel request", value: "custom-trip" },
   { label: "Other", value: "other" },
 ] as const;
 

@@ -39,7 +39,7 @@ function ContactMethods({ site, whatsappHref }: { site: SiteViewModel; whatsappH
           </a>
           <a className="contact-method" href={`mailto:${site.reservationsEmail}`}>
             <span className="contact-method-icon"><Icon name="mail" size={25} /></span>
-            <span><strong>Reservations</strong><small>Trip and program inquiries</small></span>
+            <span><strong>Reservations</strong><small>Destination questions</small></span>
             <Icon name="arrow" />
           </a>
           <a className="contact-method" href={`mailto:${site.salesEmail}`}>

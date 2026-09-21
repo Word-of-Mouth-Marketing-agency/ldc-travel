@@ -1,14 +1,16 @@
 import {
   ArrowRight,
-  CalendarDays,
+  ArrowUpRight,
   CheckCircle2,
   ChevronDown,
-  Clock3,
+  Compass,
+  Globe2,
   Mail,
+  MessageCircle,
   MapPin,
   Menu,
-  Plane,
   Quote,
+  Sparkles,
   Star,
   X,
   type LucideIcon,
@@ -16,30 +18,34 @@ import {
 
 type IconName =
   | "arrow"
-  | "calendar"
+  | "arrow-up-right"
   | "check"
   | "chevron"
-  | "clock"
+  | "compass"
   | "close"
+  | "globe"
   | "mail"
+  | "message"
   | "menu"
   | "pin"
-  | "plane"
   | "quote"
+  | "sparkles"
   | "star";
 
 const icons: Record<IconName, LucideIcon> = {
   arrow: ArrowRight,
-  calendar: CalendarDays,
+  "arrow-up-right": ArrowUpRight,
   check: CheckCircle2,
   chevron: ChevronDown,
-  clock: Clock3,
+  compass: Compass,
   close: X,
+  globe: Globe2,
   mail: Mail,
+  message: MessageCircle,
   menu: Menu,
   pin: MapPin,
-  plane: Plane,
   quote: Quote,
+  sparkles: Sparkles,
   star: Star,
 };
 

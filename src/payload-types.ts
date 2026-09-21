@@ -636,7 +636,7 @@ export interface Inquiry {
   fullName: string;
   email?: string | null;
   phone?: string | null;
-  inquiryType: 'general' | 'program' | 'destination' | 'event' | 'custom-trip' | 'corporate-group' | 'other';
+  inquiryType: 'general' | 'destination' | 'custom-trip' | 'other';
   subject?: string | null;
   message: string;
   source: string;
@@ -1205,7 +1205,7 @@ export interface Homepage {
     supportingCopy: string;
     image?: (number | null) | Media;
     /**
-     * Optional remote demo image URL. Prefer a Media upload for production content.
+     * Optional approved demo image URL. Prefer a Media upload for production content.
      */
     imageUrl?: string | null;
     primaryCta: {
@@ -1220,11 +1220,55 @@ export interface Homepage {
     };
   };
   featuredDestinations?: (number | Destination)[] | null;
-  popularPrograms?: (number | TravelProgram)[] | null;
-  activeOffer?: (number | null) | Offer;
-  upcomingEvents?: (number | Event)[] | null;
-  featuredTestimonials?: (number | Testimonial)[] | null;
-  latestGuides?: (number | Guide)[] | null;
+  whyLdc?: {
+    eyebrow?: string | null;
+    headline?: string | null;
+    description?: string | null;
+    items?:
+      | {
+          title: string;
+          description: string;
+          /**
+           * Use a shared icon key such as globe, compass, or message.
+           */
+          icon: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  inspiration?: {
+    eyebrow?: string | null;
+    headline?: string | null;
+    description?: string | null;
+    items?:
+      | {
+          title: string;
+          label: string;
+          description: string;
+          image?: (number | null) | Media;
+          /**
+           * Optional approved demo image URL. Prefer a Media upload for production content.
+           */
+          imageUrl?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  destinationCta: {
+    eyebrow?: string | null;
+    headline?: string | null;
+    description?: string | null;
+    primaryCta: {
+      label: string;
+      kind: 'whatsapp' | 'internal' | 'external';
+      url?: string | null;
+    };
+    secondaryCta: {
+      label: string;
+      kind: 'whatsapp' | 'internal' | 'external';
+      url?: string | null;
+    };
+  };
   faqs?: (number | Faq)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1302,11 +1346,59 @@ export interface HomepageSelect<T extends boolean = true> {
             };
       };
   featuredDestinations?: T;
-  popularPrograms?: T;
-  activeOffer?: T;
-  upcomingEvents?: T;
-  featuredTestimonials?: T;
-  latestGuides?: T;
+  whyLdc?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  inspiration?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              label?: T;
+              description?: T;
+              image?: T;
+              imageUrl?: T;
+              id?: T;
+            };
+      };
+  destinationCta?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        primaryCta?:
+          | T
+          | {
+              label?: T;
+              kind?: T;
+              url?: T;
+            };
+        secondaryCta?:
+          | T
+          | {
+              label?: T;
+              kind?: T;
+              url?: T;
+            };
+      };
   faqs?: T;
   updatedAt?: T;
   createdAt?: T;

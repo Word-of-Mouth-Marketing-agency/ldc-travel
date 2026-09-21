@@ -68,3 +68,14 @@
 ## Definition of done
 
 The foundation and Phase 1 criteria in `specs/001-foundation/spec.md` are met, checks are recorded, the source asset folder is unchanged, only `/` is implemented, the source design direction is preserved, and no deployment work has started.
+
+## Destination-first Phase 1 redesign
+
+23. Review the existing homepage, mobile navigation, supplied logos, new blue/yellow identity, and destination-only business model through the UI/UX design route.
+24. Replace the public homepage composition with a destination-led hero, exactly six destinations, Why LDC, inspiration, destination CTA, FAQ, and footer.
+25. Remove obsolete homepage CMS relationships and public preview data for programs, offers, events, testimonials, and guides without deleting their collections.
+26. Add CMS fields for Why LDC, destination inspiration, destination CTA, and selected destinations; regenerate types/import map.
+27. Copy supplied logo variants, update shared chrome, refresh SEO copy, scrollbar tokens, contact labels, and durable documentation.
+28. Validate preview mode without PostgreSQL, strict production fallback behavior, responsive layouts, accessibility, typecheck, lint, build, and diff hygiene.
+
+The next scope is Phase 2 destination listing/detail pages. Do not create those routes during Phase 1.

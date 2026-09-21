@@ -9,9 +9,8 @@ import { WhatsAppIcon } from "./WhatsAppIcon";
 import type { SiteViewModel } from "../../content/homepage-demo";
 
 const groups = [
-  { title: "Explore", links: [{ label: "Destinations", href: "#" }, { label: "Travel Programs", href: "#" }, { label: "Offers", href: "#" }] },
-  { title: "Discover", links: [{ label: "Festivals & Events", href: "#" }, { label: "Travel Guides", href: "#" }, { label: "About Us", href: "#" }] },
-  { title: "Connect", links: [{ label: "Contact Us", href: "/contact" }, { label: "Our Services", href: "#" }] },
+  { title: "Explore", links: [{ label: "Destinations", href: "/#destinations" }, { label: "Why LDC Travel", href: "/#why-ldc" }, { label: "Inspiration", href: "/#inspiration" }] },
+  { title: "Company", links: [{ label: "Home", href: "/" }, { label: "Contact", href: "/contact" }] },
 ];
 
 export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
@@ -19,7 +18,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
     <footer className="site-footer">
       <div className="site-container footer-main">
         <div className="footer-brand-column">
-          <Image src="/brand/white-logo.webp" alt="LDC Travel" width={88} height={88} className="footer-logo" />
+          <Image src="/brand/ldc-logo-yellow.webp" alt="LDC Travel" width={176} height={112} className="footer-logo" />
           <p className="footer-tagline">{site.tagline}</p>
           <p>{site.footerCopy}</p>
           <div className="social-links" aria-label="LDC Travel social links">

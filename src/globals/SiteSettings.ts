@@ -29,8 +29,8 @@ export const SiteSettings: GlobalConfig = {
       name: "whatsapp",
       type: "group",
       fields: [
-        { name: "defaultMessage", type: "textarea", defaultValue: "Hi LDC Travel, I would like to know more about your travel programs." },
-        { name: "contextTemplate", type: "textarea", defaultValue: "Hi LDC Travel, I'm interested in {{title}} and would like more information." },
+        { name: "defaultMessage", type: "textarea", defaultValue: "Hi LDC Travel, I'd like to explore one of your destinations." },
+        { name: "contextTemplate", type: "textarea", defaultValue: "Hi LDC Travel, I'm interested in exploring {{title}}. Please share more information." },
       ],
     },
     {

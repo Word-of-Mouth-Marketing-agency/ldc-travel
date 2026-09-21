@@ -16,6 +16,15 @@ const ctaFields = [
   { name: "url", type: "text" as const },
 ];
 
+const imageFields = [
+  { name: "image", type: "upload" as const, relationTo: "media" as const },
+  {
+    name: "imageUrl",
+    type: "text" as const,
+    admin: { description: "Optional approved demo image URL. Prefer a Media upload for production content." },
+  },
+];
+
 export const Homepage: GlobalConfig = {
   slug: "homepage",
   admin: { group: "Configuration" },
@@ -31,22 +40,60 @@ export const Homepage: GlobalConfig = {
         { name: "eyebrow", type: "text", required: true },
         { name: "headline", type: "text", required: true },
         { name: "supportingCopy", type: "textarea", required: true },
-        { name: "image", type: "upload", relationTo: "media" },
-        {
-          name: "imageUrl",
-          type: "text",
-          admin: { description: "Optional remote demo image URL. Prefer a Media upload for production content." },
-        },
+        ...imageFields,
         { name: "primaryCta", type: "group", fields: ctaFields },
         { name: "secondaryCta", type: "group", fields: ctaFields },
       ],
     },
     { name: "featuredDestinations", type: "relationship", relationTo: "destinations", hasMany: true },
-    { name: "popularPrograms", type: "relationship", relationTo: "travel-programs", hasMany: true },
-    { name: "activeOffer", type: "relationship", relationTo: "offers" },
-    { name: "upcomingEvents", type: "relationship", relationTo: "events", hasMany: true },
-    { name: "featuredTestimonials", type: "relationship", relationTo: "testimonials", hasMany: true },
-    { name: "latestGuides", type: "relationship", relationTo: "guides", hasMany: true },
+    {
+      name: "whyLdc",
+      type: "group",
+      fields: [
+        { name: "eyebrow", type: "text" },
+        { name: "headline", type: "text" },
+        { name: "description", type: "textarea" },
+        {
+          name: "items",
+          type: "array",
+          fields: [
+            { name: "title", type: "text", required: true },
+            { name: "description", type: "textarea", required: true },
+            { name: "icon", type: "text", required: true, admin: { description: "Use a shared icon key such as globe, compass, or message." } },
+          ],
+        },
+      ],
+    },
+    {
+      name: "inspiration",
+      type: "group",
+      fields: [
+        { name: "eyebrow", type: "text" },
+        { name: "headline", type: "text" },
+        { name: "description", type: "textarea" },
+        {
+          name: "items",
+          type: "array",
+          fields: [
+            { name: "title", type: "text", required: true },
+            { name: "label", type: "text", required: true },
+            { name: "description", type: "textarea", required: true },
+            ...imageFields,
+          ],
+        },
+      ],
+    },
+    {
+      name: "destinationCta",
+      type: "group",
+      fields: [
+        { name: "eyebrow", type: "text" },
+        { name: "headline", type: "text" },
+        { name: "description", type: "textarea" },
+        { name: "primaryCta", type: "group", fields: ctaFields },
+        { name: "secondaryCta", type: "group", fields: ctaFields },
+      ],
+    },
     { name: "faqs", type: "relationship", relationTo: "faqs", hasMany: true },
   ],
 };

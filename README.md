@@ -1,8 +1,8 @@
 # LDC Travel
 
-Production foundation for LDC Travel’s Egypt-first tourism marketing website.
+Destination-first production foundation for LDC Travel’s Egypt-first tourism marketing website.
 
-This repository contains the application foundation, Payload CMS schema, official brand assets, the Phase 1 homepage implementation for `/`, and the Contact page/inquiry flow at `/contact`.
+This repository contains the application foundation, Payload CMS schema, official brand assets, the destination-first Phase 1 homepage implementation for `/`, and the Contact page/inquiry flow at `/contact`.
 
 ## Stack
 
@@ -52,7 +52,7 @@ pnpm generate:importmap
 
 - `src/app/(frontend)` — public application route group, homepage route, and Contact page/server action.
 - `src/components` — server-first homepage sections plus isolated mobile navigation and GSAP text-reveal islands.
-- `src/content/homepage-demo.ts` — isolated development-only fallback/demo view model used when a local CMS database is not configured.
+- `src/content/homepage-demo.ts` — isolated destination-first development-only fallback/demo view model used when a local CMS database is not configured.
 - `src/app/(payload)` — Payload admin/API integration.
 - `src/collections` — admin users, media, markets, and editorial collections.
 - `src/globals` — Site Settings and Homepage globals.
@@ -67,13 +67,13 @@ The Contact page uses Site Settings for verified LDC contact/social details. Its
 
 ## Product boundaries
 
-The site is lead-generation only: no booking engine, checkout, payments, customer accounts, or public CMS registration. WhatsApp is the primary CTA. The launch market is Egypt; Saudi Arabia is a future market and is not exposed in current public content. The current language is English only, with logical layout choices preserved for later RTL support.
+The site is destination-led lead generation only: no travel programs, package pricing, events, booking engine, checkout, payments, customer accounts, or public CMS registration are exposed on the public homepage. WhatsApp is the primary CTA. The launch market is Egypt; Saudi Arabia is a future market and is not exposed in current public content. The current language is English only, with logical layout choices preserved for later RTL support.
 
-The approved homepage screenshot at `A:/Projects/Travel-content/homepage-design.png` is the visual direction for the shipped Phase 1 homepage. Its newsletter section is excluded, and no booking/search widget is included.
+The new authoritative Phase 1 direction is a destination-first homepage using `#336DD5` blue and `#FFD200` yellow. It includes a split hero, exactly six approved destinations (Turkey, Russia, Bali, Georgia, Indonesia, Thailand), Why LDC positioning, destination inspiration, a destination CTA, FAQ, and footer. The prior screenshot and its newsletter/program/event composition are historical reference only; no newsletter or booking/search widget is included.
 
 ## Homepage development
 
-With `DATABASE_URL` and `PAYLOAD_SECRET` configured for a local database, run `pnpm seed` to create missing Egypt-only demo records and homepage relationships. Existing records are preserved on repeated runs. During development without a database, `/` renders the isolated demo view model so the frontend can be developed and reviewed safely.
+With `DATABASE_URL` and `PAYLOAD_SECRET` configured for a local database, run `pnpm seed` to create missing Egypt-only market/destination/FAQ records and destination-first homepage relationships. Existing editorial records are preserved on repeated runs; the seed does not create new programs, offers, events, testimonials, or guides. During development without a database, `/` renders the isolated demo view model so the frontend can be developed and reviewed safely.
 
 The demo view model is development-only by default. For a temporary database-free Vercel client UI preview, set the server-side `UI_PREVIEW_MODE=true`; this explicit flag allows the public homepage and Contact page to use the safe demo view model without PostgreSQL. Never enable it on the real production VPS site. In production without that flag, a missing database configuration, unavailable Payload connection, or missing public Egypt market causes the homepage to render an explicit unavailable state; it never silently serves demo content.
 

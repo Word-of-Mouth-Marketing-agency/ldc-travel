@@ -94,11 +94,8 @@ export function ContactForm({ whatsappHref }: { whatsappHref: string }) {
             <label htmlFor="contact-inquiryType">Inquiry type <span aria-hidden="true">*</span></label>
             <select id="contact-inquiryType" name="inquiryType" defaultValue="general" required aria-invalid={Boolean(errors.inquiryType)} aria-describedby={errors.inquiryType ? "contact-inquiryType-error" : undefined}>
               <option value="general">General Inquiry</option>
-              <option value="program">Travel Program</option>
               <option value="destination">Destination</option>
-              <option value="event">Festival / Event</option>
-              <option value="custom-trip">Custom Trip</option>
-              <option value="corporate-group">Corporate / Group Travel</option>
+              <option value="custom-trip">Custom travel request</option>
               <option value="other">Other</option>
             </select>
             <FieldError id="contact-inquiryType-error" message={errors.inquiryType} />

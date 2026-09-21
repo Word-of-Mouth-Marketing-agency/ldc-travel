@@ -11,7 +11,7 @@ export const metadata: Metadata = buildPageMetadata({
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   pathname: "/contact",
   title: "Contact LDC Travel | Tourism Marketing",
-  description: "Start a travel inquiry with LDC Travel from Egypt. Talk to our team about programs, destinations, festivals, and custom journeys on WhatsApp or by email.",
+  description: "Start a destination inquiry with LDC Travel from Egypt. Talk to our team about international travel ideas and custom requests on WhatsApp or by email.",
   socialImageUrl: "https://images.unsplash.com/photo-1580225495234-00e84e19c85e?auto=format&fit=crop&w=1200&q=80",
 });
 

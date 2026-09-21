@@ -76,7 +76,7 @@ export function MobileNav({ activePath = "/", items, socialLinks, whatsappHref }
           <button type="button" className="mobile-menu-backdrop" tabIndex={-1} aria-label="Close navigation menu" onClick={() => setOpen(false)} />
           <aside id="mobile-navigation" ref={drawerRef} className="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="LDC Travel navigation">
             <div className="mobile-menu-header">
-              <Image src="/brand/main-logo.webp" alt="LDC Travel" width={82} height={82} className="mobile-menu-logo" />
+              <Image src="/brand/ldc-logo-blue.webp" alt="LDC Travel" width={176} height={112} className="mobile-menu-logo" />
               <button ref={closeButtonRef} type="button" className="mobile-menu-close" aria-label="Close navigation menu" onClick={() => setOpen(false)}>
                 <Icon name="close" size={21} />
               </button>

@@ -8,6 +8,7 @@ import { WhatsAppIcon } from "./WhatsAppIcon";
 
 const navItems = [
   { label: "Home", href: "/" },
+  { label: "Destinations", href: "/#destinations" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -18,7 +19,7 @@ export function Header({ activePath = "/", socialLinks, whatsappConfig }: { acti
     <header className="site-header">
       <div className="site-container header-inner">
         <Link className="brand-link" href="/" aria-label="LDC Travel home">
-          <Image className="brand-logo" src="/brand/main-logo.webp" alt="LDC Travel" width={92} height={92} priority />
+          <Image className="brand-logo" src="/brand/ldc-logo-blue.webp" alt="LDC Travel" width={176} height={112} priority />
         </Link>
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navItems.map((item) => (

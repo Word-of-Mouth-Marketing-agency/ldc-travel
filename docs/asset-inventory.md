@@ -2,24 +2,24 @@
 
 ## Source directory
 
-`A:/Projects/Travel-content` was inspected as a read-only source/reference directory. It contains five logo files and the approved homepage reference image.
+`A:/Projects/Travel-content` remains reference-only. The newly supplied redesign logos were provided from `A:/Downloads` and copied into the project without modifying their source files.
 
-| Source file | Type / dimensions | Variant | Intended project usage | Project destination |
-|---|---|---|---|---|
-| `main-logo.webp` | WebP, 1254×1254, alpha | Full-color blue/cyan mark with navy wordmark and Tourism Marketing line | Default light-surface brand lockup; future header/footer | `public/brand/main-logo.webp` |
-| `blue-logo.webp` | WebP, 1254×1254, alpha | Navy monochrome | Light backgrounds where a single-color mark is preferred | `public/brand/blue-logo.webp` |
-| `cyan-logo.webp` | WebP, 1254×1254, alpha | Cyan monochrome | Brand accent treatments and light surfaces with sufficient contrast | `public/brand/cyan-logo.webp` |
-| `orange-logo.webp` | WebP, 1254×1254, alpha | Orange monochrome | Accent-only placements where navy/cyan contrast is not appropriate | `public/brand/orange-logo.webp` |
-| `white-logo.webp` | WebP, 1254×1254, alpha | White monochrome | Dark navy footer, photography overlays, and colored brand surfaces | `public/brand/white-logo.webp` |
-| `homepage-design.png` | PNG, 905×1738, no alpha | Approved visual reference | Architecture and Phase 1 homepage direction only; not shipped as UI content | Not copied |
+| Source file | Variant | Intended project usage | Project destination |
+|---|---|---|---|
+| `A:/Downloads/ldc-logo-blue.webp` | Blue full lockup | Light header and mobile drawer | `public/brand/ldc-logo-blue.webp` |
+| `A:/Downloads/ldc-logo-yellow.webp` | Yellow full lockup | Blue footer and strong blue surfaces | `public/brand/ldc-logo-yellow.webp` |
+| `A:/Downloads/ldc-logo-black.webp` | Black full lockup | Available for future light-background treatments | `public/brand/ldc-logo-black.webp` |
+| `public/hero-travel.webp` | Supplied lake/mountain hero photograph | Homepage hero fallback and preview image | `public/hero-travel.webp` |
 
-## Selection notes
+The existing five legacy brand files in `public/brand/` remain untouched for rollback/reference compatibility. The supplied redesign files are the authoritative current public logo choices.
 
-- The light header direction in the screenshot maps to `main-logo.webp` or `blue-logo.webp`.
-- The dark footer and any future dark/photographic hero overlay map to `white-logo.webp`.
-- The monochrome cyan and orange variants are available for intentional contrast/accent contexts; they should not be recolored or used as a default without a contrast check.
-- No icon-only source variant was provided. For small icon contexts, `src/app/icon.png` and `src/app/apple-icon.png` are derived from the emblem area of the official `blue-logo.webp`; the original source and copied brand assets remain unchanged.
+## Logo selection
 
-## Source integrity
+- Header: `ldc-logo-blue.webp` on white.
+- Mobile drawer: `ldc-logo-blue.webp` on white.
+- Footer: `ldc-logo-yellow.webp` on `#173C86` blue.
+- Favicon/app icon: retained existing icon-only asset because the supplied files are full lockups and no dedicated new emblem file was provided. The wordmark was not cropped or distorted.
 
-No files in `A:/Projects/Travel-content` were modified or deleted. The project contains copies of only the five logo variants needed for the foundation.
+## Remote imagery
+
+Demo destination and inspiration imagery uses explicit Unsplash image IDs already allowed by the Next Image configuration. Production editors should use Payload Media uploads. The source directory and supplied source files are not modified.

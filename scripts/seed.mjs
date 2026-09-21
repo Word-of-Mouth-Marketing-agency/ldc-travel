@@ -32,6 +32,7 @@ async function ensure(collection, field, value, data) {
     console.log(`skip ${collection}:${value}`);
     return existing;
   }
+
   const created = await payload.create({ collection, data });
   console.log(`create ${collection}:${value}`);
   return created;
@@ -57,20 +58,12 @@ const egypt = await ensure("markets", "code", "EG", {
 
 const marketId = egypt.id;
 const destinationSeeds = [
-  ["cairo", { title: "Cairo", country: "Egypt", regionOrCity: "Cairo", summary: "Layered history, generous hospitality, and a city that stays awake.", imageUrl: image("photo-1503177119275-0aa32b3a9368"), featured: true }],
-  ["paris", { title: "Paris", country: "France", regionOrCity: "Paris", summary: "Art, food, and unforgettable city walks.", imageUrl: image("photo-1502602898657-3e91760cbb34"), featured: true }],
-  ["maldives", { title: "Maldives", country: "Maldives", regionOrCity: "Malé Atoll", summary: "Slow mornings on clear water and white sand.", imageUrl: image("photo-1514282401047-d79a71a590e8"), featured: true }],
-  ["dubai", { title: "Dubai", country: "United Arab Emirates", regionOrCity: "Dubai", summary: "Skyline energy, desert calm, and modern luxury.", imageUrl: image("photo-1512453979798-5ea266f8880c"), featured: true }],
-  ["cappadocia", { title: "Cappadocia", country: "Türkiye", regionOrCity: "Göreme", summary: "Valleys, cave towns, and sunrise balloons.", imageUrl: image("photo-1528181304800-259b08848526"), featured: true }],
-  ["bangkok", { title: "Bangkok", country: "Thailand", regionOrCity: "Bangkok", summary: "Temple mornings, street food, and river nights.", imageUrl: image("photo-1508009603885-50cf7c579365"), featured: true }],
-  ["santorini", { title: "Santorini", country: "Greece", regionOrCity: "Cyclades", summary: "Blue domes, bright water, and unhurried island days.", imageUrl: image("photo-1570077188670-e3a8d69ac5ff"), featured: false }],
-  ["zurich", { title: "Zurich", country: "Switzerland", regionOrCity: "Zurich", summary: "Lakeside calm with easy routes into the Alps.", imageUrl: image("photo-1530789253388-582c481c54b0"), featured: false }],
-  ["bali", { title: "Bali", country: "Indonesia", regionOrCity: "Ubud", summary: "Green terraces, warm water, and room to breathe.", imageUrl: image("photo-1537996194471-e657df975ab4"), featured: false }],
-  ["phuket", { title: "Phuket", country: "Thailand", regionOrCity: "Phuket", summary: "Bright beaches, private sightseeing, and easy island days.", imageUrl: image("photo-1507525428034-b723cf961d3e"), featured: false }],
-  ["istanbul", { title: "Istanbul", country: "Turkey", regionOrCity: "Istanbul", summary: "Historic streets, Bosphorus views, and a well-paced city stay.", imageUrl: image("photo-1524231757912-21f4fe3a7200"), featured: false }],
-  ["georgia", { title: "Georgia", country: "Georgia", regionOrCity: "Tbilisi, Batumi, and Bakuriani", summary: "A three-stop journey across Tbilisi, Batumi, and Bakuriani.", imageUrl: image("photo-1569396116180-210c182bedb8"), featured: false }],
-  ["trabzon", { title: "Trabzon", country: "Turkey", regionOrCity: "Trabzon", summary: "Black Sea scenery, guided sightseeing, and a comfortable stay.", imageUrl: image("photo-1530789253388-582c481c54b0"), featured: false }],
-  ["indonesia", { title: "Indonesia", country: "Indonesia", regionOrCity: "Jakarta and Bali", summary: "A Jakarta and Bali escape with two distinct stays.", imageUrl: image("photo-1537996194471-e657df975ab4"), featured: false }],
+  ["turkey", { title: "Turkey", country: "Türkiye", regionOrCity: "Istanbul and beyond", summary: "Where layered history meets bright coastlines and generous hospitality.", imageUrl: image("photo-1524231757912-21f4fe3a7200"), featured: true }],
+  ["russia", { title: "Russia", country: "Russia", regionOrCity: "Moscow and St Petersburg", summary: "Grand city squares, rich culture, and stories around every corner.", imageUrl: image("photo-1513326738677-b964603b136d"), featured: true }],
+  ["bali", { title: "Bali", country: "Indonesia", regionOrCity: "Ubud and the coast", summary: "A restorative mix of green terraces, temple calm, and island energy.", imageUrl: image("photo-1537996194471-e657df975ab4"), featured: true }],
+  ["georgia", { title: "Georgia", country: "Georgia", regionOrCity: "Tbilisi and the Caucasus", summary: "Mountain horizons, warm streets, and a culture made for slow discovery.", imageUrl: image("photo-1569396116180-210c182bedb8"), featured: true }],
+  ["indonesia", { title: "Indonesia", country: "Indonesia", regionOrCity: "Java, Bali, and beyond", summary: "Island landscapes, ancient places, and vivid everyday life.", imageUrl: image("photo-1548013146-72479768bada"), featured: true }],
+  ["thailand", { title: "Thailand", country: "Thailand", regionOrCity: "Bangkok and the islands", summary: "Street-side flavor, temple mornings, and blue-water escapes.", imageUrl: image("photo-1508009603885-50cf7c579365"), featured: true }],
 ];
 
 const destinations = {};
@@ -78,73 +71,12 @@ for (const [slug, data] of destinationSeeds) {
   destinations[slug] = await ensure("destinations", "slug", slug, { ...data, slug, status: "published", markets: [marketId] });
 }
 
-const programSeeds = [
-  ["phuket-thailand", { title: "Phuket", summary: "Andakira Hotel Phuket Patong · Breakfast · 4 private sightseeing tours", destinations: [destinations.phuket.id], durationDays: 6, durationLabel: "6 nights", startingPrice: { amount: 35800, currency: "EGP", unit: "group", note: "For 2 people" }, priceNote: "EGP 17,900 per person", accommodation: "Andakira Hotel Phuket Patong", included: [{ item: "Accommodation with Breakfast" }, { item: "4 Private Sightseeing Tours" }, { item: "Airport Pick-up & Drop-off" }], imageUrl: image("photo-1507525428034-b723cf961d3e"), featured: true }],
-  ["istanbul-package", { title: "Istanbul Package", summary: "Hotel + breakfast · Airport service · 4 sightseeing tours", destinations: [destinations.istanbul.id], durationDays: 8, durationLabel: "8 days / 7 nights", startingPrice: { amount: 50900, currency: "EGP", unit: "group", note: "For 2 people" }, included: [{ item: "Hotel accommodation with breakfast" }, { item: "Welcome & farewell airport service" }, { item: "4 sightseeing tours" }], imageUrl: image("photo-1524231757912-21f4fe3a7200"), featured: true }],
-  ["georgia", { title: "Georgia", summary: "Tbilisi · Batumi · Bakuriani", destinations: [destinations.georgia.id], durationDays: 7, durationLabel: "7 days", startingPrice: { amount: 53000, currency: "EGP", unit: "group", note: "For 2 people" }, itinerary: [{ day: 1, title: "Tbilisi", description: "3 days in Tbilisi." }, { day: 4, title: "Batumi", description: "3 days in Batumi." }, { day: 7, title: "Bakuriani", description: "1 day in Bakuriani." }], included: [{ item: "Private car with driver daily for transfers & tours" }, { item: "Free travel insurance" }, { item: "Free SIM card" }, { item: "Accommodation with breakfast" }], imageUrl: image("photo-1569396116180-210c182bedb8"), featured: true }],
-  ["trabzon", { title: "Trabzon", summary: "Hotel + breakfast · Airport service · 4 sightseeing tours", destinations: [destinations.trabzon.id], durationDays: 8, durationLabel: "8 days / 7 nights", startingPrice: { amount: 57700, currency: "EGP", unit: "group", note: "For 2 people" }, priceNote: "One person in a double room from EGP 28,800", included: [{ item: "Hotel with Breakfast" }, { item: "Welcome and Farewell Service" }, { item: "4 Sightseeing Tours" }], imageUrl: image("photo-1530789253388-582c481c54b0"), featured: true }],
-  ["indonesia", { title: "Indonesia", summary: "Jakarta · Bali private pool villa · Prime-location hotel", destinations: [destinations.indonesia.id], durationDays: 6, durationLabel: "6 days", startingPrice: { amount: 63000, currency: "EGP", unit: "group", note: "For 2 people" }, itinerary: [{ day: 1, title: "Jakarta", description: "3 days in Jakarta." }, { day: 4, title: "Bali private pool villa", description: "1 day in Bali at a private pool villa." }, { day: 5, title: "Bali prime location hotel", description: "2 days in Bali at a hotel in a prime location." }], included: [{ item: "Private car with driver daily for transfers & tours" }, { item: "Free travel insurance" }, { item: "Free SIM card" }, { item: "Accommodation with breakfast" }], imageUrl: image("photo-1537996194471-e657df975ab4"), featured: true }],
-];
-
-const programs = {};
-for (const [slug, data] of programSeeds) {
-  programs[slug] = await ensure("travel-programs", "slug", slug, { ...data, slug, status: "published", markets: [marketId] });
-}
-
-const legacyProgramSlugs = new Set(["nile-and-pyramids-escape", "greek-islands-ease", "dubai-city-break", "switzerland-panorama", "bali-slow-days"]);
-
-const offer = await ensure("offers", "slug", "summer-escape", {
-  title: "Summer Escape",
-  slug: "summer-escape",
-  badge: "Seasonal offer",
-  headline: "Make this summer one to remember",
-  description: "Save up to 20% on selected programs when you start planning early.",
-  discountLabel: "Up to 20% off",
-  imageUrl: image("photo-1507525428034-b723cf961d3e"),
-  ctaLabel: "Explore the offer",
-  status: "published",
-  markets: [marketId],
-});
-
-const eventSeeds = [
-  ["cairo-jazz-festival", "Cairo Jazz Festival", "Cairo, Egypt", "2026-10-10", "An easygoing evening of live music and city energy.", "photo-1514525253161-7a46d19cd819"],
-  ["giza-pyramids-sound-and-light", "Giza Pyramids Sound and Light", "Giza, Egypt", "2026-10-18", "A memorable night beside one of the world's great landmarks.", "photo-1503177119275-0aa32b3a9368"],
-  ["el-gouna-film-festival", "El Gouna Film Festival", "El Gouna, Egypt", "2026-10-23", "Cinema, sea air, and a lively Red Sea atmosphere.", "photo-1540575467063-178a50c2df87"],
-  ["siwa-oasis-season", "Siwa Oasis Season", "Siwa, Egypt", "2026-11-05", "A slower cultural escape through palms, salt lakes, and desert light.", "photo-1516026672322-bc52d61a55d5"],
-  ["nile-valley-festival", "Nile Valley Festival", "Luxor, Egypt", "2026-11-20", "Local stories, open skies, and warm evenings along the Nile.", "photo-1500534623283-312aade485b7"],
-];
-const events = [];
-for (const [slug, title, location, startDate, summary, imageId] of eventSeeds) {
-  events.push(await ensure("events", "slug", slug, { title, slug, location, startDate, summary, imageUrl: image(imageId), featured: true, status: "published", markets: [marketId] }));
-}
-
-const testimonialSeeds = [
-  ["Mariam E.", "Cairo, Egypt", "The team listened carefully and made every part of our trip feel easy. We came home with wonderful memories."],
-  ["Omar K.", "Alexandria, Egypt", "Thoughtful suggestions, clear communication, and a program that fit our family perfectly."],
-  ["Noura S.", "Giza, Egypt", "From the first WhatsApp message, the planning felt personal, calm, and genuinely helpful."],
-];
-const testimonials = [];
-for (const [displayName, location, quote] of testimonialSeeds) {
-  const existing = await payload.find({ collection: "testimonials", where: { displayName: { equals: displayName } }, limit: 1, depth: 0 });
-  testimonials.push(existing.docs[0] ?? await payload.create({ collection: "testimonials", data: { displayName, location, quote, rating: 5, featured: true, isDemoContent: true } }));
-}
-
-const guideSeeds = [
-  ["how-to-plan-a-first-trip-to-egypt", "How to plan a first trip to Egypt", "Destination guide", "A relaxed starting point for choosing cities, pacing your days, and leaving room for discovery.", "photo-1503177119275-0aa32b3a9368"],
-  ["what-to-pack-for-a-red-sea-escape", "What to pack for a Red Sea escape", "Travel tips", "The practical essentials that keep beach days, boat trips, and evenings comfortable.", "photo-1507525428034-b723cf961d3e"],
-  ["a-slower-weekend-in-siwa", "A slower weekend in Siwa", "Inspiration", "Think palms, salt lakes, local food, and a little more space in the itinerary.", "photo-1548013146-72479768bada"],
-];
-const guides = [];
-for (const [slug, title, category, excerpt, imageId] of guideSeeds) {
-  guides.push(await ensure("guides", "slug", slug, { title, slug, summary: excerpt, excerpt, category, imageUrl: image(imageId), publishedAt: "2026-08-18", featured: true, status: "published", markets: [marketId] }));
-}
-
 const faqSeeds = [
-  ["How do I start planning with LDC Travel?", "Send us a WhatsApp message with the kind of trip you have in mind. We will ask a few useful questions and suggest a starting direction."],
-  ["Can you tailor a program for my family or group?", "Yes. Our programs are a starting point, and we can shape the pace, destinations, accommodation style, and experiences around your group."],
-  ["Do you offer travel programs outside Egypt?", "Yes. We curate selected international journeys for travelers departing from Egypt. Message us with your preferred destination and dates."],
-  ["Do I need to book online?", "No. This website is for exploring ideas and starting a conversation. Program details and next steps are handled directly with the LDC Travel team."],
-  ["Can I ask about a destination that is not listed?", "Absolutely. Tell us where you would like to go and we will let you know how we can help."],
+  ["How do I start planning with LDC Travel?", "Start with a WhatsApp message or the contact form. Tell us which destination interests you and what kind of experience you are imagining."],
+  ["Can you help if I am still choosing a destination?", "Yes. Share the mood, pace, and kind of places you enjoy, and our team can suggest a useful direction to explore."],
+  ["Do you arrange custom travel requests?", "We can discuss a destination-specific request and the details that matter to you before outlining the next step."],
+  ["What happens after I send an inquiry?", "A member of the LDC Travel team will follow up directly to understand your request and answer your questions."],
+  ["Can I ask about a destination that is not listed yet?", "Absolutely. The destinations shown here are our current focus, but you can still message us with another idea and we will let you know how we can help."],
 ];
 const faqs = [];
 for (const [index, [question, answer]] of faqSeeds.entries()) {
@@ -153,6 +85,11 @@ for (const [index, [question, answer]] of faqSeeds.entries()) {
 }
 
 const siteSettings = await payload.findGlobal({ slug: "site-settings", depth: 0 });
+const destinationWhatsapp = {
+  defaultMessage: "Hi LDC Travel, I'd like to explore one of your destinations.",
+  contextTemplate: "Hi LDC Travel, I'm interested in exploring {{title}}. Please share more information.",
+};
+
 if (!siteSettings.siteName) {
   await payload.updateGlobal({ slug: "site-settings", data: {
     siteName: "LDC Travel",
@@ -160,8 +97,8 @@ if (!siteSettings.siteName) {
     defaultMarket: marketId,
     canonicalUrl: siteUrl,
     contact: { whatsappDisplay: "+20 12 11118118", whatsappNumber: "201211118118", office: "15 Mahmoud Essmat Hamdy, Sheraton", reservationsEmail: "reservations@ldc-tourism.com", salesEmail: "sales@ldc-tourism.com" },
-    whatsapp: { defaultMessage: "Hi LDC Travel, I would like to know more about your travel programs.", contextTemplate: "Hi LDC Travel, I'm interested in {{title}} and would like more information." },
-    footerCopy: "Your trusted travel partner for thoughtful journeys, memorable experiences, and places worth returning to.",
+    whatsapp: destinationWhatsapp,
+    footerCopy: "Thoughtful destination guidance for travelers ready to see more of the world.",
     socialLinks: [
       { label: "Instagram", url: "https://www.instagram.com/ldctravels.eg/" },
       { label: "Facebook", url: "https://www.facebook.com/profile.php?id=61591627376189" },
@@ -171,52 +108,66 @@ if (!siteSettings.siteName) {
   } });
   console.log("create global:site-settings");
 } else {
-  console.log("skip global:site-settings");
-}
-
-const homepage = await payload.findGlobal({ slug: "homepage", depth: 0 });
-const currentProgramIds = Array.isArray(homepage.popularPrograms)
-  ? homepage.popularPrograms.map((item) => typeof item === "object" && item !== null ? item.id : item).filter(Boolean).map(String)
-  : [];
-const legacyPrograms = await payload.find({ collection: "travel-programs", where: { slug: { in: Array.from(legacyProgramSlugs) } }, limit: 50, depth: 0 });
-const legacyProgramIds = new Set(legacyPrograms.docs.map((item) => String(item.id)));
-const canReplaceLegacyHomepagePrograms = currentProgramIds.length === 0 || currentProgramIds.every((id) => legacyProgramIds.has(id));
-const homepageHero = homepage.hero && typeof homepage.hero === "object" ? homepage.hero : {};
-const currentHeroImageUrl = typeof homepageHero.imageUrl === "string" ? homepageHero.imageUrl : "";
-const legacyHeroImageUrl = image("photo-1580225495234-00e84e19c85e");
-const canReplaceLegacyHero = !homepageHero.image && (!currentHeroImageUrl || currentHeroImageUrl === legacyHeroImageUrl);
-if (!homepage.hero) {
-  await payload.updateGlobal({ slug: "homepage", data: {
-    hero: {
-      eyebrow: "Make room for the extraordinary",
-      headline: "Explore the world with LDC Travel",
-      supportingCopy: "Discover unforgettable destinations, thoughtful travel programs, and memories that last a lifetime.",
-      imageUrl: heroImagePath,
-      primaryCta: { label: "Inquire on WhatsApp", kind: "whatsapp" },
-      secondaryCta: { label: "Explore programs", kind: "internal", url: "/programs" },
-    },
-    featuredDestinations: Object.values(destinations).map((item) => item.id),
-    popularPrograms: Object.values(programs).map((item) => item.id),
-    activeOffer: offer.id,
-    upcomingEvents: events.map((item) => item.id),
-    featuredTestimonials: testimonials.map((item) => item.id),
-    latestGuides: guides.map((item) => item.id),
-    faqs: faqs.map((item) => item.id),
-  } });
-  console.log("create global:homepage");
-} else {
-  const homepageUpdates = {};
-  if (canReplaceLegacyHero) homepageUpdates.hero = { ...homepageHero, imageUrl: heroImagePath };
-  if (canReplaceLegacyHomepagePrograms) homepageUpdates.popularPrograms = Object.values(programs).map((item) => item.id);
-
-  if (Object.keys(homepageUpdates).length > 0) {
-    await payload.updateGlobal({ slug: "homepage", data: homepageUpdates });
-    if (canReplaceLegacyHero) console.log("update global:homepage hero image");
-    if (canReplaceLegacyHomepagePrograms) console.log("update global:homepage popularPrograms");
+  const currentWhatsapp = siteSettings.whatsapp && typeof siteSettings.whatsapp === "object" ? siteSettings.whatsapp : {};
+  const legacyMessage = `${currentWhatsapp.defaultMessage ?? ""} ${currentWhatsapp.contextTemplate ?? ""}`.toLowerCase();
+  if (legacyMessage.includes("program") || legacyMessage.includes("package")) {
+    await payload.updateGlobal({ slug: "site-settings", data: { whatsapp: destinationWhatsapp } });
+    console.log("migrate global:site-settings whatsapp copy");
   } else {
-    console.log("skip global:homepage");
+    console.log("skip global:site-settings");
   }
 }
 
+const homepage = await payload.findGlobal({ slug: "homepage", depth: 0 });
+const currentHero = homepage.hero && typeof homepage.hero === "object" ? homepage.hero : {};
+const oldHomepageHeadline = currentHero.headline === "Explore the world with LDC Travel";
+const needsHomepageMigration = !homepage.hero || oldHomepageHeadline || !homepage.whyLdc || !homepage.inspiration;
+
+if (needsHomepageMigration) {
+  await payload.updateGlobal({ slug: "homepage", data: {
+    hero: {
+      eyebrow: "Travel farther, thoughtfully",
+      headline: "Explore more. Travel better.",
+      supportingCopy: "Discover inspiring destinations and start a conversation with a team that helps you travel with confidence.",
+      imageUrl: heroImagePath,
+      primaryCta: { label: "Explore destinations", kind: "internal", url: "#destinations" },
+      secondaryCta: { label: "Talk to LDC Travel", kind: "whatsapp" },
+    },
+    featuredDestinations: destinationSeeds.map(([slug]) => destinations[slug].id),
+    whyLdc: {
+      eyebrow: "Why travel with LDC",
+      headline: "A clearer way to choose your next destination.",
+      description: "We make the first step feel easy: discover the places that fit your mood, ask the questions that matter, and move forward with a real person on your side.",
+      items: [
+        { title: "Destination-first thinking", description: "Start with the feeling, landscape, and culture you want to experience.", icon: "globe" },
+        { title: "Guidance that feels personal", description: "Share your priorities and get a thoughtful starting point for your journey.", icon: "compass" },
+        { title: "A simple human conversation", description: "No complicated process. Just clear answers when you are ready.", icon: "message" },
+      ],
+    },
+    inspiration: {
+      eyebrow: "Find your kind of escape",
+      headline: "Let the destination set the pace.",
+      description: "From old cities to open landscapes, follow the kind of experience you want more of.",
+      items: [
+        { title: "Culture", label: "Stories in every street", description: "For travelers who want art, history, food, and a strong sense of place.", imageUrl: image("photo-1524231757912-21f4fe3a7200") },
+        { title: "Nature", label: "Room to breathe", description: "Mountain air, green valleys, and landscapes that invite you to slow down.", imageUrl: image("photo-1569396116180-210c182bedb8") },
+        { title: "Islands", label: "Blue-water days", description: "A warmer rhythm of coastlines, sunlight, and time well spent outdoors.", imageUrl: image("photo-1537996194471-e657df975ab4") },
+        { title: "City energy", label: "A little more alive", description: "For the nights, neighborhoods, and small discoveries that stay with you.", imageUrl: image("photo-1508009603885-50cf7c579365") },
+      ],
+    },
+    destinationCta: {
+      eyebrow: "Your next chapter starts here",
+      headline: "Tell us where you want to go.",
+      description: "Have a destination in mind or still choosing? Send a message and we will help you find the right direction.",
+      primaryCta: { label: "Explore destinations", kind: "internal", url: "#destinations" },
+      secondaryCta: { label: "Start a conversation", kind: "whatsapp" },
+    },
+    faqs: faqs.map((item) => item.id),
+  } });
+  console.log("migrate global:homepage to destination-first content");
+} else {
+  console.log("skip global:homepage; existing editorial homepage preserved");
+}
+
 await payload.destroy();
-console.log("LDC Travel demo seed complete. Existing records were preserved.");
+console.log("LDC Travel destination-first demo seed complete. Legacy collections were not deleted.");
