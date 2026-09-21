@@ -170,8 +170,16 @@ if (!siteSettings.siteName) {
 
 const homepage = await payload.findGlobal({ slug: "homepage", depth: 0 });
 const currentHero = homepage.hero && typeof homepage.hero === "object" ? homepage.hero : {};
+const currentHeroPrimaryCta = currentHero.primaryCta && typeof currentHero.primaryCta === "object" ? currentHero.primaryCta : {};
+const currentHeroSecondaryCta = currentHero.secondaryCta && typeof currentHero.secondaryCta === "object" ? currentHero.secondaryCta : {};
+const currentDestinationCta = homepage.destinationCta && typeof homepage.destinationCta === "object" ? homepage.destinationCta : {};
+const currentDestinationPrimaryCta = currentDestinationCta.primaryCta && typeof currentDestinationCta.primaryCta === "object" ? currentDestinationCta.primaryCta : {};
+const currentDestinationSecondaryCta = currentDestinationCta.secondaryCta && typeof currentDestinationCta.secondaryCta === "object" ? currentDestinationCta.secondaryCta : {};
 const oldHomepageHeadline = currentHero.headline === "Explore the world with LDC Travel";
-const needsHomepageMigration = !homepage.hero || oldHomepageHeadline || !homepage.whyLdc || !homepage.inspiration;
+const hasRequiredHeroContent = [currentHero.eyebrow, currentHero.headline, currentHero.supportingCopy, currentHeroPrimaryCta.label, currentHeroSecondaryCta.label].every((value) => typeof value === "string" && value.trim());
+const hasRequiredDestinationCta = [currentDestinationPrimaryCta.label, currentDestinationSecondaryCta.label].every((value) => typeof value === "string" && value.trim());
+const needsHomepageMigration = !hasRequiredHeroContent || oldHomepageHeadline || !homepage.whyLdc || !homepage.inspiration || !hasRequiredDestinationCta;
+const needsHomepageRelationships = !Array.isArray(homepage.featuredDestinations) || homepage.featuredDestinations.length === 0 || !Array.isArray(homepage.faqs) || homepage.faqs.length === 0;
 
 if (needsHomepageMigration) {
   await payload.updateGlobal({ slug: "homepage", data: {
@@ -216,7 +224,15 @@ if (needsHomepageMigration) {
   } });
   console.log("migrate global:homepage to destination-first content");
 } else {
-  console.log("skip global:homepage; existing editorial homepage preserved");
+  if (needsHomepageRelationships) {
+    await payload.updateGlobal({ slug: "homepage", data: {
+      ...(Array.isArray(homepage.featuredDestinations) && homepage.featuredDestinations.length ? {} : { featuredDestinations: destinationSeeds.map(([slug]) => destinations[slug].id) }),
+      ...(Array.isArray(homepage.faqs) && homepage.faqs.length ? {} : { faqs: faqs.map((item) => item.id) }),
+    } });
+    console.log("enrich global:homepage with destination and FAQ relationships");
+  } else {
+    console.log("skip global:homepage; existing editorial homepage preserved");
+  }
 }
 
 await payload.destroy();

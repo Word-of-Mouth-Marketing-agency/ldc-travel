@@ -59,7 +59,7 @@ function readSafeMediaUrl(value: string) {
 }
 
 function isVisibleInMarket(value: RecordValue, marketId: string) {
-  return asRecords(value.markets).some((market) => asString(market.id) === marketId) ||
+  return asRecords(value.markets).some((market) => String(market.id ?? "") === marketId) ||
     (Array.isArray(value.markets) && value.markets.some((market) => typeof market === "string" && market === marketId));
 }
 

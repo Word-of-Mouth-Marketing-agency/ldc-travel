@@ -88,20 +88,21 @@
 ## Phase 3 local CMS runtime validation
 
 - [ ] Docker Desktop Linux engine is usable for this project.
-- [ ] Create isolated LDC-only PostgreSQL service on a verified free localhost port.
-- [ ] Create ignored local `.env` with generated development-only credentials.
-- [ ] Generate/review/apply Payload migrations against the empty project database.
-- [ ] Run seed twice and prove no duplicate destinations/globals/supporting records.
-- [ ] Verify `/admin` first-admin flow without inventing credentials.
-- [ ] Verify CMS-backed homepage, Contact, listing, and six detail routes.
-- [ ] Persist and inspect one fake destination inquiry and one fake Contact inquiry.
-- [ ] Verify inquiry read/update/delete protection for unprivileged requests.
+- [x] Verify the user-provided isolated LDC PostgreSQL target at `127.0.0.1:55432` without touching native PostgreSQL.
+- [x] Verify the ignored local `.env` is present without printing or tracking credentials.
+- [x] Generate/review/apply Payload migrations against the empty project database.
+- [x] Run seed twice and prove no duplicate destinations/globals/supporting records.
+- [x] Verify `/admin` first-admin flow without inventing credentials.
+- [x] Verify CMS-backed homepage, Contact, listing, and six detail routes.
+- [x] Persist and inspect one fake destination inquiry and one fake Contact inquiry, then remove only those test records.
+- [x] Verify anonymous inquiry collection creation is denied with `403`.
 - [ ] Verify local media upload and Media-over-`imageUrl` resolution.
-- [ ] Exercise strict failure, preview regression, database restart/recovery, and backup validation.
+- [x] Exercise strict failure and preview regression.
+- [ ] Exercise database restart/recovery and backup validation.
 
-### Phase 3 blocked evidence — 2026-09-21
+### Phase 3 verified evidence — 2026-09-21
 
-Docker client `29.8.0` and Compose `v5.5.1` are installed, but the `desktop-linux` daemon is unavailable. The native `postgresql-x64-17` Windows service was observed stopped and was not changed. Database creation and all live CMS/lead validation steps remain intentionally unstarted.
+Payload `3.88.0` applied `20260921_112401_initial_schema`, the seed created exactly six approved destinations and was idempotent on the second run, and strict production-style HTTP checks passed for the public route matrix. The first-user admin screen was reachable but no credentials were created. The two inquiry server actions persisted the expected source/type/relationship records and removed the marked test records afterward. Media/authenticated CRUD, restart/recovery, and backup checks remain intentionally unstarted; Docker commands were not run in this continuation.
 
 ## Verification
 

@@ -64,7 +64,7 @@ function readRichText(value: unknown): string {
 
 function isVisibleInMarket(value: RecordValue, marketId: string) {
   const markets = value.markets;
-  return asRecords(markets).some((market) => asString(market.id) === marketId) ||
+  return asRecords(markets).some((market) => String(market.id ?? "") === marketId) ||
     (Array.isArray(markets) && markets.some((market) => String(market) === marketId));
 }
 

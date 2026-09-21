@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",
-    "seed": "node scripts/seed.mjs",
+    "seed": "payload run scripts/seed.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "generate:types": "payload generate:types",

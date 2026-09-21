@@ -217,7 +217,7 @@ Store the base number and default message in Site Settings. Expose a single help
 - [x] No newsletter, booking/search widget, checkout, Saudi public content, or unscoped public page implemented.
 - [x] Contact page at `/contact` with Site Settings contact data, accessible inquiry form, WhatsApp fallback, and admin-only Inquiries collection implemented.
 - [x] Responsive, accessibility, remote-image, type, lint, build, and local HTTP checks completed where infrastructure allowed.
-- [ ] Payload admin/database seed runtime verification remains pending a local `DATABASE_URL` and `PAYLOAD_SECRET`.
+- [x] Payload migration, local database seed, admin entry flow, CMS-backed routes, and inquiry persistence were verified against an isolated local PostgreSQL runtime; authenticated admin CRUD/media upload remains a follow-up.
 
 ## Contact page implementation status
 
@@ -259,8 +259,9 @@ Phase 1 ships `/` using CMS-driven sections in this order: Header, Hero, Feature
 
 ## Phase 3 local CMS runtime status
 
-- [ ] Live PostgreSQL/Payload runtime, migrations, seed, admin, CMS-backed routes, inquiry persistence, media upload, and restart/recovery have been verified.
+- [x] Live PostgreSQL/Payload runtime, explicit migration, repeatable seed, admin entry flow, CMS-backed routes, inquiry persistence, anonymous create protection, and preview/strict failure behavior were verified.
 - [x] Preview and strict fallback behavior remain implemented at source level from Phase 1/2.
-- [x] Docker discovery found the client and Compose CLI installed but the `desktop-linux` daemon unavailable; database creation was stopped without touching native PostgreSQL.
+- [x] The user-provided isolated PostgreSQL target at `127.0.0.1:55432/ldc_travel_dev` was reachable; Docker commands were not run during the continuation.
 - [x] No local credentials, database dump, admin credentials, or test lead details were added to the repository.
+- [ ] Authenticated admin CRUD/media upload, database restart/recovery, and backup validation remain pending.
 - [ ] Production PostgreSQL choice and deployment remain deferred.

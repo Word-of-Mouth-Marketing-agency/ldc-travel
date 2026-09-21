@@ -95,3 +95,5 @@ The foundation and Phase 1 criteria in `specs/001-foundation/spec.md` are met, c
 38. Verify the first-admin flow, CMS-backed homepage/destination/contact rendering, destination and contact inquiry persistence, admin-only inquiry access, media precedence, and logging boundaries.
 39. Exercise strict CMS failure, preview-mode regression, scoped database stop/restart recovery, and the local `pg_dump -Fc` / `pg_restore --list` backup procedure.
 40. Record the runtime evidence and commit only after all gates pass; production PostgreSQL and deployment remain deferred.
+
+Phase 3 runtime evidence recorded 2026-09-21: migration, seed idempotency, strict CMS-backed routes, inquiry persistence/access control, preview regression, and public asset/link checks passed. Authenticated media/admin CRUD, database restart/recovery, and backup validation remain separate follow-up gates.
