@@ -5,23 +5,28 @@ import { useRef } from "react";
 import { useEffect, useState } from "react";
 
 import type { SocialLink } from "../../content/homepage-demo";
+import { DesignYourTripTrigger } from "./DesignYourTripModal";
 import { Icon } from "../homepage/Icon";
 import { SocialIcon } from "./SocialIcon";
-import { WhatsAppIcon } from "./WhatsAppIcon";
 
 type NavItem = { label: string; href: string };
 
-export function MobileNav({ activePath = "/", items, socialLinks, whatsappHref }: { activePath?: string; items: NavItem[]; socialLinks: SocialLink[]; whatsappHref: string }) {
+export function MobileNav({ activePath = "/", items, socialLinks }: { activePath?: string; items: NavItem[]; socialLinks: SocialLink[] }) {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLElement>(null);
   const wasOpenRef = useRef(false);
+  const handoffToTripRef = useRef(false);
 
   useEffect(() => {
     if (!open) {
       if (!wasOpenRef.current) return undefined;
       wasOpenRef.current = false;
+      if (handoffToTripRef.current) {
+        handoffToTripRef.current = false;
+        return undefined;
+      }
       const frame = window.requestAnimationFrame(() => menuButtonRef.current?.focus());
       return () => window.cancelAnimationFrame(frame);
     }
@@ -88,10 +93,14 @@ export function MobileNav({ activePath = "/", items, socialLinks, whatsappHref }
                 </a>
               ))}
             </nav>
-            <a className="button button-primary mobile-menu-cta" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-              <WhatsAppIcon />
-              Inquire on WhatsApp
-            </a>
+            <DesignYourTripTrigger
+              className="button button-primary mobile-menu-cta"
+              returnFocusRef={menuButtonRef}
+              onOpen={() => {
+                handoffToTripRef.current = true;
+                setOpen(false);
+              }}
+            />
             <div className="mobile-menu-social">
               <p>Follow LDC Travel</p>
               <div className="mobile-menu-social-links">

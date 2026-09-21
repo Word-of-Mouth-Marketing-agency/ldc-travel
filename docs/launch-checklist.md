@@ -4,7 +4,7 @@ This checklist contains unresolved human inputs and final operator gates. Do not
 
 ## Human inputs required before Phase 7
 
-- [ ] Final production HTTPS domain supplied and approved.
+- [x] Final production HTTPS domain supplied and approved: `https://ldc-tourism.com`.
 - [ ] DNS records and owner confirmed.
 - [ ] Production administrator email approved.
 - [ ] Dedicated PostgreSQL strategy selected: native isolated database/user or isolated supported PostgreSQL service.
@@ -26,7 +26,7 @@ This checklist contains unresolved human inputs and final operator gates. Do not
 - [ ] Database backup created and `pg_restore --list` succeeds.
 - [ ] Payload migration status is known; migration runs only against the dedicated LDC database.
 - [ ] `UI_PREVIEW_MODE` is empty or `false`.
-- [ ] `NEXT_PUBLIC_SITE_URL` is the final HTTPS origin.
+- [x] `NEXT_PUBLIC_SITE_URL` is documented as `https://ldc-tourism.com`; applying it remains a deployment operation.
 - [ ] Application binds only to `127.0.0.1:<PORT>`.
 - [ ] `PAYLOAD_MEDIA_DIR` points outside the release tree.
 - [ ] `/api/health` returns liveness without exposing secrets or database details.

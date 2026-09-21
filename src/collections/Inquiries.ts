@@ -5,7 +5,7 @@ import { inquiryTypeOptions } from "../lib/inquiry-validation";
 export const Inquiries: CollectionConfig = {
   slug: "inquiries",
   admin: {
-    defaultColumns: ["fullName", "destination", "inquiryType", "status", "createdAt"],
+    defaultColumns: ["fullName", "destinationText", "destination", "inquiryType", "source", "status", "createdAt"],
     group: "Leads",
     useAsTitle: "fullName",
   },
@@ -20,6 +20,9 @@ export const Inquiries: CollectionConfig = {
     { name: "email", type: "email" },
     { name: "phone", type: "text", maxLength: 30 },
     { name: "destination", type: "relationship", relationTo: "destinations", admin: { position: "sidebar" } },
+    { name: "destinationText", type: "text", maxLength: 120, admin: { description: "Free-text destination used for custom trip requests." } },
+    { name: "travelers", type: "number", min: 1, max: 100, admin: { position: "sidebar" } },
+    { name: "preferredTravelDates", type: "text", maxLength: 120 },
     {
       name: "inquiryType",
       type: "select",

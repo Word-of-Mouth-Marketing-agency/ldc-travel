@@ -6,7 +6,7 @@ This is a variable-name-only contract for the future WOM-VPS-01 deployment. Neve
 |---|---:|---:|---|---|
 | `DATABASE_URL` | Yes | Yes | Dedicated LDC PostgreSQL database only; never reuse another workload's database or credentials. | `postgresql://<LDC_DB_USER>:<PASSWORD>@127.0.0.1:<PORT>/ldc_travel_prod` |
 | `PAYLOAD_SECRET` | Yes | Yes | Long, random Payload auth/session secret stored in the deployment secret store. | `<GENERATED_RANDOM_SECRET>` |
-| `NEXT_PUBLIC_SITE_URL` | Yes | No | Final canonical HTTPS origin. The confirmed production domain is not yet supplied. | `https://<FINAL_HTTPS_DOMAIN>` |
+| `NEXT_PUBLIC_SITE_URL` | Yes | No | Final canonical HTTPS origin. Confirmed production value: `https://ldc-tourism.com`. | `https://ldc-tourism.com` |
 | `PAYLOAD_MEDIA_DIR` | Yes | No | Persistent media directory outside release folders. | `/srv/ldc-travel/media` |
 | `PORT` | Yes | No | Localhost-only application port selected after a fresh VPS port audit. | `31xx` |
 | `HOSTNAME` | Optional | No | Keep the app bound to loopback; the current start script explicitly passes `127.0.0.1`. | `127.0.0.1` |
@@ -16,7 +16,7 @@ This is a variable-name-only contract for the future WOM-VPS-01 deployment. Neve
 
 ## Required production invariants
 
-- `NEXT_PUBLIC_SITE_URL` remains blocked until the client supplies the real HTTPS domain.
+- `NEXT_PUBLIC_SITE_URL=https://ldc-tourism.com` is the confirmed production canonical origin. This documentation update does not deploy it or change DNS.
 - `DATABASE_URL` points to an LDC-owned database/user and does not reuse Graquamarine, MariaDB, Redis, or another application's database.
 - `PAYLOAD_MEDIA_DIR` is persistent across releases and rollbacks, owned by the application runtime user, and included in the media backup scope.
 - The Node process listens only on `127.0.0.1:<PORT>` and is reachable publicly only through the existing OpenLiteSpeed HTTPS vhost.

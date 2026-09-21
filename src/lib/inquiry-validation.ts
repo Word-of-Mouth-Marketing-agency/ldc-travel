@@ -43,6 +43,30 @@ export type DestinationInquiryFormState = {
   values: Partial<DestinationInquiryValues>;
 };
 
+export type CustomTripInquiryValues = {
+  fullName: string;
+  email: string;
+  phone: string;
+  destinationText: string;
+  travelers: string;
+  preferredTravelDates: string;
+  tripNotes: string;
+};
+
+export type CustomTripInquiryData = Omit<CustomTripInquiryValues, "travelers"> & {
+  travelers: number;
+};
+
+export type CustomTripInquiryField = keyof CustomTripInquiryValues;
+export type CustomTripInquiryFieldErrors = Partial<Record<CustomTripInquiryField, string>>;
+
+export type CustomTripInquiryFormState = {
+  status: "idle" | "success" | "error";
+  message: string;
+  fieldErrors: CustomTripInquiryFieldErrors;
+  values: Partial<CustomTripInquiryValues>;
+};
+
 export type InquiryValidationResult =
   | { success: true; data: InquiryFormValues }
   | { success: false; fieldErrors: InquiryFieldErrors; formError?: string; isSpam?: boolean; values: Partial<InquiryFormValues> };
@@ -118,4 +142,47 @@ export function validateDestinationInquiry(formData: FormData): DestinationInqui
   }
 
   return { success: true, data: { fullName, email, phone } };
+}
+
+export type CustomTripInquiryValidationResult =
+  | { success: true; data: CustomTripInquiryData }
+  | { success: false; fieldErrors: CustomTripInquiryFieldErrors; formError?: string; isSpam?: boolean; values: Partial<CustomTripInquiryValues> };
+
+export function validateCustomTripInquiry(formData: FormData): CustomTripInquiryValidationResult {
+  const fullName = readString(formData, "fullName");
+  const email = readString(formData, "email");
+  const phone = readString(formData, "phone");
+  const destinationText = readString(formData, "destinationText");
+  const travelers = readString(formData, "travelers");
+  const preferredTravelDates = readString(formData, "preferredTravelDates");
+  const tripNotes = readString(formData, "tripNotes");
+  const fieldErrors: CustomTripInquiryFieldErrors = {};
+
+  const values = { fullName, email, phone, destinationText, travelers, preferredTravelDates, tripNotes };
+
+  if (readString(formData, "website")) {
+    return { success: false, fieldErrors: {}, formError: "Please try again.", isSpam: true, values };
+  }
+
+  if (fullName.length < 2 || fullName.length > 80) fieldErrors.fullName = "Please enter your name (2–80 characters).";
+  if (!email || email.length > 160 || !isValidEmail(email)) fieldErrors.email = "Please enter a valid email address.";
+  if (!phone || phone.length > 30 || !isValidPhone(phone)) fieldErrors.phone = "Please enter a valid phone or WhatsApp number.";
+  if (destinationText.length < 2 || destinationText.length > 120) fieldErrors.destinationText = "Please tell us where you would like to go.";
+
+  const travelerCount = Number(travelers);
+  if (!travelers || !Number.isInteger(travelerCount) || travelerCount < 1 || travelerCount > 100) {
+    fieldErrors.travelers = "Enter a whole number from 1 to 100.";
+  }
+
+  if (preferredTravelDates.length > 120) fieldErrors.preferredTravelDates = "Keep your preferred dates under 120 characters.";
+  if (tripNotes.length > 2000) fieldErrors.tripNotes = "Keep your trip notes under 2,000 characters.";
+
+  if (Object.keys(fieldErrors).length) {
+    return { success: false, fieldErrors, formError: "Please check the highlighted fields and try again.", values };
+  }
+
+  return {
+    success: true,
+    data: { fullName, email, phone, destinationText, travelers: travelerCount, preferredTravelDates, tripNotes },
+  };
 }

@@ -50,7 +50,7 @@ Editorial records relate to one or more Market records. The launch configuration
 
 ## Editorial SEO behavior
 
-Public page titles and descriptions are route-specific and written in the destination-first editorial voice. Canonicals and absolute sitemap URLs are driven by `NEXT_PUBLIC_SITE_URL`; no production domain is assumed in source code. When the explicit server-side `UI_PREVIEW_MODE=true` flag is enabled, public metadata is `noindex,nofollow` and `robots.txt` disallows crawling the preview. Normal production mode emits indexable metadata, allows public routes, and disallows only `/admin` and `/api`.
+Public page titles and descriptions are route-specific and written in the destination-first editorial voice. Canonicals and absolute sitemap URLs are driven by `NEXT_PUBLIC_SITE_URL`, with the confirmed production value documented as `https://ldc-tourism.com` but still supplied through the environment rather than hardcoded in components. When the explicit server-side `UI_PREVIEW_MODE=true` flag is enabled, public metadata is `noindex,nofollow` and `robots.txt` disallows crawling the preview. Normal production mode emits indexable metadata, allows public routes, and disallows only `/admin` and `/api`.
 
 The frontend emits one truthful Organization/WebSite graph, plus BreadcrumbList and TouristDestination data on destination detail pages. No Product, Offer, Trip, Hotel, AggregateRating, or FAQPage schema is emitted because the public site has no prices, booking flow, ratings, or eligible structured FAQ presentation.
 

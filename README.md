@@ -108,7 +108,7 @@ The homepage prefers uploaded Payload Media for editorial imagery. Optional `ima
 
 Phase 2 destination copy is concise original paraphrase based on official tourism authorities and UNESCO where relevant. The source list is maintained in [docs/destination-sources.md](docs/destination-sources.md). Unstable visa, entry, safety, and border guidance is intentionally omitted from the public destination pages.
 
-Phase 4 editorial SEO QA keeps the six destination pages differentiated, uses source-backed stable context, and maintains meaningful image alt text. Set `NEXT_PUBLIC_SITE_URL` to the final public origin before launch so canonical links and `sitemap.xml` resolve to the real host. Explicit `UI_PREVIEW_MODE=true` previews are noindex/nofollow and disallowed in `robots.txt`; normal production mode remains crawlable for public routes.
+Phase 4 editorial SEO QA keeps the six destination pages differentiated, uses source-backed stable context, and maintains meaningful image alt text. The confirmed production canonical origin is `https://ldc-tourism.com`; set `NEXT_PUBLIC_SITE_URL` to that value during the approved deployment so canonical links and `sitemap.xml` resolve to the real host. Explicit `UI_PREVIEW_MODE=true` previews are noindex/nofollow and disallowed in `robots.txt`; normal production mode remains crawlable for public routes.
 
 ## Source assets
 

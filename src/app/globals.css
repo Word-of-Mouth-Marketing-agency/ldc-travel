@@ -81,6 +81,32 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .floating-whatsapp:hover { transform: translateY(-3px) scale(1.04); background: #20bd5a; box-shadow: 0 1.1rem 2.1rem rgb(20 35 61 / 0.26); }
 .floating-whatsapp:active { transform: translateY(-1px) scale(0.98); }
 
+.design-trip-modal { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 1rem; background: rgb(16 43 97 / 0.7); animation: backdrop-in 180ms ease both; }
+.design-trip-dialog { display: flex; flex-direction: column; width: min(100%, 44rem); max-height: min(53rem, calc(100dvh - 2rem)); overflow-y: auto; overscroll-behavior: contain; padding: clamp(1.25rem, 4vw, 2.35rem); border: 1px solid rgb(51 109 213 / 0.18); border-radius: 1.35rem; background: white; box-shadow: 0 1.75rem 5rem rgb(16 43 97 / 0.3); font-family: var(--font-ui); animation: dialog-in 220ms cubic-bezier(.2,.8,.2,1) both; -webkit-overflow-scrolling: touch; }
+.design-trip-dialog-header { position: sticky; top: calc(clamp(1.25rem, 4vw, 2.35rem) * -1); z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin: calc(clamp(1.25rem, 4vw, 2.35rem) * -1) calc(clamp(1.25rem, 4vw, 2.35rem) * -1) 0; padding: clamp(1.25rem, 4vw, 2.35rem) clamp(1.25rem, 4vw, 2.35rem) 0.85rem; background: white; }
+.design-trip-dialog-header .section-eyebrow { margin-bottom: 0.45rem; color: var(--brand-blue); }
+.design-trip-dialog-header h2 { max-width: 14ch; margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -0.075em; line-height: 0.92; }
+.design-trip-close { display: grid; place-items: center; flex: 0 0 auto; width: 2.75rem; height: 2.75rem; border: 1px solid var(--line); border-radius: 0.8rem; background: var(--brand-blue-light); color: var(--brand-blue-deep); cursor: pointer; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease; }
+.design-trip-close:hover { border-color: var(--brand-blue); background: white; transform: rotate(4deg); }
+.design-trip-description { max-width: 38rem; margin: 0.25rem 0 0; color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
+.design-trip-form { margin-top: 1.2rem; }
+.design-trip-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.35rem; }
+.design-trip-field-wide { grid-column: 1 / -1; }
+.design-trip-optional { margin-left: 0.35rem; color: var(--muted); font-size: 0.67rem; font-weight: 500; }
+.design-trip-form .form-field input, .design-trip-form .form-field textarea { background: #fbfdff; }
+.design-trip-message { display: grid; gap: 0.45rem; margin-top: 1.15rem; padding: 0.8rem 0.9rem; border: 1px solid rgb(180 35 24 / 0.28); border-radius: 0.65rem; background: rgb(180 35 24 / 0.07); color: var(--danger); font-size: 0.78rem; line-height: 1.45; }
+.design-trip-message p { margin: 0; }
+.design-trip-message a { width: fit-content; color: var(--brand-blue); font-weight: 750; text-decoration: underline; text-underline-offset: 0.2em; }
+.design-trip-honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.design-trip-form-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.45rem; }
+.design-trip-form-footer p { margin: 0; color: var(--muted); font-size: 0.7rem; }
+.design-trip-form-footer p span { color: var(--brand-blue); }
+.design-trip-submit { min-width: 13rem; }
+.design-trip-submit:disabled { cursor: wait; opacity: 0.68; transform: none; }
+.design-trip-success { display: grid; justify-items: start; gap: 0.8rem; margin-top: 1.35rem; padding: 1.25rem; border: 1px solid rgb(51 109 213 / 0.2); border-radius: 1rem; background: linear-gradient(145deg, white, var(--brand-blue-light)); }
+.design-trip-success h3 { margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -0.05em; line-height: 1; }
+.design-trip-success p { max-width: 32rem; margin: 0; color: var(--muted); line-height: 1.65; }
+
 .hero-section { position: relative; isolation: isolate; min-height: clamp(38rem, 72vw, 49rem); overflow: hidden; background: var(--surface-muted); }
 .hero-photo, .hero-photo img { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero-photo img { object-fit: cover; object-position: 69% center; }
@@ -411,6 +437,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes drawer-in { from { opacity: 0; transform: translateX(1.5rem); } to { opacity: 1; transform: translateX(0); } }
 @keyframes faq-in { from { opacity: 0; transform: translateY(-0.3rem); } to { opacity: 1; transform: translateY(0); } }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(0.65rem) scale(0.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 @media (min-width: 640px) {
   .site-container { width: min(100% - 3rem, var(--content-width)); }
@@ -420,6 +447,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .contact-methods-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .contact-form-fields-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-main { grid-template-columns: 1.6fr repeat(2, 1fr); }
+}
+
+@media (max-width: 639px) {
+  .design-trip-modal { align-items: end; padding: 0.5rem; }
+  .design-trip-dialog { max-height: calc(100dvh - 1rem); border-radius: 1.15rem; padding: 1.05rem; }
+  .design-trip-dialog-header { top: -1.05rem; margin: -1.05rem -1.05rem 0; padding: 1.05rem 1.05rem 0.8rem; }
+  .design-trip-fields { grid-template-columns: 1fr; gap: 0.9rem; }
+  .design-trip-field-wide { grid-column: auto; }
+  .design-trip-form-footer { align-items: stretch; flex-direction: column; }
+  .design-trip-submit { width: 100%; }
 }
 
 @media (min-width: 768px) {

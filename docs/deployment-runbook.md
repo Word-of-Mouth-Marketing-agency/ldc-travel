@@ -6,7 +6,7 @@ Status: preparation only. This runbook is not an authorization to deploy. Phase 
 
 Stop unless every item is confirmed:
 
-- final HTTPS domain supplied and approved;
+- final HTTPS domain supplied and approved: `https://ldc-tourism.com`;
 - DNS owner and records identified;
 - dedicated LDC PostgreSQL architecture and credentials available through the approved secret channel;
 - `PAYLOAD_SECRET` generated and stored securely;
@@ -22,7 +22,7 @@ Stop unless every item is confirmed:
 1. Record the current VPS hostname, OS, kernel, CPU, RAM, swap, disk, listeners, OLS version/status, Node versions, process-manager landscape, PostgreSQL/MariaDB/Redis ownership, and representative existing-site health.
 2. Confirm the target application port is unused and bind the application only to `127.0.0.1`.
 3. Confirm the LDC release commit, lockfile, Node version, pnpm version, migration list, and environment variable names.
-4. Confirm the final domain is covered by the intended certificate plan. Do not request or replace certificates in this phase.
+4. Confirm `https://ldc-tourism.com` is covered by the intended certificate plan. Do not request or replace certificates in this phase.
 
 ## Provisional architecture decisions
 

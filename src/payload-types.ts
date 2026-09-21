@@ -705,6 +705,12 @@ export interface Inquiry {
   email?: string | null;
   phone?: string | null;
   destination?: (number | null) | Destination;
+  /**
+   * Free-text destination used for custom trip requests.
+   */
+  destinationText?: string | null;
+  travelers?: number | null;
+  preferredTravelDates?: string | null;
   inquiryType: 'general' | 'destination' | 'custom-trip' | 'other';
   subject?: string | null;
   message: string;
@@ -1206,6 +1212,9 @@ export interface InquiriesSelect<T extends boolean = true> {
   email?: T;
   phone?: T;
   destination?: T;
+  destinationText?: T;
+  travelers?: T;
+  preferredTravelDates?: T;
   inquiryType?: T;
   subject?: T;
   message?: T;
