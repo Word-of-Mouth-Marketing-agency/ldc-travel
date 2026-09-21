@@ -85,6 +85,24 @@
 - [x] Preserve preview fallback and strict production CMS-unavailable behavior.
 - [x] Generate Payload types/import map and run typecheck/lint/build/diff validation.
 
+## Phase 3 local CMS runtime validation
+
+- [ ] Docker Desktop Linux engine is usable for this project.
+- [ ] Create isolated LDC-only PostgreSQL service on a verified free localhost port.
+- [ ] Create ignored local `.env` with generated development-only credentials.
+- [ ] Generate/review/apply Payload migrations against the empty project database.
+- [ ] Run seed twice and prove no duplicate destinations/globals/supporting records.
+- [ ] Verify `/admin` first-admin flow without inventing credentials.
+- [ ] Verify CMS-backed homepage, Contact, listing, and six detail routes.
+- [ ] Persist and inspect one fake destination inquiry and one fake Contact inquiry.
+- [ ] Verify inquiry read/update/delete protection for unprivileged requests.
+- [ ] Verify local media upload and Media-over-`imageUrl` resolution.
+- [ ] Exercise strict failure, preview regression, database restart/recovery, and backup validation.
+
+### Phase 3 blocked evidence — 2026-09-21
+
+Docker client `29.8.0` and Compose `v5.5.1` are installed, but the `desktop-linux` daemon is unavailable. The native `postgresql-x64-17` Windows service was observed stopped and was not changed. Database creation and all live CMS/lead validation steps remain intentionally unstarted.
+
 ## Verification
 
 - [x] Run dependency install successfully.

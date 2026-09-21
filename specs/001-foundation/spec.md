@@ -256,3 +256,11 @@ Phase 1 ships `/` using CMS-driven sections in this order: Header, Hero, Feature
 - [x] Updated centralized WhatsApp configuration to `+9667277981053` and contextual destination messages.
 - [x] Recorded research sources in `docs/destination-sources.md`; unstable entry, visa, and safety claims remain out of public copy.
 - [x] Verified detail pages remain server-first and use one dynamic template, responsive image handling, restrained GSAP-compatible styling, and accessible form/error states.
+
+## Phase 3 local CMS runtime status
+
+- [ ] Live PostgreSQL/Payload runtime, migrations, seed, admin, CMS-backed routes, inquiry persistence, media upload, and restart/recovery have been verified.
+- [x] Preview and strict fallback behavior remain implemented at source level from Phase 1/2.
+- [x] Docker discovery found the client and Compose CLI installed but the `desktop-linux` daemon unavailable; database creation was stopped without touching native PostgreSQL.
+- [x] No local credentials, database dump, admin credentials, or test lead details were added to the repository.
+- [ ] Production PostgreSQL choice and deployment remain deferred.

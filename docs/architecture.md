@@ -75,3 +75,9 @@ The Destinations collection now supports structured overview, highlights, experi
 ## Production-readiness boundaries
 
 The production start script uses Next's native server with `--hostname 127.0.0.1`; deployment, OpenLiteSpeed, WOM-VPS-01, PostgreSQL credentials, DNS, and SSL remain deferred. `PAYLOAD_MEDIA_DIR` is deployment-managed and no production storage configuration is part of this redesign.
+
+## Phase 3 local CMS runtime status
+
+The application is configured for Payload's PostgreSQL adapter, but live local CMS verification remains blocked until Docker Desktop's `desktop-linux` engine is usable. The Docker client/Compose CLI are installed; the daemon check failed to connect to Docker's named pipe. The native Windows PostgreSQL service was not modified. No `.env`, local password, Compose service, migration, seed, admin user, database dump, or test media was created while the runtime prerequisite was unavailable.
+
+Once Docker is ready, create an isolated LDC-only PostgreSQL service on a free localhost port, generate and review Payload migrations for the empty database, apply them, run the existing idempotent seed twice, and verify `/admin`, CMS-backed public routes, inquiry persistence, access control, media precedence, strict failure behavior, and preview-mode regression. The local backup boundary is a custom-format `pg_dump -Fc` followed by read-only `pg_restore --list`; restore testing must use a separate scratch database and is not production deployment.

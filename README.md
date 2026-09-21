@@ -35,7 +35,13 @@ Requirements:
 
 For a production-style local run, use `pnpm build` followed by `PORT=<runtime port> pnpm start`; the start script binds Next to `127.0.0.1` for a future same-host reverse proxy. Do not use `pnpm dev` in production. Set `PAYLOAD_MEDIA_DIR` to a deployment-managed persistent upload directory when deploying; the local `media` default must not be treated as release storage.
 
-The Payload config uses development schema push by default and disables it in production. Migrations and deployment decisions are intentionally deferred until the VPS stack is specified.
+The Payload config uses development schema push by default and disables it in production. Phase 3 live CMS verification is a separate local-only workflow: it must use an isolated project-owned PostgreSQL service and explicit Payload migrations before any seed or admin verification is treated as real. Do not point this project at the native Windows PostgreSQL service or at a production database.
+
+## Phase 3 local CMS runtime status
+
+Live local CMS/database validation is currently blocked because Docker Desktop's Linux engine is not available on the development machine. The Docker client and Compose CLI are installed, but `docker info` cannot connect to `desktop-linux`; the native Windows PostgreSQL service is intentionally left untouched. No local `.env`, database credentials, Compose service, migration, seed run, admin account, database dump, or media test file was created during this blocked pass.
+
+When the Docker Linux engine is available, the safe order is: confirm the project working directory and a free localhost-only port; create only the LDC PostgreSQL service with credentials in an ignored `.env`; verify the container health and database identity; generate/review/apply Payload migrations to the empty project database; run the seed twice and compare counts; start the app; create the first admin interactively at `/admin`; verify CMS-backed public routes and both inquiry persistence paths; then stop/restart only the LDC database service. For a future database backup, use an application-consistent custom-format dump such as `pg_dump -Fc` and verify its structure with `pg_restore --list` before considering it usable. Never commit dumps or secrets.
 
 ## Commands
 

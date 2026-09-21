@@ -86,3 +86,12 @@ The foundation and Phase 1 criteria in `specs/001-foundation/spec.md` are met, c
 32. Reuse the protected Inquiries collection for destination-page leads with server-side Name, Email, and Phone validation, destination relation, source, and honeypot protection.
 33. Update the centralized WhatsApp helper/configuration, homepage destination links, shared navigation/footer links, preview data, seed enrichment, and SEO metadata.
 34. Validate preview and strict-mode behavior, form negative paths, generated Payload types/import map, typecheck, lint, build, responsive browser states, and diff hygiene.
+
+## Phase 3 local CMS runtime validation
+
+35. Confirm Docker Desktop's Linux engine and a free localhost-only database port without touching the native Windows PostgreSQL service or unrelated containers.
+36. Create only the project-owned PostgreSQL service and ignored local environment, then verify database identity and health before any schema operation.
+37. Generate/review/apply Payload migrations to the empty project database, run the existing seed twice, and prove idempotency with counts for destinations, globals, FAQs, and supporting records.
+38. Verify the first-admin flow, CMS-backed homepage/destination/contact rendering, destination and contact inquiry persistence, admin-only inquiry access, media precedence, and logging boundaries.
+39. Exercise strict CMS failure, preview-mode regression, scoped database stop/restart recovery, and the local `pg_dump -Fc` / `pg_restore --list` backup procedure.
+40. Record the runtime evidence and commit only after all gates pass; production PostgreSQL and deployment remain deferred.
