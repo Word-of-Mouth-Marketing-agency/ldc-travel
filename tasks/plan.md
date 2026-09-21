@@ -78,4 +78,11 @@ The foundation and Phase 1 criteria in `specs/001-foundation/spec.md` are met, c
 27. Copy supplied logo variants, update shared chrome, refresh SEO copy, scrollbar tokens, contact labels, and durable documentation.
 28. Validate preview mode without PostgreSQL, strict production fallback behavior, responsive layouts, accessibility, typecheck, lint, build, and diff hygiene.
 
-The next scope is Phase 2 destination listing/detail pages. Do not create those routes during Phase 1.
+## Phase 2 destination system
+
+29. Research Turkey, Russia, Bali, Georgia, Indonesia, and Thailand from official tourism and heritage sources; record concise source notes in `docs/destination-sources.md`.
+30. Extend the Destinations collection with structured detail content while preserving legacy collections and production Media relationships.
+31. Implement `/destinations` and one reusable `/destinations/[slug]` detail template with responsive hero, highlights, experiences, useful information, gallery, related destinations, FAQ, and inquiry CTA.
+32. Reuse the protected Inquiries collection for destination-page leads with server-side Name, Email, and Phone validation, destination relation, source, and honeypot protection.
+33. Update the centralized WhatsApp helper/configuration, homepage destination links, shared navigation/footer links, preview data, seed enrichment, and SEO metadata.
+34. Validate preview and strict-mode behavior, form negative paths, generated Payload types/import map, typecheck, lint, build, responsive browser states, and diff hygiene.

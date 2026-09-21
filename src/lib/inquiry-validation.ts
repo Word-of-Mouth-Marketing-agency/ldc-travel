@@ -26,6 +26,21 @@ export type ContactFormState = {
   fieldErrors: InquiryFieldErrors;
 };
 
+export type DestinationInquiryValues = {
+  fullName: string;
+  email: string;
+  phone: string;
+};
+
+export type DestinationInquiryField = keyof DestinationInquiryValues;
+export type DestinationInquiryFieldErrors = Partial<Record<DestinationInquiryField, string>>;
+
+export type DestinationInquiryFormState = {
+  status: "idle" | "success" | "error";
+  message: string;
+  fieldErrors: DestinationInquiryFieldErrors;
+};
+
 export type InquiryValidationResult =
   | { success: true; data: InquiryFormValues }
   | { success: false; fieldErrors: InquiryFieldErrors; formError?: string; isSpam?: boolean };
@@ -76,4 +91,29 @@ export function validateInquiry(formData: FormData): InquiryValidationResult {
     success: true,
     data: { fullName, email, phone, inquiryType, subject, message },
   };
+}
+
+export type DestinationInquiryValidationResult =
+  | { success: true; data: DestinationInquiryValues }
+  | { success: false; fieldErrors: DestinationInquiryFieldErrors; formError?: string; isSpam?: boolean };
+
+export function validateDestinationInquiry(formData: FormData): DestinationInquiryValidationResult {
+  const fullName = readString(formData, "fullName");
+  const email = readString(formData, "email");
+  const phone = readString(formData, "phone");
+  const fieldErrors: DestinationInquiryFieldErrors = {};
+
+  if (readString(formData, "website")) {
+    return { success: false, fieldErrors: {}, formError: "Please try again.", isSpam: true };
+  }
+
+  if (fullName.length < 2 || fullName.length > 80) fieldErrors.fullName = "Please enter your name (2–80 characters).";
+  if (!email || email.length > 160 || !isValidEmail(email)) fieldErrors.email = "Please enter a valid email address.";
+  if (!phone || phone.length > 30 || !isValidPhone(phone)) fieldErrors.phone = "Please enter a valid phone or WhatsApp number.";
+
+  if (Object.keys(fieldErrors).length) {
+    return { success: false, fieldErrors, formError: "Please check the highlighted fields and try again." };
+  }
+
+  return { success: true, data: { fullName, email, phone } };
 }

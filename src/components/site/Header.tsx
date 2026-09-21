@@ -8,7 +8,7 @@ import { WhatsAppIcon } from "./WhatsAppIcon";
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "Destinations", href: "/#destinations" },
+  { label: "Destinations", href: "/destinations" },
   { label: "Contact", href: "/contact" },
 ];
 

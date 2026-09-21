@@ -275,18 +275,56 @@ export interface Destination {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Concise destination overview shown near the top of the detail page.
+   */
+  overview?: string | null;
   coverImage?: (number | null) | Media;
   /**
    * Optional remote demo image URL. Prefer a Media upload for production content.
    */
   imageUrl?: string | null;
   gallery?: (number | Media)[] | null;
+  /**
+   * Structured places or areas to discover. Use approved Media uploads for production imagery.
+   */
+  highlights?:
+    | {
+        title: string;
+        description: string;
+        image?: (number | null) | Media;
+        imageUrl?: string | null;
+        alt?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  experiences?:
+    | {
+        title: string;
+        description: string;
+        /**
+         * Shared icon key such as city, mountain, waves, or sparkles.
+         */
+        icon?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  bestTimeToVisit?: string | null;
+  usefulInformation?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
   featured?: boolean | null;
   status: 'draft' | 'published' | 'archived';
   /**
    * Only markets selected here may show this record publicly.
    */
   markets: (number | Market)[];
+  relatedDestinations?: (number | Destination)[] | null;
+  faqs?: (number | Faq)[] | null;
   relatedPrograms?: (number | TravelProgram)[] | null;
   seo?: {
     metaTitle?: string | null;
@@ -294,6 +332,34 @@ export interface Destination {
     socialImage?: (number | null) | Media;
     canonicalUrl?: string | null;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category?: string | null;
+  order: number;
+  enabled?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -601,34 +667,6 @@ export interface Testimonial {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
- */
-export interface Faq {
-  id: number;
-  question: string;
-  answer: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  category?: string | null;
-  order: number;
-  enabled?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "inquiries".
  */
 export interface Inquiry {
@@ -636,6 +674,7 @@ export interface Inquiry {
   fullName: string;
   email?: string | null;
   phone?: string | null;
+  destination?: (number | null) | Destination;
   inquiryType: 'general' | 'destination' | 'custom-trip' | 'other';
   subject?: string | null;
   message: string;
@@ -873,12 +912,41 @@ export interface DestinationsSelect<T extends boolean = true> {
   regionOrCity?: T;
   summary?: T;
   content?: T;
+  overview?: T;
   coverImage?: T;
   imageUrl?: T;
   gallery?: T;
+  highlights?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        imageUrl?: T;
+        alt?: T;
+        id?: T;
+      };
+  experiences?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        icon?: T;
+        id?: T;
+      };
+  bestTimeToVisit?: T;
+  usefulInformation?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
   featured?: T;
   status?: T;
   markets?: T;
+  relatedDestinations?: T;
+  faqs?: T;
   relatedPrograms?: T;
   seo?:
     | T
@@ -1107,6 +1175,7 @@ export interface InquiriesSelect<T extends boolean = true> {
   fullName?: T;
   email?: T;
   phone?: T;
+  destination?: T;
   inquiryType?: T;
   subject?: T;
   message?: T;

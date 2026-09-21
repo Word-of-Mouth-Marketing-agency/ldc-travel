@@ -243,4 +243,16 @@ Phase 1 ships `/` using CMS-driven sections in this order: Header, Hero, Feature
 - [x] Added the destination-first Homepage global fields and regenerated Payload types.
 - [x] Added the supplied blue/yellow logo variants and updated shared header/footer usage.
 - [x] Preserved server-side preview mode and strict production CMS-unavailable behavior.
-- [x] Kept destination detail routes, destination research, destination inquiry forms, deployment, and production PostgreSQL out of scope.
+- [x] Kept destination detail routes, destination research, destination inquiry forms, deployment, and production PostgreSQL out of Phase 1 scope; the destination system is implemented in Phase 2 below.
+
+## Phase 2 destination system completion
+
+- [x] Added `/destinations` plus reusable dynamic routes for Turkey, Russia, Bali, Georgia, Indonesia, and Thailand.
+- [x] Kept Bali and Indonesia as separate public destinations and removed all public program, event, offer, price, booking, and newsletter concepts from the destination flow.
+- [x] Extended Destinations with structured overview, highlights, experiences, best-time guidance, useful information, related destinations, FAQ relationships, and production Media-compatible image fields.
+- [x] Reused the admin-only Inquiries collection with an optional destination relation and a server-side destination-page source.
+- [x] Added a destination inquiry form with exactly Name, Email, and Phone; validation is server-side and includes a honeypot.
+- [x] Preview-mode submissions never claim persistence; normal production storage failures never claim success.
+- [x] Updated centralized WhatsApp configuration to `+9667277981053` and contextual destination messages.
+- [x] Recorded research sources in `docs/destination-sources.md`; unstable entry, visa, and safety claims remain out of public copy.
+- [x] Verified detail pages remain server-first and use one dynamic template, responsive image handling, restrained GSAP-compatible styling, and accessible form/error states.

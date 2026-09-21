@@ -71,6 +71,20 @@
 - [x] Preserve UI_PREVIEW_MODE and strict production CMS-unavailable behavior.
 - [x] Keep destination detail/listing pages, research, forms, deployment, and production PostgreSQL out of scope.
 
+## Phase 2 destination system
+
+- [x] Research all six approved destinations from official tourism, government, and UNESCO sources.
+- [x] Add readable source notes in `docs/destination-sources.md`.
+- [x] Add `/destinations` with exactly six destination cards and real detail links.
+- [x] Add reusable `/destinations/[slug]` detail architecture for all six slugs.
+- [x] Add structured CMS fields for overview, highlights, experiences, best time, useful information, related destinations, and FAQs.
+- [x] Reuse admin-only Inquiries with a destination relationship and `destination-page` source.
+- [x] Add destination Name, Email, and Phone form with server validation, honeypot, preview-safe failure, and production persistence boundary.
+- [x] Update WhatsApp to `+9667277981053` through the centralized helper.
+- [x] Update homepage, header, mobile drawer, footer, and SEO links for functional destination routes.
+- [x] Preserve preview fallback and strict production CMS-unavailable behavior.
+- [x] Generate Payload types/import map and run typecheck/lint/build/diff validation.
+
 ## Verification
 
 - [x] Run dependency install successfully.

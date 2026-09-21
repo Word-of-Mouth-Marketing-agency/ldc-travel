@@ -8,9 +8,10 @@ type SafeImageProps = {
   className?: string;
   sizes: string;
   src: string;
+  priority?: boolean;
 };
 
-export function SafeImage({ alt, className = "", sizes, src }: SafeImageProps) {
+export function SafeImage({ alt, className = "", priority = false, sizes, src }: SafeImageProps) {
   const [failed, setFailed] = useState(false);
 
   if (failed) {
@@ -22,5 +23,5 @@ export function SafeImage({ alt, className = "", sizes, src }: SafeImageProps) {
     );
   }
 
-  return <Image className={className} src={src} alt={alt} fill sizes={sizes} onError={() => setFailed(true)} />;
+  return <Image className={className} src={src} alt={alt} fill priority={priority} sizes={sizes} onError={() => setFailed(true)} />;
 }

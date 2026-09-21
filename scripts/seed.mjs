@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+
 if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
   console.error("Seed requires DATABASE_URL and PAYLOAD_SECRET in the local environment.");
   process.exit(1);
@@ -7,6 +9,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const heroImagePath = "/hero-travel.webp";
 const { default: config } = await import("../payload.config.ts");
 const { getPayload } = await import("payload");
+const destinationContent = JSON.parse(await readFile(new URL("../src/content/destinations-data.json", import.meta.url), "utf8"));
 
 const image = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=85`;
 
@@ -52,23 +55,62 @@ const egypt = await ensure("markets", "code", "EG", {
     office: "15 Mahmoud Essmat Hamdy, Sheraton",
     reservationsEmail: "reservations@ldc-tourism.com",
     salesEmail: "sales@ldc-tourism.com",
-    whatsapp: "+20 12 11118118",
+    whatsapp: "+966 7277981053",
   },
 });
 
 const marketId = egypt.id;
-const destinationSeeds = [
-  ["turkey", { title: "Turkey", country: "Türkiye", regionOrCity: "Istanbul and beyond", summary: "Where layered history meets bright coastlines and generous hospitality.", imageUrl: image("photo-1524231757912-21f4fe3a7200"), featured: true }],
-  ["russia", { title: "Russia", country: "Russia", regionOrCity: "Moscow and St Petersburg", summary: "Grand city squares, rich culture, and stories around every corner.", imageUrl: image("photo-1513326738677-b964603b136d"), featured: true }],
-  ["bali", { title: "Bali", country: "Indonesia", regionOrCity: "Ubud and the coast", summary: "A restorative mix of green terraces, temple calm, and island energy.", imageUrl: image("photo-1537996194471-e657df975ab4"), featured: true }],
-  ["georgia", { title: "Georgia", country: "Georgia", regionOrCity: "Tbilisi and the Caucasus", summary: "Mountain horizons, warm streets, and a culture made for slow discovery.", imageUrl: image("photo-1569396116180-210c182bedb8"), featured: true }],
-  ["indonesia", { title: "Indonesia", country: "Indonesia", regionOrCity: "Java, Bali, and beyond", summary: "Island landscapes, ancient places, and vivid everyday life.", imageUrl: image("photo-1548013146-72479768bada"), featured: true }],
-  ["thailand", { title: "Thailand", country: "Thailand", regionOrCity: "Bangkok and the islands", summary: "Street-side flavor, temple mornings, and blue-water escapes.", imageUrl: image("photo-1508009603885-50cf7c579365"), featured: true }],
-];
+const destinationRelations = {
+  turkey: ["georgia", "russia"],
+  russia: ["turkey", "georgia"],
+  bali: ["indonesia", "thailand"],
+  georgia: ["turkey", "russia"],
+  indonesia: ["bali", "thailand"],
+  thailand: ["bali", "turkey"],
+};
+const destinationSeeds = destinationContent.map((destination) => [destination.slug, {
+  title: destination.title,
+  country: destination.country,
+  regionOrCity: destination.regionOrCity,
+  summary: destination.summary,
+  overview: destination.overview,
+  imageUrl: destination.highlights[0].image,
+  highlights: destination.highlights.map(({ title, description, image: imageUrl, alt }) => ({ title, description, imageUrl, alt })),
+  experiences: destination.experiences,
+  bestTimeToVisit: destination.bestTimeToVisit,
+  usefulInformation: destination.usefulInformation,
+  featured: true,
+  seo: { metaTitle: destination.seoMetaTitle, metaDescription: destination.seoMetaDescription },
+}]);
 
 const destinations = {};
 for (const [slug, data] of destinationSeeds) {
-  destinations[slug] = await ensure("destinations", "slug", slug, { ...data, slug, status: "published", markets: [marketId] });
+  const existing = await findBy("destinations", "slug", slug);
+  if (!existing) {
+    destinations[slug] = await payload.create({ collection: "destinations", data: { ...data, slug, status: "published", markets: [marketId] } });
+    console.log(`create destinations:${slug}`);
+    continue;
+  }
+
+  const missingDetailFields = {};
+  for (const field of ["overview", "highlights", "experiences", "bestTimeToVisit", "usefulInformation", "seo"]) {
+    if (existing[field] == null || (Array.isArray(existing[field]) && existing[field].length === 0)) missingDetailFields[field] = data[field];
+  }
+  if (!existing.imageUrl) missingDetailFields.imageUrl = data.imageUrl;
+  if (Object.keys(missingDetailFields).length) {
+    destinations[slug] = await payload.update({ collection: "destinations", id: existing.id, data: missingDetailFields });
+    console.log(`enrich destinations:${slug}`);
+  } else {
+    destinations[slug] = existing;
+    console.log(`skip destinations:${slug}`);
+  }
+}
+
+for (const [slug, relatedSlugs] of Object.entries(destinationRelations)) {
+  const destination = destinations[slug];
+  if (destination && (!destination.relatedDestinations || destination.relatedDestinations.length === 0)) {
+    await payload.update({ collection: "destinations", id: destination.id, data: { relatedDestinations: relatedSlugs.map((relatedSlug) => destinations[relatedSlug].id) } });
+  }
 }
 
 const faqSeeds = [
@@ -87,7 +129,7 @@ for (const [index, [question, answer]] of faqSeeds.entries()) {
 const siteSettings = await payload.findGlobal({ slug: "site-settings", depth: 0 });
 const destinationWhatsapp = {
   defaultMessage: "Hi LDC Travel, I'd like to explore one of your destinations.",
-  contextTemplate: "Hi LDC Travel, I'm interested in exploring {{title}}. Please share more information.",
+  contextTemplate: "Hi LDC Travel, I'm interested in {{title}} and would like more information.",
 };
 
 if (!siteSettings.siteName) {
@@ -96,7 +138,7 @@ if (!siteSettings.siteName) {
     tagline: "Tourism Marketing",
     defaultMarket: marketId,
     canonicalUrl: siteUrl,
-    contact: { whatsappDisplay: "+20 12 11118118", whatsappNumber: "201211118118", office: "15 Mahmoud Essmat Hamdy, Sheraton", reservationsEmail: "reservations@ldc-tourism.com", salesEmail: "sales@ldc-tourism.com" },
+    contact: { whatsappDisplay: "+966 7277981053", whatsappNumber: "9667277981053", office: "15 Mahmoud Essmat Hamdy, Sheraton", reservationsEmail: "reservations@ldc-tourism.com", salesEmail: "sales@ldc-tourism.com" },
     whatsapp: destinationWhatsapp,
     footerCopy: "Thoughtful destination guidance for travelers ready to see more of the world.",
     socialLinks: [
@@ -109,12 +151,20 @@ if (!siteSettings.siteName) {
   console.log("create global:site-settings");
 } else {
   const currentWhatsapp = siteSettings.whatsapp && typeof siteSettings.whatsapp === "object" ? siteSettings.whatsapp : {};
+  const currentContact = siteSettings.contact && typeof siteSettings.contact === "object" ? siteSettings.contact : {};
+  const currentNumber = String(currentContact.whatsappNumber ?? "");
+  const knownLegacyNumbers = new Set(["", "201211118118", "+20 12 11118118", "7277981053"]);
   const legacyMessage = `${currentWhatsapp.defaultMessage ?? ""} ${currentWhatsapp.contextTemplate ?? ""}`.toLowerCase();
-  if (legacyMessage.includes("program") || legacyMessage.includes("package")) {
-    await payload.updateGlobal({ slug: "site-settings", data: { whatsapp: destinationWhatsapp } });
-    console.log("migrate global:site-settings whatsapp copy");
+  const shouldUpdateCopy = legacyMessage.includes("program") || legacyMessage.includes("package") || !currentWhatsapp.contextTemplate;
+  const shouldUpdateNumber = knownLegacyNumbers.has(currentNumber);
+  if (shouldUpdateCopy || shouldUpdateNumber) {
+    await payload.updateGlobal({ slug: "site-settings", data: {
+      ...(shouldUpdateNumber ? { contact: { ...currentContact, whatsappDisplay: "+966 7277981053", whatsappNumber: "9667277981053" } } : {}),
+      ...(shouldUpdateCopy ? { whatsapp: destinationWhatsapp } : {}),
+    } });
+    console.log("migrate global:site-settings destination WhatsApp configuration");
   } else {
-    console.log("skip global:site-settings");
+    console.log("skip global:site-settings; newer WhatsApp value preserved");
   }
 }
 
@@ -130,7 +180,7 @@ if (needsHomepageMigration) {
       headline: "Explore more. Travel better.",
       supportingCopy: "Discover inspiring destinations and start a conversation with a team that helps you travel with confidence.",
       imageUrl: heroImagePath,
-      primaryCta: { label: "Explore destinations", kind: "internal", url: "#destinations" },
+      primaryCta: { label: "Explore destinations", kind: "internal", url: "/destinations" },
       secondaryCta: { label: "Talk to LDC Travel", kind: "whatsapp" },
     },
     featuredDestinations: destinationSeeds.map(([slug]) => destinations[slug].id),
@@ -159,7 +209,7 @@ if (needsHomepageMigration) {
       eyebrow: "Your next chapter starts here",
       headline: "Tell us where you want to go.",
       description: "Have a destination in mind or still choosing? Send a message and we will help you find the right direction.",
-      primaryCta: { label: "Explore destinations", kind: "internal", url: "#destinations" },
+      primaryCta: { label: "Explore destinations", kind: "internal", url: "/destinations" },
       secondaryCta: { label: "Start a conversation", kind: "whatsapp" },
     },
     faqs: faqs.map((item) => item.id),

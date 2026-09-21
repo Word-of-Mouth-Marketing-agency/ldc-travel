@@ -10,6 +10,7 @@ import {
   type SocialLink,
   type WhyLdcItem,
 } from "../content/homepage-demo";
+import { approvedDestinationSlugs } from "../content/destinations";
 import { createWhatsAppUrl, type WhatsAppConfig } from "./whatsapp";
 import { getLaunchMarketCode } from "./markets";
 import { isUiPreviewMode } from "./preview";
@@ -125,21 +126,22 @@ function ctaFromCms(value: unknown, fallback: Cta, whatsappConfig: WhatsAppConfi
   const label = asString(record?.label, fallback.label);
   if (kind === "whatsapp") return { label, href: createWhatsAppUrl(whatsappConfig), external: true };
   const href = asString(record?.url, fallback.href);
-  return { label, href, external: kind === "external" };
+  return { label, href: href === "#" ? fallback.href : href, external: kind === "external" };
 }
 
 function mapDestination(value: unknown, index: number): DestinationViewModel {
   const record = asRecord(value);
   const fallback = demoHomepage.destinations[index % demoHomepage.destinations.length];
+  const slug = asString(record?.slug, fallback.slug);
 
   return {
+    slug,
     title: asString(record?.title, fallback.title),
     country: asString(record?.country, fallback.country),
     regionOrCity: asString(record?.regionOrCity, fallback.regionOrCity),
     summary: asString(record?.summary, fallback.summary),
     image: readImage(record, fallback.image),
-    // Detail routes are intentionally deferred to Phase 2.
-    href: "#",
+    href: `/destinations/${slug}`,
   };
 }
 
@@ -173,7 +175,7 @@ function mapInspiration(value: unknown): HomepageViewModel["inspiration"] {
       label: asString(item.label, fallbackItem.label),
       description: asString(item.description, fallbackItem.description),
       image: readImage(item, fallbackItem.image),
-      href: "#",
+      href: asString(item.href, fallbackItem.href),
     };
   });
 
@@ -228,7 +230,10 @@ export async function getHomepageData(): Promise<HomepageViewModel> {
     const whatsappConfig = buildWhatsappConfig(site);
     const homepageRecord = asRecord(homepage);
     const hero = asRecord(homepageRecord?.hero);
-    const destinations = asRecords(homepageRecord?.featuredDestinations).filter((item) => isVisibleInMarket(item, marketId));
+    const destinations = asRecords(homepageRecord?.featuredDestinations)
+      .filter((item) => isVisibleInMarket(item, marketId))
+      .filter((item) => approvedDestinationSlugs.includes(asString(item.slug)))
+      .slice(0, 6);
     const faqs = asRecords(homepageRecord?.faqs);
 
     return {

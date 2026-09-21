@@ -18,8 +18,8 @@ export const SiteSettings: GlobalConfig = {
       name: "contact",
       type: "group",
       fields: [
-        { name: "whatsappDisplay", type: "text", required: true, defaultValue: "+20 12 11118118" },
-        { name: "whatsappNumber", type: "text", required: true, defaultValue: "201211118118" },
+        { name: "whatsappDisplay", type: "text", required: true, defaultValue: "+966 7277981053" },
+        { name: "whatsappNumber", type: "text", required: true, defaultValue: "9667277981053" },
         { name: "office", type: "text", required: true, defaultValue: "15 Mahmoud Essmat Hamdy, Sheraton" },
         { name: "reservationsEmail", type: "email", required: true, defaultValue: "reservations@ldc-tourism.com" },
         { name: "salesEmail", type: "email", required: true, defaultValue: "sales@ldc-tourism.com" },
@@ -30,7 +30,7 @@ export const SiteSettings: GlobalConfig = {
       type: "group",
       fields: [
         { name: "defaultMessage", type: "textarea", defaultValue: "Hi LDC Travel, I'd like to explore one of your destinations." },
-        { name: "contextTemplate", type: "textarea", defaultValue: "Hi LDC Travel, I'm interested in exploring {{title}}. Please share more information." },
+        { name: "contextTemplate", type: "textarea", defaultValue: "Hi LDC Travel, I'm interested in {{title}} and would like more information." },
       ],
     },
     {

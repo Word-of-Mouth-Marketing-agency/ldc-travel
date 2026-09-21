@@ -31,6 +31,7 @@ export type SiteViewModel = {
 };
 
 export type DestinationViewModel = {
+  slug: string;
   title: string;
   country: string;
   regionOrCity?: string;
@@ -100,9 +101,9 @@ const image = (id: string, alt: string): ImageSource => ({
 const localImage = (src: string, alt: string): ImageSource => ({ src, alt });
 
 const demoWhatsappConfig: WhatsAppConfig = {
-  phoneNumber: "201211118118",
+  phoneNumber: "9667277981053",
   defaultMessage: "Hi LDC Travel, I'd like to explore one of your destinations.",
-  contextTemplate: "Hi LDC Travel, I'm interested in exploring {{title}}. Please share more information.",
+  contextTemplate: "Hi LDC Travel, I'm interested in {{title}} and would like more information.",
 };
 
 const whatsappCta = (label: string, title?: string): Cta => ({
@@ -116,8 +117,8 @@ export const demoHomepage: HomepageViewModel = {
     name: "LDC Travel",
     tagline: "Tourism Marketing",
     office: "15 Mahmoud Essmat Hamdy, Sheraton",
-    whatsappDisplay: "+20 12 11118118",
-    whatsappNumber: "201211118118",
+    whatsappDisplay: "+966 7277981053",
+    whatsappNumber: "9667277981053",
     reservationsEmail: "reservations@ldc-tourism.com",
     salesEmail: "sales@ldc-tourism.com",
     defaultMessage: demoWhatsappConfig.defaultMessage,
@@ -136,16 +137,16 @@ export const demoHomepage: HomepageViewModel = {
     headline: "Explore more. Travel better.",
     supportingCopy: "Discover inspiring destinations and start a conversation with a team that helps you travel with confidence.",
     image: localImage("/hero-travel.webp", "Mountain lake village framed by the Alps"),
-    primaryCta: { label: "Explore destinations", href: "#destinations" },
+    primaryCta: { label: "Explore destinations", href: "/destinations" },
     secondaryCta: whatsappCta("Talk to LDC Travel"),
   },
   destinations: [
-    { title: "Turkey", country: "Türkiye", regionOrCity: "Istanbul and beyond", summary: "Where layered history meets bright coastlines and generous hospitality.", image: image("photo-1524231757912-21f4fe3a7200", "Istanbul skyline with mosque domes and the Bosphorus"), href: "#" },
-    { title: "Russia", country: "Russia", regionOrCity: "Moscow and St Petersburg", summary: "Grand city squares, rich culture, and stories around every corner.", image: image("photo-1513326738677-b964603b136d", "Colorful architecture in Moscow at blue hour"), href: "#" },
-    { title: "Bali", country: "Indonesia", regionOrCity: "Ubud and the coast", summary: "A restorative mix of green terraces, temple calm, and island energy.", image: image("photo-1537996194471-e657df975ab4", "Balinese temple surrounded by tropical greenery"), href: "#" },
-    { title: "Georgia", country: "Georgia", regionOrCity: "Tbilisi and the Caucasus", summary: "Mountain horizons, warm streets, and a culture made for slow discovery.", image: image("photo-1569396116180-210c182bedb8", "Mountain landscape in Georgia under a clear sky"), href: "#" },
-    { title: "Indonesia", country: "Indonesia", regionOrCity: "Java, Bali, and beyond", summary: "Island landscapes, ancient places, and vivid everyday life.", image: image("photo-1548013146-72479768bada", "Stone temple surrounded by lush Indonesian forest"), href: "#" },
-    { title: "Thailand", country: "Thailand", regionOrCity: "Bangkok and the islands", summary: "Street-side flavor, temple mornings, and blue-water escapes.", image: image("photo-1508009603885-50cf7c579365", "Golden temple roof in Bangkok at sunset"), href: "#" },
+    { slug: "turkey", title: "Turkey", country: "Türkiye", regionOrCity: "Istanbul and beyond", summary: "Where layered history meets bright coastlines and generous hospitality.", image: image("photo-1524231757912-21f4fe3a7200", "Istanbul skyline with mosque domes and the Bosphorus"), href: "/destinations/turkey" },
+    { slug: "russia", title: "Russia", country: "Russia", regionOrCity: "Moscow and St Petersburg", summary: "Grand city squares, rich culture, and stories around every corner.", image: image("photo-1513326738677-b964603b136d", "Colorful architecture in Moscow at blue hour"), href: "/destinations/russia" },
+    { slug: "bali", title: "Bali", country: "Indonesia", regionOrCity: "Ubud and the coast", summary: "A restorative mix of green terraces, temple calm, and island energy.", image: image("photo-1537996194471-e657df975ab4", "Balinese temple surrounded by tropical greenery"), href: "/destinations/bali" },
+    { slug: "georgia", title: "Georgia", country: "Georgia", regionOrCity: "Tbilisi and the Caucasus", summary: "Mountain horizons, warm streets, and a culture made for slow discovery.", image: image("photo-1569396116180-210c182bedb8", "Mountain landscape in Georgia under a clear sky"), href: "/destinations/georgia" },
+    { slug: "indonesia", title: "Indonesia", country: "Indonesia", regionOrCity: "Java, Bali, and beyond", summary: "Island landscapes, ancient places, and vivid everyday life.", image: image("photo-1548013146-72479768bada", "Stone temple surrounded by lush Indonesian forest"), href: "/destinations/indonesia" },
+    { slug: "thailand", title: "Thailand", country: "Thailand", regionOrCity: "Bangkok and the islands", summary: "Street-side flavor, temple mornings, and blue-water escapes.", image: image("photo-1508009603885-50cf7c579365", "Golden temple roof in Bangkok at sunset"), href: "/destinations/thailand" },
   ],
   whyLdc: {
     eyebrow: "Why travel with LDC",
@@ -162,17 +163,17 @@ export const demoHomepage: HomepageViewModel = {
     headline: "Let the destination set the pace.",
     description: "From old cities to open landscapes, follow the kind of experience you want more of.",
     items: [
-      { title: "Culture", label: "Stories in every street", description: "For travelers who want art, history, food, and a strong sense of place.", image: image("photo-1524231757912-21f4fe3a7200", "Historic Istanbul skyline beside the Bosphorus"), href: "#" },
-      { title: "Nature", label: "Room to breathe", description: "Mountain air, green valleys, and landscapes that invite you to slow down.", image: image("photo-1569396116180-210c182bedb8", "Green mountain landscape in Georgia"), href: "#" },
-      { title: "Islands", label: "Blue-water days", description: "A warmer rhythm of coastlines, sunlight, and time well spent outdoors.", image: image("photo-1537996194471-e657df975ab4", "Tropical Balinese coastline and greenery"), href: "#" },
-      { title: "City energy", label: "A little more alive", description: "For the nights, neighborhoods, and small discoveries that stay with you.", image: image("photo-1508009603885-50cf7c579365", "Bangkok temple details and city light"), href: "#" },
+      { title: "Culture", label: "Stories in every street", description: "For travelers who want art, history, food, and a strong sense of place.", image: image("photo-1524231757912-21f4fe3a7200", "Historic Istanbul skyline beside the Bosphorus"), href: "/destinations" },
+      { title: "Nature", label: "Room to breathe", description: "Mountain air, green valleys, and landscapes that invite you to slow down.", image: image("photo-1569396116180-210c182bedb8", "Green mountain landscape in Georgia"), href: "/destinations/georgia" },
+      { title: "Islands", label: "Blue-water days", description: "A warmer rhythm of coastlines, sunlight, and time well spent outdoors.", image: image("photo-1537996194471-e657df975ab4", "Tropical Balinese coastline and greenery"), href: "/destinations/bali" },
+      { title: "City energy", label: "A little more alive", description: "For the nights, neighborhoods, and small discoveries that stay with you.", image: image("photo-1508009603885-50cf7c579365", "Bangkok temple details and city light"), href: "/destinations/thailand" },
     ],
   },
   destinationCta: {
     eyebrow: "Your next chapter starts here",
     headline: "Tell us where you want to go.",
     description: "Have a destination in mind or still choosing? Send a message and we will help you find the right direction.",
-    primaryCta: { label: "Explore destinations", href: "#destinations" },
+      primaryCta: { label: "Explore destinations", href: "/destinations" },
     secondaryCta: whatsappCta("Start a conversation"),
   },
   faqs: [

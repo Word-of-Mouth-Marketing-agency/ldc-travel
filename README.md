@@ -2,7 +2,7 @@
 
 Destination-first production foundation for LDC Travel’s Egypt-first tourism marketing website.
 
-This repository contains the application foundation, Payload CMS schema, official brand assets, the destination-first Phase 1 homepage implementation for `/`, and the Contact page/inquiry flow at `/contact`.
+This repository contains the application foundation, Payload CMS schema, official brand assets, the destination-first Phase 1 homepage implementation for `/`, the Phase 2 destination listing/detail system, and the Contact page/inquiry flow at `/contact`.
 
 ## Stack
 
@@ -50,14 +50,15 @@ pnpm generate:importmap
 
 ## Project map
 
-- `src/app/(frontend)` — public application route group, homepage route, and Contact page/server action.
-- `src/components` — server-first homepage sections plus isolated mobile navigation and GSAP text-reveal islands.
+- `src/app/(frontend)` — public application route group, homepage, destination routes, and Contact page/server actions.
+- `src/components` — server-first homepage/destination sections plus isolated mobile navigation, inquiry forms, and GSAP text-reveal islands.
 - `src/content/homepage-demo.ts` — isolated destination-first development-only fallback/demo view model used when a local CMS database is not configured.
+- `src/content/destinations-data.json` — researched, original demo destination content shared by preview fallback and the repeatable seed.
 - `src/app/(payload)` — Payload admin/API integration.
 - `src/collections` — admin users, media, markets, and editorial collections.
 - `src/globals` — Site Settings and Homepage globals.
 - `src/fields` — shared Payload field factories.
-- `src/lib` — deep modules for WhatsApp, market context, and metadata.
+- `src/lib` — deep modules for WhatsApp, market context, metadata, homepage normalization, and destination normalization.
 - `public/brand` — copied official LDC logo variants.
 - `specs/001-foundation/spec.md` — product, architecture, CMS, and Phase 1 acceptance criteria.
 - `tasks/plan.md` and `tasks/todo.md` — dependency-ordered implementation plan.
@@ -65,15 +66,17 @@ pnpm generate:importmap
 
 The Contact page uses Site Settings for verified LDC contact/social details. Its inquiry form validates on the server and writes to the admin-only Inquiries collection through a server action when local Payload credentials are available. Without `DATABASE_URL` and `PAYLOAD_SECRET`, development shows the form but submission fails clearly with a WhatsApp fallback; inquiries are never stored in temporary files or treated as successfully submitted.
 
-## Product boundaries
+## Public routes and product boundaries
 
-The site is destination-led lead generation only: no travel programs, package pricing, events, booking engine, checkout, payments, customer accounts, or public CMS registration are exposed on the public homepage. WhatsApp is the primary CTA. The launch market is Egypt; Saudi Arabia is a future market and is not exposed in current public content. The current language is English only, with logical layout choices preserved for later RTL support.
+The public destination routes are `/destinations` and `/destinations/turkey`, `/destinations/russia`, `/destinations/bali`, `/destinations/georgia`, `/destinations/indonesia`, and `/destinations/thailand`. Detail pages use one reusable dynamic route and offer a destination-scoped Name, Email, and Phone inquiry form; there is no direct booking or payment flow.
+
+The site is destination-led lead generation only: no travel programs, package pricing, events, booking engine, checkout, payments, customer accounts, or public CMS registration are exposed on the public website. WhatsApp is the primary CTA. The launch market is Egypt; the current configured WhatsApp conversion number is `+9667277981053` in normalized `wa.me` form. The current language is English only, with logical layout choices preserved for later RTL support.
 
 The new authoritative Phase 1 direction is a destination-first homepage using `#336DD5` blue and `#FFD200` yellow. It includes a split hero, exactly six approved destinations (Turkey, Russia, Bali, Georgia, Indonesia, Thailand), Why LDC positioning, destination inspiration, a destination CTA, FAQ, and footer. The prior screenshot and its newsletter/program/event composition are historical reference only; no newsletter or booking/search widget is included.
 
-## Homepage development
+## Homepage and destination development
 
-With `DATABASE_URL` and `PAYLOAD_SECRET` configured for a local database, run `pnpm seed` to create missing Egypt-only market/destination/FAQ records and destination-first homepage relationships. Existing editorial records are preserved on repeated runs; the seed does not create new programs, offers, events, testimonials, or guides. During development without a database, `/` renders the isolated demo view model so the frontend can be developed and reviewed safely.
+With `DATABASE_URL` and `PAYLOAD_SECRET` configured for a local database, run `pnpm seed` to create missing Egypt-only market/destination/FAQ records, enrich missing destination-detail fields, and maintain destination-first homepage relationships. Existing editorial fields are preserved on repeated runs; the seed does not create new programs, offers, events, testimonials, or guides. During development or explicit preview mode without a database, `/`, `/destinations`, and all six detail routes render the isolated researched demo view model so the frontend can be reviewed safely.
 
 The demo view model is development-only by default. For a temporary database-free Vercel client UI preview, set the server-side `UI_PREVIEW_MODE=true`; this explicit flag allows the public homepage and Contact page to use the safe demo view model without PostgreSQL. Never enable it on the real production VPS site. In production without that flag, a missing database configuration, unavailable Payload connection, or missing public Egypt market causes the homepage to render an explicit unavailable state; it never silently serves demo content.
 
@@ -82,12 +85,16 @@ The homepage prefers uploaded Payload Media for editorial imagery. Optional `ima
 ## Verified LDC contact channels
 
 - Egypt office: `15 Mahmoud Essmat Hamdy, Sheraton`
-- WhatsApp: `+20 12 11118118`
+- WhatsApp: `+9667277981053`
 - Email: `reservations@ldc-tourism.com`, `sales@ldc-tourism.com`
 - Instagram: <https://www.instagram.com/ldctravels.eg/>
 - Facebook: <https://www.facebook.com/profile.php?id=61591627376189>
 - TikTok: <https://www.tiktok.com/@ldc.travel.agency>
 - LinkedIn: <https://www.linkedin.com/company/ldctravel/>
+
+## Research and content safety
+
+Phase 2 destination copy is concise original paraphrase based on official tourism authorities and UNESCO where relevant. The source list is maintained in [docs/destination-sources.md](docs/destination-sources.md). Unstable visa, entry, safety, and border guidance is intentionally omitted from the public destination pages.
 
 ## Source assets
 

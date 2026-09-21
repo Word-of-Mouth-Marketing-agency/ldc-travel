@@ -6,9 +6,9 @@ import type {
   InspirationItem,
   HomepageViewModel,
 } from "../../content/homepage-demo";
+import Link from "next/link";
 import { Icon } from "./Icon";
 import { SectionHeading } from "./SectionHeading";
-import { PlaceholderLink } from "../site/PlaceholderLink";
 import { SafeImage } from "../site/SafeImage";
 import { WhatsAppIcon } from "../site/WhatsAppIcon";
 import { RevealHeading } from "../motion/RevealHeading";
@@ -38,7 +38,7 @@ export function DestinationsSection({ items }: { items: DestinationViewModel[] }
         />
         <div className="destination-grid">
           {items.slice(0, 6).map((destination, index) => (
-            <PlaceholderLink className={`destination-card destination-card-${index + 1}`} key={`${destination.title}-${destination.country}`} aria-label={`Explore ${destination.title}`}>
+            <Link className={`destination-card destination-card-${index + 1}`} key={`${destination.title}-${destination.country}`} href={destination.href} aria-label={`Explore ${destination.title}`}>
               <CoverImage image={destination.image} />
               <span className="card-scrim" />
               <span className="destination-index">0{index + 1}</span>
@@ -48,7 +48,7 @@ export function DestinationsSection({ items }: { items: DestinationViewModel[] }
                 <p>{destination.summary}</p>
                 <span className="destination-card-link">Explore destination <Icon name="arrow-up-right" size={16} /></span>
               </div>
-            </PlaceholderLink>
+            </Link>
           ))}
         </div>
       </div>
@@ -81,7 +81,7 @@ export function WhyLdcSection({ content }: { content: HomepageViewModel["whyLdc"
 
 function InspirationCard({ item, featured = false }: { item: InspirationItem; featured?: boolean }) {
   return (
-    <PlaceholderLink className={`inspiration-card${featured ? " inspiration-card-featured" : ""}`} aria-label={`Explore ${item.title} inspiration`}>
+    <Link className={`inspiration-card${featured ? " inspiration-card-featured" : ""}`} href={item.href} aria-label={`Explore ${item.title} inspiration`}>
       <CoverImage image={item.image} />
       <span className="card-scrim" />
       <div className="inspiration-card-copy">
@@ -90,7 +90,7 @@ function InspirationCard({ item, featured = false }: { item: InspirationItem; fe
         <p>{item.description}</p>
         <span className="text-link">Discover the feeling <Icon name="arrow-up-right" size={16} /></span>
       </div>
-    </PlaceholderLink>
+    </Link>
   );
 }
 
