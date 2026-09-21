@@ -18,13 +18,15 @@ export function buildPageMetadata({
   socialImageUrl,
 }: SeoInput): Metadata {
   const canonical = new URL(pathname, siteUrl).toString();
+  const siteSuffix = ` | ${siteName}`;
+  const pageTitle = title.endsWith(siteSuffix) ? title.slice(0, -siteSuffix.length) : title;
 
   return {
-    title,
+    title: pageTitle,
     description,
     alternates: { canonical },
     openGraph: {
-      title,
+      title: pageTitle,
       description,
       url: canonical,
       siteName,
@@ -33,7 +35,7 @@ export function buildPageMetadata({
     },
     twitter: {
       card: socialImageUrl ? "summary_large_image" : "summary",
-      title,
+      title: pageTitle,
       description,
       images: socialImageUrl ? [socialImageUrl] : undefined,
     },
