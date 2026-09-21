@@ -37,6 +37,8 @@ For a production-style local run, use `pnpm build` followed by `PORT=<runtime po
 
 The Payload config uses development schema push by default and disables it in production. Phase 3 live CMS verification is a separate local-only workflow: it must use an isolated project-owned PostgreSQL service and explicit Payload migrations before any seed or admin verification is treated as real. Do not point this project at the native Windows PostgreSQL service or at a production database.
 
+Production preparation is documented in [docs/production-environment.md](docs/production-environment.md), [docs/deployment-runbook.md](docs/deployment-runbook.md), and [docs/launch-checklist.md](docs/launch-checklist.md). These are planning documents only; no production deployment, database, process, DNS, SSL, or OpenLiteSpeed change has been performed.
+
 ## Phase 3 local CMS runtime status
 
 The local CMS runtime was verified on 2026-09-21 against the user-provided isolated PostgreSQL database at `127.0.0.1:55432` (`ldc_travel_dev`, user `ldc_travel_dev`). The ignored `.env` was present and never printed, tracked, or modified. Payload migration `20260921_112401_initial_schema` was generated, reviewed, applied, and reported as applied by `migrate:status`; no reset, fresh, down, or drop shortcut was used.
@@ -45,7 +47,7 @@ The idempotent seed was run twice. The database contains exactly the six approve
 
 Strict production-style local routes rendered successfully for `/`, `/contact`, `/destinations`, and all six destination detail routes. `/admin` returned the first-user creation/login flow; no admin credentials were invented or created. The two server-action inquiry paths persisted marked local test records with the correct source/type/destination relationship, then those records were deleted. Anonymous direct `POST /api/inquiries` returned `403`. With `UI_PREVIEW_MODE=true` and empty database credentials, public routes rendered the demo UI and valid form submissions returned explicit non-success preview notices. With preview disabled and empty credentials, public routes rendered the explicit unavailable state instead of demo content.
 
-Media upload, authenticated admin CRUD, database restart/recovery, and backup/restore validation remain pending because no admin credentials were supplied and this pass is explicitly forbidden from running Docker commands. Production PostgreSQL, deployment, and WOM-VPS-01 remain untouched. Never commit `.env`, dumps, or secrets.
+The Phase 6 local backup/restore drill is complete: a temporary `pg_dump -Fc` archive passed `pg_restore --list`, restored into a disposable database, and validated the six destinations, homepage schema, inquiries schema, and migration records before the disposable database and archive were removed. Authenticated admin/media CRUD remains pending because Payload still shows the first-user setup screen; no credentials were invented. The allowed read-only WOM-VPS-01 SSH audit was attempted but was unavailable from this environment. Production PostgreSQL, deployment, and WOM-VPS-01 remain untouched. Never commit `.env`, dumps, or secrets.
 
 ## Commands
 

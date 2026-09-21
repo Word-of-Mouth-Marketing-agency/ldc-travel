@@ -112,3 +112,12 @@ Phase 3 runtime evidence recorded 2026-09-21: migration, seed idempotency, stric
 47. Fix only release-blocking regressions found during QA, regenerate Payload artifacts when relevant, and record final validation evidence without beginning deployment work.
 
 Phase 5 release-candidate QA completed 2026-09-21: the public route matrix, responsive overflow checks, drawer focus trap, validation error paths, image loading, metadata, strict failure mode, preview mode, and local CMS-backed rendering passed. The only browser-tool limitation was direct entry into email/tel controls in the isolated in-app browser; server-side validation and prior local persistence evidence remain intact.
+
+## Phase 6 operational hardening and deployment preparation
+
+48. Audit the repository's production contract, media persistence model, startup/runtime versions, Payload security boundaries, and health behavior without changing production infrastructure.
+49. Validate a local PostgreSQL custom-format backup and isolated restore, and record the recovery evidence without overwriting the active development database.
+50. Create the production environment reference, deployment runbook, rollback strategy, and launch checklist; keep the final domain and production database choice as explicit human inputs.
+51. Perform only an allowed read-only WOM-VPS-01 audit when access is available; otherwise report the access blocker and treat historical server notes as stale.
+
+Phase 6 preparation completed 2026-09-21 without deployment. Local backup/restore passed, Payload admin validation stopped at first-user setup, the VPS SSH audit was unavailable, and the remaining production inputs are documented for Phase 7.

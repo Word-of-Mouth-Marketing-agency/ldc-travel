@@ -80,7 +80,9 @@ The Destinations collection now supports structured overview, highlights, experi
 
 ## Production-readiness boundaries
 
-The production start script uses Next's native server with `--hostname 127.0.0.1`; deployment, OpenLiteSpeed, WOM-VPS-01, PostgreSQL credentials, DNS, and SSL remain deferred. `PAYLOAD_MEDIA_DIR` is deployment-managed and no production storage configuration is part of this redesign.
+The production start script uses Next's native server with `--hostname 127.0.0.1`; deployment, OpenLiteSpeed, WOM-VPS-01, PostgreSQL credentials, DNS, and SSL remain deferred. `PAYLOAD_MEDIA_DIR` is deployment-managed and no production storage configuration is part of this redesign. Phase 6 preparation documents are maintained in `docs/production-environment.md`, `docs/deployment-runbook.md`, and `docs/launch-checklist.md`.
+
+The application exposes a lightweight liveness endpoint at `/api/health`. It returns only the service name and an `ok` status, does not connect to PostgreSQL, and sends `Cache-Control: no-store`; database readiness remains an operator smoke check rather than a public health response.
 
 ## Phase 3 local CMS runtime status
 
@@ -88,4 +90,4 @@ The local CMS runtime was verified on 2026-09-21 against the user-provided isola
 
 Production-style local HTTP checks passed for the homepage, Contact, destination listing, all six CMS-backed detail routes, `/admin`, favicon assets, WhatsApp links, and configured social links. The server actions persisted and then removed marked local contact/destination test inquiries; anonymous collection creation returned `403`. Preview mode rendered all public routes with empty database credentials and returned explicit non-success form notices. Preview-disabled empty-credential checks rendered the strict unavailable state. Numeric Payload relationship IDs are normalized before market visibility checks so valid CMS records do not fall back silently.
 
-Authenticated admin CRUD/media upload, database restart/recovery, and `pg_dump -Fc` / `pg_restore --list` backup validation remain pending. No Docker commands were run in this continuation, no native PostgreSQL or production system was changed, and production deployment remains deferred.
+Phase 6 verified a local `pg_dump -Fc` archive with `pg_restore --list`, restored it into a disposable database, checked the six destinations, homepage/inquiries schema, and migration records, and removed only the disposable database and temporary archive. Authenticated admin CRUD/media upload remains pending because the local Payload instance still requires first-user creation. The read-only WOM-VPS-01 audit could not connect from this environment, so prior Brain server notes are treated as stale planning context rather than current production evidence. No native PostgreSQL or production system was changed, and production deployment remains deferred.

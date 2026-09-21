@@ -7,7 +7,7 @@ export const Media: CollectionConfig = {
   },
   upload: {
     staticDir: process.env.PAYLOAD_MEDIA_DIR?.trim() || "media",
-    mimeTypes: ["image/*", "image/svg+xml"],
+    mimeTypes: ["image/jpeg", "image/png", "image/webp", "image/avif"],
     adminThumbnail: "thumbnail",
     imageSizes: [
       { name: "thumbnail", width: 480, height: 320, position: "centre" },

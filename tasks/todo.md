@@ -134,3 +134,16 @@ Payload `3.88.0` applied `20260921_112401_initial_schema`, the seed created exac
 - [x] Add the branded root not-found experience and refresh the known obsolete broken demo image URLs without overwriting real CMS content.
 - [x] Run Payload type generation, import-map generation, typecheck, lint, production build, and git diff --check.
 - [x] Record release-candidate evidence in `docs/release-qa.md`.
+
+## Phase 6 operational hardening and deployment preparation
+
+- [x] Audit repository startup, environment, Payload, media, migration, and security boundaries.
+- [x] Add and verify a non-sensitive `/api/health` liveness endpoint.
+- [x] Create and verify a temporary local `pg_dump -Fc` archive with `pg_restore --list`.
+- [x] Restore into and validate a disposable local PostgreSQL database, then remove only the disposable target and temporary archive.
+- [x] Confirm Payload admin status; stop at first-user setup without inventing credentials.
+- [x] Document persistent media, environment, process, database, OLS, logging, migration, and rollback strategy.
+- [x] Create `docs/deployment-runbook.md` and `docs/launch-checklist.md`.
+- [x] Attempt the permitted read-only WOM-VPS-01 audit and record that access was unavailable.
+- [x] Run generation, typecheck, lint, build, diff, and secret checks after safe source/documentation changes.
+- [x] Keep deployment, DNS, OLS edits/reloads, production database creation, process creation, and package installation out of scope.
