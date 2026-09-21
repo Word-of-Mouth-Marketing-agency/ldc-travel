@@ -7,7 +7,7 @@ import { submitInquiry } from "../../app/(frontend)/contact/actions";
 import type { ContactFormState, InquiryField } from "../../lib/inquiry-validation";
 import { Icon } from "../homepage/Icon";
 
-const initialState: ContactFormState = { status: "idle", message: "", fieldErrors: {} };
+const initialState: ContactFormState = { status: "idle", message: "", fieldErrors: {}, values: {} };
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -54,7 +54,7 @@ export function ContactForm({ whatsappHref }: { whatsappHref: string }) {
   const errors = state.fieldErrors;
 
   return (
-    <form ref={formRef} className="contact-form" action={formAction} noValidate>
+    <form key={`contact-form-${state.status}-${JSON.stringify(state.values)}`} ref={formRef} className="contact-form" action={formAction} noValidate>
       <div className="contact-form-heading">
         <p className="section-eyebrow">Start a conversation</p>
         <h2 id="inquiry-heading">Tell us what you’re planning.</h2>
@@ -71,17 +71,17 @@ export function ContactForm({ whatsappHref }: { whatsappHref: string }) {
         <div className="contact-form-fields contact-form-fields-two">
           <div className="form-field">
             <label htmlFor="contact-fullName">Full name <span aria-hidden="true">*</span></label>
-            <input id="contact-fullName" name="fullName" type="text" autoComplete="name" maxLength={80} required aria-invalid={Boolean(errors.fullName)} aria-describedby={errors.fullName ? "contact-fullName-error" : undefined} />
+            <input id="contact-fullName" name="fullName" type="text" autoComplete="name" maxLength={80} required defaultValue={state.values.fullName ?? ""} aria-invalid={Boolean(errors.fullName)} aria-describedby={errors.fullName ? "contact-fullName-error" : undefined} />
             <FieldError id="contact-fullName-error" message={errors.fullName} />
           </div>
           <div className="form-field">
             <label htmlFor="contact-email">Email</label>
-            <input id="contact-email" name="email" type="email" autoComplete="email" maxLength={160} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "contact-email-error" : undefined} />
+            <input id="contact-email" name="email" type="email" autoComplete="email" maxLength={160} defaultValue={state.values.email ?? ""} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "contact-email-error" : undefined} />
             <FieldError id="contact-email-error" message={errors.email} />
           </div>
           <div className="form-field">
             <label htmlFor="contact-phone">Phone / WhatsApp</label>
-            <input id="contact-phone" name="phone" type="tel" autoComplete="tel" maxLength={30} aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "contact-phone-error" : undefined} />
+            <input id="contact-phone" name="phone" type="tel" autoComplete="tel" maxLength={30} defaultValue={state.values.phone ?? ""} aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "contact-phone-error" : undefined} />
             <FieldError id="contact-phone-error" message={errors.phone} />
           </div>
         </div>
@@ -92,7 +92,7 @@ export function ContactForm({ whatsappHref }: { whatsappHref: string }) {
         <div className="contact-form-fields contact-form-fields-two">
           <div className="form-field">
             <label htmlFor="contact-inquiryType">Inquiry type <span aria-hidden="true">*</span></label>
-            <select id="contact-inquiryType" name="inquiryType" defaultValue="general" required aria-invalid={Boolean(errors.inquiryType)} aria-describedby={errors.inquiryType ? "contact-inquiryType-error" : undefined}>
+            <select id="contact-inquiryType" name="inquiryType" defaultValue={state.values.inquiryType ?? "general"} required aria-invalid={Boolean(errors.inquiryType)} aria-describedby={errors.inquiryType ? "contact-inquiryType-error" : undefined}>
               <option value="general">General Inquiry</option>
               <option value="destination">Destination</option>
               <option value="custom-trip">Custom travel request</option>
@@ -102,13 +102,13 @@ export function ContactForm({ whatsappHref }: { whatsappHref: string }) {
           </div>
           <div className="form-field">
             <label htmlFor="contact-subject">Subject</label>
-            <input id="contact-subject" name="subject" type="text" maxLength={120} aria-invalid={Boolean(errors.subject)} aria-describedby={errors.subject ? "contact-subject-error" : undefined} />
+            <input id="contact-subject" name="subject" type="text" maxLength={120} defaultValue={state.values.subject ?? ""} aria-invalid={Boolean(errors.subject)} aria-describedby={errors.subject ? "contact-subject-error" : undefined} />
             <FieldError id="contact-subject-error" message={errors.subject} />
           </div>
         </div>
         <div className="form-field">
           <label htmlFor="contact-message">Message <span aria-hidden="true">*</span></label>
-          <textarea id="contact-message" name="message" rows={6} minLength={10} maxLength={2000} required aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "contact-message-error" : undefined} />
+          <textarea id="contact-message" name="message" rows={6} minLength={10} maxLength={2000} required defaultValue={state.values.message ?? ""} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "contact-message-error" : undefined} />
           <FieldError id="contact-message-error" message={errors.message} />
         </div>
       </fieldset>

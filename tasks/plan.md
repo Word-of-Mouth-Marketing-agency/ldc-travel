@@ -104,3 +104,11 @@ Phase 3 runtime evidence recorded 2026-09-21: migration, seed idempotency, stric
 42. Audit homepage, listing, detail, Contact, FAQ, CTA, image alt, and internal-link language for destination-first clarity and retired-model leakage.
 43. Complete environment-driven metadata, canonicals, Open Graph, preview noindex, sitemap, robots, and limited truthful structured data.
 44. Clarify Destination CMS editorial help text, preserve idempotent non-destructive seed behavior, update durable documentation, and validate the public route matrix.
+
+## Phase 5 release-candidate browser QA
+
+45. Run the responsive viewport matrix, representative visual review, route smoke checks, mobile drawer keyboard checks, form validation checks, image audit, link audit, and branded 404 regression checks.
+46. Verify preview-mode rendering without database credentials, strict CMS-unavailable behavior without credentials, and CMS-backed rendering with the configured local PostgreSQL environment.
+47. Fix only release-blocking regressions found during QA, regenerate Payload artifacts when relevant, and record final validation evidence without beginning deployment work.
+
+Phase 5 release-candidate QA completed 2026-09-21: the public route matrix, responsive overflow checks, drawer focus trap, validation error paths, image loading, metadata, strict failure mode, preview mode, and local CMS-backed rendering passed. The only browser-tool limitation was direct entry into email/tel controls in the isolated in-app browser; server-side validation and prior local persistence evidence remain intact.

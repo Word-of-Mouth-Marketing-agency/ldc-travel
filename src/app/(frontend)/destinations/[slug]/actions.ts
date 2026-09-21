@@ -19,11 +19,12 @@ export async function submitDestinationInquiry(
       status: "error",
       message: validation.formError ?? "Please check the form and try again.",
       fieldErrors: validation.fieldErrors,
+      values: validation.values,
     };
   }
 
   if (!approvedDestinationSlugs.includes(slug)) {
-    return { status: "error", message: "This destination is not available. Please contact us on WhatsApp.", fieldErrors: {} };
+    return { status: "error", message: "This destination is not available. Please contact us on WhatsApp.", fieldErrors: {}, values: validation.data };
   }
 
   if (isUiPreviewMode()) {
@@ -31,6 +32,7 @@ export async function submitDestinationInquiry(
       status: "error",
       message: "This is a website preview. Your details were not submitted. Please contact LDC Travel on WhatsApp.",
       fieldErrors: {},
+      values: validation.data,
     };
   }
 
@@ -39,6 +41,7 @@ export async function submitDestinationInquiry(
       status: "error",
       message: "We couldn’t send your inquiry right now. Please contact us on WhatsApp.",
       fieldErrors: {},
+      values: validation.data,
     };
   }
 
@@ -55,7 +58,7 @@ export async function submitDestinationInquiry(
     const destination = destinationResult.docs[0];
 
     if (!destination) {
-      return { status: "error", message: "We couldn’t find that destination right now. Please contact us on WhatsApp.", fieldErrors: {} };
+      return { status: "error", message: "We couldn’t find that destination right now. Please contact us on WhatsApp.", fieldErrors: {}, values: validation.data };
     }
 
     await payload.create({
@@ -76,6 +79,7 @@ export async function submitDestinationInquiry(
       status: "success",
       message: "Thanks — we've received your details. The LDC Travel team will contact you soon.",
       fieldErrors: {},
+      values: {},
     };
   } catch (error) {
     console.error("Destination inquiry submission failed.", error instanceof Error ? error.message : "Unknown error");
@@ -83,6 +87,7 @@ export async function submitDestinationInquiry(
       status: "error",
       message: "We couldn’t send your inquiry right now. Please contact us on WhatsApp.",
       fieldErrors: {},
+      values: validation.data,
     };
   }
 }

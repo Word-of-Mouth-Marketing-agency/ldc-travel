@@ -7,7 +7,7 @@ import { submitDestinationInquiry } from "../../app/(frontend)/destinations/[slu
 import type { DestinationInquiryField, DestinationInquiryFormState } from "../../lib/inquiry-validation";
 import { Icon } from "../homepage/Icon";
 
-const initialState: DestinationInquiryFormState = { status: "idle", message: "", fieldErrors: {} };
+const initialState: DestinationInquiryFormState = { status: "idle", message: "", fieldErrors: {}, values: {} };
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -49,7 +49,7 @@ export function DestinationInquiryForm({ destinationTitle, slug, whatsappHref }:
   const errors = state.fieldErrors;
 
   return (
-    <form ref={formRef} className="destination-inquiry-form" action={formAction} noValidate aria-labelledby="destination-inquiry-heading">
+    <form key={`destination-form-${state.status}-${JSON.stringify(state.values)}`} ref={formRef} className="destination-inquiry-form" action={formAction} noValidate aria-labelledby="destination-inquiry-heading">
       <div className="destination-inquiry-heading">
         <p className="section-eyebrow">Plan your {destinationTitle} journey</p>
         <h2 id="destination-inquiry-heading">Interested in {destinationTitle}?</h2>
@@ -64,17 +64,17 @@ export function DestinationInquiryForm({ destinationTitle, slug, whatsappHref }:
       <div className="destination-inquiry-fields">
         <div className="form-field">
           <label htmlFor="destination-fullName">Name <span aria-hidden="true">*</span></label>
-          <input id="destination-fullName" name="fullName" type="text" autoComplete="name" maxLength={80} required aria-invalid={Boolean(errors.fullName)} aria-describedby={errors.fullName ? "destination-fullName-error" : undefined} />
+          <input id="destination-fullName" name="fullName" type="text" autoComplete="name" maxLength={80} required defaultValue={state.values.fullName ?? ""} aria-invalid={Boolean(errors.fullName)} aria-describedby={errors.fullName ? "destination-fullName-error" : undefined} />
           <FieldError id="destination-fullName-error" message={errors.fullName} />
         </div>
         <div className="form-field">
           <label htmlFor="destination-email">Email <span aria-hidden="true">*</span></label>
-          <input id="destination-email" name="email" type="email" autoComplete="email" maxLength={160} required aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "destination-email-error" : undefined} />
+          <input id="destination-email" name="email" type="email" autoComplete="email" maxLength={160} required defaultValue={state.values.email ?? ""} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "destination-email-error" : undefined} />
           <FieldError id="destination-email-error" message={errors.email} />
         </div>
         <div className="form-field">
           <label htmlFor="destination-phone">Phone <span aria-hidden="true">*</span></label>
-          <input id="destination-phone" name="phone" type="tel" autoComplete="tel" maxLength={30} required aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "destination-phone-error" : undefined} />
+          <input id="destination-phone" name="phone" type="tel" autoComplete="tel" maxLength={30} required defaultValue={state.values.phone ?? ""} aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "destination-phone-error" : undefined} />
           <FieldError id="destination-phone-error" message={errors.phone} />
         </div>
       </div>

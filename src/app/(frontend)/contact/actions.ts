@@ -11,6 +11,7 @@ export async function submitInquiry(_previousState: ContactFormState, formData: 
       status: "error",
       message: validation.formError ?? "Please check the form and try again.",
       fieldErrors: validation.fieldErrors,
+      values: validation.values,
     };
   }
 
@@ -19,6 +20,7 @@ export async function submitInquiry(_previousState: ContactFormState, formData: 
       status: "error",
       message: "Preview mode: this form is not connected to a database, so your inquiry was not sent. Please contact us on WhatsApp instead.",
       fieldErrors: {},
+      values: validation.data,
     };
   }
 
@@ -27,6 +29,7 @@ export async function submitInquiry(_previousState: ContactFormState, formData: 
       status: "error",
       message: "We couldn’t send your inquiry right now. Please contact us on WhatsApp.",
       fieldErrors: {},
+      values: validation.data,
     };
   }
 
@@ -49,6 +52,7 @@ export async function submitInquiry(_previousState: ContactFormState, formData: 
       status: "success",
       message: "Thanks, your inquiry has been received. Our team will get back to you soon.",
       fieldErrors: {},
+      values: {},
     };
   } catch (error) {
     console.error("Contact inquiry submission failed.", error instanceof Error ? error.message : "Unknown error");
@@ -57,6 +61,7 @@ export async function submitInquiry(_previousState: ContactFormState, formData: 
       status: "error",
       message: "We couldn’t send your inquiry right now. Please contact us on WhatsApp.",
       fieldErrors: {},
+      values: validation.data,
     };
   }
 }

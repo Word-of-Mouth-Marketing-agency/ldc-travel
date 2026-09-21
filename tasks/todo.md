@@ -122,4 +122,15 @@ Payload `3.88.0` applied `20260921_112401_initial_schema`, the seed created exac
 - [x] Add environment-driven canonical metadata, Open Graph descriptions/images, preview noindex, sitemap, and robots rules.
 - [x] Add truthful Organization, WebSite, BreadcrumbList, and TouristDestination structured data without product, price, booking, or rating schemas.
 - [x] Clarify Destination CMS editorial help text and preserve non-destructive seed behavior.
-- [ ] Run final browser/responsive QA as the separate Phase 5 scope.
+- [x] Run final browser/responsive QA as the separate Phase 5 scope.
+
+## Phase 5 release-candidate browser QA
+
+- [x] Run the 320px through 1920px responsive matrix with no document overflow or clipped interactive labels.
+- [x] Review representative desktop/mobile states and verify the mobile drawer focus trap, Escape handling, scroll lock, and focus return.
+- [x] Smoke-test the homepage, Contact, destination listing, and all six destination detail routes in preview and local CMS-backed modes.
+- [x] Verify destination/contact validation errors, ARIA state, preserved text values, and preview-safe submission boundaries.
+- [x] Audit images, links, metadata, structured data, robots, sitemap, favicon, footer, scrollbar, reduced-motion behavior, and console output.
+- [x] Add the branded root not-found experience and refresh the known obsolete broken demo image URLs without overwriting real CMS content.
+- [x] Run Payload type generation, import-map generation, typecheck, lint, production build, and git diff --check.
+- [x] Record release-candidate evidence in `docs/release-qa.md`.

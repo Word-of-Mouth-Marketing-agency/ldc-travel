@@ -24,6 +24,7 @@ export type ContactFormState = {
   status: "idle" | "success" | "error";
   message: string;
   fieldErrors: InquiryFieldErrors;
+  values: Partial<InquiryFormValues>;
 };
 
 export type DestinationInquiryValues = {
@@ -39,11 +40,12 @@ export type DestinationInquiryFormState = {
   status: "idle" | "success" | "error";
   message: string;
   fieldErrors: DestinationInquiryFieldErrors;
+  values: Partial<DestinationInquiryValues>;
 };
 
 export type InquiryValidationResult =
   | { success: true; data: InquiryFormValues }
-  | { success: false; fieldErrors: InquiryFieldErrors; formError?: string; isSpam?: boolean };
+  | { success: false; fieldErrors: InquiryFieldErrors; formError?: string; isSpam?: boolean; values: Partial<InquiryFormValues> };
 
 function readString(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -69,7 +71,7 @@ export function validateInquiry(formData: FormData): InquiryValidationResult {
   const fieldErrors: InquiryFieldErrors = {};
 
   if (readString(formData, "website")) {
-    return { success: false, fieldErrors: {}, formError: "Please try again.", isSpam: true };
+    return { success: false, fieldErrors: {}, formError: "Please try again.", isSpam: true, values: { fullName, email, phone, inquiryType, subject, message } };
   }
 
   if (fullName.length < 2 || fullName.length > 80) fieldErrors.fullName = "Please enter your name (2–80 characters).";
@@ -84,7 +86,7 @@ export function validateInquiry(formData: FormData): InquiryValidationResult {
   if (message.length < 10 || message.length > 2000) fieldErrors.message = "Please share 10–2,000 characters about your request.";
 
   if (Object.keys(fieldErrors).length) {
-    return { success: false, fieldErrors, formError: "Please check the highlighted fields and try again." };
+    return { success: false, fieldErrors, formError: "Please check the highlighted fields and try again.", values: { fullName, email, phone, inquiryType, subject, message } };
   }
 
   return {
@@ -95,7 +97,7 @@ export function validateInquiry(formData: FormData): InquiryValidationResult {
 
 export type DestinationInquiryValidationResult =
   | { success: true; data: DestinationInquiryValues }
-  | { success: false; fieldErrors: DestinationInquiryFieldErrors; formError?: string; isSpam?: boolean };
+  | { success: false; fieldErrors: DestinationInquiryFieldErrors; formError?: string; isSpam?: boolean; values: Partial<DestinationInquiryValues> };
 
 export function validateDestinationInquiry(formData: FormData): DestinationInquiryValidationResult {
   const fullName = readString(formData, "fullName");
@@ -104,7 +106,7 @@ export function validateDestinationInquiry(formData: FormData): DestinationInqui
   const fieldErrors: DestinationInquiryFieldErrors = {};
 
   if (readString(formData, "website")) {
-    return { success: false, fieldErrors: {}, formError: "Please try again.", isSpam: true };
+    return { success: false, fieldErrors: {}, formError: "Please try again.", isSpam: true, values: { fullName, email, phone } };
   }
 
   if (fullName.length < 2 || fullName.length > 80) fieldErrors.fullName = "Please enter your name (2–80 characters).";
@@ -112,7 +114,7 @@ export function validateDestinationInquiry(formData: FormData): DestinationInqui
   if (!phone || phone.length > 30 || !isValidPhone(phone)) fieldErrors.phone = "Please enter a valid phone or WhatsApp number.";
 
   if (Object.keys(fieldErrors).length) {
-    return { success: false, fieldErrors, formError: "Please check the highlighted fields and try again." };
+    return { success: false, fieldErrors, formError: "Please check the highlighted fields and try again.", values: { fullName, email, phone } };
   }
 
   return { success: true, data: { fullName, email, phone } };

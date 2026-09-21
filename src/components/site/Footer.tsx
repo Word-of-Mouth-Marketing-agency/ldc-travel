@@ -23,7 +23,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
           <p>{site.footerCopy}</p>
           <div className="social-links" aria-label="LDC Travel social links">
             {site.socialLinks.map((social) => social.url ? (
-              <a key={social.label} href={social.url} aria-label={social.label} target="_blank" rel="noreferrer">
+              <a key={social.label} href={social.url} aria-label={social.label} target="_blank" rel="noopener noreferrer">
                 <SocialIcon label={social.label} />
               </a>
             ) : (

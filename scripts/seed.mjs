@@ -121,6 +121,11 @@ function matchesLegacyEditorialCopy(existing, slug) {
   return Boolean(signature && existing.summary === signature.summary && existing.overview === signature.overview && existing.bestTimeToVisit === signature.bestTimeToVisit);
 }
 
+const legacyBrokenImageUrls = [
+  "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=1200&q=85",
+  "https://images.unsplash.com/photo-1520637836862-4d197d17c93a?auto=format&fit=crop&w=1200&q=85",
+];
+
 const destinations = {};
 for (const [slug, data] of destinationSeeds) {
   const existing = await findBy("destinations", "slug", slug);
@@ -132,10 +137,15 @@ for (const [slug, data] of destinationSeeds) {
 
   const missingDetailFields = {};
   const safeEditorialRefresh = matchesLegacyEditorialCopy(existing, slug);
+  const needsImageRefresh = legacyBrokenImageUrls.some((url) => JSON.stringify(existing).includes(url));
   for (const field of ["overview", "highlights", "experiences", "bestTimeToVisit", "usefulInformation", "seo"]) {
     if (safeEditorialRefresh || existing[field] == null || (Array.isArray(existing[field]) && existing[field].length === 0)) missingDetailFields[field] = data[field];
   }
   if (safeEditorialRefresh || !existing.imageUrl) missingDetailFields.imageUrl = data.imageUrl;
+  if (needsImageRefresh) {
+    missingDetailFields.highlights = data.highlights;
+    missingDetailFields.gallery = data.gallery;
+  }
   if (Object.keys(missingDetailFields).length) {
     destinations[slug] = await payload.update({ collection: "destinations", id: existing.id, data: missingDetailFields });
     console.log(`enrich destinations:${slug}`);
