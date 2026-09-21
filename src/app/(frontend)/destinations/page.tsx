@@ -3,13 +3,13 @@ import type { Metadata } from "next";
 import { DestinationsListingPage, DestinationsUnavailable } from "../../../components/destinations/DestinationListingPage";
 import { ContactDataError, getContactData } from "../../../lib/contact";
 import { DestinationDataError, getDestinationsData } from "../../../lib/destinations";
-import { buildPageMetadata } from "../../../lib/seo";
+import { buildPageMetadata, getSiteUrl } from "../../../lib/seo";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildPageMetadata({
   siteName: "LDC Travel",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  siteUrl: getSiteUrl(),
   pathname: "/destinations",
   title: "Destinations | LDC Travel",
   description: "Explore Turkey, Russia, Bali, Georgia, Indonesia, and Thailand with LDC Travel. Find a destination that fits the way you want to travel.",

@@ -38,6 +38,8 @@ export const seoFields = (): Field[] => [
   {
     name: "seo",
     type: "group",
+    label: "SEO",
+    admin: { description: "Optional page title, description, social image, and canonical override for this editorial record." },
     fields: [
       { name: "metaTitle", type: "text", maxLength: 60 },
       { name: "metaDescription", type: "textarea", maxLength: 160 },

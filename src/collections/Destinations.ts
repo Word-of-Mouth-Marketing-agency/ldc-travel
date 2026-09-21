@@ -19,7 +19,7 @@ export const Destinations: CollectionConfig = {
       type: "text",
       admin: { description: "Optional remote demo image URL. Prefer a Media upload for production content." },
     },
-    { name: "gallery", type: "upload", relationTo: "media", hasMany: true },
+    { name: "gallery", type: "upload", relationTo: "media", hasMany: true, admin: { description: "Optional supporting image gallery. Add meaningful alt text to each image." } },
     {
       name: "highlights",
       type: "array",
@@ -41,10 +41,11 @@ export const Destinations: CollectionConfig = {
         { name: "icon", type: "text", admin: { description: "Shared icon key such as city, mountain, waves, or sparkles." } },
       ],
     },
-    { name: "bestTimeToVisit", type: "textarea" },
+    { name: "bestTimeToVisit", type: "textarea", admin: { description: "Use nuanced seasonal guidance; avoid declaring one universal best month." } },
     {
       name: "usefulInformation",
       type: "array",
+      admin: { description: "Stable context such as language, currency, geography, or planning considerations. Do not add legal advice." },
       fields: [
         { name: "label", type: "text", required: true },
         { name: "value", type: "textarea", required: true },
@@ -54,7 +55,7 @@ export const Destinations: CollectionConfig = {
     statusField(),
     marketVisibilityField(),
     { name: "relatedDestinations", type: "relationship", relationTo: "destinations", hasMany: true },
-    { name: "faqs", type: "relationship", relationTo: "faqs", hasMany: true },
+    { name: "faqs", type: "relationship", relationTo: "faqs", hasMany: true, admin: { description: "Destination-specific questions that help visitors decide whether to start an inquiry." } },
     {
       name: "relatedPrograms",
       type: "relationship",

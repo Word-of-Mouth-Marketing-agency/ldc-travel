@@ -48,6 +48,12 @@ Testimonials and Guides are not currently shown because the available content is
 
 Editorial records relate to one or more Market records. The launch configuration resolves one active public market (Egypt), and public queries scope content through that market seam. The public homepage does not expose Saudi Arabia as a destination market. The confirmed WhatsApp value is `+9667277981053`, normalized to `9667277981053` for `wa.me` URLs and configured centrally.
 
+## Editorial SEO behavior
+
+Public page titles and descriptions are route-specific and written in the destination-first editorial voice. Canonicals and absolute sitemap URLs are driven by `NEXT_PUBLIC_SITE_URL`; no production domain is assumed in source code. When the explicit server-side `UI_PREVIEW_MODE=true` flag is enabled, public metadata is `noindex,nofollow` and `robots.txt` disallows crawling the preview. Normal production mode emits indexable metadata, allows public routes, and disallows only `/admin` and `/api`.
+
+The frontend emits one truthful Organization/WebSite graph, plus BreadcrumbList and TouristDestination data on destination detail pages. No Product, Offer, Trip, Hotel, AggregateRating, or FAQPage schema is emitted because the public site has no prices, booking flow, ratings, or eligible structured FAQ presentation.
+
 ## Contact and inquiry seam
 
 `src/app/(frontend)/contact/page.tsx` remains a server-rendered Contact page that reuses Site Settings, shared navigation/footer, and the WhatsApp conversion path. The reusable destination detail template adds a Name, Email, and Phone form bound to the current destination. Persistence remains admin-only through the existing Inquiries collection, which now stores an optional destination relationship; missing credentials never produce a success state.

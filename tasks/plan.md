@@ -97,3 +97,10 @@ The foundation and Phase 1 criteria in `specs/001-foundation/spec.md` are met, c
 40. Record the runtime evidence and commit only after all gates pass; production PostgreSQL and deployment remain deferred.
 
 Phase 3 runtime evidence recorded 2026-09-21: migration, seed idempotency, strict CMS-backed routes, inquiry persistence/access control, preview regression, and public asset/link checks passed. Authenticated media/admin CRUD, database restart/recovery, and backup validation remain separate follow-up gates.
+
+## Phase 4 editorial and SEO QA
+
+41. Re-research and refine all six approved destination records using current official tourism, city, and UNESCO sources while retaining original concise copy.
+42. Audit homepage, listing, detail, Contact, FAQ, CTA, image alt, and internal-link language for destination-first clarity and retired-model leakage.
+43. Complete environment-driven metadata, canonicals, Open Graph, preview noindex, sitemap, robots, and limited truthful structured data.
+44. Clarify Destination CMS editorial help text, preserve idempotent non-destructive seed behavior, update durable documentation, and validate the public route matrix.

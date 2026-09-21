@@ -135,7 +135,7 @@ export const demoHomepage: HomepageViewModel = {
   hero: {
     eyebrow: "Travel farther, thoughtfully",
     headline: "Explore more. Travel better.",
-    supportingCopy: "Discover inspiring destinations and start a conversation with a team that helps you travel with confidence.",
+    supportingCopy: "Explore six distinctive destinations, then talk with LDC Travel about the places, pace, and experiences you want to build around.",
     image: localImage("/hero-travel.webp", "Mountain lake village framed by the Alps"),
     primaryCta: { label: "Explore destinations", href: "/destinations" },
     secondaryCta: whatsappCta("Talk to LDC Travel"),
@@ -151,17 +151,17 @@ export const demoHomepage: HomepageViewModel = {
   whyLdc: {
     eyebrow: "Why travel with LDC",
     headline: "A clearer way to choose your next destination.",
-    description: "We make the first step feel easy: discover the places that fit your mood, ask the questions that matter, and move forward with a real person on your side.",
+    description: "Move from inspiration to a clearer destination conversation. Tell us what matters to you, ask the questions that matter, and take the next step with a real person.",
     items: [
-      { title: "Destination-first thinking", description: "Start with the feeling, landscape, and culture you want to experience.", icon: "globe" },
-      { title: "Guidance that feels personal", description: "Share your priorities and get a thoughtful starting point for your journey.", icon: "compass" },
-      { title: "A simple human conversation", description: "No complicated process. Just clear answers when you are ready.", icon: "message" },
+      { title: "Start with the destination", description: "Begin with the landscape, culture, or pace you want to experience.", icon: "globe" },
+      { title: "Guidance with context", description: "Share your priorities and get a useful direction for the next conversation.", icon: "compass" },
+      { title: "A clear human follow-up", description: "Send your details or a WhatsApp message, and our team will respond with the next step.", icon: "message" },
     ],
   },
   inspiration: {
     eyebrow: "Find your kind of escape",
     headline: "Let the destination set the pace.",
-    description: "From old cities to open landscapes, follow the kind of experience you want more of.",
+    description: "From old cities to open landscapes, start with the kind of experience you want more of.",
     items: [
       { title: "Culture", label: "Stories in every street", description: "For travelers who want art, history, food, and a strong sense of place.", image: image("photo-1524231757912-21f4fe3a7200", "Historic Istanbul skyline beside the Bosphorus"), href: "/destinations" },
       { title: "Nature", label: "Room to breathe", description: "Mountain air, green valleys, and landscapes that invite you to slow down.", image: image("photo-1569396116180-210c182bedb8", "Green mountain landscape in Georgia"), href: "/destinations/georgia" },
@@ -172,7 +172,7 @@ export const demoHomepage: HomepageViewModel = {
   destinationCta: {
     eyebrow: "Your next chapter starts here",
     headline: "Tell us where you want to go.",
-    description: "Have a destination in mind or still choosing? Send a message and we will help you find the right direction.",
+    description: "Have a destination in mind or still choosing? Send your details and the LDC Travel team will follow up with a useful direction.",
       primaryCta: { label: "Explore destinations", href: "/destinations" },
     secondaryCta: whatsappCta("Start a conversation"),
   },

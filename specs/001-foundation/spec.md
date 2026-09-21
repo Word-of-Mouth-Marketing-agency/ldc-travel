@@ -265,3 +265,13 @@ Phase 1 ships `/` using CMS-driven sections in this order: Header, Hero, Feature
 - [x] No local credentials, database dump, admin credentials, or test lead details were added to the repository.
 - [ ] Authenticated admin CRUD/media upload, database restart/recovery, and backup validation remain pending.
 - [ ] Production PostgreSQL choice and deployment remain deferred.
+
+## Phase 4 editorial and SEO completion state
+
+- [x] Re-researched all six approved destinations from current official tourism, city, and UNESCO sources and refreshed the source map.
+- [x] Refined destination editorial copy, seasonal guidance, stable useful information, image alt text, homepage language, CTAs, and FAQ support without adding retired public concepts.
+- [x] Added environment-driven canonical metadata, Open Graph metadata, preview `noindex,nofollow`, sitemap, and robots rules.
+- [x] Added truthful Organization/WebSite, destination BreadcrumbList, and TouristDestination structured data; excluded product, offer, booking, rating, and payment schemas.
+- [x] Clarified Destination CMS editorial help text while preserving legacy collections and non-destructive seed behavior.
+- [x] Recorded the final canonical-host requirement: `NEXT_PUBLIC_SITE_URL` must be set to the real production origin before launch.
+- [ ] Browser/responsive/final QA remains Phase 5 scope.

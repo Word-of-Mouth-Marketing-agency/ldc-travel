@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 
 import { Homepage, HomepageUnavailable } from "../../components/homepage/Homepage";
 import { getHomepageData, HomepageDataError } from "../../lib/homepage";
-import { buildPageMetadata } from "../../lib/seo";
+import { buildPageMetadata, getSiteUrl } from "../../lib/seo";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildPageMetadata({
   siteName: "LDC Travel",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  title: "LDC Travel | Tourism Marketing",
-  description: "Explore international destinations with LDC Travel from Egypt. Discover Turkey, Russia, Bali, Georgia, Indonesia, and Thailand, then start a thoughtful travel conversation.",
+  siteUrl: getSiteUrl(),
+  title: "International Destinations from Egypt | LDC Travel",
+  description: "Explore Turkey, Russia, Bali, Georgia, Indonesia, and Thailand with LDC Travel, then start a clear conversation about your next destination.",
   socialImageUrl: "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=1200&q=80",
 });
 

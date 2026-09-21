@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { DestinationDetailPage, DestinationDetailUnavailable } from "../../../../components/destinations/DestinationDetailPage";
 import { ContactDataError, getContactData } from "../../../../lib/contact";
 import { DestinationDataError, getDestinationData, getDestinationsData, getRelatedDestinationItems } from "../../../../lib/destinations";
-import { buildPageMetadata } from "../../../../lib/seo";
+import { buildPageMetadata, getSiteUrl } from "../../../../lib/seo";
+import { DestinationStructuredData } from "../../../../components/seo/StructuredData";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: DestinationRouteProps): Promi
     if (!destination) return { title: "Destination not found | LDC Travel" };
     return buildPageMetadata({
       siteName: "LDC Travel",
-      siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+      siteUrl: getSiteUrl(),
       pathname: `/destinations/${destination.slug}`,
       title: destination.seoMetaTitle,
       description: destination.seoMetaDescription,
@@ -50,5 +51,5 @@ export default async function DestinationRoute({ params }: DestinationRouteProps
   }
 
   if (!destinations || !contact) return <DestinationDetailUnavailable />;
-  return <DestinationDetailPage destination={destination} relatedDestinations={getRelatedDestinationItems(destination, destinations)} destinations={destinations} site={contact.site} whatsappConfig={contact.whatsappConfig} />;
+  return <><DestinationStructuredData destination={destination} /><DestinationDetailPage destination={destination} relatedDestinations={getRelatedDestinationItems(destination, destinations)} destinations={destinations} site={contact.site} whatsappConfig={contact.whatsappConfig} /></>;
 }

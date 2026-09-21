@@ -4,23 +4,24 @@
     "title": "Turkey",
     "country": "Türkiye",
     "regionOrCity": "Istanbul, Cappadocia and the coast",
-    "eyebrow": "Where continents meet",
-    "summary": "Layered history, dramatic landscapes, and a Mediterranean rhythm that changes from city to coast.",
-    "overview": "Turkey brings together the energy of Istanbul, the sculpted valleys of Cappadocia, and a long coastline shaped by light, water, and ancient stories. It is a destination for travelers who want culture and contrast in the same journey.",
+    "eyebrow": "Two continents, many ways to travel",
+    "summary": "Istanbul energy, Cappadocian valleys, and Aegean and Mediterranean coastlines in one rich destination.",
+    "overview": "Turkey gives a journey room to change pace: move from Bosphorus-facing neighborhoods and historic architecture in Istanbul to Cappadocia's volcanic valleys, then toward coastal towns and archaeological sites. Food, design, and a deep sense of history keep the route grounded.",
     "highlights": [
-      { "title": "Istanbul", "description": "Move between historic quarters, waterfront views, museums, markets, and the everyday energy of a city spanning two continents.", "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=85", "alt": "Istanbul skyline with mosque domes and the Bosphorus" },
+      { "title": "Istanbul", "description": "Move between historic quarters, Bosphorus views, museums, markets, and the everyday energy of a city linking Europe and Asia.", "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=85", "alt": "Istanbul skyline with mosque domes and the Bosphorus" },
       { "title": "Cappadocia", "description": "Explore a distinctive landscape of fairy chimneys, valleys, cave spaces, and villages shaped by volcanic stone.", "image": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=85", "alt": "Hot air balloons over Cappadocia at sunrise" },
-      { "title": "Turquoise coast", "description": "Follow the Aegean and Mediterranean shores for coastal towns, clear water, and archaeological traces beside the sea.", "image": "https://images.unsplash.com/photo-1566847438217-76e82d383f84?auto=format&fit=crop&w=1200&q=85", "alt": "Turquoise coastline viewed from above" }
+      { "title": "Aegean and Mediterranean coast", "description": "Follow the shores for coastal towns, clear water, and archaeological traces beside the sea.", "image": "https://images.unsplash.com/photo-1566847438217-76e82d383f84?auto=format&fit=crop&w=1200&q=85", "alt": "Turquoise coastline viewed from above" }
     ],
     "experiences": [
       { "title": "City stories", "description": "Let Istanbul set the pace with architecture, food, neighborhoods, and views across the Bosphorus.", "icon": "city" },
-      { "title": "Landscapes with a sense of wonder", "description": "Make space for Cappadocia's valleys, stone formations, and quiet early-morning light.", "icon": "mountain" },
+      { "title": "Volcanic landscapes", "description": "Make space for Cappadocia's valleys, stone formations, and quiet early-morning light.", "icon": "mountain" },
       { "title": "Coastal discovery", "description": "Balance cultural depth with relaxed days along the Aegean and Mediterranean shores.", "icon": "waves" }
     ],
-    "bestTimeToVisit": "Spring and autumn are often comfortable for city walks, cultural visits, and inland exploration. Summer suits the coast, while Cappadocia and higher inland areas can feel very different from the shoreline.",
+    "bestTimeToVisit": "For city walks and inland discovery, many travelers prefer spring or autumn. Summer is popular for coastal stays, while Cappadocia's highland setting can feel cooler than the shoreline.",
     "usefulInformation": [
       { "label": "Language", "value": "Turkish; English is common in major visitor areas." },
-      { "label": "Character", "value": "A varied destination combining urban culture, heritage, nature, and coast." },
+      { "label": "Currency", "value": "Turkish lira." },
+      { "label": "Travel character", "value": "A varied destination combining urban culture, heritage, nature, and coast." },
       { "label": "Planning note", "value": "Distances between regions are meaningful, so a thoughtful route makes the experience easier." }
     ],
     "gallery": [
@@ -30,30 +31,31 @@
       { "image": "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=1200&q=85", "alt": "Historic Istanbul street" }
     ],
     "seoMetaTitle": "Turkey Travel | LDC Travel",
-    "seoMetaDescription": "Explore Turkey with LDC Travel, from Istanbul and Cappadocia to the Mediterranean coast. Start a thoughtful destination inquiry."
+    "seoMetaDescription": "Explore Turkey with LDC Travel, from Istanbul and Cappadocia to Aegean and Mediterranean coastlines. Start a destination inquiry."
   },
   {
     "slug": "russia",
     "title": "Russia",
     "country": "Russia",
     "regionOrCity": "Moscow and Saint Petersburg",
-    "eyebrow": "Grandeur and culture",
-    "summary": "Monumental cityscapes, celebrated museums, and a cultural journey with a strong sense of place.",
-    "overview": "Russia's classic city route moves between Moscow's historic centre and Saint Petersburg's water-shaped architectural landscape. The experience is rich in museums, public squares, theatres, palaces, and layers of cultural history.",
+    "eyebrow": "Cities shaped by culture",
+    "summary": "Moscow and Saint Petersburg meet in a culture-led route of grand architecture, museums, and waterways.",
+    "overview": "A Russia journey can move between Moscow's historic centre and Saint Petersburg's canal-lined urban landscape. The focus is cultural: public squares, museums, theatres, palaces, and the architectural details that give each city its own rhythm.",
     "highlights": [
       { "title": "Moscow", "description": "Discover the Kremlin and Red Square at the historic heart of the capital, then continue through museums, galleries, and lively neighborhoods.", "image": "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=1200&q=85", "alt": "Colorful architecture in Moscow at blue hour" },
       { "title": "Saint Petersburg", "description": "Follow canals, embankments, grand ensembles, and the cultural institutions of Russia's northern capital.", "image": "https://images.unsplash.com/photo-1556610961-2fecc5927173?auto=format&fit=crop&w=1200&q=85", "alt": "Historic architecture beside water in Saint Petersburg" },
-      { "title": "Museums and heritage", "description": "Build time around art, architecture, music, and historic spaces rather than rushing between landmarks.", "image": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=1200&q=85", "alt": "Ornate historic interior" }
+      { "title": "Museums and heritage", "description": "Build time around art, architecture, music, and historic spaces so the cities are experienced rather than rushed.", "image": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=1200&q=85", "alt": "Ornate historic interior" }
     ],
     "experiences": [
       { "title": "Historic city centres", "description": "Take in the scale of Moscow and Saint Petersburg through their squares, streets, monuments, and waterways.", "icon": "city" },
       { "title": "A museum-led journey", "description": "Leave room for the museums and collections that give each city its cultural texture.", "icon": "sparkles" },
-      { "title": "Architecture after dark", "description": "See how evening light changes the character of the great facades and public spaces.", "icon": "moon" }
+      { "title": "Architecture in changing light", "description": "Notice how morning, evening, and winter light change the character of great facades and public spaces.", "icon": "moon" }
     ],
     "bestTimeToVisit": "The most suitable season depends on the route and experience you want. Warmer months support long city walks and riverfront time, while winter brings a different atmosphere and requires more careful planning for weather.",
     "usefulInformation": [
       { "label": "Language", "value": "Russian; English availability varies by city and venue." },
-      { "label": "Character", "value": "A culture-focused destination shaped by architecture, museums, music, and history." },
+      { "label": "Currency", "value": "Russian ruble." },
+      { "label": "Travel character", "value": "A culture-focused destination shaped by architecture, museums, music, and history." },
       { "label": "Planning note", "value": "Confirm current entry, transport, and venue information with authoritative sources before travel." }
     ],
     "gallery": [
@@ -63,30 +65,31 @@
       { "image": "https://images.unsplash.com/photo-1520637836862-4d197d17c93a?auto=format&fit=crop&w=1200&q=85", "alt": "Open landscape under a wide sky" }
     ],
     "seoMetaTitle": "Russia Travel | LDC Travel",
-    "seoMetaDescription": "Discover a culture-led Russia journey through Moscow and Saint Petersburg with LDC Travel. Begin your destination inquiry."
+    "seoMetaDescription": "Discover a culture-led Russia journey through Moscow and Saint Petersburg with LDC Travel. Begin your inquiry."
   },
   {
     "slug": "bali",
     "title": "Bali",
     "country": "Indonesia",
     "regionOrCity": "Ubud, temples and the coast",
-    "eyebrow": "Island rhythm",
-    "summary": "Green terraces, temple calm, warm coastlines, and a culture that invites you to slow down.",
-    "overview": "Bali brings together natural beauty, cultural heritage, and a relaxed island rhythm. From Ubud's artistic centre to rice terraces, beaches, and temples by the sea, the island rewards travelers who leave room for both discovery and pause.",
+    "eyebrow": "An island with its own rhythm",
+    "summary": "Ubud's rice landscapes, temple traditions, and coastlines create a slower island rhythm.",
+    "overview": "Bali is a distinct island destination with its own cultural and natural character. Move from Ubud's rice landscapes and creative life to temple settings, beaches, and time outdoors, leaving enough space for both discovery and pause.",
     "highlights": [
       { "title": "Ubud", "description": "Spend time among galleries, craft traditions, rice-field landscapes, and the cultural energy of central Bali.", "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=85", "alt": "Balinese temple surrounded by tropical greenery" },
-      { "title": "Temple landscapes", "description": "Experience the visual calm of Balinese temples and the rituals that remain part of everyday life.", "image": "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1200&q=85", "alt": "Temple gate in Bali" },
+      { "title": "Temple landscapes", "description": "Take in temple architecture, carved details, and the cultural traditions that shape the island's daily rhythm.", "image": "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1200&q=85", "alt": "Temple gate in Bali" },
       { "title": "Beaches and coastlines", "description": "Choose a coastal rhythm that matches you, from sunrise walks to lively surf beaches and quieter shores.", "image": "https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=1200&q=85", "alt": "Bali coastline with tropical water" }
     ],
     "experiences": [
       { "title": "Culture in motion", "description": "Let ceremonies, dance, craft, and architecture add meaning to the places you visit.", "icon": "sparkles" },
       { "title": "Green escapes", "description": "Move inland for rice terraces, forest paths, and the slower pace of Ubud and its surroundings.", "icon": "leaf" },
-      { "title": "A day by the sea", "description": "Keep the itinerary open enough for sunsets, swimming, and unplanned discoveries along the coast.", "icon": "waves" }
+      { "title": "A day by the sea", "description": "Keep the route open for swimming, sunsets, and the coastal pace that suits you.", "icon": "waves" }
     ],
     "bestTimeToVisit": "The drier months are generally popular for outdoor plans, while the wetter season can bring lush landscapes and shorter, more flexible outings. Local conditions vary across the island and by activity.",
     "usefulInformation": [
       { "label": "Language", "value": "Indonesian and Balinese; English is common in established visitor areas." },
-      { "label": "Character", "value": "A culture-rich island destination balancing nature, wellness, beaches, and creative life." },
+      { "label": "Currency", "value": "Indonesian rupiah." },
+      { "label": "Travel character", "value": "A culture-rich island destination balancing nature, wellness, beaches, and creative life." },
       { "label": "Planning note", "value": "Allow extra time for road movement and choose a base that matches your preferred pace." }
     ],
     "gallery": [
@@ -103,23 +106,24 @@
     "title": "Georgia",
     "country": "Georgia",
     "regionOrCity": "Tbilisi, Kakheti and the Caucasus",
-    "eyebrow": "A warm crossroads",
-    "summary": "Old streets, mountain horizons, generous tables, and a destination with many different moods.",
-    "overview": "Georgia sits at a crossroads of Europe and Asia, bringing together a lively capital, Caucasus landscapes, Black Sea air, and a deep food and wine culture. It is compact enough to feel connected while changing character from region to region.",
+    "eyebrow": "Cities, mountains, and the shared table",
+    "summary": "Tbilisi streets, Caucasus horizons, Kakheti tables, and a culture shaped by many crossroads.",
+    "overview": "Georgia brings together Tbilisi's layered streets, the high landscapes around Kazbegi, Kakheti's food and wine traditions, and the different character of the country's regions. The appeal is in the contrast between city, mountain, table, and road.",
     "highlights": [
       { "title": "Tbilisi", "description": "Wander through a capital where historic streets, bath districts, balconies, and contemporary creative life sit side by side.", "image": "https://images.unsplash.com/photo-1569396116180-210c182bedb8?auto=format&fit=crop&w=1200&q=85", "alt": "Tbilisi rooftops and Caucasus landscape" },
-      { "title": "Caucasus mountains", "description": "Head north for wide mountain views, high valleys, and villages that make the landscape the main story.", "image": "https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?auto=format&fit=crop&w=1200&q=85", "alt": "Snowy Caucasus mountain landscape" },
+      { "title": "Kazbegi and the Caucasus", "description": "Head north for wide mountain views, high valleys, and villages where the landscape becomes the main story.", "image": "https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?auto=format&fit=crop&w=1200&q=85", "alt": "Snowy Caucasus mountain landscape" },
       { "title": "Kakheti and the table", "description": "Make space for regional food, village hospitality, and the long relationship between Georgia, vineyards, and the shared table.", "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85", "alt": "Georgian hillside town and valley" }
     ],
     "experiences": [
       { "title": "A city with layers", "description": "Use Tbilisi as a starting point for architecture, baths, food, and a growing contemporary scene.", "icon": "city" },
       { "title": "Mountain air", "description": "Trade the city for the Caucasus when you want wide views, walking, and a stronger sense of distance.", "icon": "mountain" },
-      { "title": "Food, wine, and welcome", "description": "Let regional cuisine and the shared table become part of how you understand the country.", "icon": "utensils" }
+      { "title": "Food, wine, and place", "description": "Let regional cuisine, vineyards, and the shared table become part of how you understand the country.", "icon": "utensils" }
     ],
     "bestTimeToVisit": "Georgia spans several landscapes and climates, so the best period depends on your route. Spring and autumn are inviting for cities, food, and walking; summer opens more mountain routes, while winter suits snow experiences in selected regions.",
     "usefulInformation": [
       { "label": "Language", "value": "Georgian; English is increasingly common in visitor-facing areas." },
-      { "label": "Character", "value": "A culturally rich crossroads blending cities, mountains, food, wine, and coast." },
+      { "label": "Currency", "value": "Georgian lari." },
+      { "label": "Travel character", "value": "A culturally rich crossroads blending cities, mountains, food, wine, and coast." },
       { "label": "Planning note", "value": "Regional travel adds variety, but routes should allow for changing terrain and road times." }
     ],
     "gallery": [
@@ -129,30 +133,31 @@
       { "image": "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1200&q=85", "alt": "Historic stone architecture" }
     ],
     "seoMetaTitle": "Georgia Travel | LDC Travel",
-    "seoMetaDescription": "Explore Georgia with LDC Travel, from Tbilisi and the Caucasus to Kakheti's food and wine culture. Start your inquiry."
+    "seoMetaDescription": "Explore Georgia with LDC Travel, from Tbilisi and Kazbegi to Kakheti's food and wine culture. Start an inquiry."
   },
   {
     "slug": "indonesia",
     "title": "Indonesia",
     "country": "Indonesia",
     "regionOrCity": "Java, Yogyakarta and the islands",
-    "eyebrow": "Many islands, many stories",
-    "summary": "A broader Indonesian journey through ancient places, volcanic landscapes, creative cities, and island life.",
-    "overview": "Indonesia is much larger than any single island. A destination-first journey can move through Java's cultural centres, volcanic landscapes, historic cities, and the different rhythms of islands such as Lombok, while keeping Bali as its own distinct destination.",
+    "eyebrow": "A wider archipelago story",
+    "summary": "Go beyond Bali through Java's heritage, volcanic landscapes, and the changing rhythms of a vast archipelago.",
+    "overview": "Indonesia is a broad archipelago rather than a single travel style. Look to Java for Yogyakarta, heritage, and volcanic landscapes, then consider islands such as Lombok for a different balance of coastline, local culture, and open space. Bali remains its own distinct destination on this site.",
     "highlights": [
       { "title": "Yogyakarta and Java", "description": "Discover a cultural centre shaped by palaces, crafts, living traditions, and the temple landscapes of Central Java.", "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85", "alt": "Stone temple surrounded by lush Indonesian forest" },
       { "title": "Volcanic landscapes", "description": "Java's geography adds a dramatic natural dimension, from highland views to the fertile landscapes shaped by volcanoes.", "image": "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1200&q=85", "alt": "Indonesian volcano at sunrise" },
-      { "title": "Beyond one island", "description": "Look toward Lombok and other regions for a different balance of coastline, local culture, and open space.", "image": "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1200&q=85", "alt": "Indonesian island coastline" }
+      { "title": "Lombok and beyond", "description": "Look toward Lombok and other regions for a different balance of coastline, local culture, and open space.", "image": "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1200&q=85", "alt": "Indonesian island coastline" }
     ],
     "experiences": [
       { "title": "Living culture", "description": "Spend time with the traditions, crafts, food, and everyday scenes that make each region distinct.", "icon": "sparkles" },
       { "title": "Heritage and place", "description": "Use Yogyakarta and Central Java as a gateway to stories preserved in temples, palaces, and craft communities.", "icon": "compass" },
-      { "title": "Island contrasts", "description": "Combine urban and cultural discovery with the quieter pace of another island when the route allows.", "icon": "waves" }
+      { "title": "Island contrasts", "description": "Balance cultural discovery with the quieter pace of another island when the route allows.", "icon": "waves" }
     ],
     "bestTimeToVisit": "Indonesia's scale means weather varies by island and activity. Drier months are often preferred for outdoor routes, but the best timing should be matched to the specific islands and experiences you want to include.",
     "usefulInformation": [
       { "label": "Language", "value": "Indonesian, alongside many regional languages; English is common in established visitor areas." },
-      { "label": "Character", "value": "A diverse archipelago where culture, nature, heritage, and island life change across regions." },
+      { "label": "Currency", "value": "Indonesian rupiah." },
+      { "label": "Travel character", "value": "A diverse archipelago where culture, nature, heritage, and island life change across regions." },
       { "label": "Planning note", "value": "Treat Indonesia as a multi-region destination and plan transfers with generous space." }
     ],
     "gallery": [
@@ -162,30 +167,31 @@
       { "image": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=1200&q=85", "alt": "Cultural architecture detail" }
     ],
     "seoMetaTitle": "Indonesia Travel | LDC Travel",
-    "seoMetaDescription": "Explore Indonesia beyond one island with LDC Travel, from Java and Yogyakarta to wider archipelago landscapes. Begin an inquiry."
+    "seoMetaDescription": "Explore Indonesia beyond Bali with LDC Travel, from Java and Yogyakarta to wider archipelago landscapes. Begin an inquiry."
   },
   {
     "slug": "thailand",
     "title": "Thailand",
     "country": "Thailand",
     "regionOrCity": "Bangkok, Chiang Mai and the islands",
-    "eyebrow": "Colour, flavour, movement",
-    "summary": "Temple mornings, street-side flavour, creative city energy, and coastlines made for a change of pace.",
-    "overview": "Thailand offers an easy-to-love mix of city life, cultural landmarks, northern landscapes, and islands. A well-shaped route can move from Bangkok's energy to Chiang Mai's slower rhythm and then toward the sea.",
+    "eyebrow": "City energy, northern calm, sea air",
+    "summary": "Bangkok energy, Chiang Mai's northern character, and island coastlines in one flexible journey.",
+    "overview": "Thailand works through contrast: Bangkok's river, temples, markets, and food; Chiang Mai's northern cultural character and mountain setting; and the coastlines around Phuket and other islands. The route can be as lively or unhurried as the balance you choose.",
     "highlights": [
       { "title": "Bangkok", "description": "Take in the capital's temples, river life, markets, neighbourhoods, food, and bold modern energy.", "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1200&q=85", "alt": "Golden temple roof in Bangkok at sunset" },
-      { "title": "Chiang Mai", "description": "Explore a northern city where Lanna culture, creative streets, markets, and nearby mountain nature meet.", "image": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=85", "alt": "Temple and mountain landscape in Thailand" },
+      { "title": "Chiang Mai", "description": "Explore a northern city where Lanna culture, creative streets, markets, and mountain nature meet.", "image": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=85", "alt": "Temple and mountain landscape in Thailand" },
       { "title": "Islands and beaches", "description": "Slow the pace with a coastal stay shaped by warm water, boat days, and the kind of rest you are looking for.", "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85", "alt": "Blue tropical sea and sandy beach" }
     ],
     "experiences": [
       { "title": "City flavour", "description": "Let Bangkok's food, river, markets, and neighbourhoods introduce you to the country's energy.", "icon": "city" },
       { "title": "Northern calm", "description": "Make room for Chiang Mai's cultural life and the natural spaces beyond the city.", "icon": "mountain" },
-      { "title": "Sea-change days", "description": "Finish with island time when you want your trip to open out into sun, water, and rest.", "icon": "waves" }
+      { "title": "Sea-change days", "description": "Add island time when you want the journey to open out into sun, water, and rest.", "icon": "waves" }
     ],
     "bestTimeToVisit": "Thailand varies by region and coast, with seasonal differences that matter for city, mountain, and island plans. A route should be timed around the specific regions you want rather than one nationwide season assumption.",
     "usefulInformation": [
       { "label": "Language", "value": "Thai; English is common in major tourist areas." },
-      { "label": "Character", "value": "A flexible destination blending food, culture, nature, cities, and beach time." },
+      { "label": "Currency", "value": "Thai baht." },
+      { "label": "Travel character", "value": "A flexible destination blending food, culture, nature, cities, and beach time." },
       { "label": "Planning note", "value": "Combine regions intentionally so the journey feels varied without becoming rushed." }
     ],
     "gallery": [
@@ -195,6 +201,6 @@
       { "image": "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=1200&q=85", "alt": "Thai market and street life" }
     ],
     "seoMetaTitle": "Thailand Travel | LDC Travel",
-    "seoMetaDescription": "Discover Thailand with LDC Travel, from Bangkok and Chiang Mai to island escapes, food, temples, and nature. Start an inquiry."
+    "seoMetaDescription": "Discover Thailand with LDC Travel, from Bangkok and Chiang Mai to Phuket and island coastlines. Start an inquiry."
   }
 ]

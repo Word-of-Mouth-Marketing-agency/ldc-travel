@@ -284,6 +284,9 @@ export interface Destination {
    * Optional remote demo image URL. Prefer a Media upload for production content.
    */
   imageUrl?: string | null;
+  /**
+   * Optional supporting image gallery. Add meaningful alt text to each image.
+   */
   gallery?: (number | Media)[] | null;
   /**
    * Structured places or areas to discover. Use approved Media uploads for production imagery.
@@ -309,7 +312,13 @@ export interface Destination {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Use nuanced seasonal guidance; avoid declaring one universal best month.
+   */
   bestTimeToVisit?: string | null;
+  /**
+   * Stable context such as language, currency, geography, or planning considerations. Do not add legal advice.
+   */
   usefulInformation?:
     | {
         label: string;
@@ -324,8 +333,14 @@ export interface Destination {
    */
   markets: (number | Market)[];
   relatedDestinations?: (number | Destination)[] | null;
+  /**
+   * Destination-specific questions that help visitors decide whether to start an inquiry.
+   */
   faqs?: (number | Faq)[] | null;
   relatedPrograms?: (number | TravelProgram)[] | null;
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -450,6 +465,9 @@ export interface TravelProgram {
   markets: (number | Market)[];
   offer?: (number | null) | Offer;
   whatsappMessageOverride?: string | null;
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -488,6 +506,9 @@ export interface Offer {
    * Only markets selected here may show this record publicly.
    */
   markets: (number | Market)[];
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -539,6 +560,9 @@ export interface Event {
    * Only markets selected here may show this record publicly.
    */
   markets: (number | Market)[];
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -586,6 +610,9 @@ export interface Service {
    * Only markets selected here may show this record publicly.
    */
   markets: (number | Market)[];
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -637,6 +664,9 @@ export interface Guide {
    * Only markets selected here may show this record publicly.
    */
   markets: (number | Market)[];
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
@@ -1253,6 +1283,9 @@ export interface SiteSetting {
       }[]
     | null;
   footerCopy?: string | null;
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
   seo?: {
     metaTitle?: string | null;
     metaDescription?: string | null;
