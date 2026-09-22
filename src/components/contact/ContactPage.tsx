@@ -48,12 +48,7 @@ function RegionalSocialLinks({ market, links }: { market: string; links: readonl
     <div className="contact-social-market">
       <h3>{market}</h3>
       <div className="contact-social-links">
-        {links.map((social) => social.url === "#" ? (
-          <span key={social.label} className="contact-social-link contact-social-link-inactive" aria-disabled="true" aria-label={`LDC Travel ${market} on ${social.label} coming soon`}>
-            <SocialIcon label={social.label} />
-            <span>{social.label}</span>
-          </span>
-        ) : (
+        {links.map((social) => (
           <a key={social.label} className="contact-social-link" href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`LDC Travel ${market} on ${social.label}`}>
             <SocialIcon label={social.label} />
             <span>{social.label}</span>
@@ -65,13 +60,13 @@ function RegionalSocialLinks({ market, links }: { market: string; links: readonl
 }
 
 function SocialConnect() {
-
   return (
     <section className="contact-social-section" aria-labelledby="contact-social-heading">
       <div className="site-container contact-social-inner">
         <div className="contact-social-heading">
           <p className="section-eyebrow">Stay connected</p>
           <h2 id="contact-social-heading">Find a little more inspiration.</h2>
+          <p>Follow LDC Travel for destination ideas, travel inspiration, and updates from our teams.</p>
         </div>
         <div className="contact-social-markets">
           <RegionalSocialLinks market="Egypt" links={regionalSocialLinks.Egypt} />
