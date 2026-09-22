@@ -11,10 +11,11 @@ const { getPayload } = await import("payload");
 const destinationContent = JSON.parse(await readFile(new URL("../src/content/destinations-data.json", import.meta.url), "utf8"));
 
 const image = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=85`;
-const heroImageUrl = image("photo-1685858196931-c84ff0d785a7");
+const heroImageUrl = image("photo-1534008897995-27a23e859048");
 const legacyHeroImageUrls = [
   "/hero-travel.webp",
   image("photo-1558460683-79b76978fc70"),
+  image("photo-1685858196931-c84ff0d785a7"),
 ];
 
 const lexical = (text) => ({

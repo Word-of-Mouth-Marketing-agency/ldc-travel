@@ -69,7 +69,7 @@ When `DATABASE_URL` is configured, the homepage reads the Homepage and Site Sett
 
 ## Image contract
 
-Production editors should prefer Payload Media uploads. Optional demo image URLs accept same-app paths such as `/hero-travel.webp` or HTTPS images from `images.unsplash.com` and `images.pexels.com`; malformed or unapproved values fall back safely. Next Image is restricted to those hosts. The homepage demo/seed hero now uses the verified Ko Ra Wi, Thailand beach image, while the supplied `hero-travel.webp` remains available as a legacy local asset.
+Production editors should prefer Payload Media uploads. Optional demo image URLs accept same-app paths such as `/hero-travel.webp` or HTTPS images from `images.unsplash.com` and `images.pexels.com`; malformed or unapproved values fall back safely. Next Image is restricted to those hosts. The homepage demo/seed hero now uses the verified [Maya Bay, Phi Phi Islands photo](https://unsplash.com/photos/boats-on-turquoise-maya-bay-water-TejFa7VW5e4), represented by Unsplash image `photo-1534008897995-27a23e859048`; the supplied `hero-travel.webp` remains available as a legacy local asset. The destination CTA reuses the current normalized hero image as a lightweight supporting visual, so no additional CMS field is required.
 
 ## Destination detail contract
 

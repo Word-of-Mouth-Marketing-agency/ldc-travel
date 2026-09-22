@@ -133,7 +133,7 @@ export const demoHomepage: HomepageViewModel = {
     eyebrow: "Travel farther, thoughtfully",
     headline: "Explore more. Travel better.",
     supportingCopy: "Explore six distinctive destinations, then talk with LDC Travel about the places, pace, and experiences you want to build around.",
-    image: image("photo-1685858196931-c84ff0d785a7", "Turquoise sea and tropical shoreline in Ko Ra Wi, Thailand"),
+    image: image("photo-1534008897995-27a23e859048", "Turquoise water and limestone cliffs of Maya Bay, Phi Phi Islands, Thailand"),
     primaryCta: { label: "Explore destinations", href: "/destinations" },
     secondaryCta: whatsappCta("Talk to LDC Travel"),
   },

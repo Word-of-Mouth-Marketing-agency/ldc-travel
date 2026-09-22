@@ -107,7 +107,7 @@ export function InspirationSection({ content }: { content: HomepageViewModel["in
   );
 }
 
-export function DestinationCtaSection({ content }: { content: HomepageViewModel["destinationCta"] }) {
+export function DestinationCtaSection({ content, visual }: { content: HomepageViewModel["destinationCta"]; visual: ImageSource }) {
   return (
     <section className="destination-cta-section" aria-labelledby="destination-cta-heading">
       <div className="site-container">
@@ -117,9 +117,14 @@ export function DestinationCtaSection({ content }: { content: HomepageViewModel[
             <h2 id="destination-cta-heading">{content.headline}</h2>
             <p>{content.description}</p>
           </div>
-          <div className="destination-cta-actions">
-            <CtaLink cta={content.primaryCta} primary />
-            <CtaLink cta={content.secondaryCta} />
+          <div className="destination-cta-side">
+            <div className="destination-cta-visual">
+              <SafeImage src={visual.src} alt={visual.alt} sizes="(max-width: 767px) 92vw, (max-width: 1023px) 44vw, 32vw" />
+            </div>
+            <div className="destination-cta-actions">
+              <CtaLink cta={content.primaryCta} primary />
+              <CtaLink cta={content.secondaryCta} />
+            </div>
           </div>
         </div>
       </div>

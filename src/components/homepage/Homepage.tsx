@@ -57,7 +57,7 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
         <DestinationsSection items={data.destinations} />
         <WhyLdcSection content={data.whyLdc} />
         <InspirationSection content={data.inspiration} />
-        <DestinationCtaSection content={data.destinationCta} />
+        <DestinationCtaSection content={data.destinationCta} visual={data.hero.image} />
         <FaqSection items={data.faqs} />
       </main>
       <Footer site={data.site} whatsappConfig={data.whatsappConfig} />
