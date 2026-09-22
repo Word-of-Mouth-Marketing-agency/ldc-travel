@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { regionalSocialLinks, type RegionalSocialLink } from "../../content/regional-social";
 import type { SiteViewModel } from "../../content/homepage-demo";
 import { createPublicWhatsAppConfig } from "../../lib/public-contact";
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
@@ -25,40 +26,6 @@ export function ContactUnavailable() {
   );
 }
 
-function ContactMethods({ site, whatsappHref, egyptWhatsappHref }: { site: SiteViewModel; whatsappHref: string; egyptWhatsappHref: string }) {
-  return (
-    <section className="content-section contact-methods-section" aria-labelledby="contact-methods-heading">
-      <div className="site-container">
-        <div className="contact-section-intro">
-          <p className="section-eyebrow">Reach us directly</p>
-          <h2 id="contact-methods-heading">Choose the easiest way to connect.</h2>
-        </div>
-        <div className="contact-methods-grid">
-          <a className="contact-method contact-method-primary" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-            <span className="contact-method-icon"><WhatsAppIcon size={25} /></span>
-            <span><strong>Saudi WhatsApp</strong><small>Chat with our travel team</small></span>
-            <Icon name="arrow" />
-          </a>
-          <a className="contact-method" href={egyptWhatsappHref} target="_blank" rel="noopener noreferrer">
-            <span className="contact-method-icon"><WhatsAppIcon size={25} /></span>
-            <span><strong>Egypt WhatsApp</strong><small>Chat with our Egypt team</small></span>
-            <Icon name="arrow" />
-          </a>
-          <a className="contact-method" href={`mailto:${site.email}`}>
-            <span className="contact-method-icon"><Icon name="mail" size={25} /></span>
-            <span><strong>Email us</strong><small>General travel inquiries</small></span>
-            <Icon name="arrow" />
-          </a>
-          <div className="contact-method contact-method-static">
-            <span className="contact-method-icon"><Icon name="pin" size={25} /></span>
-            <span><strong>Egypt office</strong><small>{site.office}</small></span>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function ContactDetails({ site, whatsappHref, egyptWhatsappHref }: { site: SiteViewModel; whatsappHref: string; egyptWhatsappHref: string }) {
   return (
     <aside className="contact-details" aria-labelledby="contact-details-heading">
@@ -76,15 +43,39 @@ function ContactDetails({ site, whatsappHref, egyptWhatsappHref }: { site: SiteV
   );
 }
 
-function SocialConnect({ socialLinks }: { socialLinks: SiteViewModel["socialLinks"] }) {
-  const visibleSocials = socialLinks.filter((social) => social.url && ["instagram", "facebook", "tiktok", "linkedin"].includes(social.label.toLowerCase()));
+function RegionalSocialLinks({ market, links }: { market: string; links: readonly RegionalSocialLink[] }) {
+  return (
+    <div className="contact-social-market">
+      <h3>{market}</h3>
+      <div className="contact-social-links">
+        {links.map((social) => social.url === "#" ? (
+          <span key={social.label} className="contact-social-link contact-social-link-inactive" aria-disabled="true" aria-label={`LDC Travel ${market} on ${social.label} coming soon`}>
+            <SocialIcon label={social.label} />
+            <span>{social.label}</span>
+          </span>
+        ) : (
+          <a key={social.label} className="contact-social-link" href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`LDC Travel ${market} on ${social.label}`}>
+            <SocialIcon label={social.label} />
+            <span>{social.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SocialConnect() {
 
   return (
     <section className="contact-social-section" aria-labelledby="contact-social-heading">
       <div className="site-container contact-social-inner">
-        <div><p className="section-eyebrow">Stay connected</p><h2 id="contact-social-heading">Find a little more inspiration.</h2></div>
-        <div className="contact-social-links">
-          {visibleSocials.map((social) => <a key={social.label} href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`Follow LDC Travel on ${social.label}`}><SocialIcon label={social.label} /><span>{social.label}</span></a>)}
+        <div className="contact-social-heading">
+          <p className="section-eyebrow">Stay connected</p>
+          <h2 id="contact-social-heading">Find a little more inspiration.</h2>
+        </div>
+        <div className="contact-social-markets">
+          <RegionalSocialLinks market="Egypt" links={regionalSocialLinks.Egypt} />
+          <RegionalSocialLinks market="Saudi Arabia" links={regionalSocialLinks["Saudi Arabia"]} />
         </div>
       </div>
     </section>
@@ -108,20 +99,13 @@ export function ContactPage({ site, whatsappConfig }: { site: SiteViewModel; wha
             </div>
           </div>
         </section>
-        <ContactMethods site={site} whatsappHref={whatsappHref} egyptWhatsappHref={egyptWhatsappHref} />
         <section className="content-section contact-inquiry-section" id="inquiry" aria-labelledby="inquiry-heading">
           <div className="site-container contact-inquiry-grid">
             <ContactForm whatsappHref={whatsappHref} />
             <ContactDetails site={site} whatsappHref={whatsappHref} egyptWhatsappHref={egyptWhatsappHref} />
           </div>
         </section>
-        <section className="contact-whatsapp-section" aria-labelledby="contact-whatsapp-heading">
-          <div className="site-container contact-whatsapp-card">
-            <div><p className="section-eyebrow">Need a quick conversation?</p><h2 id="contact-whatsapp-heading">Your next journey can start with one message.</h2></div>
-            <a className="button button-light" href={whatsappHref} target="_blank" rel="noopener noreferrer">Prefer WhatsApp? Chat with us <Icon name="arrow" /></a>
-          </div>
-        </section>
-        <SocialConnect socialLinks={site.socialLinks} />
+        <SocialConnect />
       </main>
       <Footer site={site} whatsappConfig={whatsappConfig} />
       <FloatingWhatsApp whatsappConfig={whatsappConfig} />
