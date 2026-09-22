@@ -147,3 +147,16 @@ Payload `3.88.0` applied `20260921_112401_initial_schema`, the seed created exac
 - [x] Attempt the permitted read-only WOM-VPS-01 audit and record that access was unavailable.
 - [x] Run generation, typecheck, lint, build, diff, and secret checks after safe source/documentation changes.
 - [x] Keep deployment, DNS, OLS edits/reloads, production database creation, process creation, and package installation out of scope.
+
+## Phase 6.5 deployment-prerequisite closure
+
+- [x] Confirm `8187c61` is the authoritative release candidate and matches `origin/main`.
+- [x] Preserve the unrelated unstaged `next-env.d.ts` change and exclude it from release documentation/commit scope.
+- [x] Re-run typecheck, lint, production build, and `git diff --check`.
+- [x] Smoke-test preview-mode `/`, `/about`, `/contact`, `/destinations`, all six destination pages, `/api/health`, robots, sitemap, and favicon assets without database credentials.
+- [x] Verify strict mode still shows CMS-unavailable states without demo-content leakage when CMS credentials are empty.
+- [x] Verify all six destination pages keep the inquiry form immediately after the overview and the `Plan This Trip` → `#destination-inquiry` path.
+- [x] Verify the Contact social section retains only the exact Egypt/Saudi Instagram and Facebook links and the corrected Instagram icon.
+- [x] Confirm no tracked environment files, database dumps, private keys, or other release secrets are present.
+- [x] Attempt public-origin smoke testing; record the environment-level refusal without treating it as production evidence.
+- [ ] Obtain the remaining Phase 7 human/operator inputs: dedicated production PostgreSQL and credentials, `PAYLOAD_SECRET`, persistent media path, admin ownership, process/port choice, backup/restore owner, deployment window, fresh VPS/OLS audit, and explicit OLS/DNS approval.

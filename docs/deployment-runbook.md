@@ -59,7 +59,7 @@ The exact root and owner require a fresh VPS audit. `shared/.env` and `media/` m
 ## Deploy application
 
 1. Create the next release directory without touching `current`.
-2. Copy the approved source/artifact for commit `a33a145` or the later approved release.
+2. Copy the approved source/artifact for commit `8187c61` (`fix: simplify social and destination page ux`) or a later approved release. Do not include unrelated working-tree edits.
 3. Link the reviewed environment file and persistent media path.
 4. Run a locked dependency install using `pnpm-lock.yaml`; do not update dependencies.
 5. Run `pnpm build` before exposing the release.

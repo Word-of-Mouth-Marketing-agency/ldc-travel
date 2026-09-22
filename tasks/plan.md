@@ -121,3 +121,12 @@ Phase 5 release-candidate QA completed 2026-09-21: the public route matrix, resp
 51. Perform only an allowed read-only WOM-VPS-01 audit when access is available; otherwise report the access blocker and treat historical server notes as stale.
 
 Phase 6 preparation completed 2026-09-21 without deployment. Local backup/restore passed, Payload admin validation stopped at first-user setup, the VPS SSH audit was unavailable, and the remaining production inputs are documented for Phase 7.
+
+## Phase 6.5 deployment-prerequisite closure
+
+52. Reconfirm the authoritative release candidate and upstream alignment without staging unrelated working-tree changes.
+53. Re-run production-style preview and strict-CMS-failure route smoke tests against the current release candidate.
+54. Recheck the latest destination inquiry placement/anchor and the simplified Contact regional social links after the UX refinement.
+55. Record application-side gate results separately from the still-open operator, database, media, VPS, OpenLiteSpeed, DNS, and credential inputs; do not begin deployment.
+
+Phase 6.5 application-side closure completed 2026-09-22 against `8187c61`. The local production build and public route smoke matrix passed, including `#destination-inquiry` placement and the simplified Contact social section. The public origin was not reachable from this environment, and all Phase 7 external deployment gates remain open.

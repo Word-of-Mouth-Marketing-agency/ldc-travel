@@ -35,3 +35,18 @@ The in-app browser could not reliably populate `email` and `tel` controls throug
 - `git diff --check`: passed; only normal CRLF conversion warnings were reported by Git.
 
 Remaining operational follow-ups are authenticated Media/admin CRUD, database restart/recovery, and backup validation. Those are separate from this public-site release-candidate QA pass.
+
+## Phase 6.5 destination/contact UX follow-up
+
+Date: 2026-09-22
+
+The current release candidate is `8187c61` (`fix: simplify social and destination page ux`). This follow-up preserved the release candidate's latest destination and Contact UX while closing the application-side smoke-test prerequisites:
+
+- Preview-mode production build passed with empty `DATABASE_URL` and `PAYLOAD_SECRET` overrides.
+- `/`, `/about`, `/contact`, `/destinations`, all six destination detail routes, `/api/health`, `/robots.txt`, `/sitemap.xml`, `/icon.png`, and `/apple-icon.png` returned successfully in the local production server.
+- All six destination routes use the shared reduced template, place the inquiry section immediately after the overview, keep Name/Email/Phone only, and expose the semantic `Plan This Trip` anchor to `#destination-inquiry`.
+- Contact keeps the simplified regional social presentation with exactly Instagram and Facebook for Egypt and Saudi Arabia; no TikTok, LinkedIn, placeholder, or legacy regional link was present. The corrected Instagram SVG rendered with explicit dimensions and stroke attributes.
+- Strict mode with empty CMS credentials continued to render branded CMS-unavailable states for the homepage, Contact, and destination detail route; demo content did not leak into normal production behavior.
+- Typecheck, lint, production build, and `git diff --check` passed. Lint retains eight pre-existing unused-parameter warnings in the two migration files and no errors.
+
+The public production origin could not be smoke-tested from this environment because requests to `https://ldc-tourism.com` were refused by the local network/proxy path. No production deployment or infrastructure mutation was performed.
