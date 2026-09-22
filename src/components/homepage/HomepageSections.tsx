@@ -12,6 +12,7 @@ import { SectionHeading } from "./SectionHeading";
 import { SafeImage } from "../site/SafeImage";
 import { WhatsAppIcon } from "../site/WhatsAppIcon";
 import { RevealHeading } from "../motion/RevealHeading";
+import { ContactForm } from "../contact/ContactForm";
 
 function CoverImage({ image, className = "" }: { image: ImageSource; className?: string }) {
   return <SafeImage className={`cover-image ${className}`} src={image.src} alt={image.alt} sizes="(max-width: 767px) 92vw, (max-width: 1023px) 44vw, 24vw" />;
@@ -107,7 +108,7 @@ export function InspirationSection({ content }: { content: HomepageViewModel["in
   );
 }
 
-export function DestinationCtaSection({ content, visual }: { content: HomepageViewModel["destinationCta"]; visual: ImageSource }) {
+export function DestinationCtaSection({ content, whatsappHref }: { content: HomepageViewModel["destinationCta"]; whatsappHref: string }) {
   return (
     <section className="destination-cta-section" aria-labelledby="destination-cta-heading">
       <div className="site-container">
@@ -116,15 +117,14 @@ export function DestinationCtaSection({ content, visual }: { content: HomepageVi
             <p className="section-eyebrow">{content.eyebrow}</p>
             <h2 id="destination-cta-heading">{content.headline}</h2>
             <p>{content.description}</p>
-          </div>
-          <div className="destination-cta-side">
-            <div className="destination-cta-visual">
-              <SafeImage src={visual.src} alt={visual.alt} sizes="(max-width: 767px) 92vw, (max-width: 1023px) 44vw, 32vw" />
-            </div>
+            <p className="destination-cta-destinations">Turkey · Russia · Bali · Georgia · Indonesia · Thailand</p>
             <div className="destination-cta-actions">
               <CtaLink cta={content.primaryCta} primary />
               <CtaLink cta={content.secondaryCta} />
             </div>
+          </div>
+          <div className="destination-cta-form-panel">
+            <ContactForm whatsappHref={whatsappHref} />
           </div>
         </div>
       </div>
