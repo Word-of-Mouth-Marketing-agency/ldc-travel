@@ -70,7 +70,7 @@ When `DATABASE_URL` is configured, the homepage reads the Homepage and Site Sett
 
 ## Image contract
 
-Production editors should prefer Payload Media uploads. Optional demo image URLs accept same-app paths such as `/hero-travel.webp` or HTTPS images from `images.unsplash.com` and `images.pexels.com`; malformed or unapproved values fall back safely. Next Image is restricted to those hosts. The supplied `hero-travel.webp` remains the local homepage hero fallback.
+Production editors should prefer Payload Media uploads. Optional demo image URLs accept same-app paths such as `/hero-travel.webp` or HTTPS images from `images.unsplash.com` and `images.pexels.com`; malformed or unapproved values fall back safely. Next Image is restricted to those hosts. The homepage demo/seed hero now uses verified Cappadocia imagery, while the supplied `hero-travel.webp` remains available as a legacy local asset.
 
 ## Destination detail contract
 

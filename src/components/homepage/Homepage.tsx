@@ -42,8 +42,6 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
         <section className="hero-section" aria-labelledby="hero-heading">
           <div className="hero-photo"><Image src={data.hero.image.src} alt={data.hero.image.alt} fill priority sizes="(max-width: 767px) 100vw, 62vw" /></div>
           <div className="hero-wash" />
-          <div className="hero-orbit hero-orbit-one" aria-hidden="true" />
-          <div className="hero-orbit hero-orbit-two" aria-hidden="true" />
           <div className="site-container hero-inner">
             <HeroIntroAnimation>
               <p className="hero-eyebrow" data-hero-eyebrow><Icon name="sparkles" /> {data.hero.eyebrow}</p>
@@ -53,10 +51,8 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
                 <HeroCta cta={data.hero.primaryCta} primary />
                 <HeroCta cta={data.hero.secondaryCta} />
               </div>
-              <p className="hero-note" data-hero-supporting><span aria-hidden="true" /> Explore destinations from Egypt with LDC Travel.</p>
             </HeroIntroAnimation>
           </div>
-          <div className="hero-bottom-note" aria-hidden="true"><span>01</span><span>Destinations worth going farther for</span></div>
         </section>
         <DestinationsSection items={data.destinations} />
         <WhyLdcSection content={data.whyLdc} />

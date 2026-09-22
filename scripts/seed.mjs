@@ -6,12 +6,13 @@ if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
 }
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const heroImagePath = "/hero-travel.webp";
 const { default: config } = await import("../payload.config.ts");
 const { getPayload } = await import("payload");
 const destinationContent = JSON.parse(await readFile(new URL("../src/content/destinations-data.json", import.meta.url), "utf8"));
 
 const image = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=85`;
+const heroImageUrl = image("photo-1558460683-79b76978fc70");
+const legacyHeroImageUrl = "/hero-travel.webp";
 
 const lexical = (text) => ({
   root: {
@@ -125,6 +126,7 @@ const legacyBrokenImageUrls = [
   "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=1200&q=85",
   "https://images.unsplash.com/photo-1520637836862-4d197d17c93a?auto=format&fit=crop&w=1200&q=85",
 ];
+const legacyIndonesiaImageUrl = "https://images.unsplash.com/photo-1548013146-72479768bada";
 
 const destinations = {};
 for (const [slug, data] of destinationSeeds) {
@@ -138,11 +140,17 @@ for (const [slug, data] of destinationSeeds) {
   const missingDetailFields = {};
   const safeEditorialRefresh = matchesLegacyEditorialCopy(existing, slug);
   const needsImageRefresh = legacyBrokenImageUrls.some((url) => JSON.stringify(existing).includes(url));
+  const needsIndonesiaImageRefresh = slug === "indonesia" && JSON.stringify(existing).includes(legacyIndonesiaImageUrl);
   for (const field of ["overview", "highlights", "experiences", "bestTimeToVisit", "usefulInformation", "seo"]) {
     if (safeEditorialRefresh || existing[field] == null || (Array.isArray(existing[field]) && existing[field].length === 0)) missingDetailFields[field] = data[field];
   }
   if (safeEditorialRefresh || !existing.imageUrl) missingDetailFields.imageUrl = data.imageUrl;
   if (needsImageRefresh) {
+    missingDetailFields.highlights = data.highlights;
+    missingDetailFields.gallery = data.gallery;
+  }
+  if (needsIndonesiaImageRefresh) {
+    missingDetailFields.imageUrl = data.imageUrl;
     missingDetailFields.highlights = data.highlights;
     missingDetailFields.gallery = data.gallery;
   }
@@ -244,15 +252,16 @@ const legacyHomepageCopy = [
   currentDestinationCta.description === "Have a destination in mind or still choosing? Send a message and we will help you find the right direction.",
 ].every(Boolean);
 const needsHomepageMigration = !hasRequiredHeroContent || oldHomepageHeadline || !homepage.whyLdc || !homepage.inspiration || !hasRequiredDestinationCta || legacyHomepageCopy;
+const needsHomepageHeroRefresh = currentHero.imageUrl === legacyHeroImageUrl;
 const needsHomepageRelationships = !Array.isArray(homepage.featuredDestinations) || homepage.featuredDestinations.length === 0 || !Array.isArray(homepage.faqs) || homepage.faqs.length === 0;
 
-if (needsHomepageMigration) {
+if (needsHomepageMigration || needsHomepageHeroRefresh) {
   await payload.updateGlobal({ slug: "homepage", data: {
     hero: {
       eyebrow: "Travel farther, thoughtfully",
       headline: "Explore more. Travel better.",
       supportingCopy: "Explore six distinctive destinations, then talk with LDC Travel about the places, pace, and experiences you want to build around.",
-      imageUrl: heroImagePath,
+      imageUrl: heroImageUrl,
       primaryCta: { label: "Explore destinations", kind: "internal", url: "/destinations" },
       secondaryCta: { label: "Talk to LDC Travel", kind: "whatsapp" },
     },

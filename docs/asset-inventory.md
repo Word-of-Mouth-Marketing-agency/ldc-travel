@@ -9,7 +9,7 @@
 | `A:/Downloads/ldc-logo-blue.webp` | Blue full lockup | Light header and mobile drawer | `public/brand/ldc-logo-blue.webp` |
 | `A:/Downloads/ldc-logo-yellow.webp` | Yellow full lockup | Blue footer and strong blue surfaces | `public/brand/ldc-logo-yellow.webp` |
 | `A:/Downloads/ldc-logo-black.webp` | Black full lockup | Available for future light-background treatments | `public/brand/ldc-logo-black.webp` |
-| `public/hero-travel.webp` | Supplied lake/mountain hero photograph | Homepage hero fallback and preview image | `public/hero-travel.webp` |
+| `public/hero-travel.webp` | Supplied lake/mountain hero photograph | Retained legacy asset for rollback/reference; no longer the homepage default | `public/hero-travel.webp` |
 
 The existing five legacy brand files in `public/brand/` remain untouched for rollback/reference compatibility. The supplied redesign files are the authoritative current public logo choices.
 
@@ -23,3 +23,5 @@ The existing five legacy brand files in `public/brand/` remain untouched for rol
 ## Remote imagery
 
 Demo destination and inspiration imagery uses explicit Unsplash image IDs already allowed by the Next Image configuration. Production editors should use Payload Media uploads. The source directory and supplied source files are not modified.
+
+The homepage demo/seed hero uses the verified [Cappadocia, Turkey photo](https://unsplash.com/photos/cappadocia-turkey-during-daytime--ZyKUkOjlzs), represented by Unsplash image `photo-1558460683-79b76978fc70`. The Indonesia demo/listing/detail image uses the verified [Borobudur temple photo](https://unsplash.com/photos/borobudur-temple-stupas-at-dawn-with-misty-mountains-hLryfyTDgGs), represented by Unsplash image `photo-1780748549579-c22a0ff53982`; its source labels the subject as Borobudur, Magelang Regency, Central Java, Indonesia.
