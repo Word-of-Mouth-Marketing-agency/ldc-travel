@@ -520,7 +520,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .mobile-nav { display: none; }
   .hero-section, .hero-inner { min-height: clamp(41rem, 58vw, 49rem); }
   .hero-copy { width: min(52%, 45rem); }
-  .hero-copy h1 { max-width: 14ch; font-size: clamp(4rem, 5vw, 4.5rem); }
+  .hero-copy h1 { max-width: 14ch; font-size: clamp(4.5rem, 5.4vw, 5.1rem); }
   .inspiration-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .contact-inquiry-grid { grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 0.8fr); gap: 1.5rem; }
   .footer-main { grid-template-columns: 1.55fr repeat(2, 0.8fr) 1.25fr; }

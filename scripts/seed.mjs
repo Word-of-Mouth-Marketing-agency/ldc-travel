@@ -11,8 +11,11 @@ const { getPayload } = await import("payload");
 const destinationContent = JSON.parse(await readFile(new URL("../src/content/destinations-data.json", import.meta.url), "utf8"));
 
 const image = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=85`;
-const heroImageUrl = image("photo-1558460683-79b76978fc70");
-const legacyHeroImageUrl = "/hero-travel.webp";
+const heroImageUrl = image("photo-1685858196931-c84ff0d785a7");
+const legacyHeroImageUrls = [
+  "/hero-travel.webp",
+  image("photo-1558460683-79b76978fc70"),
+];
 
 const lexical = (text) => ({
   root: {
@@ -251,8 +254,8 @@ const legacyHomepageCopy = [
   homepage.inspiration?.description === "From old cities to open landscapes, follow the kind of experience you want more of.",
   currentDestinationCta.description === "Have a destination in mind or still choosing? Send a message and we will help you find the right direction.",
 ].every(Boolean);
-const needsHomepageMigration = !hasRequiredHeroContent || oldHomepageHeadline || !homepage.whyLdc || !homepage.inspiration || !hasRequiredDestinationCta || legacyHomepageCopy;
-const needsHomepageHeroRefresh = currentHero.imageUrl === legacyHeroImageUrl;
+const needsHomepageMigration = !hasRequiredHeroContent || oldHomepageHeadline || !homepage.whyLdc || !homepage.inspiration || !hasRequiredDestinationCta || legacyHomepageCopy || legacyHeroImageUrls.includes(String(currentHero.imageUrl ?? ""));
+const needsHomepageHeroRefresh = legacyHeroImageUrls.includes(String(currentHero.imageUrl ?? ""));
 const needsHomepageRelationships = !Array.isArray(homepage.featuredDestinations) || homepage.featuredDestinations.length === 0 || !Array.isArray(homepage.faqs) || homepage.faqs.length === 0;
 
 if (needsHomepageMigration || needsHomepageHeroRefresh) {

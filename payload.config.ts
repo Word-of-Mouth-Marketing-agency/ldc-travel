@@ -25,6 +25,25 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
+const databaseAdapter = postgresAdapter({
+  pool: {
+    connectionString: process.env.DATABASE_URL ?? "",
+  },
+  push: process.env.NODE_ENV !== "production",
+});
+
+const originalDatabaseInit = databaseAdapter.init;
+databaseAdapter.init = (args) => {
+  const adapter = originalDatabaseInit(args);
+
+  // Payload uses this status promise separately from the awaited connection
+  // promise. Handle its rejection so an unavailable database remains an
+  // explicit CMS error instead of becoming an unhandled undefined rejection.
+  void adapter.initializing.catch(() => undefined);
+
+  return adapter;
+};
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -52,12 +71,7 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, "src/payload-types.ts"),
   },
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URL ?? "",
-    },
-    push: process.env.NODE_ENV !== "production",
-  }),
+  db: databaseAdapter,
   sharp,
   cors: siteUrl ? [siteUrl] : undefined,
   csrf: siteUrl ? [siteUrl] : undefined,
