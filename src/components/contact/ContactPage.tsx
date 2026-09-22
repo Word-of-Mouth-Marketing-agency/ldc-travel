@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import type { SiteViewModel } from "../../content/homepage-demo";
+import { createPublicWhatsAppConfig } from "../../lib/public-contact";
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
 import { Icon } from "../homepage/Icon";
 import { Footer } from "../site/Footer";
@@ -24,7 +25,7 @@ export function ContactUnavailable() {
   );
 }
 
-function ContactMethods({ site, whatsappHref }: { site: SiteViewModel; whatsappHref: string }) {
+function ContactMethods({ site, whatsappHref, egyptWhatsappHref }: { site: SiteViewModel; whatsappHref: string; egyptWhatsappHref: string }) {
   return (
     <section className="content-section contact-methods-section" aria-labelledby="contact-methods-heading">
       <div className="site-container">
@@ -35,17 +36,17 @@ function ContactMethods({ site, whatsappHref }: { site: SiteViewModel; whatsappH
         <div className="contact-methods-grid">
           <a className="contact-method contact-method-primary" href={whatsappHref} target="_blank" rel="noopener noreferrer">
             <span className="contact-method-icon"><WhatsAppIcon size={25} /></span>
-            <span><strong>WhatsApp</strong><small>Chat with our travel team</small></span>
+            <span><strong>Saudi WhatsApp</strong><small>Chat with our travel team</small></span>
             <Icon name="arrow" />
           </a>
-          <a className="contact-method" href={`mailto:${site.reservationsEmail}`}>
-            <span className="contact-method-icon"><Icon name="mail" size={25} /></span>
-            <span><strong>Reservations</strong><small>Destination questions</small></span>
+          <a className="contact-method" href={egyptWhatsappHref} target="_blank" rel="noopener noreferrer">
+            <span className="contact-method-icon"><WhatsAppIcon size={25} /></span>
+            <span><strong>Egypt WhatsApp</strong><small>Chat with our Egypt team</small></span>
             <Icon name="arrow" />
           </a>
-          <a className="contact-method" href={`mailto:${site.salesEmail}`}>
+          <a className="contact-method" href={`mailto:${site.email}`}>
             <span className="contact-method-icon"><Icon name="mail" size={25} /></span>
-            <span><strong>Sales</strong><small>Partnerships and group requests</small></span>
+            <span><strong>Email us</strong><small>General travel inquiries</small></span>
             <Icon name="arrow" />
           </a>
           <div className="contact-method contact-method-static">
@@ -58,7 +59,7 @@ function ContactMethods({ site, whatsappHref }: { site: SiteViewModel; whatsappH
   );
 }
 
-function ContactDetails({ site, whatsappHref }: { site: SiteViewModel; whatsappHref: string }) {
+function ContactDetails({ site, whatsappHref, egyptWhatsappHref }: { site: SiteViewModel; whatsappHref: string; egyptWhatsappHref: string }) {
   return (
     <aside className="contact-details" aria-labelledby="contact-details-heading">
       <p className="section-eyebrow">Good to know</p>
@@ -66,8 +67,9 @@ function ContactDetails({ site, whatsappHref }: { site: SiteViewModel; whatsappH
       <p>Tell us what matters to you: the destination, pace, occasion, or people you’re traveling with. We’ll help turn the idea into a clear plan.</p>
       <dl className="contact-details-list">
         <div><dt>Egypt office</dt><dd><Icon name="pin" />{site.office}</dd></div>
-        <div><dt>WhatsApp</dt><dd><WhatsAppIcon /><a href={whatsappHref} target="_blank" rel="noopener noreferrer">{site.whatsappDisplay}</a></dd></div>
-        <div><dt>Email</dt><dd><Icon name="mail" /><a href={`mailto:${site.reservationsEmail}`}>{site.reservationsEmail}</a></dd><dd className="contact-details-secondary"><Icon name="mail" /><a href={`mailto:${site.salesEmail}`}>{site.salesEmail}</a></dd></div>
+        <div><dt>Egypt WhatsApp</dt><dd><WhatsAppIcon /><a href={egyptWhatsappHref} target="_blank" rel="noopener noreferrer">{site.egyptWhatsappDisplay}</a></dd></div>
+        <div><dt>Saudi WhatsApp</dt><dd><WhatsAppIcon /><a href={whatsappHref} target="_blank" rel="noopener noreferrer">{site.whatsappDisplay}</a></dd></div>
+        <div><dt>Email</dt><dd><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
       </dl>
       <div className="contact-details-note"><strong>Prefer a quick answer?</strong><span>WhatsApp is the fastest way to start.</span><a className="text-link" href={whatsappHref} target="_blank" rel="noopener noreferrer">Chat with us <Icon name="arrow" /></a></div>
     </aside>
@@ -91,6 +93,7 @@ function SocialConnect({ socialLinks }: { socialLinks: SiteViewModel["socialLink
 
 export function ContactPage({ site, whatsappConfig }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
   const whatsappHref = createWhatsAppUrl(whatsappConfig, { message: "Hi LDC Travel, I'd like to ask about a travel inquiry." });
+  const egyptWhatsappHref = createWhatsAppUrl(createPublicWhatsAppConfig(site.egyptWhatsappNumber), { message: "Hi LDC Travel, I'd like to ask about a travel inquiry." });
 
   return (
     <DesignYourTripProvider whatsappHref={createWhatsAppUrl(whatsappConfig)}>
@@ -105,11 +108,11 @@ export function ContactPage({ site, whatsappConfig }: { site: SiteViewModel; wha
             </div>
           </div>
         </section>
-        <ContactMethods site={site} whatsappHref={whatsappHref} />
+        <ContactMethods site={site} whatsappHref={whatsappHref} egyptWhatsappHref={egyptWhatsappHref} />
         <section className="content-section contact-inquiry-section" id="inquiry" aria-labelledby="inquiry-heading">
           <div className="site-container contact-inquiry-grid">
             <ContactForm whatsappHref={whatsappHref} />
-            <ContactDetails site={site} whatsappHref={whatsappHref} />
+            <ContactDetails site={site} whatsappHref={whatsappHref} egyptWhatsappHref={egyptWhatsappHref} />
           </div>
         </section>
         <section className="contact-whatsapp-section" aria-labelledby="contact-whatsapp-heading">

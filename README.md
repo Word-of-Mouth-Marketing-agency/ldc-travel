@@ -43,7 +43,7 @@ Production preparation is documented in [docs/production-environment.md](docs/pr
 
 The local CMS runtime was verified on 2026-09-21 against the user-provided isolated PostgreSQL database at `127.0.0.1:55432` (`ldc_travel_dev`, user `ldc_travel_dev`). The ignored `.env` was present and never printed, tracked, or modified. Payload migration `20260921_112401_initial_schema` was generated, reviewed, applied, and reported as applied by `migrate:status`; no reset, fresh, down, or drop shortcut was used.
 
-The idempotent seed was run twice. The database contains exactly the six approved destinations (`bali`, `georgia`, `indonesia`, `russia`, `thailand`, `turkey`), six homepage destination relationships, five homepage FAQs, and the configured Saudi WhatsApp values `+966 7277981053` / `9667277981053`. A numeric Payload relationship-ID normalization fix was required so CMS market visibility did not incorrectly fall back to demo cards.
+The idempotent seed was run twice. The database contains exactly the six approved destinations (`bali`, `georgia`, `indonesia`, `russia`, `thailand`, `turkey`), six homepage destination relationships, five homepage FAQs, and the configured Saudi WhatsApp values `+966 7277981053` / `9667277981053`. Public contact output also exposes Egypt WhatsApp `+20 12 11118118` and the unified email `info@ldc-tourism.com`. A numeric Payload relationship-ID normalization fix was required so CMS market visibility did not incorrectly fall back to demo cards.
 
 Strict production-style local routes rendered successfully for `/`, `/contact`, `/destinations`, and all six destination detail routes. `/admin` returned the first-user creation/login flow; no admin credentials were invented or created. The two server-action inquiry paths persisted marked local test records with the correct source/type/destination relationship, then those records were deleted. Anonymous direct `POST /api/inquiries` returned `403`. With `UI_PREVIEW_MODE=true` and empty database credentials, public routes rendered the demo UI and valid form submissions returned explicit non-success preview notices. With preview disabled and empty credentials, public routes rendered the explicit unavailable state instead of demo content.
 
@@ -82,7 +82,7 @@ The Contact page uses Site Settings for verified LDC contact/social details. Its
 
 The public routes are `/`, `/about`, `/contact`, `/destinations`, and `/destinations/turkey`, `/destinations/russia`, `/destinations/bali`, `/destinations/georgia`, `/destinations/indonesia`, and `/destinations/thailand`. Detail pages use one reusable dynamic route and offer a destination-scoped Name, Email, and Phone inquiry form; there is no direct booking or payment flow.
 
-The site is destination-led lead generation only: no travel programs, package pricing, events, booking engine, checkout, payments, customer accounts, or public CMS registration are exposed on the public website. WhatsApp is the primary CTA. The launch market is Egypt; the current configured WhatsApp conversion number is `+9667277981053` in normalized `wa.me` form. The current language is English only, with logical layout choices preserved for later RTL support.
+The site is destination-led lead generation only: no travel programs, package pricing, events, booking engine, checkout, payments, customer accounts, or public CMS registration are exposed on the public website. WhatsApp is the primary CTA. The launch market is Egypt; the current configured primary WhatsApp conversion number is `+9667277981053` in normalized `wa.me` form, with Egypt WhatsApp `+201211118118` also exposed in contact details. The only public email is `info@ldc-tourism.com`. The current language is English only, with logical layout choices preserved for later RTL support.
 
 The new authoritative Phase 1 direction is a destination-first homepage using `#336DD5` blue and `#FFD200` yellow. It includes a split hero, exactly six approved destinations (Turkey, Russia, Bali, Georgia, Indonesia, Thailand), Why LDC positioning, destination inspiration, a destination CTA, FAQ, and footer. The prior screenshot and its newsletter/program/event composition are historical reference only; no newsletter or booking/search widget is included.
 
@@ -98,7 +98,8 @@ The homepage prefers uploaded Payload Media for editorial imagery. Optional `ima
 
 - Egypt office: `15 Mahmoud Essmat Hamdy, Sheraton`
 - WhatsApp: `+9667277981053`
-- Email: `reservations@ldc-tourism.com`, `sales@ldc-tourism.com`
+- WhatsApp: Egypt `+20 12 11118118`; Saudi Arabia `+966 7277981053`
+- Email: `info@ldc-tourism.com`
 - Instagram: <https://www.instagram.com/ldctravels.eg/>
 - Facebook: <https://www.facebook.com/profile.php?id=61591627376189>
 - TikTok: <https://www.tiktok.com/@ldc.travel.agency>

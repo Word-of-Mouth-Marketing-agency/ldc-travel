@@ -53,8 +53,8 @@ const egypt = await ensure("markets", "code", "EG", {
   isPublic: true,
   contact: {
     office: "15 Mahmoud Essmat Hamdy, Sheraton",
-    reservationsEmail: "reservations@ldc-tourism.com",
-    salesEmail: "sales@ldc-tourism.com",
+    reservationsEmail: "info@ldc-tourism.com",
+    salesEmail: "info@ldc-tourism.com",
     whatsapp: "+966 7277981053",
   },
 });
@@ -187,7 +187,7 @@ if (!siteSettings.siteName) {
     tagline: "Tourism Marketing",
     defaultMarket: marketId,
     canonicalUrl: siteUrl,
-    contact: { whatsappDisplay: "+966 7277981053", whatsappNumber: "9667277981053", office: "15 Mahmoud Essmat Hamdy, Sheraton", reservationsEmail: "reservations@ldc-tourism.com", salesEmail: "sales@ldc-tourism.com" },
+    contact: { whatsappDisplay: "+966 7277981053", whatsappNumber: "9667277981053", office: "15 Mahmoud Essmat Hamdy, Sheraton", reservationsEmail: "info@ldc-tourism.com", salesEmail: "info@ldc-tourism.com" },
     whatsapp: destinationWhatsapp,
     footerCopy: "Thoughtful destination guidance for travelers ready to see more of the world.",
     socialLinks: [
@@ -206,9 +206,19 @@ if (!siteSettings.siteName) {
   const legacyMessage = `${currentWhatsapp.defaultMessage ?? ""} ${currentWhatsapp.contextTemplate ?? ""}`.toLowerCase();
   const shouldUpdateCopy = legacyMessage.includes("program") || legacyMessage.includes("package") || !currentWhatsapp.contextTemplate;
   const shouldUpdateNumber = knownLegacyNumbers.has(currentNumber);
-  if (shouldUpdateCopy || shouldUpdateNumber) {
+  const shouldUpdateEmail = currentContact.reservationsEmail !== "info@ldc-tourism.com" || currentContact.salesEmail !== "info@ldc-tourism.com";
+  if (shouldUpdateCopy || shouldUpdateNumber || shouldUpdateEmail) {
+    const nextContact = { ...currentContact };
+    if (shouldUpdateNumber) {
+      nextContact.whatsappDisplay = "+966 7277981053";
+      nextContact.whatsappNumber = "9667277981053";
+    }
+    if (shouldUpdateEmail) {
+      nextContact.reservationsEmail = "info@ldc-tourism.com";
+      nextContact.salesEmail = "info@ldc-tourism.com";
+    }
     await payload.updateGlobal({ slug: "site-settings", data: {
-      ...(shouldUpdateNumber ? { contact: { ...currentContact, whatsappDisplay: "+966 7277981053", whatsappNumber: "9667277981053" } } : {}),
+      ...(shouldUpdateNumber || shouldUpdateEmail ? { contact: nextContact } : {}),
       ...(shouldUpdateCopy ? { whatsapp: destinationWhatsapp } : {}),
     } });
     console.log("migrate global:site-settings destination WhatsApp configuration");

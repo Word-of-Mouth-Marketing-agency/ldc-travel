@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { createPublicWhatsAppConfig } from "../../lib/public-contact";
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
 import { Icon } from "../homepage/Icon";
-import { SocialIcon } from "./SocialIcon";
 import { PlaceholderLink } from "./PlaceholderLink";
 import { WhatsAppIcon } from "./WhatsAppIcon";
 import type { SiteViewModel } from "../../content/homepage-demo";
@@ -14,6 +14,8 @@ const groups = [
 ];
 
 export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
+  const egyptWhatsappHref = createWhatsAppUrl(createPublicWhatsAppConfig(site.egyptWhatsappNumber));
+
   return (
     <footer className="site-footer">
       <div className="site-container footer-main">
@@ -21,15 +23,6 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
           <Image src="/brand/ldc-logo-yellow.webp" alt="LDC Travel" width={176} height={112} className="footer-logo" />
           <p className="footer-tagline">{site.tagline}</p>
           <p>{site.footerCopy}</p>
-          <div className="social-links" aria-label="LDC Travel social links">
-            {site.socialLinks.map((social) => social.url ? (
-              <a key={social.label} href={social.url} aria-label={social.label} target="_blank" rel="noopener noreferrer">
-                <SocialIcon label={social.label} />
-              </a>
-            ) : (
-              <span key={social.label} aria-label={`${social.label} link pending`}><SocialIcon label={social.label} /></span>
-            ))}
-          </div>
         </div>
         {groups.map((group) => (
           <div className="footer-link-column" key={group.title}>
@@ -38,11 +31,17 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
           </div>
         ))}
         <div className="footer-contact-column">
-          <h2>Egypt office</h2>
-          <p><Icon name="pin" /> {site.office}</p>
-          <a href={createWhatsAppUrl(whatsappConfig)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon /> {site.whatsappDisplay}</a>
-          <a href={`mailto:${site.reservationsEmail}`}><Icon name="mail" /> {site.reservationsEmail}</a>
-          <a href={`mailto:${site.salesEmail}`}><Icon name="mail" /> {site.salesEmail}</a>
+          <h2>Our offices</h2>
+          <div className="footer-office-group">
+            <p className="footer-office-label">Egypt</p>
+            <p><Icon name="pin" /> {site.office}</p>
+            <a href={egyptWhatsappHref} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={16} /> {site.egyptWhatsappDisplay}</a>
+          </div>
+          <div className="footer-office-group">
+            <p className="footer-office-label">Saudi Arabia</p>
+            <a href={createWhatsAppUrl(whatsappConfig)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={16} /> {site.whatsappDisplay}</a>
+          </div>
+          <a href={`mailto:${site.email}`}><Icon name="mail" /> {site.email}</a>
         </div>
       </div>
       <div className="site-container footer-bottom">

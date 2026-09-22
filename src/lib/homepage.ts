@@ -12,6 +12,7 @@ import {
 } from "../content/homepage-demo";
 import { approvedDestinationSlugs } from "../content/destinations";
 import { createWhatsAppUrl, type WhatsAppConfig } from "./whatsapp";
+import { publicContact } from "./public-contact";
 import { getLaunchMarketCode } from "./markets";
 import { isUiPreviewMode } from "./preview";
 
@@ -100,11 +101,12 @@ export function buildSite(raw: unknown): SiteViewModel {
     ...demoHomepage.site,
     name: asString(record?.siteName, demoHomepage.site.name),
     tagline: asString(record?.tagline, demoHomepage.site.tagline),
-    office: asString(contact?.office, demoHomepage.site.office),
+    office: asString(contact?.office, publicContact.office),
     whatsappDisplay: asString(contact?.whatsappDisplay, demoHomepage.site.whatsappDisplay),
     whatsappNumber: asString(contact?.whatsappNumber, demoHomepage.site.whatsappNumber),
-    reservationsEmail: asString(contact?.reservationsEmail, demoHomepage.site.reservationsEmail),
-    salesEmail: asString(contact?.salesEmail, demoHomepage.site.salesEmail),
+    egyptWhatsappDisplay: publicContact.whatsapp.egypt.display,
+    egyptWhatsappNumber: publicContact.whatsapp.egypt.number,
+    email: publicContact.email,
     defaultMessage: asString(whatsapp?.defaultMessage, demoHomepage.site.defaultMessage),
     contextTemplate: asString(whatsapp?.contextTemplate, demoHomepage.site.contextTemplate),
     footerCopy: asString(record?.footerCopy, demoHomepage.site.footerCopy),

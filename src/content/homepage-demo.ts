@@ -1,4 +1,5 @@
 import { createWhatsAppUrl, type WhatsAppConfig } from "../lib/whatsapp";
+import { createPublicWhatsAppConfig, publicContact, publicWhatsAppCopy } from "../lib/public-contact";
 
 export type ImageSource = {
   src: string;
@@ -22,8 +23,9 @@ export type SiteViewModel = {
   office: string;
   whatsappDisplay: string;
   whatsappNumber: string;
-  reservationsEmail: string;
-  salesEmail: string;
+  egyptWhatsappDisplay: string;
+  egyptWhatsappNumber: string;
+  email: string;
   defaultMessage: string;
   contextTemplate: string;
   footerCopy: string;
@@ -100,11 +102,7 @@ const image = (id: string, alt: string): ImageSource => ({
 
 const localImage = (src: string, alt: string): ImageSource => ({ src, alt });
 
-const demoWhatsappConfig: WhatsAppConfig = {
-  phoneNumber: "9667277981053",
-  defaultMessage: "Hi LDC Travel, I'd like to explore one of your destinations.",
-  contextTemplate: "Hi LDC Travel, I'm interested in {{title}} and would like more information.",
-};
+const demoWhatsappConfig: WhatsAppConfig = createPublicWhatsAppConfig(publicContact.whatsapp.saudi.number);
 
 const whatsappCta = (label: string, title?: string): Cta => ({
   label,
@@ -116,13 +114,14 @@ export const demoHomepage: HomepageViewModel = {
   site: {
     name: "LDC Travel",
     tagline: "Tourism Marketing",
-    office: "15 Mahmoud Essmat Hamdy, Sheraton",
-    whatsappDisplay: "+966 7277981053",
-    whatsappNumber: "9667277981053",
-    reservationsEmail: "reservations@ldc-tourism.com",
-    salesEmail: "sales@ldc-tourism.com",
-    defaultMessage: demoWhatsappConfig.defaultMessage,
-    contextTemplate: demoWhatsappConfig.contextTemplate ?? "",
+    office: publicContact.office,
+    whatsappDisplay: publicContact.whatsapp.saudi.display,
+    whatsappNumber: publicContact.whatsapp.saudi.number,
+    egyptWhatsappDisplay: publicContact.whatsapp.egypt.display,
+    egyptWhatsappNumber: publicContact.whatsapp.egypt.number,
+    email: publicContact.email,
+    defaultMessage: publicWhatsAppCopy.defaultMessage,
+    contextTemplate: publicWhatsAppCopy.contextTemplate,
     footerCopy: "Thoughtful destination guidance for travelers ready to see more of the world.",
     socialLinks: [
       { label: "Instagram", url: "https://www.instagram.com/ldctravels.eg/" },
