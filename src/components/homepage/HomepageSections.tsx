@@ -14,7 +14,7 @@ import { WhatsAppIcon } from "../site/WhatsAppIcon";
 import { RevealHeading } from "../motion/RevealHeading";
 
 function CoverImage({ image, className = "" }: { image: ImageSource; className?: string }) {
-  return <SafeImage className={`cover-image ${className}`} src={image.src} alt={image.alt} sizes="(max-width: 767px) 92vw, (max-width: 1199px) 44vw, 31vw" />;
+  return <SafeImage className={`cover-image ${className}`} src={image.src} alt={image.alt} sizes="(max-width: 767px) 92vw, (max-width: 1023px) 44vw, 24vw" />;
 }
 
 function CtaLink({ cta, primary = false }: { cta: Cta; primary?: boolean }) {
@@ -79,9 +79,9 @@ export function WhyLdcSection({ content }: { content: HomepageViewModel["whyLdc"
   );
 }
 
-function InspirationCard({ item, featured = false }: { item: InspirationItem; featured?: boolean }) {
+function InspirationCard({ item }: { item: InspirationItem }) {
   return (
-    <Link className={`inspiration-card${featured ? " inspiration-card-featured" : ""}`} href={item.href} aria-label={`Explore ${item.title} inspiration`}>
+    <Link className="inspiration-card" href={item.href} aria-label={`Explore ${item.title} inspiration`}>
       <CoverImage image={item.image} />
       <span className="card-scrim" />
       <div className="inspiration-card-copy">
@@ -100,7 +100,7 @@ export function InspirationSection({ content }: { content: HomepageViewModel["in
       <div className="site-container">
         <SectionHeading eyebrow={content.eyebrow} id="inspiration-heading" title={content.headline} description={content.description} />
         <div className="inspiration-grid">
-          {content.items.slice(0, 4).map((item, index) => <InspirationCard key={item.title} item={item} featured={index === 0} />)}
+          {content.items.slice(0, 4).map((item) => <InspirationCard key={item.title} item={item} />)}
         </div>
       </div>
     </section>
