@@ -6,19 +6,18 @@
 
 | Source file | Variant | Intended project usage | Project destination |
 |---|---|---|---|
-| `A:/Downloads/ldc-logo-blue.webp` | Blue full lockup | Light header and mobile drawer | `public/brand/ldc-logo-blue.webp` |
-| `A:/Downloads/ldc-logo-yellow.webp` | Yellow full lockup | Blue footer and strong blue surfaces | `public/brand/ldc-logo-yellow.webp` |
-| `A:/Downloads/ldc-logo-black.webp` | Black full lockup | Available for future light-background treatments | `public/brand/ldc-logo-black.webp` |
+| `A:/Downloads/navylogo.webp` | Navy full lockup | Light header, mobile drawer, favicon source, and structured data | `public/brand/ldc-logo-navy.webp` |
+| `A:/Downloads/orangelogo.webp` | Orange full lockup | Navy footer and orange-on-dark branded surfaces | `public/brand/ldc-logo-orange.webp` |
 | `public/hero-travel.webp` | Supplied lake/mountain hero photograph | Retained legacy asset for rollback/reference; no longer the homepage default | `public/hero-travel.webp` |
 
-The existing five legacy brand files in `public/brand/` remain untouched for rollback/reference compatibility. The supplied redesign files are the authoritative current public logo choices.
+The existing legacy brand files in `public/brand/` remain untouched for rollback/reference compatibility. The navy/orange files are the authoritative current public logo choices.
 
 ## Logo selection
 
-- Header: `ldc-logo-blue.webp` on white.
-- Mobile drawer: `ldc-logo-blue.webp` on white.
-- Footer: `ldc-logo-yellow.webp` on `#173C86` blue.
-- Favicon/app icon: `src/app/icon.png` and `src/app/apple-icon.png` use a favicon-safe transparent crop of the emblem from `public/brand/ldc-logo-blue.webp`; the original full lockup remains unchanged.
+- Header: `ldc-logo-navy.webp` on white.
+- Mobile drawer: `ldc-logo-navy.webp` on white.
+- Footer: `ldc-logo-orange.webp` on `#123665` navy.
+- Favicon/app icon: `src/app/icon.png` and `src/app/apple-icon.png` use a favicon-safe transparent crop of the emblem from `public/brand/ldc-logo-navy.webp`; the original full lockup remains unchanged.
 
 ## Remote imagery
 

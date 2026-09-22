@@ -17,7 +17,7 @@ export function Header({ activePath = "/", socialLinks }: { activePath?: string;
     <header className="site-header">
       <div className="site-container header-inner">
         <Link className="brand-link" href="/" aria-label="LDC Travel home">
-          <Image className="brand-logo" src="/brand/ldc-logo-blue.webp" alt="LDC Travel" width={176} height={112} priority />
+          <Image className="brand-logo" src="/brand/ldc-logo-navy.webp" alt="LDC Travel" width={176} height={112} priority />
         </Link>
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navItems.map((item) => (

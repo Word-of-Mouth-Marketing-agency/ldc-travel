@@ -20,7 +20,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
     <footer className="site-footer">
       <div className="site-container footer-main">
         <div className="footer-brand-column">
-          <Image src="/brand/ldc-logo-yellow.webp" alt="LDC Travel" width={176} height={112} className="footer-logo" />
+          <Image src="/brand/ldc-logo-orange.webp" alt="LDC Travel" width={176} height={112} className="footer-logo" />
           <p className="footer-tagline">{site.tagline}</p>
           <p>{site.footerCopy}</p>
         </div>

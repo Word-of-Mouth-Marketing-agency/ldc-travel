@@ -71,7 +71,7 @@ The foundation and Phase 1 criteria in `specs/001-foundation/spec.md` are met, c
 
 ## Destination-first Phase 1 redesign
 
-23. Review the existing homepage, mobile navigation, supplied logos, new blue/yellow identity, and destination-only business model through the UI/UX design route.
+23. Review the existing homepage, mobile navigation, supplied logos, new navy/orange identity, and destination-only business model through the UI/UX design route.
 24. Replace the public homepage composition with a destination-led hero, exactly six destinations, Why LDC, inspiration, destination CTA, FAQ, and footer.
 25. Remove obsolete homepage CMS relationships and public preview data for programs, offers, events, testimonials, and guides without deleting their collections.
 26. Add CMS fields for Why LDC, destination inspiration, destination CTA, and selected destinations; regenerate types/import map.

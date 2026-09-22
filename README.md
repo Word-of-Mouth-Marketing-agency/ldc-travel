@@ -84,7 +84,7 @@ The public routes are `/`, `/about`, `/contact`, `/destinations`, and `/destinat
 
 The site is destination-led lead generation only: no travel programs, package pricing, events, booking engine, checkout, payments, customer accounts, or public CMS registration are exposed on the public website. WhatsApp is the primary CTA. The launch market is Egypt; the current configured primary WhatsApp conversion number is `+9667277981053` in normalized `wa.me` form, with Egypt WhatsApp `+201211118118` also exposed in contact details. The only public email is `info@ldc-tourism.com`. The current language is English only, with logical layout choices preserved for later RTL support.
 
-The new authoritative Phase 1 direction is a destination-first homepage using `#336DD5` blue and `#FFD200` yellow. It includes a split hero, exactly six approved destinations (Turkey, Russia, Bali, Georgia, Indonesia, Thailand), Why LDC positioning, destination inspiration, a destination CTA, FAQ, and footer. The prior screenshot and its newsletter/program/event composition are historical reference only; no newsletter or booking/search widget is included.
+The current authoritative direction is a destination-first homepage using `#123665` navy and `#FF6400` orange. It includes a split hero, exactly six approved destinations (Turkey, Russia, Bali, Georgia, Indonesia, Thailand), Why LDC positioning, destination inspiration, a destination CTA, FAQ, and footer. The prior screenshot and its newsletter/program/event composition are historical reference only; no newsletter or booking/search widget is included.
 
 ## Homepage and destination development
 

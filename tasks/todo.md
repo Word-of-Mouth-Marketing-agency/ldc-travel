@@ -66,7 +66,7 @@
 - [x] Include exactly Turkey, Russia, Bali, Georgia, Indonesia, and Thailand in preview/demo data.
 - [x] Remove public homepage usage and seed creation for programs, offers, events, testimonials, and guides.
 - [x] Add Why LDC, inspiration, and destination CTA CMS fields.
-- [x] Apply #336DD5 / #FFD200 tokens, scrollbar, shared chrome, SEO copy, and supplied logos.
+- [x] Apply #123665 / #FF6400 tokens, scrollbar, shared chrome, SEO copy, and supplied logos.
 - [x] Keep legacy collections intact for a later explicit schema migration.
 - [x] Preserve UI_PREVIEW_MODE and strict production CMS-unavailable behavior.
 - [x] Keep destination detail/listing pages, research, forms, deployment, and production PostgreSQL out of scope.

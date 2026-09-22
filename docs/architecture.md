@@ -21,13 +21,12 @@ Bali and Indonesia remain separate public destinations. Homepage and listing car
 
 ## Brand and shared UI
 
-The authoritative brand colors are `#336DD5` blue and `#FFD200` yellow, with cool neutral surfaces and dark navy text. Montserrat remains the UI/control/navigation font loaded through `next/font/google`. The supplied logo variants are copied into `public/brand/`:
+The authoritative brand colors are `#123665` navy and `#FF6400` orange, with cool neutral surfaces and dark navy text. Montserrat remains the UI/control/navigation font loaded through `next/font/google`. The current supplied logo variants are copied into `public/brand/`:
 
-- `ldc-logo-blue.webp` — light header and mobile drawer
-- `ldc-logo-yellow.webp` — blue footer and strong blue surfaces
-- `ldc-logo-black.webp` — available for future light-background treatments
+- `ldc-logo-navy.webp` — light header, mobile drawer, and structured-data logo
+- `ldc-logo-orange.webp` — navy footer and dark branded surfaces
 
-The favicon and Apple icon now use a transparent, square crop of the recognizable emblem from `ldc-logo-blue.webp`; the original full-lockup source remains untouched.
+The favicon and Apple icon use a transparent, square crop of the recognizable emblem from `ldc-logo-navy.webp`; the original full-lockup source remains untouched.
 
 ## CMS ownership
 

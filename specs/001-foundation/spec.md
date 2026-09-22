@@ -9,11 +9,11 @@ Foundation and the original program-based homepage are complete at source level.
 - Public homepage content is destination-only: Turkey, Russia, Bali, Georgia, Indonesia, and Thailand.
 - Bali and Indonesia remain separate destinations.
 - Programs, package pricing, prices, events/festivals, seasonal offers, booking/search widgets, checkout, and accounts are not public homepage concepts.
-- Brand tokens are `#336DD5` blue and `#FFD200` yellow.
+- Brand tokens are `#123665` navy and `#FF6400` orange.
 - Homepage structure is Header, Hero, Destinations, Why LDC, Destination Inspiration, destination CTA, FAQ, and Footer.
 - Available demo testimonials and guides are not shown because they are placeholders and do not strengthen the redesign.
 - Destination detail/listing routes and destination inquiry forms remain Phase 2 scope.
-- The supplied logos are copied as `public/brand/ldc-logo-blue.webp`, `ldc-logo-yellow.webp`, and `ldc-logo-black.webp`.
+- The current supplied logos are copied as `public/brand/ldc-logo-navy.webp` and `public/brand/ldc-logo-orange.webp`.
 
 ## Assumptions and decisions
 
@@ -241,7 +241,7 @@ Phase 1 ships `/` using CMS-driven sections in this order: Header, Hero, Feature
 - [x] Replaced the public homepage composition with Header, Hero, six Destinations, Why LDC, Destination Inspiration, destination CTA, FAQ, and Footer.
 - [x] Removed old programs, offers, events, prices, testimonials, and guides from homepage usage and preview data without deleting their collections.
 - [x] Added the destination-first Homepage global fields and regenerated Payload types.
-- [x] Added the supplied blue/yellow logo variants and updated shared header/footer usage.
+- [x] Added the supplied navy/orange logo variants and updated shared header/footer usage.
 - [x] Preserved server-side preview mode and strict production CMS-unavailable behavior.
 - [x] Kept destination detail routes, destination research, destination inquiry forms, deployment, and production PostgreSQL out of Phase 1 scope; the destination system is implemented in Phase 2 below.
 
