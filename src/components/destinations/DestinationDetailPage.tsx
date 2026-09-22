@@ -30,7 +30,7 @@ function DestinationFaq({ destination }: { destination: DestinationDetailViewMod
 }
 
 function DestinationInquirySection({ destination, whatsappHref }: { destination: DestinationDetailViewModel; whatsappHref: string }) {
-  return <section className="destination-inquiry-section" id="inquiry" aria-labelledby="destination-inquiry-section-heading"><div className="site-container destination-inquiry-grid"><div className="destination-inquiry-intro"><p className="section-eyebrow">Take the next step</p><h2 id="destination-inquiry-section-heading">A good journey starts with a useful conversation.</h2><p>Tell us where your curiosity is taking you. We will follow up to understand what you want from the destination.</p><div className="destination-inquiry-whatsapp"><span><Icon name="message" size={18} /></span><p><strong>Prefer a quick conversation?</strong><br />WhatsApp the LDC Travel team directly.</p><a href={whatsappHref} target="_blank" rel="noopener noreferrer">Chat on WhatsApp <Icon name="arrow-up-right" size={15} /></a></div></div><DestinationInquiryForm destinationTitle={destination.title} slug={destination.slug} whatsappHref={whatsappHref} /></div></section>;
+  return <section className="destination-inquiry-section" id="destination-inquiry" aria-labelledby="destination-inquiry-section-heading"><div className="site-container destination-inquiry-grid"><div className="destination-inquiry-intro"><p className="section-eyebrow">Take the next step</p><h2 id="destination-inquiry-section-heading">Plan your {destination.title} trip.</h2><p>Leave your details and the LDC Travel team will contact you to continue planning.</p><div className="destination-inquiry-whatsapp"><span><Icon name="message" size={18} /></span><p><strong>Prefer a quick conversation?</strong><br />WhatsApp the LDC Travel team directly.</p><a href={whatsappHref} target="_blank" rel="noopener noreferrer">Chat on WhatsApp <Icon name="arrow-up-right" size={15} /></a></div></div><DestinationInquiryForm destinationTitle={destination.title} slug={destination.slug} whatsappHref={whatsappHref} /></div></section>;
 }
 
 export function DestinationDetailPage({ destination, relatedDestinations, destinations, site, whatsappConfig }: { destination: DestinationDetailViewModel; relatedDestinations: DestinationViewModel[]; destinations: DestinationViewModel[]; site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
@@ -42,11 +42,11 @@ export function DestinationDetailPage({ destination, relatedDestinations, destin
       <main>
         <DestinationHero destination={destination} whatsappHref={whatsappHref} />
         <DestinationOverview destination={destination} />
+        <DestinationInquirySection destination={destination} whatsappHref={whatsappHref} />
         <DestinationHighlights destination={destination} />
         <DestinationExperiences destination={destination} />
         <DestinationSeasonSection destination={destination} />
         <DestinationGallery destination={destination} />
-        <DestinationInquirySection destination={destination} whatsappHref={whatsappHref} />
         <DestinationFaq destination={destination} />
         <RelatedDestinations destinations={relatedDestinations.length ? relatedDestinations : destinations.filter((item) => item.slug !== destination.slug).slice(0, 2)} />
       </main>

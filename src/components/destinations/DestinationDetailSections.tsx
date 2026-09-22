@@ -24,8 +24,8 @@ export function DestinationHero({ destination, whatsappHref }: { destination: De
           <h1 id="destination-detail-title">{destination.title}</h1>
           <p>{destination.summary}</p>
           <div className="destination-detail-hero-actions">
-            <a className="button button-light" href={whatsappHref} target="_blank" rel="noopener noreferrer">Ask about {destination.title} <Icon name="arrow-up-right" size={16} /></a>
-            <a className="button button-ghost-light" href="#inquiry">Send your details <Icon name="arrow" size={16} /></a>
+            <a className="button button-light" href="#destination-inquiry">Plan This Trip <Icon name="arrow" size={16} /></a>
+            <a className="button button-ghost-light" href={whatsappHref} target="_blank" rel="noopener noreferrer">Ask about {destination.title} <Icon name="arrow-up-right" size={16} /></a>
           </div>
         </div>
         <div className="destination-detail-hero-meta"><span>{destination.country}</span><span aria-hidden="true">·</span><span>{destination.regionOrCity}</span></div>

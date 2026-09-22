@@ -271,18 +271,19 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .contact-details-note { display: grid; gap: 0.3rem; margin-top: 2rem; padding: 1rem; border-radius: 0.8rem; background: var(--brand-blue-light); color: var(--muted); font-size: 0.78rem; line-height: 1.45; }
 .contact-details-note strong { color: var(--brand-blue-deep); }
 .contact-details-note .text-link { margin-top: 0.35rem; }
-.contact-social-section { padding-block: clamp(4rem, 7vw, 6rem); background: var(--surface); }
-.contact-social-inner { display: grid; gap: clamp(1.5rem, 3vw, 2.25rem); }
+.contact-social-section { padding-block: clamp(2.75rem, 5vw, 4rem); background: var(--surface); }
+.contact-social-inner { display: grid; gap: 1.4rem; }
 .contact-social-heading { max-width: 40rem; }
-.contact-social-heading h2 { max-width: 18ch; margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: clamp(1.8rem, 3vw, 2.5rem); letter-spacing: -0.05em; line-height: 1.05; }
-.contact-social-heading > p:last-child { max-width: 36rem; margin: 0.85rem 0 0; color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
-.contact-social-markets { display: grid; grid-template-columns: 1fr; gap: 1rem; align-items: stretch; }
-.contact-social-market { display: grid; grid-template-rows: auto 1fr; min-width: 0; min-height: 9.5rem; padding: clamp(1.15rem, 2vw, 1.5rem); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface-muted); box-shadow: 0 0.65rem 1.8rem rgb(20 35 61 / 0.04); }
+.contact-social-heading h2 { max-width: 18ch; margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: clamp(1.65rem, 3vw, 2.3rem); letter-spacing: -0.05em; line-height: 1.05; }
+.contact-social-heading > p:last-child { max-width: 36rem; margin: 0.55rem 0 0; color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
+.contact-social-markets { display: grid; grid-template-columns: 1fr; gap: 1.2rem; align-items: stretch; }
+.contact-social-market { min-width: 0; }
 .contact-social-market h3 { margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: 0.9rem; font-weight: 800; letter-spacing: 0.02em; }
-.contact-social-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; gap: 0.65rem; margin-top: 1.15rem; }
-.contact-social-link { display: inline-flex; align-items: center; justify-content: flex-start; gap: 0.45rem; min-width: 0; min-height: 3rem; padding: 0.65rem 0.75rem; border: 1px solid var(--line); border-radius: 0.8rem; background: white; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: 0.76rem; font-weight: 700; transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease; }
-.contact-social-link:hover { transform: translateY(-2px); border-color: var(--brand-blue); background: var(--brand-blue-light); color: var(--brand-blue); }
-.contact-social-link .social-icon { width: 1rem; height: 1rem; }
+.contact-social-links { display: grid; gap: 0.15rem; margin-top: 0.45rem; }
+.contact-social-link { display: inline-flex; align-items: center; justify-content: flex-start; gap: 0.6rem; width: fit-content; min-width: 9rem; min-height: 2.4rem; padding: 0.35rem 0.4rem; border-radius: 0.35rem; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: 0.82rem; font-weight: 650; transition: color 180ms ease, background 180ms ease; }
+.contact-social-link:hover { background: var(--brand-blue-light); color: var(--brand-blue); }
+.contact-social-link .social-icon { width: 1.2rem; height: 1.2rem; color: var(--brand-blue); }
+.contact-social-link:hover .social-icon { color: var(--brand-yellow); }
 
 /* About page narrative layout */
 .about-masthead .page-title-inner { padding-block: clamp(2.2rem, 5vw, 4rem); }
@@ -376,95 +377,96 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .destination-support-card h2 { max-width: 16ch; margin: 0; font-family: var(--font-ui); font-size: clamp(2rem, 4vw, 3.7rem); font-weight: 750; letter-spacing: -0.07em; line-height: 0.98; }
 .destination-support-card p:last-child { max-width: 30rem; margin: 0.85rem 0 0; color: rgb(255 255 255 / 0.8); line-height: 1.6; }
 
-.destination-detail-hero { position: relative; isolation: isolate; min-height: clamp(34rem, 70vw, 47rem); overflow: hidden; background: var(--brand-blue-deep); color: white; }
+.destination-detail-hero { position: relative; isolation: isolate; min-height: clamp(30rem, 72vw, 38rem); overflow: hidden; background: var(--brand-blue-deep); color: white; }
 .destination-detail-hero-image, .destination-detail-hero-image img { position: absolute; inset: 0; width: 100%; height: 100%; }
 .destination-detail-hero-image img { object-fit: cover; object-position: center; }
 .destination-detail-hero-wash { position: absolute; z-index: 1; inset: 0; background: linear-gradient(180deg, rgb(16 43 97 / 0.56) 0%, rgb(16 43 97 / 0.2) 38%, rgb(16 43 97 / 0.88) 100%); }
-.destination-detail-hero-inner { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; min-height: clamp(34rem, 70vw, 47rem); padding-block: 2rem 1.6rem; }
+.destination-detail-hero-inner { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; min-height: clamp(30rem, 72vw, 38rem); padding-block: 1.5rem 1.25rem; }
 .destination-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; color: rgb(255 255 255 / 0.72); font-family: var(--font-ui); font-size: 0.7rem; font-weight: 650; }
 .destination-breadcrumb a:hover { color: var(--brand-yellow); }
 .destination-breadcrumb span[aria-current="page"] { color: white; }
-.destination-detail-hero-copy { max-width: 47rem; padding-block: 4rem 3rem; }
+.destination-detail-hero-copy { max-width: 42rem; padding-block: 2.5rem 2rem; }
 .destination-detail-hero-copy .section-eyebrow { color: var(--brand-yellow); }
-.destination-detail-hero-copy h1 { margin: 0; color: white; font-family: var(--font-ui); font-size: clamp(4rem, 14vw, 9.5rem); font-weight: 800; letter-spacing: -0.1em; line-height: 0.84; }
-.destination-detail-hero-copy > p:not(.section-eyebrow) { max-width: 39rem; margin: 1.25rem 0 0; color: rgb(255 255 255 / 0.86); font-size: clamp(1rem, 1.8vw, 1.25rem); line-height: 1.6; }
-.destination-detail-hero-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.7rem; }
+.destination-detail-hero-copy h1 { margin: 0; color: white; font-family: var(--font-ui); font-size: clamp(3.2rem, 11vw, 6.8rem); font-weight: 800; letter-spacing: -0.1em; line-height: 0.86; }
+.destination-detail-hero-copy > p:not(.section-eyebrow) { max-width: 35rem; margin: 0.9rem 0 0; color: rgb(255 255 255 / 0.86); font-size: clamp(0.96rem, 1.5vw, 1.12rem); line-height: 1.55; }
+.destination-detail-hero-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.25rem; }
 .button-ghost-light { border-color: rgb(255 255 255 / 0.48); background: rgb(255 255 255 / 0.08); color: white; }
 .button-ghost-light:hover { border-color: white; background: rgb(255 255 255 / 0.16); }
 .destination-detail-hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.55rem; color: rgb(255 255 255 / 0.75); font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 .destination-detail-hero-meta span:nth-child(2) { color: var(--brand-yellow); }
 .destination-overview-section { background: var(--surface); }
-.destination-overview-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-.destination-overview-copy { max-width: 46rem; }
-.destination-overview-copy h2, .destination-experiences-intro h2, .destination-season-card h2, .destination-inquiry-intro h2, .destination-faq-layout h2 { max-width: 17ch; margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: clamp(2rem, 4vw, 3.8rem); font-weight: 750; letter-spacing: -0.07em; line-height: 0.98; }
-.destination-overview-copy > p:last-child { max-width: 43rem; margin: 1.2rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.78; }
-.destination-information-card { align-self: start; padding: 1.3rem; border-radius: var(--radius-card); background: var(--brand-blue-light); }
-.destination-information-card dl { display: grid; gap: 1rem; margin: 1.2rem 0 0; }
+.destination-overview-section, .destination-highlights-section, .destination-experiences-section, .destination-season-section, .destination-gallery-section, .destination-faq-section, .related-destinations-section { padding-block: clamp(2.5rem, 6vw, 5.5rem); }
+.destination-overview-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.destination-overview-copy { max-width: 38rem; }
+.destination-overview-copy h2, .destination-experiences-intro h2, .destination-season-card h2, .destination-inquiry-intro h2, .destination-faq-layout h2 { max-width: 17ch; margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: clamp(1.85rem, 3.5vw, 3.1rem); font-weight: 750; letter-spacing: -0.07em; line-height: 1.02; }
+.destination-overview-copy > p:last-child { max-width: 38rem; margin: 0.9rem 0 0; color: var(--muted); font-size: 0.94rem; line-height: 1.68; }
+.destination-information-card { align-self: start; padding: 1.1rem; border-radius: var(--radius-card); background: var(--brand-blue-light); }
+.destination-information-card dl { display: grid; gap: 0.8rem; margin: 1rem 0 0; }
 .destination-information-card dl > div { display: grid; gap: 0.25rem; padding-top: 0.85rem; border-top: 1px solid rgb(51 109 213 / 0.2); }
 .destination-information-card dt { color: var(--brand-blue); font-family: var(--font-ui); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
 .destination-information-card dd { margin: 0; color: var(--ink); font-size: 0.8rem; line-height: 1.55; }
 .destination-highlights-section { background: var(--surface-muted); }
 .destination-highlights-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 .destination-highlight-card { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-card); background: white; box-shadow: 0 0.7rem 1.8rem rgb(20 35 61 / 0.05); }
-.destination-highlight-image { position: relative; height: 14rem; overflow: hidden; background: var(--brand-blue-deep); }
+.destination-highlight-image { position: relative; height: 11.5rem; overflow: hidden; background: var(--brand-blue-deep); }
 .destination-highlight-image img { object-fit: cover; }
-.destination-highlight-copy { padding: 1.15rem; }
+.destination-highlight-copy { padding: 1rem; }
 .destination-highlight-copy > span { color: var(--brand-blue); font-family: var(--font-ui); font-size: 0.68rem; font-weight: 800; }
-.destination-highlight-copy h3 { margin: 0.45rem 0 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: 1.25rem; font-weight: 750; letter-spacing: -0.04em; }
+.destination-highlight-copy h3 { margin: 0.4rem 0 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: 1.1rem; font-weight: 750; letter-spacing: -0.04em; }
 .destination-highlight-copy p { margin: 0.5rem 0 0; color: var(--muted); font-size: 0.82rem; line-height: 1.6; }
 .destination-experiences-section { background: var(--brand-blue-light); }
-.destination-experiences-grid { display: grid; grid-template-columns: 1fr; gap: 2.3rem; padding-bottom: clamp(4.5rem, 8vw, 8rem); }
-.destination-experiences-intro > p:last-child { max-width: 29rem; margin: 1rem 0 0; color: var(--muted); line-height: 1.65; }
+.destination-experiences-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+.destination-experiences-intro > p:last-child { max-width: 29rem; margin: 0.8rem 0 0; color: var(--muted); line-height: 1.6; }
 .destination-experiences-list { border-top: 1px solid rgb(51 109 213 / 0.24); }
-.destination-experience { display: grid; grid-template-columns: 2rem 3rem minmax(0, 1fr); align-items: start; gap: 0.8rem; padding: 1.15rem 0; border-bottom: 1px solid rgb(51 109 213 / 0.24); }
+.destination-experience { display: grid; grid-template-columns: 1.75rem 2.7rem minmax(0, 1fr); align-items: start; gap: 0.7rem; padding: 0.9rem 0; border-bottom: 1px solid rgb(51 109 213 / 0.24); }
 .destination-experience-number { padding-top: 0.32rem; color: var(--brand-blue); font-family: var(--font-ui); font-size: 0.68rem; font-weight: 800; }
-.destination-experience-icon { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 0.9rem; background: var(--brand-yellow); color: var(--brand-blue-deep); }
+.destination-experience-icon { display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border-radius: 0.8rem; background: var(--brand-yellow); color: var(--brand-blue-deep); }
 .destination-experience h3 { margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: 1rem; font-weight: 750; }
 .destination-experience p { max-width: 31rem; margin: 0.35rem 0 0; color: var(--muted); font-size: 0.83rem; line-height: 1.55; }
 .destination-season-section { background: var(--surface-muted); }
-.destination-season-card { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.2rem; padding: clamp(1.4rem, 4vw, 2.8rem); border: 1px solid var(--line); border-radius: var(--radius-card); background: white; box-shadow: 0 0.7rem 2rem rgb(20 35 61 / 0.05); }
+.destination-season-card { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.2rem; padding: clamp(1.2rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: var(--radius-card); background: white; box-shadow: 0 0.7rem 2rem rgb(20 35 61 / 0.05); }
 .destination-season-card > div { max-width: 45rem; }
 .destination-season-card h2 { max-width: none; }
 .destination-season-card p:last-child { margin: 1rem 0 0; color: var(--muted); line-height: 1.7; }
-.destination-season-mark { display: none; place-items: center; flex: 0 0 auto; width: 4.4rem; height: 4.4rem; border-radius: 50%; background: var(--brand-blue); color: var(--brand-yellow); }
+.destination-season-mark { display: none; place-items: center; flex: 0 0 auto; width: 3.7rem; height: 3.7rem; border-radius: 50%; background: var(--brand-blue); color: var(--brand-yellow); }
 .destination-gallery-section { background: var(--surface); }
-.destination-gallery-grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 11rem; gap: 0.7rem; }
+.destination-gallery-grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 9rem; gap: 0.55rem; }
 .destination-gallery-item { position: relative; overflow: hidden; min-height: 0; border-radius: 0.9rem; background: var(--brand-blue-deep); }
 .destination-gallery-item img { object-fit: cover; transition: transform 600ms cubic-bezier(.2,.8,.2,1); }
 .destination-gallery-item:hover img { transform: scale(1.05); }
 .destination-gallery-item-1 { grid-column: span 2; grid-row: span 2; }
-.destination-inquiry-section { padding-block: clamp(4rem, 8vw, 7rem); background: var(--brand-blue-deep); color: white; }
-.destination-inquiry-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start; }
-.destination-inquiry-intro { max-width: 34rem; }
+.destination-inquiry-section { scroll-margin-top: 6rem; padding-block: clamp(3rem, 6vw, 5.5rem); background: var(--brand-blue-deep); color: white; }
+.destination-inquiry-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
+.destination-inquiry-intro { max-width: 30rem; }
 .destination-inquiry-intro .section-eyebrow { color: var(--brand-yellow); }
 .destination-inquiry-intro h2 { color: white; }
-.destination-inquiry-intro > p:not(.section-eyebrow) { margin: 1rem 0 0; color: rgb(255 255 255 / 0.78); line-height: 1.7; }
-.destination-inquiry-whatsapp { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.8rem; align-items: center; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid rgb(255 255 255 / 0.18); }
-.destination-inquiry-whatsapp > span { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%; background: var(--brand-yellow); color: var(--brand-blue-deep); }
+.destination-inquiry-intro > p:not(.section-eyebrow) { margin: 0.8rem 0 0; color: rgb(255 255 255 / 0.78); line-height: 1.6; }
+.destination-inquiry-whatsapp { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.7rem; align-items: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgb(255 255 255 / 0.18); }
+.destination-inquiry-whatsapp > span { display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 50%; background: var(--brand-yellow); color: var(--brand-blue-deep); }
 .destination-inquiry-whatsapp p { margin: 0; color: rgb(255 255 255 / 0.7); font-size: 0.76rem; line-height: 1.5; }
 .destination-inquiry-whatsapp strong { color: white; }
 .destination-inquiry-whatsapp a { grid-column: 2; color: var(--brand-yellow); font-family: var(--font-ui); font-size: 0.75rem; font-weight: 800; }
 .destination-inquiry-whatsapp a:hover { color: white; }
-.destination-inquiry-form, .destination-inquiry-success { padding: clamp(1.25rem, 4vw, 2.3rem); border-radius: 1.25rem; background: white; color: var(--ink); box-shadow: var(--shadow-card); font-family: var(--font-ui); }
-.destination-inquiry-heading h2, .destination-inquiry-success h2 { margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: clamp(1.8rem, 3vw, 2.7rem); font-weight: 750; letter-spacing: -0.06em; line-height: 1; }
+.destination-inquiry-form, .destination-inquiry-success { width: min(100%, 42rem); justify-self: stretch; padding: clamp(1.15rem, 3vw, 1.8rem); border-radius: 1.15rem; background: white; color: var(--ink); box-shadow: var(--shadow-card); font-family: var(--font-ui); }
+.destination-inquiry-heading h2, .destination-inquiry-success h2 { margin: 0; color: var(--brand-blue-deep); font-family: var(--font-ui); font-size: clamp(1.65rem, 2.6vw, 2.25rem); font-weight: 750; letter-spacing: -0.06em; line-height: 1.02; }
 .destination-inquiry-heading > p:last-child { margin: 0.7rem 0 0; color: var(--muted); font-size: 0.84rem; line-height: 1.55; }
-.destination-inquiry-fields { display: grid; gap: 1rem; margin-top: 1.7rem; }
+.destination-inquiry-fields { display: grid; gap: 0.8rem; margin-top: 1.35rem; }
 .destination-inquiry-form .form-field input { background: #fbfdff; }
 .destination-inquiry-message { display: grid; gap: 0.4rem; margin-top: 1.1rem; padding: 0.8rem 0.9rem; border: 1px solid rgb(180 35 24 / 0.28); border-radius: 0.65rem; background: rgb(180 35 24 / 0.07); color: var(--danger); font-size: 0.78rem; line-height: 1.45; }
 .destination-inquiry-message p { margin: 0; }
 .destination-inquiry-message a { width: fit-content; color: var(--brand-blue); font-weight: 750; text-decoration: underline; text-underline-offset: 0.2em; }
-.destination-inquiry-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.8rem; margin-top: 1.35rem; }
+.destination-inquiry-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.8rem; margin-top: 1.1rem; }
 .destination-inquiry-footer p { margin: 0; color: var(--muted); font-size: 0.68rem; }
 .destination-inquiry-footer p span { color: var(--brand-blue); }
 .destination-inquiry-submit { min-width: 10rem; }
 .destination-inquiry-submit:disabled { cursor: wait; opacity: 0.68; transform: none; }
 .destination-inquiry-honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.destination-inquiry-success { display: grid; justify-items: start; gap: 0.7rem; min-height: 20rem; }
+.destination-inquiry-success { display: grid; justify-items: start; gap: 0.7rem; min-height: 18rem; }
 .destination-inquiry-success h2 { margin-top: -0.35rem; }
 .destination-inquiry-success > p:not(.section-eyebrow) { max-width: 28rem; margin: 0; color: var(--muted); line-height: 1.65; }
 .destination-faq-section { background: var(--surface); }
-.destination-faq-layout { display: grid; grid-template-columns: 1fr; gap: 2rem; padding-bottom: clamp(4.5rem, 8vw, 8rem); }
-.related-destinations-section { padding-bottom: clamp(4.5rem, 8vw, 8rem); background: var(--surface); }
+.destination-faq-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.related-destinations-section { background: var(--surface); }
 .related-destinations-grid { display: grid; grid-template-columns: 1fr; gap: 0.9rem; }
 .related-destination-card { position: relative; min-height: 15rem; overflow: hidden; border-radius: var(--radius-card); background: var(--brand-blue-deep); color: white; }
 .related-destination-card img { object-fit: cover; transition: transform 600ms cubic-bezier(.2,.8,.2,1); }
@@ -489,6 +491,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .footer-main { grid-template-columns: 1.6fr repeat(2, 1fr); }
 }
 
+@media (max-width: 767px) {
+  .contact-social-market + .contact-social-market { padding-top: 1.1rem; border-top: 1px solid var(--line); }
+}
+
 @media (max-width: 639px) {
   .design-trip-modal { align-items: end; padding: 0.5rem; }
   .design-trip-dialog { max-height: calc(100dvh - 1rem); border-radius: 1.15rem; padding: 1.05rem; }
@@ -508,7 +514,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .hero-copy h1 { max-width: 13ch; font-size: clamp(3.8rem, 7vw, 4.5rem); }
   .hero-bottom-note { right: 2rem; bottom: 1.5rem; left: 2rem; }
   .why-layout { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; }
-  .contact-social-markets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .contact-social-markets { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 0; }
+  .contact-social-market + .contact-social-market { padding-left: clamp(1.5rem, 5vw, 4rem); border-left: 1px solid var(--line); }
   .destination-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .destination-card { min-height: 27rem; }
   .faq-layout { grid-template-columns: minmax(14rem, 0.72fr) minmax(0, 1.35fr); gap: clamp(3rem, 8vw, 8rem); }
@@ -569,15 +576,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @media (min-width: 1024px) {
   .destination-listing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .destination-list-card-image { min-height: 19rem; }
-  .destination-detail-hero, .destination-detail-hero-inner { min-height: clamp(42rem, 58vw, 49rem); }
-  .destination-detail-hero-copy { padding-block: 5rem 4rem; }
+  .destination-detail-hero, .destination-detail-hero-inner { min-height: clamp(34rem, 44vw, 40rem); }
+  .destination-detail-hero-copy { padding-block: 3.5rem 2.5rem; }
+  .destination-detail-hero-copy h1 { font-size: clamp(3.75rem, 6.4vw, 6.5rem); }
   .destination-detail-hero-image img { object-position: 62% center; }
-  .destination-highlight-image { height: 15rem; }
+  .destination-highlight-image { height: 12.5rem; }
 }
 
 @media (min-width: 1280px) {
   .destination-list-card-image { min-height: 21rem; }
-  .destination-gallery-grid { grid-auto-rows: 15rem; }
+  .destination-gallery-grid { grid-auto-rows: 12.5rem; }
 }
 
 @media (min-width: 640px) {

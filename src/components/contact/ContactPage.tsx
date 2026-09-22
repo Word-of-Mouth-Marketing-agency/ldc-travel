@@ -66,7 +66,7 @@ function SocialConnect() {
         <div className="contact-social-heading">
           <p className="section-eyebrow">Stay connected</p>
           <h2 id="contact-social-heading">Find a little more inspiration.</h2>
-          <p>Follow LDC Travel for destination ideas, travel inspiration, and updates from our teams.</p>
+          <p>Follow LDC Travel for travel ideas and updates.</p>
         </div>
         <div className="contact-social-markets">
           <RegionalSocialLinks market="Egypt" links={regionalSocialLinks.Egypt} />
