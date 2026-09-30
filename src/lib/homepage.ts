@@ -12,7 +12,7 @@ import {
 } from "../content/homepage-demo";
 import { approvedDestinationSlugs } from "../content/destinations";
 import { createWhatsAppUrl, type WhatsAppConfig } from "./whatsapp";
-import { publicContact } from "./public-contact";
+import { normalizeSaudiOfficeAddress, publicContact } from "./public-contact";
 import { getLaunchMarketCode } from "./markets";
 import { isUiPreviewMode } from "./preview";
 
@@ -102,7 +102,7 @@ export function buildSite(raw: unknown): SiteViewModel {
     name: asString(record?.siteName, demoHomepage.site.name),
     tagline: asString(record?.tagline, demoHomepage.site.tagline),
     office: asString(contact?.office, publicContact.office),
-    saudiOffice: asString(contact?.saudiOffice, publicContact.saudiOffice),
+    saudiOffice: normalizeSaudiOfficeAddress(contact?.saudiOffice),
     whatsappDisplay: asString(contact?.whatsappDisplay, demoHomepage.site.whatsappDisplay),
     whatsappNumber: asString(contact?.whatsappNumber, demoHomepage.site.whatsappNumber),
     egyptWhatsappDisplay: publicContact.whatsapp.egypt.display,
@@ -168,7 +168,7 @@ function mapWhyLdc(value: unknown): HomepageViewModel["whyLdc"] {
   };
 }
 
-function mapInspiration(value: unknown): HomepageViewModel["inspiration"] {
+function mapInspiration(value: unknown, destinationImages: Map<string, ImageSource>): HomepageViewModel["inspiration"] {
   const record = asRecord(value);
   const fallback = demoHomepage.inspiration;
   const items = asRecords(record?.items).map((item, index): InspirationItem => {
@@ -177,7 +177,8 @@ function mapInspiration(value: unknown): HomepageViewModel["inspiration"] {
       title: asString(item.title, fallbackItem.title),
       label: asString(item.label, fallbackItem.label),
       description: asString(item.description, fallbackItem.description),
-      image: readImage(item, fallbackItem.image),
+      destinationSlug: fallbackItem.destinationSlug,
+      image: destinationImages.get(fallbackItem.destinationSlug) ?? fallbackItem.image,
       href: asString(item.href, fallbackItem.href),
     };
   });
@@ -237,6 +238,9 @@ export async function getHomepageData(): Promise<HomepageViewModel> {
       .filter((item) => isVisibleInMarket(item, marketId))
       .filter((item) => approvedDestinationSlugs.includes(asString(item.slug)))
       .slice(0, 6);
+    const mappedDestinations = destinations.length ? destinations.map(mapDestination) : demoHomepage.destinations;
+    const destinationImages = new Map<string, ImageSource>(demoHomepage.destinations.map((destination) => [destination.slug, destination.image]));
+    mappedDestinations.forEach((destination) => destinationImages.set(destination.slug, destination.image));
     const faqs = asRecords(homepageRecord?.faqs);
 
     return {
@@ -252,9 +256,9 @@ export async function getHomepageData(): Promise<HomepageViewModel> {
         primaryCta: ctaFromCms(hero?.primaryCta, demoHomepage.hero.primaryCta, whatsappConfig),
         secondaryCta: ctaFromCms(hero?.secondaryCta, demoHomepage.hero.secondaryCta, whatsappConfig),
       },
-      destinations: destinations.length ? destinations.map(mapDestination) : demoHomepage.destinations,
+      destinations: mappedDestinations,
       whyLdc: mapWhyLdc(homepageRecord?.whyLdc),
-      inspiration: mapInspiration(homepageRecord?.inspiration),
+      inspiration: mapInspiration(homepageRecord?.inspiration, destinationImages),
       destinationCta: mapDestinationCta(homepageRecord?.destinationCta, whatsappConfig),
       faqs: faqs.length ? faqs.map(mapFaq) : demoHomepage.faqs,
     };

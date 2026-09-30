@@ -72,7 +72,7 @@ export function DestinationSeasonSection({ destination }: { destination: Destina
 export function DestinationGallery({ destination }: { destination: DestinationDetailViewModel }) {
   return (
     <section className="content-section destination-gallery-section" aria-labelledby="destination-gallery-heading">
-      <div className="site-container"><div className="section-heading"><div><p className="section-eyebrow">A sense of place</p><h2 id="destination-gallery-heading">See where the story could take you.</h2></div></div><div className="destination-gallery-grid">{destination.gallery.slice(0, 4).map((image, index) => <div className={`destination-gallery-item destination-gallery-item-${index + 1}`} key={image.src}><SafeImage src={image.src} alt={image.alt} sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 42vw" /></div>)}</div></div>
+      <div className="site-container"><div className="section-heading"><div><p className="section-eyebrow">A sense of place</p><h2 id="destination-gallery-heading">See where the story could take you.</h2></div></div><div className="destination-gallery-grid">{destination.gallery.slice(0, 4).map((image, index) => <div className={`destination-gallery-item destination-gallery-item-${index + 1}`} key={`${image.src}-${index}`}><SafeImage src={image.src} alt={image.alt} sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 42vw" /></div>)}</div></div>
     </section>
   );
 }

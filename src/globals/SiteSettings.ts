@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 
 import { seoFields } from "../fields/shared";
+import { saudiOfficeAddress } from "../lib/public-contact";
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
@@ -21,7 +22,7 @@ export const SiteSettings: GlobalConfig = {
         { name: "whatsappDisplay", type: "text", required: true, defaultValue: "+966 7277981053" },
         { name: "whatsappNumber", type: "text", required: true, defaultValue: "9667277981053" },
         { name: "office", type: "text", required: true, defaultValue: "15 Mahmoud Essmat Hamdy, Sheraton" },
-        { name: "saudiOffice", type: "text", label: "Saudi office address", defaultValue: "الطابق 18برج الفصيلة،طريق الملك فهد حي العليا ص.ب54995،الرياض11524،المملكه العربيه السعودية" },
+        { name: "saudiOffice", type: "text", label: "Saudi office address", defaultValue: saudiOfficeAddress },
         { name: "reservationsEmail", type: "email", required: true, defaultValue: "info@ldc-tourism.com" },
         { name: "salesEmail", type: "email", required: true, defaultValue: "info@ldc-tourism.com" },
       ],

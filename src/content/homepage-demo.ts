@@ -54,6 +54,7 @@ export type InspirationItem = {
   title: string;
   label: string;
   description: string;
+  destinationSlug: string;
   image: ImageSource;
   href: string;
 };
@@ -97,8 +98,8 @@ export type HomepageViewModel = {
   faqs: FaqViewModel[];
 };
 
-const image = (id: string, alt: string): ImageSource => ({
-  src: `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=85`,
+const heroImage = (id: string, alt: string): ImageSource => ({
+  src: `https://images.unsplash.com/${id}`,
   alt,
 });
 
@@ -142,16 +143,16 @@ export const demoHomepage: HomepageViewModel = {
     eyebrow: "Travel farther, thoughtfully",
     headline: "Explore more. Travel better.",
     supportingCopy: "Explore six distinctive destinations, then talk with LDC Travel about the places, pace, and experiences you want to build around.",
-    image: image("photo-1534008897995-27a23e859048", "Turquoise water and limestone cliffs of Maya Bay, Phi Phi Islands, Thailand"),
+    image: heroImage("photo-1534008897995-27a23e859048", "Turquoise water and limestone cliffs of Maya Bay, Phi Phi Islands, Thailand"),
     primaryCta: { label: "Explore destinations", href: "/destinations" },
     secondaryCta: whatsappCta("Talk to LDC Travel"),
   },
   destinations: [
     { slug: "turkey", title: "Turkey", country: "Türkiye", regionOrCity: "Istanbul and beyond", summary: "Where layered history meets bright coastlines and generous hospitality.", image: destinationHeroImage("turkey"), href: "/destinations/turkey" },
-    { slug: "russia", title: "Russia", country: "Russia", regionOrCity: "Moscow and St Petersburg", summary: "Grand city squares, rich culture, and stories around every corner.", image: image("photo-1513326738677-b964603b136d", "Colorful architecture in Moscow at blue hour"), href: "/destinations/russia" },
-    { slug: "bali", title: "Bali", country: "Indonesia", regionOrCity: "Ubud and the coast", summary: "A restorative mix of green terraces, temple calm, and island energy.", image: image("photo-1537996194471-e657df975ab4", "Balinese temple surrounded by tropical greenery"), href: "/destinations/bali" },
+    { slug: "russia", title: "Russia", country: "Russia", regionOrCity: "Moscow and St Petersburg", summary: "Grand city squares, rich culture, and stories around every corner.", image: destinationHeroImage("russia"), href: "/destinations/russia" },
+    { slug: "bali", title: "Bali", country: "Indonesia", regionOrCity: "Ubud and the coast", summary: "A restorative mix of green terraces, temple calm, and island energy.", image: destinationHeroImage("bali"), href: "/destinations/bali" },
     { slug: "georgia", title: "Georgia", country: "Georgia", regionOrCity: "Tbilisi and the Caucasus", summary: "Mountain horizons, warm streets, and a culture made for slow discovery.", image: destinationHeroImage("georgia"), href: "/destinations/georgia" },
-    { slug: "indonesia", title: "Indonesia", country: "Indonesia", regionOrCity: "Java, Bali, and beyond", summary: "Island landscapes, ancient places, and vivid everyday life.", image: image("photo-1780748549579-c22a0ff53982", "Borobudur temple stupas at dawn in Central Java, Indonesia"), href: "/destinations/indonesia" },
+    { slug: "indonesia", title: "Indonesia", country: "Indonesia", regionOrCity: "Java, Bali, and beyond", summary: "Island landscapes, ancient places, and vivid everyday life.", image: destinationHeroImage("indonesia"), href: "/destinations/indonesia" },
     { slug: "thailand", title: "Thailand", country: "Thailand", regionOrCity: "Bangkok and the islands", summary: "Street-side flavor, temple mornings, and blue-water escapes.", image: destinationHeroImage("thailand"), href: "/destinations/thailand" },
   ],
   whyLdc: {
@@ -169,10 +170,10 @@ export const demoHomepage: HomepageViewModel = {
     headline: "Let the destination set the pace.",
     description: "From old cities to open landscapes, start with the kind of experience you want more of.",
     items: [
-      { title: "Culture", label: "Stories in every street", description: "For travelers who want art, history, food, and a strong sense of place.", image: image("photo-1524231757912-21f4fe3a7200", "Historic Istanbul skyline beside the Bosphorus"), href: "/destinations" },
-      { title: "Nature", label: "Room to breathe", description: "Mountain air, green valleys, and landscapes that invite you to slow down.", image: image("photo-1569396116180-210c182bedb8", "Green mountain landscape in Georgia"), href: "/destinations/georgia" },
-      { title: "Islands", label: "Blue-water days", description: "A warmer rhythm of coastlines, sunlight, and time well spent outdoors.", image: image("photo-1537996194471-e657df975ab4", "Tropical Balinese coastline and greenery"), href: "/destinations/bali" },
-      { title: "City energy", label: "A little more alive", description: "For the nights, neighborhoods, and small discoveries that stay with you.", image: image("photo-1508009603885-50cf7c579365", "Bangkok temple details and city light"), href: "/destinations/thailand" },
+      { title: "Culture", label: "Stories in every street", description: "For travelers who want art, history, food, and a strong sense of place.", destinationSlug: "turkey", image: destinationHeroImage("turkey"), href: "/destinations" },
+      { title: "Nature", label: "Room to breathe", description: "Mountain air, green valleys, and landscapes that invite you to slow down.", destinationSlug: "georgia", image: destinationHeroImage("georgia"), href: "/destinations/georgia" },
+      { title: "Islands", label: "Blue-water days", description: "A warmer rhythm of coastlines, sunlight, and time well spent outdoors.", destinationSlug: "bali", image: destinationHeroImage("bali"), href: "/destinations/bali" },
+      { title: "City energy", label: "A little more alive", description: "For the nights, neighborhoods, and small discoveries that stay with you.", destinationSlug: "thailand", image: destinationHeroImage("thailand"), href: "/destinations/thailand" },
     ],
   },
   destinationCta: {

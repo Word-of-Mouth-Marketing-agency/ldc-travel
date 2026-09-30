@@ -10,9 +10,9 @@
     "heroImageAlt": "Historic domes and minarets in Istanbul, Turkey",
     "overview": "Turkey gives a journey room to change pace: move from Bosphorus-facing neighborhoods and historic architecture in Istanbul to Cappadocia's volcanic valleys, then toward coastal towns and archaeological sites. Food, design, and a deep sense of history keep the route grounded.",
     "highlights": [
-      { "title": "Istanbul", "description": "Move between historic quarters, Bosphorus views, museums, markets, and the everyday energy of a city linking Europe and Asia.", "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=85", "alt": "Istanbul skyline with mosque domes and the Bosphorus" },
-      { "title": "Cappadocia", "description": "Explore a distinctive landscape of fairy chimneys, valleys, cave spaces, and villages shaped by volcanic stone.", "image": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=85", "alt": "Hot air balloons over Cappadocia at sunrise" },
-      { "title": "Aegean and Mediterranean coast", "description": "Follow the shores for coastal towns, clear water, and archaeological traces beside the sea.", "image": "https://images.unsplash.com/photo-1566847438217-76e82d383f84?auto=format&fit=crop&w=1200&q=85", "alt": "Turquoise coastline viewed from above" }
+      { "title": "Istanbul", "description": "Move between historic quarters, Bosphorus views, museums, markets, and the everyday energy of a city linking Europe and Asia.", "image": "https://images.unsplash.com/photo-1766826236680-dc2f5529bac5", "alt": "Istanbul's Bosphorus and Maiden's Tower" },
+      { "title": "Cappadocia", "description": "Explore a distinctive landscape of fairy chimneys, valleys, cave spaces, and villages shaped by volcanic stone.", "image": "https://images.unsplash.com/photo-1530789253388-582c481c54b0", "alt": "Hot-air balloons above Cappadocia, Türkiye" },
+      { "title": "Aegean and Mediterranean coast", "description": "Follow the shores for coastal towns, clear water, and archaeological traces beside the sea.", "image": "https://images.unsplash.com/photo-1689130033348-1ebe2612a3d8", "alt": "Coastal town of Kaş on Türkiye's Antalya coast" }
     ],
     "experiences": [
       { "title": "City stories", "description": "Let Istanbul set the pace with architecture, food, neighborhoods, and views across the Bosphorus.", "icon": "city" },
@@ -27,10 +27,10 @@
       { "label": "Planning note", "value": "Distances between regions are meaningful, so a thoughtful route makes the experience easier." }
     ],
     "gallery": [
-      { "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1600&q=85", "alt": "Istanbul skyline at the water" },
-      { "image": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=85", "alt": "Cappadocia valleys and balloons" },
-      { "image": "https://images.unsplash.com/photo-1566847438217-76e82d383f84?auto=format&fit=crop&w=1200&q=85", "alt": "Turkish Mediterranean coast" },
-      { "image": "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=1200&q=85", "alt": "Historic Istanbul street" }
+      { "image": "https://images.unsplash.com/photo-1766826236680-dc2f5529bac5", "alt": "Istanbul's Bosphorus and Maiden's Tower" },
+      { "image": "https://images.unsplash.com/photo-1530789253388-582c481c54b0", "alt": "Hot-air balloons above Cappadocia, Türkiye" },
+      { "image": "https://images.unsplash.com/photo-1689130033348-1ebe2612a3d8", "alt": "Coastal town of Kaş on Türkiye's Antalya coast" },
+      { "image": "/destinations/turkey.webp", "alt": "Historic mosque domes and minarets in Istanbul, Türkiye" }
     ],
     "seoMetaTitle": "Turkey Travel | LDC Travel",
     "seoMetaDescription": "Explore Turkey with LDC Travel, from Istanbul and Cappadocia to Aegean and Mediterranean coastlines. Start a destination inquiry."
@@ -44,9 +44,9 @@
     "summary": "Moscow and Saint Petersburg meet in a culture-led route of grand architecture, museums, and waterways.",
     "overview": "A Russia journey can move between Moscow's historic centre and Saint Petersburg's canal-lined urban landscape. The focus is cultural: public squares, museums, theatres, palaces, and the architectural details that give each city its own rhythm.",
     "highlights": [
-      { "title": "Moscow", "description": "Discover the Kremlin and Red Square at the historic heart of the capital, then continue through museums, galleries, and lively neighborhoods.", "image": "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=1200&q=85", "alt": "Colorful architecture in Moscow at blue hour" },
-      { "title": "Saint Petersburg", "description": "Follow canals, embankments, grand ensembles, and the cultural institutions of Russia's northern capital.", "image": "https://images.unsplash.com/photo-1556610961-2fecc5927173?auto=format&fit=crop&w=1200&q=85", "alt": "Historic architecture beside water in Saint Petersburg" },
-      { "title": "Museums and heritage", "description": "Build time around art, architecture, music, and historic spaces so the cities are experienced rather than rushed.", "image": "https://images.unsplash.com/photo-1753811604729-bc3d467e7f06?auto=format&fit=crop&w=1200&q=85", "alt": "Moscow Kremlin and riverfront architecture" }
+      { "title": "Moscow", "description": "Discover the Kremlin and Red Square at the historic heart of the capital, then continue through museums, galleries, and lively neighborhoods.", "image": "https://images.unsplash.com/photo-1513326738677-b964603b136d", "alt": "Colorful architecture in Moscow at blue hour" },
+      { "title": "Saint Petersburg", "description": "Follow canals, embankments, grand ensembles, and the cultural institutions of Russia's northern capital.", "image": "https://images.unsplash.com/photo-1764725726270-4f94dbaa16ac", "alt": "Canal and historic buildings in Saint Petersburg, Russia" },
+      { "title": "Museums and heritage", "description": "Build time around art, architecture, music, and historic spaces so the cities are experienced rather than rushed.", "image": "https://images.unsplash.com/photo-1752986002031-579569bd3d6d", "alt": "Moscow Kremlin above the river" }
     ],
     "experiences": [
       { "title": "Historic city centres", "description": "Take in the scale of Moscow and Saint Petersburg through their squares, streets, monuments, and waterways.", "icon": "city" },
@@ -61,10 +61,10 @@
       { "label": "Planning note", "value": "Confirm current entry, transport, and venue information with authoritative sources before travel." }
     ],
     "gallery": [
-      { "image": "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=1600&q=85", "alt": "Moscow landmark at dusk" },
-      { "image": "https://images.unsplash.com/photo-1556610961-2fecc5927173?auto=format&fit=crop&w=1200&q=85", "alt": "Saint Petersburg historic waterfront" },
-      { "image": "https://images.unsplash.com/photo-1753811604729-bc3d467e7f06?auto=format&fit=crop&w=1200&q=85", "alt": "Moscow Kremlin and riverfront architecture" },
-      { "image": "https://images.unsplash.com/photo-1556610961-2fecc5927173?auto=format&fit=crop&w=1200&q=85", "alt": "Historic Russian architecture beside water" }
+      { "image": "https://images.unsplash.com/photo-1513326738677-b964603b136d", "alt": "Saint Basil's Cathedral in Moscow, Russia" },
+      { "image": "https://images.unsplash.com/photo-1764725726270-4f94dbaa16ac", "alt": "Canal and historic buildings in Saint Petersburg, Russia" },
+      { "image": "https://images.unsplash.com/photo-1752986002031-579569bd3d6d", "alt": "Moscow Kremlin above the river" },
+      { "image": "/destinations/georgia.webp", "alt": "Saint Isaac's Cathedral in Saint Petersburg, Russia" }
     ],
     "seoMetaTitle": "Russia Travel | LDC Travel",
     "seoMetaDescription": "Discover a culture-led Russia journey through Moscow and Saint Petersburg with LDC Travel. Begin your inquiry."
@@ -78,9 +78,9 @@
     "summary": "Ubud's rice landscapes, temple traditions, and coastlines create a slower island rhythm.",
     "overview": "Bali is a distinct island destination with its own cultural and natural character. Move from Ubud's rice landscapes and creative life to temple settings, beaches, and time outdoors, leaving enough space for both discovery and pause.",
     "highlights": [
-      { "title": "Ubud", "description": "Spend time among galleries, craft traditions, rice-field landscapes, and the cultural energy of central Bali.", "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=85", "alt": "Balinese temple surrounded by tropical greenery" },
-      { "title": "Temple landscapes", "description": "Take in temple architecture, carved details, and the cultural traditions that shape the island's daily rhythm.", "image": "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1200&q=85", "alt": "Temple gate in Bali" },
-      { "title": "Beaches and coastlines", "description": "Choose a coastal rhythm that matches you, from sunrise walks to lively surf beaches and quieter shores.", "image": "https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=1200&q=85", "alt": "Bali coastline with tropical water" }
+      { "title": "Ubud", "description": "Spend time among galleries, craft traditions, rice-field landscapes, and the cultural energy of central Bali.", "image": "https://images.unsplash.com/photo-1557093793-d149a38a1be8", "alt": "Tegalalang rice terraces in Ubud, Bali" },
+      { "title": "Temple landscapes", "description": "Take in temple architecture, carved details, and the cultural traditions that shape the island's daily rhythm.", "image": "https://images.unsplash.com/photo-1583134993424-a40b553886a8", "alt": "Ulun Danu Beratan Temple beside Lake Beratan, Bali" },
+      { "title": "Beaches and coastlines", "description": "Choose a coastal rhythm that matches you, from sunrise walks to lively surf beaches and quieter shores.", "image": "https://images.unsplash.com/photo-1752153417364-2e41ffac2db3", "alt": "Uluwatu Temple on a cliff above the Bali coast" }
     ],
     "experiences": [
       { "title": "Culture in motion", "description": "Let ceremonies, dance, craft, and architecture add meaning to the places you visit.", "icon": "sparkles" },
@@ -95,10 +95,10 @@
       { "label": "Planning note", "value": "Allow extra time for road movement and choose a base that matches your preferred pace." }
     ],
     "gallery": [
-      { "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=85", "alt": "Bali temple and tropical greenery" },
-      { "image": "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1200&q=85", "alt": "Balinese temple entrance" },
-      { "image": "https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=1200&q=85", "alt": "Bali beach and sea" },
-      { "image": "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=85", "alt": "Tropical island landscape" }
+      { "image": "https://images.unsplash.com/photo-1557093793-d149a38a1be8", "alt": "Tegalalang rice terraces in Ubud, Bali" },
+      { "image": "https://images.unsplash.com/photo-1583134993424-a40b553886a8", "alt": "Ulun Danu Beratan Temple beside Lake Beratan, Bali" },
+      { "image": "https://images.unsplash.com/photo-1752153417364-2e41ffac2db3", "alt": "Uluwatu Temple on a cliff above the Bali coast" },
+      { "image": "https://images.unsplash.com/photo-1664551614393-b1b896485c7f", "alt": "Tanah Lot temple on Bali's coast" }
     ],
     "seoMetaTitle": "Bali Travel | LDC Travel",
     "seoMetaDescription": "Find your Bali rhythm with LDC Travel, from Ubud and temple landscapes to beaches and island calm. Start an inquiry."
@@ -111,12 +111,12 @@
     "eyebrow": "Cities, mountains, and the shared table",
     "summary": "Tbilisi streets, Caucasus horizons, Kakheti tables, and a culture shaped by many crossroads.",
     "heroImage": "/destinations/georgia.webp",
-    "heroImageAlt": "Travel scenery in Georgia",
+    "heroImageAlt": "Saint Isaac's Cathedral in Saint Petersburg, Russia",
     "overview": "Georgia brings together Tbilisi's layered streets, the high landscapes around Kazbegi, Kakheti's food and wine traditions, and the different character of the country's regions. The appeal is in the contrast between city, mountain, table, and road.",
     "highlights": [
-      { "title": "Tbilisi", "description": "Wander through a capital where historic streets, bath districts, balconies, and contemporary creative life sit side by side.", "image": "https://images.unsplash.com/photo-1569396116180-210c182bedb8?auto=format&fit=crop&w=1200&q=85", "alt": "Tbilisi rooftops and Caucasus landscape" },
-      { "title": "Kazbegi and the Caucasus", "description": "Head north for wide mountain views, high valleys, and villages where the landscape becomes the main story.", "image": "https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?auto=format&fit=crop&w=1200&q=85", "alt": "Snowy Caucasus mountain landscape" },
-      { "title": "Kakheti and the table", "description": "Make space for regional food, village hospitality, and the long relationship between Georgia, vineyards, and the shared table.", "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85", "alt": "Georgian hillside town and valley" }
+      { "title": "Tbilisi", "description": "Wander through a capital where historic streets, bath districts, balconies, and contemporary creative life sit side by side.", "image": "https://images.unsplash.com/photo-1759506346306-5370eb85ae62", "alt": "Old Town and the Kura River in Tbilisi, Georgia" },
+      { "title": "Kazbegi and the Caucasus", "description": "Head north for wide mountain views, high valleys, and villages where the landscape becomes the main story.", "image": "https://images.unsplash.com/photo-1761649653559-bf4b309d15d6", "alt": "Gergeti Trinity Church below Mount Kazbek, Georgia" },
+      { "title": "Kakheti and the table", "description": "Make space for regional food, village hospitality, and the long relationship between Georgia, vineyards, and the shared table.", "image": "https://images.unsplash.com/photo-1688568383745-2369fe4abbc4", "alt": "Vineyard at sunset in Shakriani, Kakheti, Georgia" }
     ],
     "experiences": [
       { "title": "A city with layers", "description": "Use Tbilisi as a starting point for architecture, baths, food, and a growing contemporary scene.", "icon": "city" },
@@ -131,10 +131,9 @@
       { "label": "Planning note", "value": "Regional travel adds variety, but routes should allow for changing terrain and road times." }
     ],
     "gallery": [
-      { "image": "https://images.unsplash.com/photo-1569396116180-210c182bedb8?auto=format&fit=crop&w=1600&q=85", "alt": "Georgia mountain panorama" },
-      { "image": "https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?auto=format&fit=crop&w=1200&q=85", "alt": "Caucasus peaks and valley" },
-      { "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=85", "alt": "Georgian town in the hills" },
-      { "image": "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1200&q=85", "alt": "Historic stone architecture" }
+      { "image": "https://images.unsplash.com/photo-1759506346306-5370eb85ae62", "alt": "Old Town and the Kura River in Tbilisi, Georgia" },
+      { "image": "https://images.unsplash.com/photo-1761649653559-bf4b309d15d6", "alt": "Gergeti Trinity Church below Mount Kazbek, Georgia" },
+      { "image": "https://images.unsplash.com/photo-1688568383745-2369fe4abbc4", "alt": "Vineyard at sunset in Shakriani, Kakheti, Georgia" }
     ],
     "seoMetaTitle": "Georgia Travel | LDC Travel",
     "seoMetaDescription": "Explore Georgia with LDC Travel, from Tbilisi and Kazbegi to Kakheti's food and wine culture. Start an inquiry."
@@ -148,9 +147,9 @@
     "summary": "Go beyond Bali through Java's heritage, volcanic landscapes, and the changing rhythms of a vast archipelago.",
     "overview": "Indonesia is a broad archipelago rather than a single travel style. Look to Java for Yogyakarta, heritage, and volcanic landscapes, then consider islands such as Lombok for a different balance of coastline, local culture, and open space. Bali remains its own distinct destination on this site.",
     "highlights": [
-      { "title": "Yogyakarta and Java", "description": "Discover a cultural centre shaped by palaces, crafts, living traditions, and the temple landscapes of Central Java.", "image": "https://images.unsplash.com/photo-1780748549579-c22a0ff53982?auto=format&fit=crop&w=1200&q=85", "alt": "Borobudur temple stupas at dawn in Central Java, Indonesia" },
-      { "title": "Volcanic landscapes", "description": "Java's geography adds a dramatic natural dimension, from highland views to the fertile landscapes shaped by volcanoes.", "image": "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1200&q=85", "alt": "Indonesian volcano at sunrise" },
-      { "title": "Lombok and beyond", "description": "Look toward Lombok and other regions for a different balance of coastline, local culture, and open space.", "image": "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1200&q=85", "alt": "Indonesian island coastline" }
+      { "title": "Yogyakarta and Java", "description": "Discover a cultural centre shaped by palaces, crafts, living traditions, and the temple landscapes of Central Java.", "image": "https://images.unsplash.com/photo-1780748549579-c22a0ff53982", "alt": "Borobudur temple stupas at dawn in Central Java, Indonesia" },
+      { "title": "Volcanic landscapes", "description": "Java's geography adds a dramatic natural dimension, from highland views to the fertile landscapes shaped by volcanoes.", "image": "https://images.unsplash.com/photo-1781813377841-a3a25348ed17", "alt": "Mount Bromo at sunrise in East Java, Indonesia" },
+      { "title": "Lombok and beyond", "description": "Look toward Lombok and other regions for a different balance of coastline, local culture, and open space.", "image": "https://images.unsplash.com/photo-1779983055454-0d5ea653b304", "alt": "Pink Beach and dry hills in Komodo National Park, Indonesia" }
     ],
     "experiences": [
       { "title": "Living culture", "description": "Spend time with the traditions, crafts, food, and everyday scenes that make each region distinct.", "icon": "sparkles" },
@@ -165,10 +164,10 @@
       { "label": "Planning note", "value": "Treat Indonesia as a multi-region destination and plan transfers with generous space." }
     ],
     "gallery": [
-      { "image": "https://images.unsplash.com/photo-1780748549579-c22a0ff53982?auto=format&fit=crop&w=1600&q=85", "alt": "Borobudur temple stupas at dawn in Central Java, Indonesia" },
-      { "image": "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1200&q=85", "alt": "Volcanic Indonesian landscape" },
-      { "image": "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1200&q=85", "alt": "Indonesian island water" },
-      { "image": "https://images.unsplash.com/photo-1760947585876-8018a42ef327?auto=format&fit=crop&w=1200&q=85", "alt": "Tiered temple on an Indonesian lake" }
+      { "image": "https://images.unsplash.com/photo-1780748549579-c22a0ff53982", "alt": "Borobudur temple stupas at dawn in Central Java, Indonesia" },
+      { "image": "https://images.unsplash.com/photo-1781813377841-a3a25348ed17", "alt": "Mount Bromo at sunrise in East Java, Indonesia" },
+      { "image": "https://images.unsplash.com/photo-1576233475048-55f08b53a8bd", "alt": "Prambanan temple complex in Central Java, Indonesia" },
+      { "image": "https://images.unsplash.com/photo-1779983055454-0d5ea653b304", "alt": "Pink Beach and dry hills in Komodo National Park, Indonesia" }
     ],
     "seoMetaTitle": "Indonesia Travel | LDC Travel",
     "seoMetaDescription": "Explore Indonesia beyond Bali with LDC Travel, from Java and Yogyakarta to wider archipelago landscapes. Begin an inquiry."
@@ -184,9 +183,9 @@
     "heroImageAlt": "Wat Arun at sunset beside the Chao Phraya River in Bangkok, Thailand",
     "overview": "Thailand works through contrast: Bangkok's river, temples, markets, and food; Chiang Mai's northern cultural character and mountain setting; and the coastlines around Phuket and other islands. The route can be as lively or unhurried as the balance you choose.",
     "highlights": [
-      { "title": "Bangkok", "description": "Take in the capital's temples, river life, markets, neighbourhoods, food, and bold modern energy.", "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1200&q=85", "alt": "Golden temple roof in Bangkok at sunset" },
-      { "title": "Chiang Mai", "description": "Explore a northern city where Lanna culture, creative streets, markets, and mountain nature meet.", "image": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=85", "alt": "Temple and mountain landscape in Thailand" },
-      { "title": "Islands and beaches", "description": "Slow the pace with a coastal stay shaped by warm water, boat days, and the kind of rest you are looking for.", "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85", "alt": "Blue tropical sea and sandy beach" }
+      { "title": "Bangkok", "description": "Take in the capital's temples, river life, markets, neighbourhoods, food, and bold modern energy.", "image": "https://images.unsplash.com/photo-1769850069487-494e221ce015", "alt": "Wat Arun and the Chao Phraya River in Bangkok, Thailand" },
+      { "title": "Chiang Mai", "description": "Explore a northern city where Lanna culture, creative streets, markets, and mountain nature meet.", "image": "https://images.unsplash.com/photo-1785336741791-71b2d4608d5e", "alt": "Wat Sri Suphan in Chiang Mai, Thailand" },
+      { "title": "Islands and beaches", "description": "Slow the pace with a coastal stay shaped by warm water, boat days, and the kind of rest you are looking for.", "image": "https://images.unsplash.com/photo-1534008897995-27a23e859048", "alt": "Turquoise water and limestone cliffs at Maya Bay, Thailand" }
     ],
     "experiences": [
       { "title": "City flavour", "description": "Let Bangkok's food, river, markets, and neighbourhoods introduce you to the country's energy.", "icon": "city" },
@@ -201,10 +200,10 @@
       { "label": "Planning note", "value": "Combine regions intentionally so the journey feels varied without becoming rushed." }
     ],
     "gallery": [
-      { "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1600&q=85", "alt": "Bangkok temple at sunset" },
-      { "image": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=85", "alt": "Thai temple and landscape" },
-      { "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85", "alt": "Thailand beach and turquoise water" },
-      { "image": "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=1200&q=85", "alt": "Thai market and street life" }
+      { "image": "/destinations/thailand.webp", "alt": "Wat Arun at sunset beside the Chao Phraya River in Bangkok, Thailand" },
+      { "image": "https://images.unsplash.com/photo-1785336741791-71b2d4608d5e", "alt": "Wat Sri Suphan in Chiang Mai, Thailand" },
+      { "image": "https://images.unsplash.com/photo-1534008897995-27a23e859048", "alt": "Turquoise water and limestone cliffs at Maya Bay, Thailand" },
+      { "image": "https://images.unsplash.com/photo-1769850069487-494e221ce015", "alt": "Wat Arun and the Chao Phraya River in Bangkok, Thailand" }
     ],
     "seoMetaTitle": "Thailand Travel | LDC Travel",
     "seoMetaDescription": "Discover Thailand with LDC Travel, from Bangkok and Chiang Mai to Phuket and island coastlines. Start an inquiry."

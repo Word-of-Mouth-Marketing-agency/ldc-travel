@@ -40,7 +40,7 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
       <Header socialLinks={data.site.socialLinks} />
       <main>
         <section className="hero-section" aria-labelledby="hero-heading">
-          <div className="hero-photo"><Image src={data.hero.image.src} alt={data.hero.image.alt} fill priority sizes="(max-width: 767px) 100vw, 62vw" /></div>
+          <div className="hero-photo"><Image src={data.hero.image.src} alt={data.hero.image.alt} fill loading="eager" fetchPriority="high" quality={90} sizes="100vw" /></div>
           <div className="hero-wash" />
           <div className="site-container hero-inner">
             <HeroIntroAnimation>

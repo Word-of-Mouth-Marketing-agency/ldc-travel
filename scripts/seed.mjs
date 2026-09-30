@@ -6,17 +6,32 @@ if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
 }
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const saudiOfficeAddress = "الطابق 18برج الفصيلة،طريق الملك فهد حي العليا ص.ب54995،الرياض11524،المملكه العربيه السعودية";
+const saudiOfficeAddress = ["18th Floor, Al Faisaliah Tower", "King Fahd Road, Al Olaya District", "P.O. Box 54995", "Riyadh 11524, Kingdom of Saudi Arabia"].join("\n");
+const legacySaudiOfficeAddress = "الطابق 18برج الفصيلة،طريق الملك فهد حي العليا ص.ب54995،الرياض11524،المملكه العربيه السعودية";
 const { default: config } = await import("../payload.config.ts");
 const { getPayload } = await import("payload");
 const destinationContent = JSON.parse(await readFile(new URL("../src/content/destinations-data.json", import.meta.url), "utf8"));
 
-const image = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=85`;
-const heroImageUrl = image("photo-1534008897995-27a23e859048");
+const image = (id) => `https://images.unsplash.com/${id}`;
+const legacyImage = (id) => `${image(id)}?auto=format&fit=crop&w=1600&q=85`;
+const destinationImageUrl = (slug) => {
+  const destination = destinationContent.find((item) => item.slug === slug);
+  return destination?.heroImage ?? destination?.highlights?.[0]?.image;
+};
+const inspirationDestinationSlugs = ["turkey", "georgia", "bali", "thailand"];
+const legacyHomepageInspirationImageIds = [
+  "photo-1524231757912-21f4fe3a7200",
+  "photo-1569396116180-210c182bedb8",
+  "photo-1537996194471-e657df975ab4",
+  "photo-1508009603885-50cf7c579365",
+];
+const heroImageId = "photo-1534008897995-27a23e859048";
+const heroImageUrl = `https://images.unsplash.com/${heroImageId}`;
 const legacyHeroImageUrls = [
   "/hero-travel.webp",
-  image("photo-1558460683-79b76978fc70"),
-  image("photo-1685858196931-c84ff0d785a7"),
+  legacyImage(heroImageId),
+  legacyImage("photo-1558460683-79b76978fc70"),
+  legacyImage("photo-1685858196931-c84ff0d785a7"),
 ];
 
 const lexical = (text) => ({
@@ -132,6 +147,14 @@ const legacyBrokenImageUrls = [
   "https://images.unsplash.com/photo-1520637836862-4d197d17c93a?auto=format&fit=crop&w=1200&q=85",
 ];
 const legacyIndonesiaImageUrl = "https://images.unsplash.com/photo-1548013146-72479768bada";
+const legacyDestinationImageIds = {
+  turkey: ["photo-1524231757912-21f4fe3a7200", "photo-1528181304800-259b08848526", "photo-1566847438217-76e82d383f84", "photo-1541432901042-2d8bd64b4a9b"],
+  russia: ["photo-1513326738677-b964603b136d", "photo-1556610961-2fecc5927173", "photo-1753811604729-bc3d467e7f06"],
+  bali: ["photo-1537996194471-e657df975ab4", "photo-1555400038-63f5ba517a47", "photo-1539367628448-4bc5c9d171c8", "photo-1518548419970-58e3b4079ab2"],
+  georgia: ["photo-1569396116180-210c182bedb8", "photo-1605727216801-e27ce1d0cc28", "photo-1605649487212-47bdab064df7", "photo-1564769625905-50e93615e769"],
+  indonesia: ["photo-1780748549579-c22a0ff53982", "photo-1516690561799-46d8f74f9abf", "photo-1530789253388-582c481c54b0", "photo-1760947585876-8018a42ef327", "photo-1548013146-72479768bada"],
+  thailand: ["photo-1508009603885-50cf7c579365", "photo-1528181304800-259b08848526", "photo-1507525428034-b723cf961d3e", "photo-1526392060635-9d6019884377"],
+};
 const legacyDestinationHeroImages = {
   turkey: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=85",
   georgia: "https://images.unsplash.com/photo-1569396116180-210c182bedb8?auto=format&fit=crop&w=1200&q=85",
@@ -149,20 +172,25 @@ for (const [slug, data] of destinationSeeds) {
 
   const missingDetailFields = {};
   const safeEditorialRefresh = matchesLegacyEditorialCopy(existing, slug);
-  const needsImageRefresh = legacyBrokenImageUrls.some((url) => JSON.stringify(existing).includes(url));
-  const needsIndonesiaImageRefresh = slug === "indonesia" && JSON.stringify(existing).includes(legacyIndonesiaImageUrl);
+  const existingJson = JSON.stringify(existing);
+  const staleImageIds = legacyDestinationImageIds[slug] ?? [];
+  const staleImageId = (value) => staleImageIds.find((id) => String(value ?? "").includes(id));
+  const needsImageRefresh = legacyBrokenImageUrls.some((url) => existingJson.includes(url)) || staleImageIds.some((id) => existingJson.includes(id));
+  const stalePrimaryImage = staleImageId(existing.imageUrl) || (slug === "indonesia" && String(existing.imageUrl ?? "").includes(legacyIndonesiaImageUrl));
   for (const field of ["overview", "highlights", "experiences", "bestTimeToVisit", "usefulInformation", "seo"]) {
     if (safeEditorialRefresh || existing[field] == null || (Array.isArray(existing[field]) && existing[field].length === 0)) missingDetailFields[field] = data[field];
   }
-  if (safeEditorialRefresh || !existing.imageUrl || existing.imageUrl === legacyDestinationHeroImages[slug]) missingDetailFields.imageUrl = data.imageUrl;
-  if (needsImageRefresh) {
-    missingDetailFields.highlights = data.highlights;
-    missingDetailFields.gallery = data.gallery;
-  }
-  if (needsIndonesiaImageRefresh) {
-    missingDetailFields.imageUrl = data.imageUrl;
-    missingDetailFields.highlights = data.highlights;
-    missingDetailFields.gallery = data.gallery;
+  if (safeEditorialRefresh || !existing.imageUrl || stalePrimaryImage || existing.imageUrl === legacyDestinationHeroImages[slug]) missingDetailFields.imageUrl = data.imageUrl;
+  if (needsImageRefresh && Array.isArray(existing.highlights)) {
+    const refreshedHighlights = existing.highlights.map((highlight, index) => {
+      const staleUrl = staleImageId(highlight.imageUrl) || legacyBrokenImageUrls.find((url) => String(highlight.imageUrl ?? "").includes(url));
+      const canonical = data.highlights.find((item) => item.title === highlight.title) ?? data.highlights[index];
+      if (!staleUrl || highlight.image || !canonical) return highlight;
+      return { ...highlight, imageUrl: canonical.imageUrl, alt: canonical.alt };
+    });
+    if (refreshedHighlights.some((highlight, index) => highlight !== existing.highlights[index])) {
+      missingDetailFields.highlights = refreshedHighlights;
+    }
   }
   if (Object.keys(missingDetailFields).length) {
     destinations[slug] = await payload.update({ collection: "destinations", id: existing.id, data: missingDetailFields });
@@ -225,7 +253,8 @@ if (!siteSettings.siteName) {
   const shouldUpdateCopy = legacyMessage.includes("program") || legacyMessage.includes("package") || !currentWhatsapp.contextTemplate;
   const shouldUpdateNumber = knownLegacyNumbers.has(currentNumber);
   const shouldUpdateEmail = currentContact.reservationsEmail !== "info@ldc-tourism.com" || currentContact.salesEmail !== "info@ldc-tourism.com";
-  const shouldSetSaudiOffice = !String(currentContact.saudiOffice ?? "").trim();
+  const currentSaudiOffice = String(currentContact.saudiOffice ?? "").trim();
+  const shouldSetSaudiOffice = !currentSaudiOffice || currentSaudiOffice === legacySaudiOfficeAddress;
   if (shouldUpdateCopy || shouldUpdateNumber || shouldUpdateEmail || shouldSetSaudiOffice) {
     const nextContact = { ...currentContact };
     if (shouldUpdateNumber) {
@@ -254,6 +283,9 @@ const currentHeroSecondaryCta = currentHero.secondaryCta && typeof currentHero.s
 const currentDestinationCta = homepage.destinationCta && typeof homepage.destinationCta === "object" ? homepage.destinationCta : {};
 const currentDestinationPrimaryCta = currentDestinationCta.primaryCta && typeof currentDestinationCta.primaryCta === "object" ? currentDestinationCta.primaryCta : {};
 const currentDestinationSecondaryCta = currentDestinationCta.secondaryCta && typeof currentDestinationCta.secondaryCta === "object" ? currentDestinationCta.secondaryCta : {};
+const currentInspiration = homepage.inspiration && typeof homepage.inspiration === "object" ? homepage.inspiration : {};
+const currentInspirationItems = Array.isArray(currentInspiration.items) ? currentInspiration.items : [];
+const needsHomepageInspirationRefresh = legacyHomepageInspirationImageIds.some((id) => JSON.stringify(currentInspiration).includes(id));
 const oldHomepageHeadline = currentHero.headline === "Explore the world with LDC Travel";
 const hasRequiredHeroContent = [currentHero.eyebrow, currentHero.headline, currentHero.supportingCopy, currentHeroPrimaryCta.label, currentHeroSecondaryCta.label].every((value) => typeof value === "string" && value.trim());
 const hasRequiredDestinationCta = [currentDestinationPrimaryCta.label, currentDestinationSecondaryCta.label].every((value) => typeof value === "string" && value.trim());
@@ -293,10 +325,10 @@ if (needsHomepageMigration || needsHomepageHeroRefresh) {
       headline: "Let the destination set the pace.",
       description: "From old cities to open landscapes, start with the kind of experience you want more of.",
       items: [
-        { title: "Culture", label: "Stories in every street", description: "For travelers who want art, history, food, and a strong sense of place.", imageUrl: image("photo-1524231757912-21f4fe3a7200") },
-        { title: "Nature", label: "Room to breathe", description: "Mountain air, green valleys, and landscapes that invite you to slow down.", imageUrl: image("photo-1569396116180-210c182bedb8") },
-        { title: "Islands", label: "Blue-water days", description: "A warmer rhythm of coastlines, sunlight, and time well spent outdoors.", imageUrl: image("photo-1537996194471-e657df975ab4") },
-        { title: "City energy", label: "A little more alive", description: "For the nights, neighborhoods, and small discoveries that stay with you.", imageUrl: image("photo-1508009603885-50cf7c579365") },
+        { title: "Culture", label: "Stories in every street", description: "For travelers who want art, history, food, and a strong sense of place.", imageUrl: destinationImageUrl("turkey") },
+        { title: "Nature", label: "Room to breathe", description: "Mountain air, green valleys, and landscapes that invite you to slow down.", imageUrl: destinationImageUrl("georgia") },
+        { title: "Islands", label: "Blue-water days", description: "A warmer rhythm of coastlines, sunlight, and time well spent outdoors.", imageUrl: destinationImageUrl("bali") },
+        { title: "City energy", label: "A little more alive", description: "For the nights, neighborhoods, and small discoveries that stay with you.", imageUrl: destinationImageUrl("thailand") },
       ],
     },
     destinationCta: {
@@ -310,13 +342,34 @@ if (needsHomepageMigration || needsHomepageHeroRefresh) {
   } });
   console.log("migrate global:homepage to destination-first content");
 } else {
+  if (needsHomepageInspirationRefresh) {
+    const refreshedItems = currentInspirationItems.map((item, index) => {
+      const slug = inspirationDestinationSlugs[index];
+      return {
+        title: item.title,
+        label: item.label,
+        description: item.description,
+        imageUrl: slug ? destinationImageUrl(slug) : item.imageUrl,
+        ...(item.image ? { image: item.image } : {}),
+      };
+    });
+    await payload.updateGlobal({ slug: "homepage", data: {
+      inspiration: {
+        eyebrow: currentInspiration.eyebrow,
+        headline: currentInspiration.headline,
+        description: currentInspiration.description,
+        items: refreshedItems,
+      },
+    } });
+    console.log("refresh global:homepage inspiration images from canonical destination records");
+  }
   if (needsHomepageRelationships) {
     await payload.updateGlobal({ slug: "homepage", data: {
       ...(Array.isArray(homepage.featuredDestinations) && homepage.featuredDestinations.length ? {} : { featuredDestinations: destinationSeeds.map(([slug]) => destinations[slug].id) }),
       ...(Array.isArray(homepage.faqs) && homepage.faqs.length ? {} : { faqs: faqs.map((item) => item.id) }),
     } });
     console.log("enrich global:homepage with destination and FAQ relationships");
-  } else {
+  } else if (!needsHomepageInspirationRefresh) {
     console.log("skip global:homepage; existing editorial homepage preserved");
   }
 }

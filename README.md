@@ -97,6 +97,7 @@ The homepage prefers uploaded Payload Media for editorial imagery. Optional `ima
 ## Verified LDC contact channels
 
 - Egypt office: `15 Mahmoud Essmat Hamdy, Sheraton`
+- Saudi Arabia office: `18th Floor, Al Faisaliah Tower; King Fahd Road, Al Olaya District; P.O. Box 54995; Riyadh 11524, Kingdom of Saudi Arabia`
 - WhatsApp: `+9667277981053`
 - WhatsApp: Egypt `+20 12 11118118`; Saudi Arabia `+966 7277981053`
 - Email: `info@ldc-tourism.com`
@@ -107,7 +108,7 @@ The homepage prefers uploaded Payload Media for editorial imagery. Optional `ima
 
 ## Research and content safety
 
-Phase 2 destination copy is concise original paraphrase based on official tourism authorities and UNESCO where relevant. The source list is maintained in [docs/destination-sources.md](docs/destination-sources.md). Unstable visa, entry, safety, and border guidance is intentionally omitted from the public destination pages.
+Phase 2 destination copy is concise original paraphrase based on official tourism authorities and UNESCO where relevant. The source list is maintained in [docs/destination-sources.md](docs/destination-sources.md). Image subjects and source pages are maintained in [docs/destination-image-sources.md](docs/destination-image-sources.md). Unstable visa, entry, safety, and border guidance is intentionally omitted from the public destination pages.
 
 Phase 4 editorial SEO QA keeps the six destination pages differentiated, uses source-backed stable context, and maintains meaningful image alt text. The confirmed production canonical origin is `https://ldc-tourism.com`; set `NEXT_PUBLIC_SITE_URL` to that value during the approved deployment so canonical links and `sitemap.xml` resolve to the real host. Explicit `UI_PREVIEW_MODE=true` previews are noindex/nofollow and disallowed in `robots.txt`; normal production mode remains crawlable for public routes.
 

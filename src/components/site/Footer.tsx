@@ -38,7 +38,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
           </div>
           <div className="footer-office-group">
             <p className="footer-office-label">Saudi Arabia</p>
-            <p><Icon name="pin" /> <bdi dir="rtl" lang="ar">{site.saudiOffice}</bdi></p>
+            <p className="footer-office-address"><Icon name="pin" /> <span>{site.saudiOffice}</span></p>
             <a href={createWhatsAppUrl(whatsappConfig)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={16} /> {site.whatsappDisplay}</a>
           </div>
           <a href={`mailto:${site.email}`}><Icon name="mail" /> {site.email}</a>

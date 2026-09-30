@@ -24,5 +24,5 @@ export function SafeImage({ alt, className = "", priority = false, quality, size
     );
   }
 
-  return <Image className={className} src={src} alt={alt} fill priority={priority} quality={quality} sizes={sizes} onError={() => setFailed(true)} />;
+  return <Image className={className} src={src} alt={alt} fill loading={priority ? "eager" : undefined} fetchPriority={priority ? "high" : undefined} quality={quality} sizes={sizes} onError={() => setFailed(true)} />;
 }

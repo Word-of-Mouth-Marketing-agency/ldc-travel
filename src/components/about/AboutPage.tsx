@@ -101,7 +101,7 @@ export function AboutPage({ site, whatsappConfig }: { site: SiteViewModel; whats
               <p data-reveal-heading>Rather than asking travelers to choose from rigid online options, we help them explore destinations, share what they have in mind, and connect with our team to shape the right next step.</p>
             </RevealHeading>
             <div className="about-image-card">
-              <Image src="/hero-travel.webp" alt="Calm alpine village beside a clear mountain lake" fill sizes="(max-width: 767px) 100vw, 45vw" />
+              <Image src="/hero-travel.webp" alt="Calm alpine village beside a clear mountain lake" fill loading="eager" fetchPriority="high" sizes="(max-width: 767px) 100vw, 45vw" />
               <div className="about-image-card-caption"><span>Start with the place</span><strong>Let the destination set the pace.</strong></div>
             </div>
           </div>
