@@ -32,7 +32,7 @@ export function SiteStructuredData() {
         "@graph": [
           {
             "@type": "Organization",
-            ...(organizationId ? { "@id": organizationId, url: siteUrl, logo: toAbsoluteUrl("/brand/ldc-logo-navy.webp", siteUrl) } : {}),
+            ...(organizationId ? { "@id": organizationId, url: siteUrl, logo: toAbsoluteUrl("/brand/ldc-travel-primary.webp", siteUrl) } : {}),
             name: "LDC Travel",
             sameAs: socialUrls,
           },

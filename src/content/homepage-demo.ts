@@ -1,5 +1,6 @@
 import { createWhatsAppUrl, type WhatsAppConfig } from "../lib/whatsapp";
 import { createPublicWhatsAppConfig, publicContact, publicWhatsAppCopy } from "../lib/public-contact";
+import { demoDestinations } from "./destinations";
 
 export type ImageSource = {
   src: string;
@@ -21,6 +22,7 @@ export type SiteViewModel = {
   name: string;
   tagline: string;
   office: string;
+  saudiOffice: string;
   whatsappDisplay: string;
   whatsappNumber: string;
   egyptWhatsappDisplay: string;
@@ -108,11 +110,18 @@ const whatsappCta = (label: string, title?: string): Cta => ({
   external: true,
 });
 
+function destinationHeroImage(slug: string): ImageSource {
+  const destination = demoDestinations.find((item) => item.slug === slug);
+  if (!destination) throw new Error(`Missing destination imagery for ${slug}.`);
+  return destination.heroImage;
+}
+
 export const demoHomepage: HomepageViewModel = {
   site: {
     name: "LDC Travel",
     tagline: "Tourism Marketing",
     office: publicContact.office,
+    saudiOffice: publicContact.saudiOffice,
     whatsappDisplay: publicContact.whatsapp.saudi.display,
     whatsappNumber: publicContact.whatsapp.saudi.number,
     egyptWhatsappDisplay: publicContact.whatsapp.egypt.display,
@@ -138,12 +147,12 @@ export const demoHomepage: HomepageViewModel = {
     secondaryCta: whatsappCta("Talk to LDC Travel"),
   },
   destinations: [
-    { slug: "turkey", title: "Turkey", country: "Türkiye", regionOrCity: "Istanbul and beyond", summary: "Where layered history meets bright coastlines and generous hospitality.", image: image("photo-1524231757912-21f4fe3a7200", "Istanbul skyline with mosque domes and the Bosphorus"), href: "/destinations/turkey" },
+    { slug: "turkey", title: "Turkey", country: "Türkiye", regionOrCity: "Istanbul and beyond", summary: "Where layered history meets bright coastlines and generous hospitality.", image: destinationHeroImage("turkey"), href: "/destinations/turkey" },
     { slug: "russia", title: "Russia", country: "Russia", regionOrCity: "Moscow and St Petersburg", summary: "Grand city squares, rich culture, and stories around every corner.", image: image("photo-1513326738677-b964603b136d", "Colorful architecture in Moscow at blue hour"), href: "/destinations/russia" },
     { slug: "bali", title: "Bali", country: "Indonesia", regionOrCity: "Ubud and the coast", summary: "A restorative mix of green terraces, temple calm, and island energy.", image: image("photo-1537996194471-e657df975ab4", "Balinese temple surrounded by tropical greenery"), href: "/destinations/bali" },
-    { slug: "georgia", title: "Georgia", country: "Georgia", regionOrCity: "Tbilisi and the Caucasus", summary: "Mountain horizons, warm streets, and a culture made for slow discovery.", image: image("photo-1569396116180-210c182bedb8", "Mountain landscape in Georgia under a clear sky"), href: "/destinations/georgia" },
+    { slug: "georgia", title: "Georgia", country: "Georgia", regionOrCity: "Tbilisi and the Caucasus", summary: "Mountain horizons, warm streets, and a culture made for slow discovery.", image: destinationHeroImage("georgia"), href: "/destinations/georgia" },
     { slug: "indonesia", title: "Indonesia", country: "Indonesia", regionOrCity: "Java, Bali, and beyond", summary: "Island landscapes, ancient places, and vivid everyday life.", image: image("photo-1780748549579-c22a0ff53982", "Borobudur temple stupas at dawn in Central Java, Indonesia"), href: "/destinations/indonesia" },
-    { slug: "thailand", title: "Thailand", country: "Thailand", regionOrCity: "Bangkok and the islands", summary: "Street-side flavor, temple mornings, and blue-water escapes.", image: image("photo-1508009603885-50cf7c579365", "Golden temple roof in Bangkok at sunset"), href: "/destinations/thailand" },
+    { slug: "thailand", title: "Thailand", country: "Thailand", regionOrCity: "Bangkok and the islands", summary: "Street-side flavor, temple mornings, and blue-water escapes.", image: destinationHeroImage("thailand"), href: "/destinations/thailand" },
   ],
   whyLdc: {
     eyebrow: "Why travel with LDC",

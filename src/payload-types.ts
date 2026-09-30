@@ -1277,6 +1277,7 @@ export interface SiteSetting {
     whatsappDisplay: string;
     whatsappNumber: string;
     office: string;
+    saudiOffice?: string | null;
     reservationsEmail: string;
     salesEmail: string;
   };
@@ -1399,6 +1400,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         whatsappDisplay?: T;
         whatsappNumber?: T;
         office?: T;
+        saudiOffice?: T;
         reservationsEmail?: T;
         salesEmail?: T;
       };

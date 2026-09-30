@@ -22,7 +22,7 @@ export default function NotFound() {
       }}
     >
       <div style={{ width: "min(100%, 34rem)" }}>
-        <Image src="/brand/ldc-logo-navy.webp" alt="LDC Travel" width={176} height={112} priority style={{ width: "8.5rem", height: "auto", margin: "0 auto 2rem" }} />
+        <Image src="/brand/ldc-travel-primary.webp" alt="LDC Travel — Tourism Marketing" width={1254} height={1254} sizes="136px" priority style={{ width: "8.5rem", height: "auto", margin: "0 auto 2rem" }} />
         <p style={{ margin: 0, color: "var(--brand-navy)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" }}>LDC Travel · Tourism Marketing</p>
         <h1 style={{ margin: "0.75rem 0 0", color: "var(--brand-navy-deep)", fontSize: "clamp(2.5rem, 10vw, 5rem)", letterSpacing: "-0.06em", lineHeight: 0.95 }}>This page took a wrong turn.</h1>
         <p style={{ margin: "1rem auto 0", maxWidth: "28rem", color: "var(--muted)", lineHeight: 1.7 }}>The destination you are looking for is not available here. Let’s get you back to the journey.</p>

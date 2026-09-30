@@ -20,8 +20,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
     <footer className="site-footer">
       <div className="site-container footer-main">
         <div className="footer-brand-column">
-          <Image src="/brand/ldc-logo-orange.webp" alt="LDC Travel" width={176} height={112} className="footer-logo" />
-          <p className="footer-tagline">{site.tagline}</p>
+          <Image src="/brand/ldc-travel-white.webp" alt="LDC Travel — Tourism Marketing" width={1254} height={1254} sizes="128px" className="footer-logo" />
           <p>{site.footerCopy}</p>
         </div>
         {groups.map((group) => (
@@ -39,6 +38,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
           </div>
           <div className="footer-office-group">
             <p className="footer-office-label">Saudi Arabia</p>
+            <p><Icon name="pin" /> <bdi dir="rtl" lang="ar">{site.saudiOffice}</bdi></p>
             <a href={createWhatsAppUrl(whatsappConfig)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={16} /> {site.whatsappDisplay}</a>
           </div>
           <a href={`mailto:${site.email}`}><Icon name="mail" /> {site.email}</a>

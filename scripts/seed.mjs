@@ -6,6 +6,7 @@ if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
 }
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const saudiOfficeAddress = "الطابق 18برج الفصيلة،طريق الملك فهد حي العليا ص.ب54995،الرياض11524،المملكه العربيه السعودية";
 const { default: config } = await import("../payload.config.ts");
 const { getPayload } = await import("payload");
 const destinationContent = JSON.parse(await readFile(new URL("../src/content/destinations-data.json", import.meta.url), "utf8"));
@@ -79,7 +80,7 @@ const destinationSeeds = destinationContent.map((destination) => [destination.sl
   regionOrCity: destination.regionOrCity,
   summary: destination.summary,
   overview: destination.overview,
-  imageUrl: destination.highlights[0].image,
+  imageUrl: destination.heroImage ?? destination.highlights[0].image,
   highlights: destination.highlights.map(({ title, description, image: imageUrl, alt }) => ({ title, description, imageUrl, alt })),
   experiences: destination.experiences,
   bestTimeToVisit: destination.bestTimeToVisit,
@@ -131,6 +132,11 @@ const legacyBrokenImageUrls = [
   "https://images.unsplash.com/photo-1520637836862-4d197d17c93a?auto=format&fit=crop&w=1200&q=85",
 ];
 const legacyIndonesiaImageUrl = "https://images.unsplash.com/photo-1548013146-72479768bada";
+const legacyDestinationHeroImages = {
+  turkey: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=85",
+  georgia: "https://images.unsplash.com/photo-1569396116180-210c182bedb8?auto=format&fit=crop&w=1200&q=85",
+  thailand: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1200&q=85",
+};
 
 const destinations = {};
 for (const [slug, data] of destinationSeeds) {
@@ -148,7 +154,7 @@ for (const [slug, data] of destinationSeeds) {
   for (const field of ["overview", "highlights", "experiences", "bestTimeToVisit", "usefulInformation", "seo"]) {
     if (safeEditorialRefresh || existing[field] == null || (Array.isArray(existing[field]) && existing[field].length === 0)) missingDetailFields[field] = data[field];
   }
-  if (safeEditorialRefresh || !existing.imageUrl) missingDetailFields.imageUrl = data.imageUrl;
+  if (safeEditorialRefresh || !existing.imageUrl || existing.imageUrl === legacyDestinationHeroImages[slug]) missingDetailFields.imageUrl = data.imageUrl;
   if (needsImageRefresh) {
     missingDetailFields.highlights = data.highlights;
     missingDetailFields.gallery = data.gallery;
@@ -199,7 +205,7 @@ if (!siteSettings.siteName) {
     tagline: "Tourism Marketing",
     defaultMarket: marketId,
     canonicalUrl: siteUrl,
-    contact: { whatsappDisplay: "+966 7277981053", whatsappNumber: "9667277981053", office: "15 Mahmoud Essmat Hamdy, Sheraton", reservationsEmail: "info@ldc-tourism.com", salesEmail: "info@ldc-tourism.com" },
+    contact: { whatsappDisplay: "+966 7277981053", whatsappNumber: "9667277981053", office: "15 Mahmoud Essmat Hamdy, Sheraton", saudiOffice: saudiOfficeAddress, reservationsEmail: "info@ldc-tourism.com", salesEmail: "info@ldc-tourism.com" },
     whatsapp: destinationWhatsapp,
     footerCopy: "Thoughtful destination guidance for travelers ready to see more of the world.",
     socialLinks: [
@@ -219,7 +225,8 @@ if (!siteSettings.siteName) {
   const shouldUpdateCopy = legacyMessage.includes("program") || legacyMessage.includes("package") || !currentWhatsapp.contextTemplate;
   const shouldUpdateNumber = knownLegacyNumbers.has(currentNumber);
   const shouldUpdateEmail = currentContact.reservationsEmail !== "info@ldc-tourism.com" || currentContact.salesEmail !== "info@ldc-tourism.com";
-  if (shouldUpdateCopy || shouldUpdateNumber || shouldUpdateEmail) {
+  const shouldSetSaudiOffice = !String(currentContact.saudiOffice ?? "").trim();
+  if (shouldUpdateCopy || shouldUpdateNumber || shouldUpdateEmail || shouldSetSaudiOffice) {
     const nextContact = { ...currentContact };
     if (shouldUpdateNumber) {
       nextContact.whatsappDisplay = "+966 7277981053";
@@ -229,8 +236,9 @@ if (!siteSettings.siteName) {
       nextContact.reservationsEmail = "info@ldc-tourism.com";
       nextContact.salesEmail = "info@ldc-tourism.com";
     }
+    if (shouldSetSaudiOffice) nextContact.saudiOffice = saudiOfficeAddress;
     await payload.updateGlobal({ slug: "site-settings", data: {
-      ...(shouldUpdateNumber || shouldUpdateEmail ? { contact: nextContact } : {}),
+      ...(shouldUpdateNumber || shouldUpdateEmail || shouldSetSaudiOffice ? { contact: nextContact } : {}),
       ...(shouldUpdateCopy ? { whatsapp: destinationWhatsapp } : {}),
     } });
     console.log("migrate global:site-settings destination WhatsApp configuration");

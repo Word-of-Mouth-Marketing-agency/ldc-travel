@@ -15,7 +15,7 @@ function ExperienceIcon({ name }: { name: string }) {
 export function DestinationHero({ destination, whatsappHref }: { destination: DestinationDetailViewModel; whatsappHref: string }) {
   return (
     <section className="destination-detail-hero" aria-labelledby="destination-detail-title">
-      <div className="destination-detail-hero-image"><SafeImage src={destination.heroImage.src} alt={destination.heroImage.alt} priority sizes="(max-width: 767px) 100vw, 72vw" /></div>
+      <div className="destination-detail-hero-image"><SafeImage src={destination.heroImage.src} alt={destination.heroImage.alt} priority quality={90} sizes="100vw" /></div>
       <div className="destination-detail-hero-wash" />
       <div className="site-container destination-detail-hero-inner">
         <nav className="destination-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><Link href="/destinations">Destinations</Link><span aria-hidden="true">/</span><span aria-current="page">{destination.title}</span></nav>

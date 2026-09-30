@@ -6,6 +6,8 @@
     "regionOrCity": "Istanbul, Cappadocia and the coast",
     "eyebrow": "Two continents, many ways to travel",
     "summary": "Istanbul energy, Cappadocian valleys, and Aegean and Mediterranean coastlines in one rich destination.",
+    "heroImage": "/destinations/turkey.webp",
+    "heroImageAlt": "Historic domes and minarets in Istanbul, Turkey",
     "overview": "Turkey gives a journey room to change pace: move from Bosphorus-facing neighborhoods and historic architecture in Istanbul to Cappadocia's volcanic valleys, then toward coastal towns and archaeological sites. Food, design, and a deep sense of history keep the route grounded.",
     "highlights": [
       { "title": "Istanbul", "description": "Move between historic quarters, Bosphorus views, museums, markets, and the everyday energy of a city linking Europe and Asia.", "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=85", "alt": "Istanbul skyline with mosque domes and the Bosphorus" },
@@ -108,6 +110,8 @@
     "regionOrCity": "Tbilisi, Kakheti and the Caucasus",
     "eyebrow": "Cities, mountains, and the shared table",
     "summary": "Tbilisi streets, Caucasus horizons, Kakheti tables, and a culture shaped by many crossroads.",
+    "heroImage": "/destinations/georgia.webp",
+    "heroImageAlt": "Travel scenery in Georgia",
     "overview": "Georgia brings together Tbilisi's layered streets, the high landscapes around Kazbegi, Kakheti's food and wine traditions, and the different character of the country's regions. The appeal is in the contrast between city, mountain, table, and road.",
     "highlights": [
       { "title": "Tbilisi", "description": "Wander through a capital where historic streets, bath districts, balconies, and contemporary creative life sit side by side.", "image": "https://images.unsplash.com/photo-1569396116180-210c182bedb8?auto=format&fit=crop&w=1200&q=85", "alt": "Tbilisi rooftops and Caucasus landscape" },
@@ -176,6 +180,8 @@
     "regionOrCity": "Bangkok, Chiang Mai and the islands",
     "eyebrow": "City energy, northern calm, sea air",
     "summary": "Bangkok energy, Chiang Mai's northern character, and island coastlines in one flexible journey.",
+    "heroImage": "/destinations/thailand.webp",
+    "heroImageAlt": "Wat Arun at sunset beside the Chao Phraya River in Bangkok, Thailand",
     "overview": "Thailand works through contrast: Bangkok's river, temples, markets, and food; Chiang Mai's northern cultural character and mountain setting; and the coastlines around Phuket and other islands. The route can be as lively or unhurried as the balance you choose.",
     "highlights": [
       { "title": "Bangkok", "description": "Take in the capital's temples, river life, markets, neighbourhoods, food, and bold modern energy.", "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1200&q=85", "alt": "Golden temple roof in Bangkok at sunset" },

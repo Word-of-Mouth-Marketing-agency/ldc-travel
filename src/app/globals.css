@@ -52,7 +52,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgb(219 228 242 / 0.92); background: rgb(255 255 255 / 0.94); backdrop-filter: blur(16px); }
 .header-inner { display: flex; align-items: center; min-height: 5.35rem; gap: 1rem; }
-.brand-link { position: relative; display: inline-flex; flex: 0 0 auto; width: 9.3rem; height: 4.3rem; }
+.brand-link { position: relative; display: inline-flex; flex: 0 0 auto; width: 5.25rem; height: 5.25rem; }
 .brand-logo { width: 100%; height: 100%; object-fit: contain; object-position: left center; }
 .desktop-nav { display: none; align-items: stretch; justify-content: center; gap: clamp(1.1rem, 2.4vw, 2.7rem); flex: 1; height: 5.35rem; }
 .desktop-nav a { position: relative; display: inline-flex; align-items: center; color: var(--ink); font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
@@ -65,7 +65,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .mobile-menu-backdrop { position: fixed; z-index: 0; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: rgb(9 31 59 / 0.56); cursor: pointer; animation: backdrop-in 180ms ease both; }
 .mobile-menu-panel { position: fixed; z-index: 1; inset: 0 0 0 auto; display: flex; flex-direction: column; width: min(24rem, calc(100vw - 1rem)); min-height: 100dvh; overflow-y: auto; padding: 1.35rem clamp(1rem, 5vw, 2.2rem) 2rem; border: 0; border-left: 1px solid var(--line); border-radius: 1.25rem 0 0 1.25rem; background: white; box-shadow: -1.2rem 0 3rem rgb(9 31 59 / 0.2); animation: drawer-in 220ms cubic-bezier(.2,.8,.2,1) both; }
 .mobile-menu-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.mobile-menu-logo { width: 9rem; height: 4.8rem; object-fit: contain; object-position: left center; }
+.mobile-menu-logo { width: 5.25rem; height: 5.25rem; object-fit: contain; object-position: left center; }
 .mobile-menu-close { display: inline-grid; place-items: center; width: 2.8rem; height: 2.8rem; border: 1px solid var(--line); border-radius: 0.8rem; background: var(--brand-navy-light); color: var(--brand-navy-dark); cursor: pointer; }
 .mobile-menu-panel nav { display: grid; gap: 0.35rem; margin-top: 2.3rem; }
 .mobile-menu-panel nav a { display: flex; align-items: center; min-height: 3.45rem; padding: 0.8rem 0.85rem; border-radius: 0.7rem; color: var(--brand-navy-dark); font-size: 1.08rem; font-weight: 700; }
@@ -209,13 +209,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-footer { position: relative; overflow: hidden; padding-bottom: 2.8rem; background: var(--brand-navy-deep); color: rgb(255 255 255 / 0.82); }
 .footer-main { display: grid; grid-template-columns: 1fr; gap: 2rem; padding-block: 3.75rem 2.8rem; }
 .footer-brand-column { max-width: 22rem; }
-.footer-logo { width: 10rem; height: 5.8rem; object-fit: contain; object-position: left center; }
+.footer-logo { width: 8rem; height: 8rem; object-fit: contain; object-position: left center; }
 .footer-tagline { margin: 0.25rem 0 0.65rem; color: var(--brand-orange); font-family: var(--font-ui); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
 .footer-brand-column > p:not(.footer-tagline) { margin: 0; font-size: 0.82rem; line-height: 1.7; }
 .footer-link-column, .footer-contact-column { display: grid; align-content: start; gap: 0.6rem; }
 .footer-link-column h2, .footer-contact-column h2 { margin: 0 0 0.35rem; color: white; font-family: var(--font-ui); font-size: 0.86rem; }
 .footer-link-column a, .footer-contact-column a, .footer-contact-column p { display: flex; align-items: flex-start; gap: 0.5rem; margin: 0; color: rgb(255 255 255 / 0.72); font-family: var(--font-ui); font-size: 0.75rem; line-height: 1.5; }
 .footer-link-column a:hover, .footer-contact-column a:hover { color: var(--brand-orange); }
+.footer-contact-column bdi { flex: 1; text-align: right; overflow-wrap: anywhere; }
 .footer-office-group { display: grid; gap: 0.4rem; }
 .footer-contact-column .footer-office-label { display: block; color: white; font-size: 0.72rem; font-weight: 750; }
 .footer-contact-column .ui-icon, .footer-contact-column .whatsapp-icon { width: 1rem; height: 1rem; flex: 0 0 auto; color: var(--brand-orange); }
@@ -269,6 +270,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .contact-details-list > div { display: grid; gap: 0.4rem; }
 .contact-details-list dt { color: var(--brand-navy-deep); font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
 .contact-details-list dd { display: flex; align-items: flex-start; gap: 0.55rem; margin: 0; color: var(--muted); font-size: 0.82rem; line-height: 1.5; overflow-wrap: anywhere; }
+.contact-details-list dd bdi { flex: 1; text-align: right; overflow-wrap: anywhere; }
 .contact-details-list dd svg { flex: 0 0 auto; width: 1rem; height: 1rem; color: var(--brand-navy); }
 .contact-details-list dd a:hover { color: var(--brand-navy); }
 .contact-details-secondary { margin-left: 1.55rem !important; }
@@ -535,6 +537,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .destination-cta { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: stretch; }
   .destination-cta-copy, .destination-cta-form-panel { padding: clamp(2rem, 4vw, 3.7rem); }
   .inspiration-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .inspiration-card { min-height: 0; }
   .contact-inquiry-grid { grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 0.8fr); gap: 1.5rem; }
   .footer-main { grid-template-columns: 1.55fr repeat(2, 0.8fr) 1.25fr; }
 }

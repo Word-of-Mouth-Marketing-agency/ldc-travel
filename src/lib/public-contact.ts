@@ -3,6 +3,7 @@ import type { WhatsAppConfig } from "./whatsapp";
 export const publicContact = {
   email: "info@ldc-tourism.com",
   office: "15 Mahmoud Essmat Hamdy, Sheraton",
+  saudiOffice: "الطابق 18برج الفصيلة،طريق الملك فهد حي العليا ص.ب54995،الرياض11524،المملكه العربيه السعودية",
   whatsapp: {
     egypt: { display: "+20 12 11118118", number: "201211118118" },
     saudi: { display: "+966 7277981053", number: "9667277981053" },

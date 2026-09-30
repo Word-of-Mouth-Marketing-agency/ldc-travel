@@ -102,6 +102,7 @@ export function buildSite(raw: unknown): SiteViewModel {
     name: asString(record?.siteName, demoHomepage.site.name),
     tagline: asString(record?.tagline, demoHomepage.site.tagline),
     office: asString(contact?.office, publicContact.office),
+    saudiOffice: asString(contact?.saudiOffice, publicContact.saudiOffice),
     whatsappDisplay: asString(contact?.whatsappDisplay, demoHomepage.site.whatsappDisplay),
     whatsappNumber: asString(contact?.whatsappNumber, demoHomepage.site.whatsappNumber),
     egyptWhatsappDisplay: publicContact.whatsapp.egypt.display,

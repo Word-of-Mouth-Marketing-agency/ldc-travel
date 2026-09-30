@@ -34,6 +34,7 @@ function ContactDetails({ site, whatsappHref, egyptWhatsappHref }: { site: SiteV
       <p>Tell us what matters to you: the destination, pace, occasion, or people you’re traveling with. We’ll help turn the idea into a clear plan.</p>
       <dl className="contact-details-list">
         <div><dt>Egypt office</dt><dd><Icon name="pin" />{site.office}</dd></div>
+        <div><dt>Saudi Arabia office</dt><dd><Icon name="pin" /><bdi dir="rtl" lang="ar">{site.saudiOffice}</bdi></dd></div>
         <div><dt>Egypt WhatsApp</dt><dd><WhatsAppIcon /><a href={egyptWhatsappHref} target="_blank" rel="noopener noreferrer">{site.egyptWhatsappDisplay}</a></dd></div>
         <div><dt>Saudi WhatsApp</dt><dd><WhatsAppIcon /><a href={whatsappHref} target="_blank" rel="noopener noreferrer">{site.whatsappDisplay}</a></dd></div>
         <div><dt>Email</dt><dd><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>

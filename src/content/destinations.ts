@@ -46,6 +46,8 @@ type RawDestination = {
   regionOrCity: string;
   eyebrow: string;
   summary: string;
+  heroImage?: string;
+  heroImageAlt?: string;
   overview: string;
   highlights: { title: string; description: string; image: string; alt: string }[];
   experiences: DestinationExperience[];
@@ -84,7 +86,7 @@ export const approvedDestinationSlugs = raw.map((destination) => destination.slu
 
 export const demoDestinations: DestinationDetailViewModel[] = raw.map((destination) => ({
   ...destination,
-  heroImage: toImage(destination.highlights[0].image, destination.highlights[0].alt),
+  heroImage: toImage(destination.heroImage ?? destination.highlights[0].image, destination.heroImageAlt ?? destination.highlights[0].alt),
   highlights: destination.highlights.map((highlight) => ({
     title: highlight.title,
     description: highlight.description,
