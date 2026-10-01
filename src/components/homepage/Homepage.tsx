@@ -37,7 +37,7 @@ function HeroCta({ cta, primary = false }: { cta: HomepageViewModel["hero"]["pri
 export function Homepage({ data }: { data: HomepageViewModel }) {
   return (
     <DesignYourTripProvider whatsappHref={createWhatsAppUrl(data.whatsappConfig)}>
-      <Header socialLinks={data.site.socialLinks} />
+      <Header site={data.site} />
       <main>
         <section className="hero-section" aria-labelledby="hero-heading">
           <div className="hero-photo"><Image src={data.hero.image.src} alt={data.hero.image.alt} fill loading="eager" fetchPriority="high" quality={90} sizes="100vw" /></div>
@@ -54,11 +54,11 @@ export function Homepage({ data }: { data: HomepageViewModel }) {
             </HeroIntroAnimation>
           </div>
         </section>
-        <DestinationsSection items={data.destinations} />
+        <DestinationsSection items={data.destinations} content={data.destinationsSection} />
         <WhyLdcSection content={data.whyLdc} />
         <InspirationSection content={data.inspiration} />
-        <DestinationCtaSection content={data.destinationCta} whatsappHref={createWhatsAppUrl(data.whatsappConfig)} />
-        <FaqSection items={data.faqs} />
+        <DestinationCtaSection content={data.destinationCta} destinations={data.destinations} whatsappHref={createWhatsAppUrl(data.whatsappConfig)} />
+        <FaqSection items={data.faqs} content={data.faqSection} />
       </main>
       <Footer site={data.site} whatsappConfig={data.whatsappConfig} />
       <FloatingWhatsApp whatsappConfig={data.whatsappConfig} />

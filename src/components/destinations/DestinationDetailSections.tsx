@@ -28,7 +28,7 @@ export function DestinationHero({ destination, whatsappHref }: { destination: De
             <a className="button button-ghost-light" href={whatsappHref} target="_blank" rel="noopener noreferrer">Ask about {destination.title} <Icon name="arrow-up-right" size={16} /></a>
           </div>
         </div>
-        <div className="destination-detail-hero-meta"><span>{destination.country}</span><span aria-hidden="true">·</span><span>{destination.regionOrCity}</span></div>
+        {destination.regionOrCity ? <div className="destination-detail-hero-meta"><span>{destination.country}</span><span aria-hidden="true">·</span><span>{destination.regionOrCity}</span></div> : null}
       </div>
     </section>
   );
@@ -39,21 +39,23 @@ export function DestinationOverview({ destination }: { destination: DestinationD
     <section className="content-section destination-overview-section" aria-labelledby="destination-overview-heading">
       <div className="site-container destination-overview-grid">
         <div className="destination-overview-copy"><p className="section-eyebrow">A closer look</p><h2 id="destination-overview-heading">A destination with more than one story.</h2><p>{destination.overview}</p></div>
-        <div className="destination-information-card"><p className="section-eyebrow">Useful to know</p><dl>{destination.usefulInformation.map((item) => <div key={item.label}><dt>{item.label}</dt><dd>{item.value}</dd></div>)}</dl></div>
+        {destination.usefulInformation.length ? <div className="destination-information-card"><p className="section-eyebrow">Useful to know</p><dl>{destination.usefulInformation.map((item) => <div key={item.label}><dt>{item.label}</dt><dd>{item.value}</dd></div>)}</dl></div> : null}
       </div>
     </section>
   );
 }
 
 export function DestinationHighlights({ destination }: { destination: DestinationDetailViewModel }) {
+  if (!destination.highlights.length) return null;
   return (
     <section className="content-section destination-highlights-section" aria-labelledby="destination-highlights-heading">
-      <div className="site-container"><div className="section-heading"><div><p className="section-eyebrow">Places to discover</p><h2 id="destination-highlights-heading">Make room for the details.</h2></div></div><div className="destination-highlights-grid">{destination.highlights.map((highlight, index) => <article className="destination-highlight-card" key={highlight.title}><div className="destination-highlight-image"><SafeImage src={highlight.image.src} alt={highlight.image.alt} sizes="(max-width: 767px) 100vw, (max-width: 1199px) 33vw, 30vw" /></div><div className="destination-highlight-copy"><span>0{index + 1}</span><h3>{highlight.title}</h3><p>{highlight.description}</p></div></article>)}</div></div>
+      <div className="site-container"><div className="section-heading"><div><p className="section-eyebrow">Places to discover</p><h2 id="destination-highlights-heading">Make room for the details.</h2></div></div><div className="destination-highlights-grid">{destination.highlights.map((highlight, index) => <article className="destination-highlight-card" key={highlight.title}>{highlight.image ? <div className="destination-highlight-image"><SafeImage src={highlight.image.src} alt={highlight.image.alt} sizes="(max-width: 767px) 100vw, (max-width: 1199px) 33vw, 30vw" /></div> : null}<div className="destination-highlight-copy"><span>0{index + 1}</span><h3>{highlight.title}</h3><p>{highlight.description}</p></div></article>)}</div></div>
     </section>
   );
 }
 
 export function DestinationExperiences({ destination }: { destination: DestinationDetailViewModel }) {
+  if (!destination.experiences.length) return null;
   return (
     <section className="content-section destination-experiences-section" aria-labelledby="destination-experiences-heading">
       <div className="site-container destination-experiences-grid"><div className="destination-experiences-intro"><p className="section-eyebrow">Travel by feeling</p><h2 id="destination-experiences-heading">Choose the moments you want more of.</h2><p>Use these ideas as a starting point. Your inquiry can be as specific or open-ended as you like.</p></div><div className="destination-experiences-list">{destination.experiences.map((experience, index) => <article className="destination-experience" key={experience.title}><span className="destination-experience-number">0{index + 1}</span><span className="destination-experience-icon"><ExperienceIcon name={experience.icon} /></span><div><h3>{experience.title}</h3><p>{experience.description}</p></div></article>)}</div></div>
@@ -62,6 +64,7 @@ export function DestinationExperiences({ destination }: { destination: Destinati
 }
 
 export function DestinationSeasonSection({ destination }: { destination: DestinationDetailViewModel }) {
+  if (!destination.bestTimeToVisit) return null;
   return (
     <section className="content-section destination-season-section" aria-labelledby="destination-season-heading">
       <div className="site-container destination-season-card"><div><p className="section-eyebrow">Plan with context</p><h2 id="destination-season-heading">When might it suit you?</h2><p>{destination.bestTimeToVisit}</p></div><span className="destination-season-mark" aria-hidden="true"><Icon name="compass" size={38} strokeWidth={1.4} /></span></div>
@@ -70,6 +73,7 @@ export function DestinationSeasonSection({ destination }: { destination: Destina
 }
 
 export function DestinationGallery({ destination }: { destination: DestinationDetailViewModel }) {
+  if (!destination.gallery.length) return null;
   return (
     <section className="content-section destination-gallery-section" aria-labelledby="destination-gallery-heading">
       <div className="site-container"><div className="section-heading"><div><p className="section-eyebrow">A sense of place</p><h2 id="destination-gallery-heading">See where the story could take you.</h2></div></div><div className="destination-gallery-grid">{destination.gallery.slice(0, 4).map((image, index) => <div className={`destination-gallery-item destination-gallery-item-${index + 1}`} key={`${image.src}-${index}`}><SafeImage src={image.src} alt={image.alt} sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 42vw" /></div>)}</div></div>

@@ -25,7 +25,7 @@ This is a variable-name-only contract for the future WOM-VPS-01 deployment. Neve
 
 ## Current application contract
 
-The repository requires Node `>=20.9.0` and pnpm `11.1.1` through `package.json`. The exact current development runtime was Node `v24.13.1`; production should use a pinned supported Node LTS release, preferably Node 20 or another explicitly approved compatible version, rather than inheriting the workstation version. The app uses Payload `3.88.0`, Next `16.3.3`, and the PostgreSQL adapter `@payloadcms/db-postgres` `3.88.0`.
+The repository requires Node `>=20.9.0` and pnpm `11.1.1` through `package.json`. The exact current development runtime was Node `v24.13.1`; production should use a pinned supported Node LTS release, preferably Node 20 or another explicitly approved compatible version, rather than inheriting the workstation version. The app currently pins Payload and `@payloadcms/*` packages to `3.90.2`, Next and `eslint-config-next` to `16.3.7`, and React to `19.2.8`.
 
 The start command is `pnpm start -- -p <PORT>`, and the package script forces `--hostname 127.0.0.1`. The production flow is therefore: locked install → `pnpm build` → process manager starts `pnpm start -- -p <PORT>` with the production environment.
 
@@ -33,7 +33,7 @@ The start command is `pnpm start -- -p <PORT>`, and the package script forces `-
 
 Payload currently uses local storage with `PAYLOAD_MEDIA_DIR` or the development fallback `media`. Payload Media is preferred over remote demo URLs. Production should use a path such as `/srv/ldc-travel/media`, with ownership and permissions limited to the app runtime and deployment operators. Back up the database before media changes, then capture the persistent media tree as part of the same recovery set. Never store uploads inside a release directory.
 
-The Media collection currently accepts raster web images and generates thumbnail, card, and hero derivatives. Payload's documented default multipart limits are 20 MiB per file and 50 MiB per request; before launch, validate a version-compatible lower application/server limit appropriate for this 2-vCPU host. No upload test was run because admin authentication is not yet available.
+The Media collection accepts JPEG, PNG, WebP, and AVIF only, rejects SVG, caps each upload at 5 MiB, and generates thumbnail/card/hero derivatives at 480/960/2400 pixels while retaining the original. No authenticated upload test was run because admin access and the current local database were unavailable during the final audit. Verify the configured application and reverse-proxy request limits agree with the collection cap before launch.
 
 ## Security audit findings
 
@@ -41,7 +41,13 @@ The Media collection currently accepts raster web images and generates thumbnail
 - Homepage and Site Settings are intentionally public-read because the server-rendered site consumes them. Their update operations require an authenticated Payload user.
 - The `/admin` and Payload `/api` surfaces remain application routes. Production must provide the real HTTPS origin so Payload CORS/CSRF configuration is constrained, and the OLS vhost/process policy must not expose the Node listener directly.
 - The current local database exposes only the seeded public destination/market read surfaces; legacy collections were empty during the audit. If legacy records are ever repopulated, their public API read policy should be reviewed before launch because those collections are no longer part of the public product model.
-- Media uploads now allow raster web images only (`jpeg`, `png`, `webp`, `avif`); SVG was removed from the accepted list to avoid an unnecessary active-content surface. A lower version-compatible file-size limit remains a pre-launch configuration gate.
+- Media uploads allow raster web images only (`jpeg`, `png`, `webp`, `avif`), cap files at 5 MiB, and reject SVG. The configured application cap is implemented; test it through authenticated admin upload and verify the proxy request limit before launch.
+
+## Final audit notes — 2026-09-30
+
+The CMS now includes Site Settings, Homepage, About Page, Contact Page, and Destinations Page globals, with explicit public-read/authenticated-write boundaries and a protected Inquiries collection. Payload is pinned to 3.90.2 and Next to 16.3.7; `pnpm-workspace.yaml` records patched transitive resolutions for fast-uri, undici, DOMPurify, and the legacy esbuild dependency. Consult `docs/release-qa.md` for the completed audit result and remaining infrastructure gates. The 2026-09-30 audit did not apply the CMS completion and auth compatibility migrations because local PostgreSQL was unavailable at that time. The subsequent 2026-10-01 operator-provided local-runtime evidence reports that all six migrations were applied, the seed passed twice, and CMS-backed routes/forms/access controls passed; see the dated evidence in `docs/release-qa.md`. This is not production database or admin-bootstrap verification.
+
+Required environment names are listed in `.env.example`; values remain deployment-owned. `UI_PREVIEW_MODE=true` is only for a temporary database-free preview and must be false/absent for the real site. `LDC_ALLOW_PRODUCTION_SEED` is an optional one-command safety gate for an explicitly approved content seed, not a persistent required production variable.
 
 ## Sources
 

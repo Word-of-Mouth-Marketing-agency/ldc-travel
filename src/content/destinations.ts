@@ -5,7 +5,7 @@ import type { ImageSource } from "./homepage-demo";
 export type DestinationHighlight = {
   title: string;
   description: string;
-  image: ImageSource;
+  image: ImageSource | null;
 };
 
 export type DestinationExperience = {

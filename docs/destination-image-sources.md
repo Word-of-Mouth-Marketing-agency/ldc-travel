@@ -14,7 +14,7 @@ Reviewed 2026-09-30. Remote image inputs use the original Unsplash CDN asset pat
 - Moscow highlight/gallery: [Saint Basil's Cathedral](https://unsplash.com/photos/saint-basils-cathedral-moscow-russia-jaH3QF46gAY), image `photo-1513326738677-b964603b136d`.
 - Saint Petersburg highlight/gallery: [canal and historic buildings](https://unsplash.com/photos/canal-with-buildings-and-a-boat-at-sunrise-PrtnVaz_PtI), image `photo-1764725726270-4f94dbaa16ac`.
 - Moscow heritage highlight/gallery: [Kremlin above the river](https://unsplash.com/photos/the-moscow-kremlin-stands-tall-over-the-river-F3j7neUTmqQ), image `photo-1752986002031-579569bd3d6d`.
-- Saint Petersburg gallery: client-supplied `public/destinations/georgia.webp`, which depicts Saint Isaac's Cathedral in Saint Petersburg; reused here with its verified Russian subject and alt text.
+- Saint Petersburg gallery: former `public/destinations/georgia.webp`, now correctly named `public/destinations/russia-st-isaacs.webp`; it depicts Saint Isaac's Cathedral in Saint Petersburg and is used only for Russia.
 
 ## Bali
 
@@ -25,8 +25,7 @@ Reviewed 2026-09-30. Remote image inputs use the original Unsplash CDN asset pat
 
 ## Georgia
 
-- Detail hero: client-supplied `public/destinations/georgia.webp`. Per the user's explicit follow-up, this image is retained for Georgia even though it depicts Saint Isaac's Cathedral in Saint Petersburg, Russia; it is not described as a Georgian landmark. This is a disclosed client-directed mismatch, not a verified Georgia image.
-- Tbilisi highlight/gallery: [Old Town and the Kura River](https://unsplash.com/photos/river-with-bridge-and-old-town-on-hill-bjbBlbX-XEg), image `photo-1759506346306-5370eb85ae62`.
+- Detail hero and Tbilisi highlight/gallery: [Old Town and the Kura River](https://unsplash.com/photos/river-with-bridge-and-old-town-on-hill-bjbBlbX-XEg), image `photo-1759506346306-5370eb85ae62`, verified as Tbilisi, Georgia. The seed imports it into Payload Media; it is not fetched during public page requests.
 - Kazbegi highlight/gallery: [Gergeti Trinity Church below Mount Kazbek](https://unsplash.com/photos/snow-capped-mountain-with-gergeti-trinity-church-2ZcyeRzucoo), image `photo-1761649653559-bf4b309d15d6`.
 - Kakheti highlight/gallery: [vineyard at Shakriani](https://unsplash.com/photos/a-vineyard-with-mountains-in-the-background-at-sunset-Lf__9L2SHVQ), image `photo-1688568383745-2369fe4abbc4`; source location is Shakriani, Kakheti, Georgia.
 
@@ -46,6 +45,6 @@ Reviewed 2026-09-30. Remote image inputs use the original Unsplash CDN asset pat
 
 ## Reuse and CMS notes
 
-The preview fallback and development seed read `src/content/destinations-data.json`. Homepage inspiration tiles now select the matching destination's canonical primary image rather than maintaining a duplicate list. The seed refreshes only known legacy demo image URLs and preserves uploaded Payload Media relations. Manually uploaded CMS assets remain editorial overrides and require a separate admin review if their depicted subjects have not been verified.
+The preview fallback and development seed read `src/content/destinations-data.json`. Homepage inspiration tiles now select the matching destination's canonical primary image rather than maintaining a duplicate list. The explicit seed imports approved Unsplash media into Payload Media and preserves editor-selected Media relations. Production page requests use CMS Media URLs only; no remote destination image fetch runs in the frontend. Manually uploaded CMS assets remain editorial overrides and require an admin to confirm subject and alt text.
 
 The homepage hero source is the original Unsplash asset `photo-1534008897995-27a23e859048`, reported by the source as 3992 × 2992 pixels. A byte size for the unparameterized original was not available from this restricted environment; the optimized Next image candidate was measured in the running browser instead.

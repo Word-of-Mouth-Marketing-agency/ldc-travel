@@ -20,7 +20,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
     <footer className="site-footer">
       <div className="site-container footer-main">
         <div className="footer-brand-column">
-          <Image src="/brand/ldc-travel-white.webp" alt="LDC Travel — Tourism Marketing" width={1254} height={1254} sizes="128px" className="footer-logo" />
+          <Image src={site.footerLogo.src} alt={site.footerLogo.alt} width={site.footerLogo.width ?? 1254} height={site.footerLogo.height ?? 1254} sizes="128px" className="footer-logo" />
           <p>{site.footerCopy}</p>
         </div>
         {groups.map((group) => (
@@ -32,12 +32,12 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
         <div className="footer-contact-column">
           <h2>Our offices</h2>
           <div className="footer-office-group">
-            <p className="footer-office-label">Egypt</p>
+            <p className="footer-office-label">{site.egyptOfficeLabel}</p>
             <p><Icon name="pin" /> {site.office}</p>
             <a href={egyptWhatsappHref} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={16} /> {site.egyptWhatsappDisplay}</a>
           </div>
           <div className="footer-office-group">
-            <p className="footer-office-label">Saudi Arabia</p>
+            <p className="footer-office-label">{site.saudiOfficeLabel}</p>
             <p className="footer-office-address"><Icon name="pin" /> <span>{site.saudiOffice}</span></p>
             <a href={createWhatsAppUrl(whatsappConfig)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={16} /> {site.whatsappDisplay}</a>
           </div>
@@ -45,7 +45,7 @@ export function Footer({ site, whatsappConfig }: { site: SiteViewModel; whatsapp
         </div>
       </div>
       <div className="site-container footer-bottom">
-        <p>© {new Date().getFullYear()} LDC Travel. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
         <p>Powered by <a className="word-of-mouth-credit" href="https://wordofmoutheg.com" target="_blank" rel="noopener noreferrer">WORD OF MOUTH</a></p>
       </div>
     </footer>

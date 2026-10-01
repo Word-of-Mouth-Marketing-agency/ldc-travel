@@ -27,15 +27,15 @@ function CtaLink({ cta, primary = false }: { cta: Cta; primary?: boolean }) {
   return <a className={className} href={cta.href}>{cta.label}<Icon name="arrow" /></a>;
 }
 
-export function DestinationsSection({ items }: { items: DestinationViewModel[] }) {
+export function DestinationsSection({ items, content }: { items: DestinationViewModel[]; content: HomepageViewModel["destinationsSection"] }) {
   return (
     <section className="content-section destinations-section" id="destinations" aria-labelledby="destinations-heading">
       <div className="site-container">
         <SectionHeading
-          eyebrow="The world, in focus"
+          eyebrow={content.eyebrow}
           id="destinations-heading"
-          title="Choose a place that feels like you."
-          description="Six destinations to start with, each offering a different way to see more of the world."
+          title={content.headline}
+          description={content.description}
         />
         <div className="destination-grid">
           {items.slice(0, 6).map((destination, index) => (
@@ -58,6 +58,7 @@ export function DestinationsSection({ items }: { items: DestinationViewModel[] }
 }
 
 export function WhyLdcSection({ content }: { content: HomepageViewModel["whyLdc"] }) {
+  if (!content.headline && !content.items.length) return null;
   return (
     <section className="content-section why-section" id="why-ldc" aria-labelledby="why-heading">
       <div className="site-container why-layout">
@@ -96,6 +97,7 @@ function InspirationCard({ item }: { item: InspirationItem }) {
 }
 
 export function InspirationSection({ content }: { content: HomepageViewModel["inspiration"] }) {
+  if (!content.headline && !content.items.length) return null;
   return (
     <section className="content-section inspiration-section" id="inspiration" aria-labelledby="inspiration-heading">
       <div className="site-container">
@@ -108,7 +110,8 @@ export function InspirationSection({ content }: { content: HomepageViewModel["in
   );
 }
 
-export function DestinationCtaSection({ content, whatsappHref }: { content: HomepageViewModel["destinationCta"]; whatsappHref: string }) {
+export function DestinationCtaSection({ content, destinations, whatsappHref }: { content: HomepageViewModel["destinationCta"]; destinations: DestinationViewModel[]; whatsappHref: string }) {
+  if (!content.headline && !content.form.headline) return null;
   return (
     <section className="destination-cta-section" aria-labelledby="destination-cta-heading">
       <div className="site-container">
@@ -117,14 +120,14 @@ export function DestinationCtaSection({ content, whatsappHref }: { content: Home
             <p className="section-eyebrow">{content.eyebrow}</p>
             <h2 id="destination-cta-heading">{content.headline}</h2>
             <p>{content.description}</p>
-            <p className="destination-cta-destinations">Turkey · Russia · Bali · Georgia · Indonesia · Thailand</p>
+            <p className="destination-cta-destinations">{destinations.map((destination) => destination.title).join(" · ")}</p>
             <div className="destination-cta-actions">
               <CtaLink cta={content.primaryCta} primary />
               <CtaLink cta={content.secondaryCta} />
             </div>
           </div>
           <div className="destination-cta-form-panel">
-            <ContactForm whatsappHref={whatsappHref} />
+            <ContactForm whatsappHref={whatsappHref} copy={content.form} />
           </div>
         </div>
       </div>
@@ -132,14 +135,15 @@ export function DestinationCtaSection({ content, whatsappHref }: { content: Home
   );
 }
 
-export function FaqSection({ items }: { items: FaqViewModel[] }) {
+export function FaqSection({ items, content }: { items: FaqViewModel[]; content: HomepageViewModel["faqSection"] }) {
+  if (!items.length) return null;
   return (
     <section className="content-section faq-section" aria-labelledby="faq-heading">
       <div className="site-container faq-layout">
         <RevealHeading className="faq-intro">
-          <p className="section-eyebrow" data-reveal-heading>Good to know</p>
-          <h2 id="faq-heading" data-reveal-heading>Questions, answered simply.</h2>
-          <p data-reveal-heading>Still choosing? Start a conversation with the LDC Travel team.</p>
+          <p className="section-eyebrow" data-reveal-heading>{content.eyebrow}</p>
+          <h2 id="faq-heading" data-reveal-heading>{content.headline}</h2>
+          {content.description ? <p data-reveal-heading>{content.description}</p> : null}
         </RevealHeading>
         <div className="faq-list">
           {items.map((item, index) => <details className="faq-item" key={item.question} open={index === 0}><summary>{item.question}<Icon name="chevron" /></summary><p>{item.answer}</p></details>)}

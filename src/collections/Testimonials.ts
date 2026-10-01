@@ -1,9 +1,10 @@
 import type { CollectionConfig } from "payload";
+import { authenticatedCollectionAccess } from "./access";
 
 export const Testimonials: CollectionConfig = {
   slug: "testimonials",
   admin: { useAsTitle: "displayName", group: "Content" },
-  access: { read: () => true },
+  access: authenticatedCollectionAccess,
   fields: [
     { name: "displayName", type: "text", required: true },
     { name: "location", type: "text" },

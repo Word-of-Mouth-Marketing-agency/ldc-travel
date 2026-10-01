@@ -13,13 +13,6 @@ export function StructuredData({ data }: { data: JsonLdValue }): ReactNode {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serialize(data) }} />;
 }
 
-const socialUrls = [
-  "https://www.instagram.com/ldctravels.eg/",
-  "https://www.facebook.com/profile.php?id=61591627376189",
-  "https://www.tiktok.com/@ldc.travel.agency",
-  "https://www.linkedin.com/company/ldctravel/",
-];
-
 export function SiteStructuredData() {
   const siteUrl = getSiteUrl();
   const organizationId = siteUrl ? `${siteUrl}/#organization` : undefined;
@@ -34,7 +27,6 @@ export function SiteStructuredData() {
             "@type": "Organization",
             ...(organizationId ? { "@id": organizationId, url: siteUrl, logo: toAbsoluteUrl("/brand/ldc-travel-primary.webp", siteUrl) } : {}),
             name: "LDC Travel",
-            sameAs: socialUrls,
           },
           {
             "@type": "WebSite",

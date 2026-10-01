@@ -59,11 +59,11 @@ The exact root and owner require a fresh VPS audit. `shared/.env` and `media/` m
 ## Deploy application
 
 1. Create the next release directory without touching `current`.
-2. Copy the approved source/artifact for commit `8187c61` (`fix: simplify social and destination page ux`) or a later approved release. Do not include unrelated working-tree edits.
+2. Copy only the clean, reviewed, approved release commit. Do not include unrelated working-tree edits.
 3. Link the reviewed environment file and persistent media path.
 4. Run a locked dependency install using `pnpm-lock.yaml`; do not update dependencies.
 5. Run `pnpm build` before exposing the release.
-6. Run Payload migrations against the dedicated LDC database only, after the verified backup: `pnpm payload migrate`.
+6. Confirm the reviewed pending migration list, take and verify a fresh backup, then run all pending Payload migrations against the dedicated LDC database only: `pnpm payload migrate`. Never apply generated migrations to a shared or production database outside the approved release/change gate.
 7. Start only the LDC application with `pnpm start -- -p <PORT>` and `UI_PREVIEW_MODE=false`.
 8. Verify `http://127.0.0.1:<PORT>/api/health` and local public routes before proxy work.
 
@@ -85,7 +85,7 @@ Also verify application logs contain no secrets, passwords, inquiry message bodi
 
 ## Migration and seed policy
 
-Never run the demo seed automatically on startup or every deploy. For the initial production content load, use an explicit approved operation after the database is created and backed up. Review the idempotent seed output and confirm manually edited CMS fields are preserved. Do not use the seed as a mechanism to overwrite editorial content.
+Never run the demo seed automatically on startup or every deploy. The seed is merge-missing and creates demo content, not verified client records. For any initial production content load, first review its exact behavior, obtain explicit content-owner approval, verify the target database and backup, then use the one-command production opt-in. Review output and confirm manually edited CMS fields are preserved. Do not use the seed to overwrite editorial content or create admin users/inquiries.
 
 ## Rollback decision
 

@@ -11,16 +11,18 @@ export type SeoInput = {
   socialImageUrl?: string | null;
 };
 
+const productionSiteUrl = "https://ldc-tourism.com";
+
 export function getSiteUrl() {
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (!configured) return undefined;
+  if (!configured) return productionSiteUrl;
 
   try {
     const url = new URL(configured);
-    if (url.protocol !== "http:" && url.protocol !== "https:") return undefined;
+    if (url.protocol !== "http:" && url.protocol !== "https:") return productionSiteUrl;
     return url.origin;
   } catch {
-    return undefined;
+    return productionSiteUrl;
   }
 }
 
@@ -38,16 +40,13 @@ export function buildPageMetadata({
   socialImageUrl,
 }: SeoInput): Metadata {
   const canonical = siteUrl ? new URL(pathname, siteUrl).toString() : undefined;
-  const siteSuffix = ` | ${siteName}`;
-  const pageTitle = title.endsWith(siteSuffix) ? title.slice(0, -siteSuffix.length) : title;
-
   return {
-    title: pageTitle,
+    title: { absolute: title },
     description,
     robots: isUiPreviewMode() ? { index: false, follow: false } : { index: true, follow: true },
     alternates: canonical ? { canonical } : undefined,
     openGraph: {
-      title: pageTitle,
+      title,
       description,
       url: canonical,
       siteName,
@@ -56,9 +55,17 @@ export function buildPageMetadata({
     },
     twitter: {
       card: socialImageUrl ? "summary_large_image" : "summary",
-      title: pageTitle,
+      title,
       description,
       images: socialImageUrl ? [socialImageUrl] : undefined,
     },
+  };
+}
+
+export function buildUnavailableMetadata(title: string): Metadata {
+  return {
+    title: { absolute: title },
+    description: "LDC Travel content is temporarily unavailable. Please try again shortly.",
+    robots: { index: false, follow: false },
   };
 }

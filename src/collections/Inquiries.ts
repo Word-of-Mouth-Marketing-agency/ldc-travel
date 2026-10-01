@@ -5,9 +5,10 @@ import { inquiryTypeOptions } from "../lib/inquiry-validation";
 export const Inquiries: CollectionConfig = {
   slug: "inquiries",
   admin: {
-    defaultColumns: ["fullName", "destinationText", "destination", "inquiryType", "source", "status", "createdAt"],
+    defaultColumns: ["fullName", "email", "phone", "destinationText", "destination", "inquiryType", "source", "status", "createdAt"],
     group: "Leads",
     useAsTitle: "fullName",
+    description: "Private travel inquiries submitted through the Contact page, destination forms, and Design Your Trip.",
   },
   access: {
     create: () => false,

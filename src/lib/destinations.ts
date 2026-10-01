@@ -4,13 +4,13 @@ import {
   getDemoDestination,
   type DestinationDetailViewModel,
 } from "../content/destinations";
+import type { DestinationHighlight } from "../content/destinations";
 import type { DestinationViewModel, ImageSource } from "../content/homepage-demo";
 import { getLaunchMarketCode } from "./markets";
 import { isUiPreviewMode } from "./preview";
+import { readMediaImage } from "./homepage";
 
 type RecordValue = Record<string, unknown>;
-
-const allowedExternalImageHosts = new Set(["images.unsplash.com", "images.pexels.com"]);
 
 export class DestinationDataError extends Error {
   constructor(message: string, cause?: unknown) {
@@ -19,109 +19,89 @@ export class DestinationDataError extends Error {
   }
 }
 
-function asRecord(value: unknown): RecordValue | undefined {
-  return value && typeof value === "object" && !Array.isArray(value) ? value as RecordValue : undefined;
+const asRecord = (value: unknown): RecordValue | undefined =>
+  value && typeof value === "object" && !Array.isArray(value) ? value as RecordValue : undefined;
+const asString = (value: unknown) => typeof value === "string" ? value.trim() : "";
+const asRecords = (value: unknown) => Array.isArray(value) ? value.map(asRecord).filter((item): item is RecordValue => Boolean(item)) : [];
+
+function requiredString(value: unknown, field: string) {
+  const text = asString(value);
+  if (!text) throw new DestinationDataError(`Required destination content is missing: ${field}.`);
+  return text;
 }
 
-function asString(value: unknown, fallback = "") {
-  return typeof value === "string" && value.trim() ? value.trim() : fallback;
-}
-
-function asRecords(value: unknown) {
-  return Array.isArray(value) ? value.map(asRecord).filter((item): item is RecordValue => Boolean(item)) : [];
-}
-
-function readAllowedImageUrl(value: string) {
-  if (value.startsWith("/") && !value.startsWith("//")) return value;
-
-  try {
-    const parsed = new URL(value);
-    return parsed.protocol === "https:" && allowedExternalImageHosts.has(parsed.hostname) ? parsed.toString() : "";
-  } catch {
-    return "";
-  }
-}
-
-function readImage(value: unknown, fallback: ImageSource): ImageSource {
-  const record = asRecord(value);
-  const media = asRecord(record?.image) ?? asRecord(record?.coverImage) ?? record;
-  const sizes = asRecord(media?.sizes);
-  const cardSize = asRecord(sizes?.card);
-  const source = readAllowedImageUrl(asString(media?.url)) ||
-    readAllowedImageUrl(asString(cardSize?.url)) ||
-    readAllowedImageUrl(asString(record?.imageUrl));
-
-  return { src: source || fallback.src, alt: asString(media?.alt, asString(record?.alt, fallback.alt)) };
+function developmentFallback(): DestinationDetailViewModel[] {
+  if (process.env.NODE_ENV !== "development" && !isUiPreviewMode()) throw new DestinationDataError("Destination content is unavailable.");
+  return demoDestinations;
 }
 
 function readRichText(value: unknown): string {
   const record = asRecord(value);
   if (!record) return "";
   const text = asString(record.text);
-  if (text) return text;
-  return asRecords(record.children).map(readRichText).filter(Boolean).join(" ");
+  const children = asRecords(record.children).map(readRichText).filter(Boolean);
+  return [text, ...children].filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
 }
 
-function isVisibleInMarket(value: RecordValue, marketId: string) {
-  const markets = value.markets;
-  return asRecords(markets).some((market) => String(market.id ?? "") === marketId) ||
-    (Array.isArray(markets) && markets.some((market) => String(market) === marketId));
+function getMedia(value: unknown, preferredSize: "card" | "hero" = "card") {
+  return readMediaImage(value, asString(asRecord(value)?.alt), preferredSize);
 }
 
-function fallbackFor(slug: string) {
-  return getDemoDestination(slug);
+function mapFaqs(value: unknown) {
+  return asRecords(value).map((faq) => ({ question: asString(faq.question), answer: readRichText(faq.answer) }))
+    .filter((faq) => faq.question && faq.answer);
 }
 
-function mapDestinationRecord(value: unknown, fallback: DestinationDetailViewModel): DestinationDetailViewModel {
+function mapDestinationRecord(value: unknown): DestinationDetailViewModel {
   const record = asRecord(value);
-  const slug = asString(record?.slug, fallback.slug);
-  const fallbackHighlights = fallback.highlights;
-  const highlights = asRecords(record?.highlights).map((item, index) => {
-    const fallbackHighlight = fallbackHighlights[index % fallbackHighlights.length];
-    return {
-      title: asString(item.title, fallbackHighlight.title),
-      description: asString(item.description, fallbackHighlight.description),
-      image: readImage(item, fallbackHighlight.image),
-    };
-  });
-  const fallbackExperiences = fallback.experiences;
-  const experiences = asRecords(record?.experiences).map((item, index) => {
-    const fallbackExperience = fallbackExperiences[index % fallbackExperiences.length];
-    return {
-      title: asString(item.title, fallbackExperience.title),
-      description: asString(item.description, fallbackExperience.description),
-      icon: asString(item.icon, fallbackExperience.icon),
-    };
-  });
-  const usefulInformation = asRecords(record?.usefulInformation).map((item, index) => {
-    const fallbackInformation = fallback.usefulInformation[index % fallback.usefulInformation.length];
-    return {
-      label: asString(item.label, fallbackInformation.label),
-      value: asString(item.value, fallbackInformation.value),
-    };
-  });
-  const gallery = asRecords(record?.gallery).map((item, index) => readImage(item, fallback.gallery[index % fallback.gallery.length]));
-  const relatedDestinations = asRecords(record?.relatedDestinations).map((item) => asString(item.slug)).filter(Boolean);
-  const faqs = asRecords(record?.faqs).map((item) => ({ question: asString(item.question), answer: readRichText(item.answer) })).filter((item) => item.question && item.answer);
+  if (!record) throw new DestinationDataError("A destination record could not be read.");
+  const slug = requiredString(record.slug, "slug");
+  if (!approvedDestinationSlugs.includes(slug) || asString(record.status) !== "published") {
+    throw new DestinationDataError("An unpublished or unapproved destination was returned to the public site.");
+  }
+
+  const coverImage = getMedia(record.coverImage);
+  const heroImage = getMedia(record.heroImage, "hero") ?? coverImage;
+  if (!coverImage || !heroImage) throw new DestinationDataError(`The ${slug} destination requires a primary Media image and descriptive alt text.`);
+
+  const highlights: DestinationHighlight[] = asRecords(record.highlights).map((item) => ({
+    title: asString(item.title),
+    description: asString(item.description),
+    image: getMedia(item.image),
+  })).filter((item) => item.title && item.description);
+
+  const experiences = asRecords(record.experiences).map((item) => ({
+    title: asString(item.title),
+    description: asString(item.description),
+    icon: asString(item.icon) || "sparkles",
+  })).filter((item) => item.title && item.description);
+
+  const information = asRecords(record.usefulInformation).map((item) => ({ label: asString(item.label), value: asString(item.value) }))
+    .filter((item) => item.label && item.value);
+  const gallery = asRecords(record.gallery).map((item) => getMedia(item)).filter((image): image is ImageSource => Boolean(image));
+  const relatedDestinations = asRecords(record.relatedDestinations).map((item) => asString(item.slug))
+    .filter((relatedSlug) => approvedDestinationSlugs.includes(relatedSlug) && relatedSlug !== slug);
+  const seo = asRecord(record.seo);
+  const overview = asString(record.overview) || readRichText(record.content);
 
   return {
     slug,
-    title: asString(record?.title, fallback.title),
-    country: asString(record?.country, fallback.country),
-    regionOrCity: asString(record?.regionOrCity, fallback.regionOrCity),
-    eyebrow: asString(record?.eyebrow, fallback.eyebrow),
-    summary: asString(record?.summary, fallback.summary),
-    heroImage: readImage(record, fallback.heroImage),
-    overview: asString(record?.overview, readRichText(record?.content) || fallback.overview),
-    highlights: highlights.length ? highlights : fallback.highlights,
-    experiences: experiences.length ? experiences : fallback.experiences,
-    bestTimeToVisit: asString(record?.bestTimeToVisit, fallback.bestTimeToVisit),
-    usefulInformation: usefulInformation.length ? usefulInformation : fallback.usefulInformation,
-    gallery: gallery.length ? gallery : fallback.gallery,
-    seoMetaTitle: asString(asRecord(record?.seo)?.metaTitle, fallback.seoMetaTitle),
-    seoMetaDescription: asString(asRecord(record?.seo)?.metaDescription, fallback.seoMetaDescription),
-    relatedDestinations: relatedDestinations.length ? relatedDestinations : fallback.relatedDestinations,
-    faqs: faqs.length ? faqs : fallback.faqs,
+    title: requiredString(record.title, `${slug} title`),
+    country: requiredString(record.country, `${slug} country`),
+    regionOrCity: asString(record.regionOrCity),
+    eyebrow: asString(record.eyebrow),
+    summary: requiredString(record.summary, `${slug} summary`),
+    heroImage,
+    overview: requiredString(overview, `${slug} overview`),
+    highlights,
+    experiences,
+    bestTimeToVisit: asString(record.bestTimeToVisit),
+    usefulInformation: information,
+    gallery,
+    seoMetaTitle: asString(seo?.metaTitle) || `${asString(record.title)} Travel | LDC Travel`,
+    seoMetaDescription: asString(seo?.metaDescription) || asString(record.summary),
+    relatedDestinations,
+    faqs: mapFaqs(record.faqs),
   };
 }
 
@@ -137,79 +117,82 @@ function mapListingItem(destination: DestinationDetailViewModel): DestinationVie
   };
 }
 
-function toListingItem(destination: DestinationDetailViewModel): DestinationViewModel {
-  return mapListingItem(destination);
+async function findLaunchMarket(payload: Awaited<ReturnType<(typeof import("payload"))["getPayload"]>>) {
+  const marketResult = await payload.find({
+    collection: "markets",
+    where: { and: [{ code: { equals: getLaunchMarketCode() } }, { isActive: { equals: true } }, { isPublic: { equals: true } }] },
+    limit: 1,
+    depth: 0,
+    overrideAccess: false,
+  });
+  const market = marketResult.docs[0];
+  if (!market) throw new DestinationDataError("The public launch market is unavailable.");
+  return market;
 }
 
-function developmentFallback(): DestinationDetailViewModel[] {
-  if (process.env.NODE_ENV !== "development" && !isUiPreviewMode()) {
-    throw new DestinationDataError("Destination content is unavailable.");
+async function findPublishedDestinations(payload: Awaited<ReturnType<(typeof import("payload"))["getPayload"]>>, marketId: string) {
+  const result = await payload.find({
+    collection: "destinations",
+    where: { and: [{ status: { equals: "published" } }, { markets: { in: [marketId] } }] },
+    limit: 30,
+    depth: 3,
+    overrideAccess: false,
+  });
+  const records = result.docs.map(mapDestinationRecord);
+  const bySlug = new Map(records.map((record) => [record.slug, record]));
+  const ordered = approvedDestinationSlugs.map((slug) => bySlug.get(slug)).filter((item): item is DestinationDetailViewModel => Boolean(item));
+  if (ordered.length !== approvedDestinationSlugs.length) throw new DestinationDataError("One or more approved destinations are not published for the public launch market.");
+  return ordered;
+}
+
+async function getPayloadClient() {
+  if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
+    if (process.env.NODE_ENV === "development") return null;
+    throw new DestinationDataError("Destination CMS content is unavailable.");
   }
-  return demoDestinations;
+  const { getPayload } = await import("payload");
+  const { default: config } = await import("../../payload.config");
+  return getPayload({ config });
 }
 
 export async function getDestinationsData(): Promise<DestinationViewModel[]> {
-  if (isUiPreviewMode()) return demoDestinations.map(toListingItem);
-  if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) return developmentFallback().map(toListingItem);
-
+  if (isUiPreviewMode()) return demoDestinations.map(mapListingItem);
   try {
-    const { getPayload } = await import("payload");
-    const { default: config } = await import("../../payload.config");
-    const payload = await getPayload({ config });
-    const marketResult = await payload.find({ collection: "markets", where: { and: [{ code: { equals: getLaunchMarketCode() } }, { isActive: { equals: true } }, { isPublic: { equals: true } }] }, limit: 1, depth: 0 });
-    const market = marketResult.docs[0];
-    if (!market) throw new DestinationDataError("Launch market is unavailable.");
-
-    const result = await payload.find({
-      collection: "destinations",
-      where: { status: { equals: "published" } },
-      limit: 30,
-      depth: 2,
-    });
-    const marketId = String(market.id);
-    const records = result.docs
-      .map(asRecord)
-      .filter((item): item is RecordValue => Boolean(item))
-      .filter((item) => approvedDestinationSlugs.includes(asString(item.slug)) && isVisibleInMarket(item, marketId));
-    const ordered = approvedDestinationSlugs.map((slug) => records.find((record) => record.slug === slug)).filter((record): record is RecordValue => Boolean(record));
-    return ordered.map((record, index) => {
-      const fallback = fallbackFor(asString(record.slug)) ?? demoDestinations[index];
-      return toListingItem(mapDestinationRecord(record, fallback));
-    });
+    const payload = await getPayloadClient();
+    if (!payload) return developmentFallback().map(mapListingItem);
+    const market = await findLaunchMarket(payload);
+    const destinations = await findPublishedDestinations(payload, String(market.id));
+    return destinations.map(mapListingItem);
   } catch (error) {
     if (process.env.NODE_ENV !== "development") throw new DestinationDataError("Destination content is unavailable.", error);
-    return developmentFallback().map(toListingItem);
+    return developmentFallback().map(mapListingItem);
   }
 }
 
 export async function getDestinationData(slug: string): Promise<DestinationDetailViewModel | null> {
   if (!approvedDestinationSlugs.includes(slug)) return null;
-  const fallback = fallbackFor(slug);
-  if (!fallback) return null;
-  if (isUiPreviewMode()) return fallback;
-  if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
-    if (process.env.NODE_ENV === "development") return fallback;
-    throw new DestinationDataError("Destination content is unavailable.");
-  }
+  if (isUiPreviewMode()) return getDemoDestination(slug) ?? null;
 
   try {
-    const { getPayload } = await import("payload");
-    const { default: config } = await import("../../payload.config");
-    const payload = await getPayload({ config });
-    const marketResult = await payload.find({ collection: "markets", where: { and: [{ code: { equals: getLaunchMarketCode() } }, { isActive: { equals: true } }, { isPublic: { equals: true } }] }, limit: 1, depth: 0 });
-    const market = marketResult.docs[0];
-    if (!market) throw new DestinationDataError("Launch market is unavailable.");
-    const result = await payload.find({ collection: "destinations", where: { and: [{ slug: { equals: slug } }, { status: { equals: "published" } }] }, limit: 1, depth: 2 });
-    const record = asRecord(result.docs[0]);
-    if (!record || !isVisibleInMarket(record, String(market.id))) return null;
-    return mapDestinationRecord(record, fallback);
+    const payload = await getPayloadClient();
+    if (!payload) return getDemoDestination(slug) ?? null;
+    const market = await findLaunchMarket(payload);
+    const result = await payload.find({
+      collection: "destinations",
+      where: { and: [{ slug: { equals: slug } }, { status: { equals: "published" } }, { markets: { in: [String(market.id)] } }] },
+      limit: 1,
+      depth: 3,
+      overrideAccess: false,
+    });
+    const record = result.docs[0];
+    return record ? mapDestinationRecord(record) : null;
   } catch (error) {
     if (process.env.NODE_ENV !== "development") throw new DestinationDataError("Destination content is unavailable.", error);
-    return fallback;
+    return getDemoDestination(slug) ?? null;
   }
 }
 
 export function getRelatedDestinationItems(destination: DestinationDetailViewModel, destinations: DestinationViewModel[]) {
-  const allowed = destination.relatedDestinations.length ? destination.relatedDestinations : approvedDestinationSlugs.filter((slug) => slug !== destination.slug).slice(0, 2);
-  return allowed.map((slug) => destinations.find((item) => item.slug === slug)).filter((item): item is DestinationViewModel => Boolean(item)).slice(0, 2);
+  return destination.relatedDestinations.map((slug) => destinations.find((item) => item.slug === slug))
+    .filter((item): item is DestinationViewModel => Boolean(item)).slice(0, 2);
 }

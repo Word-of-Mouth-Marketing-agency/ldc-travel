@@ -1,378 +1,497 @@
-import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { readFile, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 if (!process.env.DATABASE_URL || !process.env.PAYLOAD_SECRET) {
-  console.error("Seed requires DATABASE_URL and PAYLOAD_SECRET in the local environment.");
-  process.exit(1);
+  throw new Error("Seed requires DATABASE_URL and PAYLOAD_SECRET from the explicitly selected environment.");
+}
+if (process.env.NODE_ENV === "production" && process.env.LDC_ALLOW_PRODUCTION_SEED !== "true") {
+  throw new Error("Production seed is disabled. Set LDC_ALLOW_PRODUCTION_SEED=true only for an explicitly approved run.");
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const saudiOfficeAddress = ["18th Floor, Al Faisaliah Tower", "King Fahd Road, Al Olaya District", "P.O. Box 54995", "Riyadh 11524, Kingdom of Saudi Arabia"].join("\n");
-const legacySaudiOfficeAddress = "الطابق 18برج الفصيلة،طريق الملك فهد حي العليا ص.ب54995،الرياض11524،المملكه العربيه السعودية";
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+const projectDir = path.resolve(scriptDir, "..");
+const maxImageBytes = 5 * 1024 * 1024;
+let mediaDirectory;
+const mediaBySource = new Map();
+const socialAccounts = {
+  egypt: {
+    instagram: "https://www.instagram.com/ldctravels.eg/",
+    facebook: "https://www.facebook.com/profile.php?id=61591627376189",
+  },
+  saudi: {
+    instagram: "https://www.instagram.com/elwajha_elraeda_travels/",
+    facebook: "https://www.facebook.com/profile.php?id=61575912646557#",
+  },
+};
+const officeData = {
+  egypt: { label: "Egypt", address: "15 Mahmoud Essmat Hamdy, Sheraton", whatsappDisplay: "+20 12 11118118", whatsappNumber: "201211118118" },
+  saudi: {
+    label: "Saudi Arabia",
+    address: ["18th Floor, Al Faisaliah Tower", "King Fahd Road, Al Olaya District", "P.O. Box 54995", "Riyadh 11524, Kingdom of Saudi Arabia"].join("\n"),
+    whatsappDisplay: "+966 7277981053",
+    whatsappNumber: "9667277981053",
+  },
+};
+
 const { default: config } = await import("../payload.config.ts");
 const { getPayload } = await import("payload");
-const destinationContent = JSON.parse(await readFile(new URL("../src/content/destinations-data.json", import.meta.url), "utf8"));
-
-const image = (id) => `https://images.unsplash.com/${id}`;
-const legacyImage = (id) => `${image(id)}?auto=format&fit=crop&w=1600&q=85`;
-const destinationImageUrl = (slug) => {
-  const destination = destinationContent.find((item) => item.slug === slug);
-  return destination?.heroImage ?? destination?.highlights?.[0]?.image;
-};
-const inspirationDestinationSlugs = ["turkey", "georgia", "bali", "thailand"];
-const legacyHomepageInspirationImageIds = [
-  "photo-1524231757912-21f4fe3a7200",
-  "photo-1569396116180-210c182bedb8",
-  "photo-1537996194471-e657df975ab4",
-  "photo-1508009603885-50cf7c579365",
-];
-const heroImageId = "photo-1534008897995-27a23e859048";
-const heroImageUrl = `https://images.unsplash.com/${heroImageId}`;
-const legacyHeroImageUrls = [
-  "/hero-travel.webp",
-  legacyImage(heroImageId),
-  legacyImage("photo-1558460683-79b76978fc70"),
-  legacyImage("photo-1685858196931-c84ff0d785a7"),
-];
-
-const lexical = (text) => ({
-  root: {
-    type: "root",
-    children: [{ type: "paragraph", children: [{ type: "text", text, version: 1 }], direction: null, format: "", indent: 0, version: 1 }],
-    direction: null,
-    format: "",
-    indent: 0,
-    version: 1,
-  },
-});
+const { demoHomepage } = await import("../src/content/homepage-demo.ts");
+const { demoDestinations } = await import("../src/content/destinations.ts");
+const { demoAboutPage, demoContactPage, demoDestinationsPage } = await import("../src/content/page-content-demo.ts");
+const destinationContent = JSON.parse(await readFile(path.join(projectDir, "src", "content", "destinations-data.json"), "utf8"));
+let payload;
 
 async function findBy(collection, field, value) {
-  const result = await payload.find({ collection, where: { [field]: { equals: value } }, limit: 1, depth: 0 });
+  const result = await payload.find({
+    collection,
+    where: { [field]: { equals: value } },
+    limit: 1,
+    depth: 1,
+    overrideAccess: true,
+  });
   return result.docs[0];
 }
 
-async function ensure(collection, field, value, data) {
-  const existing = await findBy(collection, field, value);
-  if (existing) {
-    console.log(`skip ${collection}:${value}`);
-    return existing;
+function isEmpty(value) {
+  return value === null || value === undefined || value === "" || (Array.isArray(value) && value.length === 0);
+}
+
+function missingFields(existing, defaults) {
+  const patch = {};
+  const source = existing && typeof existing === "object" ? existing : {};
+  for (const [key, defaultValue] of Object.entries(defaults)) {
+    const current = source[key];
+    if (isEmpty(current)) {
+      patch[key] = defaultValue;
+    } else if (current && typeof current === "object" && !Array.isArray(current) && defaultValue && typeof defaultValue === "object" && !Array.isArray(defaultValue)) {
+      const nested = missingFields(current, defaultValue);
+      if (Object.keys(nested).length) patch[key] = { ...current, ...nested };
+    }
+  }
+  return patch;
+}
+
+function enrichRows(existingRows, defaultRows, matchKey = "title") {
+  if (!Array.isArray(existingRows) || existingRows.length === 0) return defaultRows;
+  const defaultsByKey = new Map(defaultRows.map((row) => [row[matchKey], row]));
+  return existingRows.map((row) => {
+    const defaults = defaultsByKey.get(row?.[matchKey]);
+    return defaults ? { ...row, ...missingFields(row, defaults) } : row;
+  });
+}
+
+function normalizeImageSource(source) {
+  if (typeof source !== "string") throw new Error("An image source is missing from the reviewed seed content.");
+  if (source.startsWith("/")) {
+    const allowedLocal = new Set([
+      "/hero-travel.webp",
+      "/destinations/turkey.webp",
+      "/destinations/thailand.webp",
+      "/destinations/russia-st-isaacs.webp",
+      "/brand/ldc-travel-primary.webp",
+      "/brand/ldc-travel-white.webp",
+    ]);
+    if (!allowedLocal.has(source)) throw new Error("Seed local image source is not in the reviewed allowlist.");
+    return { key: source, localPath: path.resolve(projectDir, "public", `.${source}`), sourceUrl: undefined };
   }
 
-  const created = await payload.create({ collection, data });
-  console.log(`create ${collection}:${value}`);
+  const url = new URL(source);
+  if (url.protocol !== "https:" || url.hostname !== "images.unsplash.com" || !/^\/photo-[A-Za-z0-9-]+$/.test(url.pathname)) {
+    throw new Error("Seed remote images must be curated Unsplash CDN assets without redirects.");
+  }
+  const canonical = `${url.origin}${url.pathname}`;
+  return { key: canonical, remoteUrl: `${canonical}?auto=format&fit=crop&w=2200&q=82`, sourceUrl: canonical };
+}
+
+function mimeExtension(mimeType) {
+  const known = new Map([
+    ["image/webp", ".webp"], ["image/jpeg", ".jpg"], ["image/png", ".png"], ["image/avif", ".avif"],
+  ]);
+  const extension = known.get(mimeType);
+  if (!extension) throw new Error(`Seed image MIME type is not allowed: ${mimeType || "unknown"}.`);
+  return extension;
+}
+
+async function getMedia(source, alt, options = {}) {
+  const normalized = normalizeImageSource(source);
+  const cached = mediaBySource.get(normalized.key);
+  if (cached) return cached;
+
+  const fingerprint = createHash("sha256").update(normalized.key).digest("hex").slice(0, 20);
+  let known;
+  for (const extension of [".webp", ".jpg", ".png", ".avif"]) {
+    known = await findBy("media", "filename", `ldc-${fingerprint}${extension}`);
+    if (known) break;
+  }
+  if (known) {
+    mediaBySource.set(normalized.key, known.id);
+    return known.id;
+  }
+
+  let bytes;
+  let mimeType;
+  let sourceUrl = normalized.sourceUrl;
+  if (normalized.localPath) {
+    bytes = await readFile(normalized.localPath);
+    const extension = path.extname(normalized.localPath).toLowerCase();
+    mimeType = extension === ".webp" ? "image/webp" : extension === ".png" ? "image/png" : "image/jpeg";
+  } else {
+    const response = await fetch(normalized.remoteUrl, { redirect: "error", signal: AbortSignal.timeout(20000) });
+    if (!response.ok) throw new Error(`Unable to import a reviewed Unsplash image (HTTP ${response.status}).`);
+    mimeType = (response.headers.get("content-type") ?? "").split(";")[0].trim().toLowerCase();
+    const announcedSize = Number(response.headers.get("content-length"));
+    if (Number.isFinite(announcedSize) && announcedSize > maxImageBytes) {
+      throw new Error("Seed image exceeds the configured 5 MiB media limit.");
+    }
+    const reader = response.body?.getReader();
+    if (!reader) throw new Error("The reviewed image response had no readable body.");
+    const chunks = [];
+    let totalBytes = 0;
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        totalBytes += value.byteLength;
+        if (totalBytes > maxImageBytes) {
+          await reader.cancel();
+          throw new Error("Seed image exceeds the configured 5 MiB media limit.");
+        }
+        chunks.push(Buffer.from(value));
+      }
+    } finally {
+      reader.releaseLock();
+    }
+    bytes = Buffer.concat(chunks, totalBytes);
+  }
+  if (bytes.byteLength > maxImageBytes) throw new Error("Seed image exceeds the configured 5 MiB media limit.");
+  const extension = mimeExtension(mimeType);
+  const filename = `ldc-${fingerprint}${extension}`;
+  mediaDirectory ??= await mkdtemp(path.join(tmpdir(), "ldc-travel-seed-"));
+  const filePath = path.join(mediaDirectory, filename);
+  await writeFile(filePath, bytes, { flag: "wx" });
+
+  const created = await payload.create({
+    collection: "media",
+    data: {
+      alt,
+      ...(options.credit ? { credit: options.credit } : {}),
+      ...(sourceUrl ? { sourceUrl } : {}),
+    },
+    filePath,
+    overrideAccess: true,
+  });
+  mediaBySource.set(normalized.key, created.id);
+  console.log(`create media:${filename}`);
+  return created.id;
+}
+
+function lexical(text) {
+  return {
+    root: {
+      type: "root",
+      children: [{ type: "paragraph", children: [{ type: "text", text, version: 1 }], direction: null, format: "", indent: 0, version: 1 }],
+      direction: null,
+      format: "",
+      indent: 0,
+      version: 1,
+    },
+  };
+}
+
+async function ensureFaq(question, answer, order, category) {
+  const existing = await findBy("faqs", "question", question);
+  if (existing) return existing;
+  const created = await payload.create({
+    collection: "faqs",
+    data: { question, answer: lexical(answer), order, enabled: true, category },
+    overrideAccess: true,
+  });
+  console.log(`create FAQ:${category}`);
   return created;
 }
 
-const payload = await getPayload({ config });
-
-const egypt = await ensure("markets", "code", "EG", {
-  name: "Egypt",
-  code: "EG",
-  locale: "en-EG",
-  currency: { code: "EGP", symbol: "EGP" },
-  isDefault: true,
-  isActive: true,
-  isPublic: true,
-  contact: {
-    office: "15 Mahmoud Essmat Hamdy, Sheraton",
-    reservationsEmail: "info@ldc-tourism.com",
-    salesEmail: "info@ldc-tourism.com",
-    whatsapp: "+966 7277981053",
-  },
-});
-
-const marketId = egypt.id;
-const destinationRelations = {
-  turkey: ["georgia", "russia"],
-  russia: ["turkey", "georgia"],
-  bali: ["indonesia", "thailand"],
-  georgia: ["turkey", "russia"],
-  indonesia: ["bali", "thailand"],
-  thailand: ["bali", "turkey"],
-};
-const destinationSeeds = destinationContent.map((destination) => [destination.slug, {
-  title: destination.title,
-  country: destination.country,
-  regionOrCity: destination.regionOrCity,
-  summary: destination.summary,
-  overview: destination.overview,
-  imageUrl: destination.heroImage ?? destination.highlights[0].image,
-  highlights: destination.highlights.map(({ title, description, image: imageUrl, alt }) => ({ title, description, imageUrl, alt })),
-  experiences: destination.experiences,
-  bestTimeToVisit: destination.bestTimeToVisit,
-  usefulInformation: destination.usefulInformation,
-  featured: true,
-  seo: { metaTitle: destination.seoMetaTitle, metaDescription: destination.seoMetaDescription },
-}]);
-
-const legacyEditorialSignatures = {
-  turkey: {
-    summary: "Layered history, dramatic landscapes, and a Mediterranean rhythm that changes from city to coast.",
-    overview: "Turkey brings together the energy of Istanbul, the sculpted valleys of Cappadocia, and a long coastline shaped by light, water, and ancient stories. It is a destination for travelers who want culture and contrast in the same journey.",
-    bestTimeToVisit: "Spring and autumn are often comfortable for city walks, cultural visits, and inland exploration. Summer suits the coast, while Cappadocia and higher inland areas can feel very different from the shoreline.",
-  },
-  russia: {
-    summary: "Monumental cityscapes, celebrated museums, and a cultural journey with a strong sense of place.",
-    overview: "Russia's classic city route moves between Moscow's historic centre and Saint Petersburg's water-shaped architectural landscape. The experience is rich in museums, public squares, theatres, palaces, and layers of cultural history.",
-    bestTimeToVisit: "The most suitable season depends on the route and experience you want. Warmer months support long city walks and riverfront time, while winter brings a different atmosphere and requires more careful planning for weather.",
-  },
-  bali: {
-    summary: "Green terraces, temple calm, warm coastlines, and a culture that invites you to slow down.",
-    overview: "Bali brings together natural beauty, cultural heritage, and a relaxed island rhythm. From Ubud's artistic centre to rice terraces, beaches, and temples by the sea, the island rewards travelers who leave room for both discovery and pause.",
-    bestTimeToVisit: "The drier months are generally popular for outdoor plans, while the wetter season can bring lush landscapes and shorter, more flexible outings. Local conditions vary across the island and by activity.",
-  },
-  georgia: {
-    summary: "Old streets, mountain horizons, generous tables, and a destination with many different moods.",
-    overview: "Georgia sits at a crossroads of Europe and Asia, bringing together a lively capital, Caucasus landscapes, Black Sea air, and a deep food and wine culture. It is compact enough to feel connected while changing character from region to region.",
-    bestTimeToVisit: "Georgia spans several landscapes and climates, so the best period depends on your route. Spring and autumn are inviting for cities, food, and walking; summer opens more mountain routes, while winter suits snow experiences in selected regions.",
-  },
-  indonesia: {
-    summary: "A broader Indonesian journey through ancient places, volcanic landscapes, creative cities, and island life.",
-    overview: "Indonesia is much larger than any single island. A destination-first journey can move through Java's cultural centres, volcanic landscapes, historic cities, and the different rhythms of islands such as Lombok, while keeping Bali as its own distinct destination.",
-    bestTimeToVisit: "Indonesia's scale means weather varies by island and activity. Drier months are often preferred for outdoor routes, but the best timing should be matched to the specific islands and experiences you want to include.",
-  },
-  thailand: {
-    summary: "Temple mornings, street-side flavour, creative city energy, and coastlines made for a change of pace.",
-    overview: "Thailand offers an easy-to-love mix of city life, cultural landmarks, northern landscapes, and islands. A well-shaped route can move from Bangkok's energy to Chiang Mai's slower rhythm and then toward the sea.",
-    bestTimeToVisit: "Thailand varies by region and coast, with seasonal differences that matter for city, mountain, and island plans. A route should be timed around the specific regions you want rather than one nationwide season assumption.",
-  },
-};
-
-function matchesLegacyEditorialCopy(existing, slug) {
-  const signature = legacyEditorialSignatures[slug];
-  return Boolean(signature && existing.summary === signature.summary && existing.overview === signature.overview && existing.bestTimeToVisit === signature.bestTimeToVisit);
+async function ensureGlobal(slug, defaults, transform = (value) => value) {
+  const existing = await payload.findGlobal({ slug, depth: 2, overrideAccess: true });
+  const data = transform(missingFields(existing, defaults), existing);
+  if (!Object.keys(data).length) {
+    console.log(`skip global:${slug}; content already exists`);
+    return existing;
+  }
+  const merged = { ...data };
+  for (const [key, value] of Object.entries(data)) {
+    const current = existing?.[key];
+    if (current && typeof current === "object" && !Array.isArray(current) && value && typeof value === "object" && !Array.isArray(value)) {
+      merged[key] = { ...current, ...value };
+    }
+  }
+  const updated = await payload.updateGlobal({ slug, data: merged, overrideAccess: true });
+  console.log(`enrich global:${slug}`);
+  return updated;
 }
 
-const legacyBrokenImageUrls = [
-  "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=1200&q=85",
-  "https://images.unsplash.com/photo-1520637836862-4d197d17c93a?auto=format&fit=crop&w=1200&q=85",
-];
-const legacyIndonesiaImageUrl = "https://images.unsplash.com/photo-1548013146-72479768bada";
-const legacyDestinationImageIds = {
-  turkey: ["photo-1524231757912-21f4fe3a7200", "photo-1528181304800-259b08848526", "photo-1566847438217-76e82d383f84", "photo-1541432901042-2d8bd64b4a9b"],
-  russia: ["photo-1513326738677-b964603b136d", "photo-1556610961-2fecc5927173", "photo-1753811604729-bc3d467e7f06"],
-  bali: ["photo-1537996194471-e657df975ab4", "photo-1555400038-63f5ba517a47", "photo-1539367628448-4bc5c9d171c8", "photo-1518548419970-58e3b4079ab2"],
-  georgia: ["photo-1569396116180-210c182bedb8", "photo-1605727216801-e27ce1d0cc28", "photo-1605649487212-47bdab064df7", "photo-1564769625905-50e93615e769"],
-  indonesia: ["photo-1780748549579-c22a0ff53982", "photo-1516690561799-46d8f74f9abf", "photo-1530789253388-582c481c54b0", "photo-1760947585876-8018a42ef327", "photo-1548013146-72479768bada"],
-  thailand: ["photo-1508009603885-50cf7c579365", "photo-1528181304800-259b08848526", "photo-1507525428034-b723cf961d3e", "photo-1526392060635-9d6019884377"],
-};
-const legacyDestinationHeroImages = {
-  turkey: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=85",
-  georgia: "https://images.unsplash.com/photo-1569396116180-210c182bedb8?auto=format&fit=crop&w=1200&q=85",
-  thailand: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1200&q=85",
-};
-
-const destinations = {};
-for (const [slug, data] of destinationSeeds) {
-  const existing = await findBy("destinations", "slug", slug);
-  if (!existing) {
-    destinations[slug] = await payload.create({ collection: "destinations", data: { ...data, slug, status: "published", markets: [marketId] } });
-    console.log(`create destinations:${slug}`);
-    continue;
-  }
-
-  const missingDetailFields = {};
-  const safeEditorialRefresh = matchesLegacyEditorialCopy(existing, slug);
-  const existingJson = JSON.stringify(existing);
-  const staleImageIds = legacyDestinationImageIds[slug] ?? [];
-  const staleImageId = (value) => staleImageIds.find((id) => String(value ?? "").includes(id));
-  const needsImageRefresh = legacyBrokenImageUrls.some((url) => existingJson.includes(url)) || staleImageIds.some((id) => existingJson.includes(id));
-  const stalePrimaryImage = staleImageId(existing.imageUrl) || (slug === "indonesia" && String(existing.imageUrl ?? "").includes(legacyIndonesiaImageUrl));
-  for (const field of ["overview", "highlights", "experiences", "bestTimeToVisit", "usefulInformation", "seo"]) {
-    if (safeEditorialRefresh || existing[field] == null || (Array.isArray(existing[field]) && existing[field].length === 0)) missingDetailFields[field] = data[field];
-  }
-  if (safeEditorialRefresh || !existing.imageUrl || stalePrimaryImage || existing.imageUrl === legacyDestinationHeroImages[slug]) missingDetailFields.imageUrl = data.imageUrl;
-  if (needsImageRefresh && Array.isArray(existing.highlights)) {
-    const refreshedHighlights = existing.highlights.map((highlight, index) => {
-      const staleUrl = staleImageId(highlight.imageUrl) || legacyBrokenImageUrls.find((url) => String(highlight.imageUrl ?? "").includes(url));
-      const canonical = data.highlights.find((item) => item.title === highlight.title) ?? data.highlights[index];
-      if (!staleUrl || highlight.image || !canonical) return highlight;
-      return { ...highlight, imageUrl: canonical.imageUrl, alt: canonical.alt };
+try {
+  payload = await getPayload({ config });
+  let egypt = await findBy("markets", "code", "EG");
+  if (!egypt) {
+    egypt = await payload.create({
+      collection: "markets",
+      data: {
+        name: "Egypt", code: "EG", locale: "en-EG", currency: { code: "EGP", symbol: "EGP" },
+        isDefault: true, isActive: true, isPublic: true,
+      },
+      overrideAccess: true,
     });
-    if (refreshedHighlights.some((highlight, index) => highlight !== existing.highlights[index])) {
-      missingDetailFields.highlights = refreshedHighlights;
+    console.log("create market:EG");
+  }
+  const marketId = egypt.id;
+
+  const heroMediaId = await getMedia(demoHomepage.hero.image.src, demoHomepage.hero.image.alt, { credit: "Unsplash" });
+  const socialImageId = await getMedia(demoHomepage.site.defaultSocialImage, "International travel landscape for LDC Travel", { credit: "Unsplash" });
+  const headerLogoId = await getMedia("/brand/ldc-travel-primary.webp", "LDC Travel logo on light backgrounds", { credit: "Client-supplied brand asset" });
+  const footerLogoId = await getMedia("/brand/ldc-travel-white.webp", "LDC Travel white logo for dark backgrounds", { credit: "Client-supplied brand asset" });
+  const aboutImageId = await getMedia(demoAboutPage.whoWeAre.image.src, demoAboutPage.whoWeAre.image.alt, { credit: "Client-supplied image asset" });
+
+  const destinationMedia = new Map();
+  for (const destination of destinationContent) {
+    const demo = demoDestinations.find((item) => item.slug === destination.slug);
+    const coverId = await getMedia(demo.heroImage.src, demo.heroImage.alt, { credit: demo.heroImage.src.startsWith("https:") ? "Unsplash" : "Client-supplied image asset" });
+    const heroId = destination.heroImage
+      ? await getMedia(destination.heroImage, destination.heroImageAlt ?? `${destination.title} destination landscape`, { credit: destination.heroImage.startsWith("https:") ? "Unsplash" : "Client-supplied image asset" })
+      : coverId;
+    const highlights = [];
+    for (const highlight of destination.highlights) {
+      highlights.push({
+        title: highlight.title,
+        description: highlight.description,
+        image: await getMedia(highlight.image, highlight.alt, { credit: highlight.image.startsWith("https:") ? "Unsplash" : "Client-supplied image asset" }),
+        alt: highlight.alt,
+      });
     }
-  }
-  if (Object.keys(missingDetailFields).length) {
-    destinations[slug] = await payload.update({ collection: "destinations", id: existing.id, data: missingDetailFields });
-    console.log(`enrich destinations:${slug}`);
-  } else {
-    destinations[slug] = existing;
-    console.log(`skip destinations:${slug}`);
-  }
-}
-
-for (const [slug, relatedSlugs] of Object.entries(destinationRelations)) {
-  const destination = destinations[slug];
-  if (destination && (!destination.relatedDestinations || destination.relatedDestinations.length === 0)) {
-    await payload.update({ collection: "destinations", id: destination.id, data: { relatedDestinations: relatedSlugs.map((relatedSlug) => destinations[relatedSlug].id) } });
-  }
-}
-
-const faqSeeds = [
-  ["How do I start planning with LDC Travel?", "Start with a WhatsApp message or the contact form. Tell us which destination interests you and what kind of experience you are imagining."],
-  ["Can you help if I am still choosing a destination?", "Yes. Share the mood, pace, and kind of places you enjoy, and our team can suggest a useful direction to explore."],
-  ["Do you arrange custom travel requests?", "We can discuss a destination-specific request and the details that matter to you before outlining the next step."],
-  ["What happens after I send an inquiry?", "A member of the LDC Travel team will follow up directly to understand your request and answer your questions."],
-  ["Can I ask about a destination that is not listed yet?", "Absolutely. The destinations shown here are our current focus, but you can still message us with another idea and we will let you know how we can help."],
-];
-const faqs = [];
-for (const [index, [question, answer]] of faqSeeds.entries()) {
-  const existing = await payload.find({ collection: "faqs", where: { question: { equals: question } }, limit: 1, depth: 0 });
-  faqs.push(existing.docs[0] ?? await payload.create({ collection: "faqs", data: { question, answer: lexical(answer), order: index, enabled: true, category: "Homepage" } }));
-}
-
-const siteSettings = await payload.findGlobal({ slug: "site-settings", depth: 0 });
-const destinationWhatsapp = {
-  defaultMessage: "Hi LDC Travel, I'd like to explore one of your destinations.",
-  contextTemplate: "Hi LDC Travel, I'm interested in {{title}} and would like more information.",
-};
-
-if (!siteSettings.siteName) {
-  await payload.updateGlobal({ slug: "site-settings", data: {
-    siteName: "LDC Travel",
-    tagline: "Tourism Marketing",
-    defaultMarket: marketId,
-    canonicalUrl: siteUrl,
-    contact: { whatsappDisplay: "+966 7277981053", whatsappNumber: "9667277981053", office: "15 Mahmoud Essmat Hamdy, Sheraton", saudiOffice: saudiOfficeAddress, reservationsEmail: "info@ldc-tourism.com", salesEmail: "info@ldc-tourism.com" },
-    whatsapp: destinationWhatsapp,
-    footerCopy: "Thoughtful destination guidance for travelers ready to see more of the world.",
-    socialLinks: [
-      { label: "Instagram", url: "https://www.instagram.com/ldctravels.eg/" },
-      { label: "Facebook", url: "https://www.facebook.com/profile.php?id=61591627376189" },
-      { label: "TikTok", url: "https://www.tiktok.com/@ldc.travel.agency" },
-      { label: "LinkedIn", url: "https://www.linkedin.com/company/ldctravel/" },
-    ],
-  } });
-  console.log("create global:site-settings");
-} else {
-  const currentWhatsapp = siteSettings.whatsapp && typeof siteSettings.whatsapp === "object" ? siteSettings.whatsapp : {};
-  const currentContact = siteSettings.contact && typeof siteSettings.contact === "object" ? siteSettings.contact : {};
-  const currentNumber = String(currentContact.whatsappNumber ?? "");
-  const knownLegacyNumbers = new Set(["", "201211118118", "+20 12 11118118", "7277981053"]);
-  const legacyMessage = `${currentWhatsapp.defaultMessage ?? ""} ${currentWhatsapp.contextTemplate ?? ""}`.toLowerCase();
-  const shouldUpdateCopy = legacyMessage.includes("program") || legacyMessage.includes("package") || !currentWhatsapp.contextTemplate;
-  const shouldUpdateNumber = knownLegacyNumbers.has(currentNumber);
-  const shouldUpdateEmail = currentContact.reservationsEmail !== "info@ldc-tourism.com" || currentContact.salesEmail !== "info@ldc-tourism.com";
-  const currentSaudiOffice = String(currentContact.saudiOffice ?? "").trim();
-  const shouldSetSaudiOffice = !currentSaudiOffice || currentSaudiOffice === legacySaudiOfficeAddress;
-  if (shouldUpdateCopy || shouldUpdateNumber || shouldUpdateEmail || shouldSetSaudiOffice) {
-    const nextContact = { ...currentContact };
-    if (shouldUpdateNumber) {
-      nextContact.whatsappDisplay = "+966 7277981053";
-      nextContact.whatsappNumber = "9667277981053";
+    const gallery = [];
+    for (const image of destination.gallery) {
+      gallery.push(await getMedia(image.image, image.alt, { credit: image.image.startsWith("https:") ? "Unsplash" : "Client-supplied image asset" }));
     }
-    if (shouldUpdateEmail) {
-      nextContact.reservationsEmail = "info@ldc-tourism.com";
-      nextContact.salesEmail = "info@ldc-tourism.com";
-    }
-    if (shouldSetSaudiOffice) nextContact.saudiOffice = saudiOfficeAddress;
-    await payload.updateGlobal({ slug: "site-settings", data: {
-      ...(shouldUpdateNumber || shouldUpdateEmail || shouldSetSaudiOffice ? { contact: nextContact } : {}),
-      ...(shouldUpdateCopy ? { whatsapp: destinationWhatsapp } : {}),
-    } });
-    console.log("migrate global:site-settings destination WhatsApp configuration");
-  } else {
-    console.log("skip global:site-settings; newer WhatsApp value preserved");
+    destinationMedia.set(destination.slug, { coverId, heroId, highlights, gallery });
   }
-}
 
-const homepage = await payload.findGlobal({ slug: "homepage", depth: 0 });
-const currentHero = homepage.hero && typeof homepage.hero === "object" ? homepage.hero : {};
-const currentHeroPrimaryCta = currentHero.primaryCta && typeof currentHero.primaryCta === "object" ? currentHero.primaryCta : {};
-const currentHeroSecondaryCta = currentHero.secondaryCta && typeof currentHero.secondaryCta === "object" ? currentHero.secondaryCta : {};
-const currentDestinationCta = homepage.destinationCta && typeof homepage.destinationCta === "object" ? homepage.destinationCta : {};
-const currentDestinationPrimaryCta = currentDestinationCta.primaryCta && typeof currentDestinationCta.primaryCta === "object" ? currentDestinationCta.primaryCta : {};
-const currentDestinationSecondaryCta = currentDestinationCta.secondaryCta && typeof currentDestinationCta.secondaryCta === "object" ? currentDestinationCta.secondaryCta : {};
-const currentInspiration = homepage.inspiration && typeof homepage.inspiration === "object" ? homepage.inspiration : {};
-const currentInspirationItems = Array.isArray(currentInspiration.items) ? currentInspiration.items : [];
-const needsHomepageInspirationRefresh = legacyHomepageInspirationImageIds.some((id) => JSON.stringify(currentInspiration).includes(id));
-const oldHomepageHeadline = currentHero.headline === "Explore the world with LDC Travel";
-const hasRequiredHeroContent = [currentHero.eyebrow, currentHero.headline, currentHero.supportingCopy, currentHeroPrimaryCta.label, currentHeroSecondaryCta.label].every((value) => typeof value === "string" && value.trim());
-const hasRequiredDestinationCta = [currentDestinationPrimaryCta.label, currentDestinationSecondaryCta.label].every((value) => typeof value === "string" && value.trim());
-const legacyHomepageCopy = [
-  currentHero.supportingCopy === "Discover inspiring destinations and start a conversation with a team that helps you travel with confidence.",
-  homepage.whyLdc?.description === "We make the first step feel easy: discover the places that fit your mood, ask the questions that matter, and move forward with a real person on your side.",
-  homepage.inspiration?.description === "From old cities to open landscapes, follow the kind of experience you want more of.",
-  currentDestinationCta.description === "Have a destination in mind or still choosing? Send a message and we will help you find the right direction.",
-].every(Boolean);
-const needsHomepageMigration = !hasRequiredHeroContent || oldHomepageHeadline || !homepage.whyLdc || !homepage.inspiration || !hasRequiredDestinationCta || legacyHomepageCopy || legacyHeroImageUrls.includes(String(currentHero.imageUrl ?? ""));
-const needsHomepageHeroRefresh = legacyHeroImageUrls.includes(String(currentHero.imageUrl ?? ""));
-const needsHomepageRelationships = !Array.isArray(homepage.featuredDestinations) || homepage.featuredDestinations.length === 0 || !Array.isArray(homepage.faqs) || homepage.faqs.length === 0;
+  const destinationDefaults = new Map();
+  for (const destination of destinationContent) {
+    const media = destinationMedia.get(destination.slug);
+    const existing = await findBy("destinations", "slug", destination.slug);
+    const defaultFaqs = [];
+    const demo = demoDestinations.find((item) => item.slug === destination.slug);
+    for (const [index, faq] of demo.faqs.entries()) {
+      defaultFaqs.push(await ensureFaq(faq.question, faq.answer, index, destination.title));
+    }
+    const defaults = {
+      title: destination.title,
+      slug: destination.slug,
+      country: destination.country,
+      regionOrCity: destination.regionOrCity,
+      eyebrow: destination.eyebrow,
+      summary: destination.summary,
+      overview: destination.overview,
+      coverImage: media.coverId,
+      heroImage: media.heroId,
+      highlights: media.highlights,
+      experiences: destination.experiences,
+      bestTimeToVisit: destination.bestTimeToVisit,
+      usefulInformation: destination.usefulInformation,
+      gallery: media.gallery,
+      featured: true,
+      status: "published",
+      markets: [marketId],
+      relatedDestinations: (demo.relatedDestinations ?? []).map((slug) => slug),
+      faqs: defaultFaqs.map((faq) => faq.id),
+      seo: { metaTitle: destination.seoMetaTitle, metaDescription: destination.seoMetaDescription },
+    };
+    destinationDefaults.set(destination.slug, defaults);
+    if (!existing) {
+      const created = await payload.create({
+        collection: "destinations",
+        data: { ...defaults, relatedDestinations: [] },
+        overrideAccess: true,
+      });
+      destinationDefaults.set(destination.slug, { ...defaults, id: created.id });
+      console.log(`create destination:${destination.slug}`);
+      continue;
+    }
 
-if (needsHomepageMigration || needsHomepageHeroRefresh) {
-  await payload.updateGlobal({ slug: "homepage", data: {
+    // relatedDestinations defaults are slugs, while Payload expects document IDs.
+    // Resolve that relationship in the second pass after all destination records exist.
+    const mergeDefaults = Object.fromEntries(
+      Object.entries(defaults).filter(([key]) => key !== "relatedDestinations"),
+    );
+    const patch = missingFields(existing, mergeDefaults);
+    if (Array.isArray(existing.highlights) && existing.highlights.length) {
+      const enrichedHighlights = enrichRows(existing.highlights, defaults.highlights);
+      if (JSON.stringify(enrichedHighlights) !== JSON.stringify(existing.highlights)) patch.highlights = enrichedHighlights;
+    }
+    if (Array.isArray(existing.experiences) && existing.experiences.length) {
+      const enrichedExperiences = enrichRows(existing.experiences, defaults.experiences);
+      if (JSON.stringify(enrichedExperiences) !== JSON.stringify(existing.experiences)) patch.experiences = enrichedExperiences;
+    }
+    if (Object.keys(patch).length) {
+      await payload.update({ collection: "destinations", id: existing.id, data: patch, overrideAccess: true });
+      console.log(`enrich destination:${destination.slug}`);
+    } else {
+      console.log(`skip destination:${destination.slug}; editor content preserved`);
+    }
+    destinationDefaults.set(destination.slug, { ...defaults, id: existing.id });
+  }
+
+  const destinationRecords = new Map();
+  for (const destination of destinationContent) {
+    const record = await findBy("destinations", "slug", destination.slug);
+    if (!record) throw new Error(`Seed failed to create destination ${destination.slug}.`);
+    destinationRecords.set(destination.slug, record);
+  }
+  for (const destination of destinationContent) {
+    const record = destinationRecords.get(destination.slug);
+    const defaults = destinationDefaults.get(destination.slug);
+    const patch = {};
+    if (isEmpty(record.relatedDestinations)) patch.relatedDestinations = defaults.relatedDestinations.map((slug) => destinationRecords.get(slug)?.id).filter(Boolean);
+    if (isEmpty(record.faqs)) patch.faqs = defaults.faqs;
+    if (Object.keys(patch).length) await payload.update({ collection: "destinations", id: record.id, data: patch, overrideAccess: true });
+  }
+
+  const homepageFaqs = [];
+  for (const [index, faq] of demoHomepage.faqs.entries()) {
+    homepageFaqs.push(await ensureFaq(faq.question, faq.answer, index, "Homepage"));
+  }
+
+  const homepageDefaults = {
     hero: {
-      eyebrow: "Travel farther, thoughtfully",
-      headline: "Explore more. Travel better.",
-      supportingCopy: "Explore six distinctive destinations, then talk with LDC Travel about the places, pace, and experiences you want to build around.",
-      imageUrl: heroImageUrl,
-      primaryCta: { label: "Explore destinations", kind: "internal", url: "/destinations" },
-      secondaryCta: { label: "Talk to LDC Travel", kind: "whatsapp" },
+      eyebrow: demoHomepage.hero.eyebrow,
+      headline: demoHomepage.hero.headline,
+      supportingCopy: demoHomepage.hero.supportingCopy,
+      image: heroMediaId,
+      primaryCta: { label: demoHomepage.hero.primaryCta.label, kind: "internal", url: demoHomepage.hero.primaryCta.href },
+      secondaryCta: { label: demoHomepage.hero.secondaryCta.label, kind: "whatsapp" },
     },
-    featuredDestinations: destinationSeeds.map(([slug]) => destinations[slug].id),
-    whyLdc: {
-      eyebrow: "Why travel with LDC",
-      headline: "A clearer way to choose your next destination.",
-      description: "Move from inspiration to a clearer destination conversation. Tell us what matters to you, ask the questions that matter, and take the next step with a real person.",
-      items: [
-        { title: "Start with the destination", description: "Begin with the landscape, culture, or pace you want to experience.", icon: "globe" },
-        { title: "Guidance with context", description: "Share your priorities and get a useful direction for the next conversation.", icon: "compass" },
-        { title: "A clear human follow-up", description: "Send your details or a WhatsApp message, and our team will respond with the next step.", icon: "message" },
-      ],
-    },
+    destinationsSection: demoHomepage.destinationsSection,
+    featuredDestinations: destinationContent.map((destination) => destinationRecords.get(destination.slug).id),
+    whyLdc: demoHomepage.whyLdc,
     inspiration: {
-      eyebrow: "Find your kind of escape",
-      headline: "Let the destination set the pace.",
-      description: "From old cities to open landscapes, start with the kind of experience you want more of.",
-      items: [
-        { title: "Culture", label: "Stories in every street", description: "For travelers who want art, history, food, and a strong sense of place.", imageUrl: destinationImageUrl("turkey") },
-        { title: "Nature", label: "Room to breathe", description: "Mountain air, green valleys, and landscapes that invite you to slow down.", imageUrl: destinationImageUrl("georgia") },
-        { title: "Islands", label: "Blue-water days", description: "A warmer rhythm of coastlines, sunlight, and time well spent outdoors.", imageUrl: destinationImageUrl("bali") },
-        { title: "City energy", label: "A little more alive", description: "For the nights, neighborhoods, and small discoveries that stay with you.", imageUrl: destinationImageUrl("thailand") },
-      ],
+      eyebrow: demoHomepage.inspiration.eyebrow,
+      headline: demoHomepage.inspiration.headline,
+      description: demoHomepage.inspiration.description,
+      items: demoHomepage.inspiration.items.map((item) => ({
+        title: item.title, label: item.label, description: item.description,
+        destination: destinationRecords.get(item.destinationSlug).id,
+        href: item.href,
+      })),
     },
     destinationCta: {
-      eyebrow: "Your next chapter starts here",
-      headline: "Tell us where you want to go.",
-      description: "Have a destination in mind or still choosing? Send your details and the LDC Travel team will follow up with a useful direction.",
-      primaryCta: { label: "Explore destinations", kind: "internal", url: "/destinations" },
-      secondaryCta: { label: "Start a conversation", kind: "whatsapp" },
+      eyebrow: demoHomepage.destinationCta.eyebrow,
+      headline: demoHomepage.destinationCta.headline,
+      description: demoHomepage.destinationCta.description,
+      primaryCta: { label: demoHomepage.destinationCta.primaryCta.label, kind: "internal", url: demoHomepage.destinationCta.primaryCta.href },
+      secondaryCta: { label: demoHomepage.destinationCta.secondaryCta.label, kind: "whatsapp" },
+      form: demoHomepage.destinationCta.form,
     },
-    faqs: faqs.map((item) => item.id),
-  } });
-  console.log("migrate global:homepage to destination-first content");
-} else {
-  if (needsHomepageInspirationRefresh) {
-    const refreshedItems = currentInspirationItems.map((item, index) => {
-      const slug = inspirationDestinationSlugs[index];
-      return {
-        title: item.title,
-        label: item.label,
-        description: item.description,
-        imageUrl: slug ? destinationImageUrl(slug) : item.imageUrl,
-        ...(item.image ? { image: item.image } : {}),
-      };
-    });
-    await payload.updateGlobal({ slug: "homepage", data: {
-      inspiration: {
-        eyebrow: currentInspiration.eyebrow,
-        headline: currentInspiration.headline,
-        description: currentInspiration.description,
-        items: refreshedItems,
-      },
-    } });
-    console.log("refresh global:homepage inspiration images from canonical destination records");
-  }
-  if (needsHomepageRelationships) {
-    await payload.updateGlobal({ slug: "homepage", data: {
-      ...(Array.isArray(homepage.featuredDestinations) && homepage.featuredDestinations.length ? {} : { featuredDestinations: destinationSeeds.map(([slug]) => destinations[slug].id) }),
-      ...(Array.isArray(homepage.faqs) && homepage.faqs.length ? {} : { faqs: faqs.map((item) => item.id) }),
-    } });
-    console.log("enrich global:homepage with destination and FAQ relationships");
-  } else if (!needsHomepageInspirationRefresh) {
-    console.log("skip global:homepage; existing editorial homepage preserved");
-  }
-}
+    faqSection: demoHomepage.faqSection,
+    faqs: homepageFaqs.map((faq) => faq.id),
+    seo: { metaTitle: demoHomepage.seo.title, metaDescription: demoHomepage.seo.description, socialImage: socialImageId },
+  };
+  await ensureGlobal("homepage", homepageDefaults, (patch, existing) => {
+    const output = { ...patch };
+    const existingInspiration = existing.inspiration?.items;
+    if (Array.isArray(existingInspiration) && existingInspiration.length) {
+      const enriched = enrichRows(existingInspiration, homepageDefaults.inspiration.items);
+      if (JSON.stringify(enriched) !== JSON.stringify(existingInspiration)) {
+        output.inspiration = { ...existing.inspiration, items: enriched };
+      }
+    }
+    return output;
+  });
 
-await payload.destroy();
-console.log("LDC Travel destination-first demo seed complete. Legacy collections were not deleted.");
+  const siteDefaults = {
+    siteName: demoHomepage.site.name,
+    tagline: demoHomepage.site.tagline,
+    defaultMarket: marketId,
+    publicEmail: demoHomepage.site.publicEmail,
+    contact: {
+      egyptOffice: officeData.egypt,
+      saudiOfficeDetails: officeData.saudi,
+      whatsappDisplay: officeData.saudi.whatsappDisplay,
+      whatsappNumber: officeData.saudi.whatsappNumber,
+      office: officeData.egypt.address,
+      saudiOffice: officeData.saudi.address,
+      reservationsEmail: demoHomepage.site.publicEmail,
+      salesEmail: demoHomepage.site.publicEmail,
+    },
+    socials: socialAccounts,
+    branding: { primaryLogo: headerLogoId, footerLogo: footerLogoId },
+    whatsapp: { defaultMessage: demoHomepage.site.defaultMessage, contextTemplate: demoHomepage.site.contextTemplate },
+    socialLinks: demoHomepage.site.socialLinks.filter((item) => ["instagram", "facebook"].includes(item.label.toLowerCase())),
+    footerCopy: demoHomepage.site.footerCopy,
+    seo: { metaTitle: demoHomepage.site.defaultMetaTitle, metaDescription: demoHomepage.site.defaultMetaDescription, socialImage: socialImageId },
+  };
+  await ensureGlobal("site-settings", siteDefaults, (patch, existing) => {
+    if (String(existing.defaultMarket?.id ?? existing.defaultMarket ?? "") !== String(marketId)) patch.defaultMarket = marketId;
+    const currentContact = existing.contact && typeof existing.contact === "object" ? existing.contact : {};
+    if (/[\u0600-\u06ff]/u.test(String(currentContact.saudiOffice ?? ""))) {
+      patch.contact = { ...(patch.contact ?? {}), saudiOffice: officeData.saudi.address };
+    }
+    const oldSocials = existing.socialLinks;
+    if (Array.isArray(oldSocials) && oldSocials.some((item) => !["instagram", "facebook"].includes(String(item.label).toLowerCase()))) {
+      patch.socialLinks = siteDefaults.socialLinks;
+    }
+    return patch;
+  });
+
+  const aboutDefaults = {
+    masthead: demoAboutPage.masthead,
+    whoWeAre: {
+      eyebrow: demoAboutPage.whoWeAre.eyebrow,
+      headline: demoAboutPage.whoWeAre.headline,
+      paragraphs: demoAboutPage.whoWeAre.paragraphs.map((text) => ({ text })),
+      image: aboutImageId,
+      imageCaption: demoAboutPage.whoWeAre.imageCaption,
+      imageTitle: demoAboutPage.whoWeAre.imageTitle,
+    },
+    approach: {
+      eyebrow: demoAboutPage.approach.eyebrow, headline: demoAboutPage.approach.headline,
+      description: demoAboutPage.approach.description, principles: demoAboutPage.approach.principles.map((label) => ({ label })),
+    },
+    support: demoAboutPage.support,
+    destinationStories: {
+      eyebrow: demoAboutPage.destinationStories.eyebrow,
+      headline: demoAboutPage.destinationStories.headline,
+      description: demoAboutPage.destinationStories.description,
+      items: demoAboutPage.destinationStories.items.map((item) => ({ destination: destinationRecords.get(item.href.split("/").at(-1)).id, label: item.label })),
+    },
+    process: demoAboutPage.process,
+    cta: demoAboutPage.cta,
+    seo: { metaTitle: demoAboutPage.seo.metaTitle, metaDescription: demoAboutPage.seo.metaDescription, socialImage: socialImageId },
+  };
+  await ensureGlobal("about-page", aboutDefaults);
+
+  const contactDefaults = {
+    masthead: demoContactPage.masthead,
+    form: demoContactPage.form,
+    details: demoContactPage.details,
+    social: demoContactPage.social,
+    seo: { metaTitle: demoContactPage.seo.metaTitle, metaDescription: demoContactPage.seo.metaDescription, socialImage: socialImageId },
+  };
+  await ensureGlobal("contact-page", contactDefaults);
+
+  const destinationsPageDefaults = {
+    masthead: demoDestinationsPage.masthead,
+    listing: demoDestinationsPage.listing,
+    support: demoDestinationsPage.support,
+    seo: { metaTitle: demoDestinationsPage.seo.metaTitle, metaDescription: demoDestinationsPage.seo.metaDescription, socialImage: socialImageId },
+  };
+  await ensureGlobal("destinations-page", destinationsPageDefaults);
+
+  console.log("LDC Travel CMS seed complete. No users or inquiries were created; existing non-empty editor content was preserved.");
+} finally {
+  if (payload) {
+    try { await payload.destroy(); } catch { /* Preserve the original seed failure if shutdown also fails. */ }
+  }
+  if (mediaDirectory) await rm(mediaDirectory, { recursive: true, force: true });
+}

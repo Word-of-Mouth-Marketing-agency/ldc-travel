@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { seoFields } from "../fields/shared";
 
 const ctaFields = [
   { name: "label", type: "text" as const, required: true },
@@ -21,7 +22,7 @@ const imageFields = [
   {
     name: "imageUrl",
     type: "text" as const,
-    admin: { description: "Optional approved demo image URL. Prefer a Media upload for production content." },
+    admin: { hidden: true, description: "Legacy demo URL retained for migration compatibility. Use a Media upload instead." },
   },
 ];
 
@@ -45,7 +46,17 @@ export const Homepage: GlobalConfig = {
         { name: "secondaryCta", type: "group", fields: ctaFields },
       ],
     },
-    { name: "featuredDestinations", type: "relationship", relationTo: "destinations", hasMany: true },
+    {
+      name: "destinationsSection",
+      type: "group",
+      label: "Featured destinations section",
+      fields: [
+        { name: "eyebrow", type: "text", required: true, defaultValue: "The world, in focus" },
+        { name: "headline", type: "text", required: true, defaultValue: "Choose a place that feels like you." },
+        { name: "description", type: "textarea", required: true, defaultValue: "Six destinations to start with, each offering a different way to see more of the world." },
+      ],
+    },
+    { name: "featuredDestinations", type: "relationship", relationTo: "destinations", hasMany: true, admin: { description: "Select and order up to the six approved destinations shown on the homepage." } },
     {
       name: "whyLdc",
       type: "group",
@@ -59,7 +70,7 @@ export const Homepage: GlobalConfig = {
           fields: [
             { name: "title", type: "text", required: true },
             { name: "description", type: "textarea", required: true },
-            { name: "icon", type: "text", required: true, admin: { description: "Use a shared icon key such as globe, compass, or message." } },
+            { name: "icon", type: "text", required: true, admin: { description: "Shared interface icon key: globe, compass, or message." } },
           ],
         },
       ],
@@ -78,6 +89,8 @@ export const Homepage: GlobalConfig = {
             { name: "title", type: "text", required: true },
             { name: "label", type: "text", required: true },
             { name: "description", type: "textarea", required: true },
+            { name: "destination", type: "relationship", relationTo: "destinations", admin: { description: "Optional destination link and image source. When selected, this destination supplies the image unless you choose an override." } },
+            { name: "href", type: "text", admin: { description: "Optional approved internal destination path. Leave blank to link to the selected destination." } },
             ...imageFields,
           ],
         },
@@ -92,8 +105,30 @@ export const Homepage: GlobalConfig = {
         { name: "description", type: "textarea" },
         { name: "primaryCta", type: "group", fields: ctaFields },
         { name: "secondaryCta", type: "group", fields: ctaFields },
+        {
+          name: "form",
+          type: "group",
+          label: "Homepage inquiry form introduction",
+          fields: [
+            { name: "eyebrow", type: "text", required: true, defaultValue: "Start a conversation" },
+            { name: "headline", type: "text", required: true, defaultValue: "Tell us what you’re planning." },
+            { name: "description", type: "textarea", required: true, defaultValue: "Share a few details and we’ll help shape the right next step." },
+            { name: "submitLabel", type: "text", required: true, defaultValue: "Send inquiry" },
+          ],
+        },
       ],
     },
-    { name: "faqs", type: "relationship", relationTo: "faqs", hasMany: true },
+    {
+      name: "faqSection",
+      type: "group",
+      label: "Homepage FAQ section",
+      fields: [
+        { name: "eyebrow", type: "text", required: true, defaultValue: "Good to know" },
+        { name: "headline", type: "text", required: true, defaultValue: "Questions, answered simply." },
+        { name: "description", type: "textarea", required: true, defaultValue: "Still choosing? Start a conversation with the LDC Travel team." },
+      ],
+    },
+    { name: "faqs", type: "relationship", relationTo: "faqs", hasMany: true, admin: { description: "Select and order the enabled questions shown on the homepage." } },
+    ...seoFields(),
   ],
 };

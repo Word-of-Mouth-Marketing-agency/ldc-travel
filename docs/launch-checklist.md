@@ -22,13 +22,18 @@ This checklist contains unresolved human inputs and final operator gates. Do not
 - [ ] Worktree release commit identified and no secrets/tracked dumps present.
 - [ ] Node and pnpm versions pinned and compatible with `package.json`.
 - [ ] Locked install succeeds without dependency updates.
+- [ ] `pnpm audit --prod` is reviewed after the final lockfile update; no unresolved high/critical advisories remain without a documented risk decision.
 - [ ] Production build succeeds from the release.
-- [ ] Database backup created and `pg_restore --list` succeeds.
-- [ ] Payload migration status is known; migration runs only against the dedicated LDC database.
+- [ ] Database backup created and `pg_restore --list` succeeds for the exact target database.
+- [ ] Every pending Payload migration is reviewed; migration status is known and migrations run only against the dedicated LDC database.
+- [ ] Explicit demo seed is reviewed and run only with content-owner approval; repeated runs preserve editor changes and never create users/inquiries.
+- [ ] First administrator is created through the approved secure setup path; credentials are never added to source control.
+- [ ] Authenticated dashboard QA covers globals, destination/media editing, inquiry triage, accepted/rejected uploads, and access control.
 - [ ] `UI_PREVIEW_MODE` is empty or `false`.
 - [x] `NEXT_PUBLIC_SITE_URL` is documented as `https://ldc-tourism.com`; applying it remains a deployment operation.
 - [ ] Application binds only to `127.0.0.1:<PORT>`.
 - [ ] `PAYLOAD_MEDIA_DIR` points outside the release tree.
+- [ ] Database, persistent media, and off-repo environment backups have a tested recovery owner and procedure.
 - [ ] `/api/health` returns liveness without exposing secrets or database details.
 - [ ] Localhost smoke test passes before OLS changes.
 - [ ] OLS config backup and rollback path are recorded before any approved edit.

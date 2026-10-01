@@ -65,8 +65,8 @@ export async function submitCustomTripInquiry(
       fieldErrors: {},
       values: {},
     };
-  } catch (error) {
-    console.error("Custom trip inquiry submission failed.", error instanceof Error ? error.message : "Unknown error");
+  } catch {
+    console.error("Custom trip inquiry submission failed.");
 
     return {
       status: "error",

@@ -64,7 +64,7 @@
       { "image": "https://images.unsplash.com/photo-1513326738677-b964603b136d", "alt": "Saint Basil's Cathedral in Moscow, Russia" },
       { "image": "https://images.unsplash.com/photo-1764725726270-4f94dbaa16ac", "alt": "Canal and historic buildings in Saint Petersburg, Russia" },
       { "image": "https://images.unsplash.com/photo-1752986002031-579569bd3d6d", "alt": "Moscow Kremlin above the river" },
-      { "image": "/destinations/georgia.webp", "alt": "Saint Isaac's Cathedral in Saint Petersburg, Russia" }
+      { "image": "/destinations/russia-st-isaacs.webp", "alt": "Saint Isaac's Cathedral in Saint Petersburg, Russia" }
     ],
     "seoMetaTitle": "Russia Travel | LDC Travel",
     "seoMetaDescription": "Discover a culture-led Russia journey through Moscow and Saint Petersburg with LDC Travel. Begin your inquiry."
@@ -110,8 +110,8 @@
     "regionOrCity": "Tbilisi, Kakheti and the Caucasus",
     "eyebrow": "Cities, mountains, and the shared table",
     "summary": "Tbilisi streets, Caucasus horizons, Kakheti tables, and a culture shaped by many crossroads.",
-    "heroImage": "/destinations/georgia.webp",
-    "heroImageAlt": "Saint Isaac's Cathedral in Saint Petersburg, Russia",
+    "heroImage": "https://images.unsplash.com/photo-1759506346306-5370eb85ae62",
+    "heroImageAlt": "Tbilisi Old Town and the Kura River, Georgia",
     "overview": "Georgia brings together Tbilisi's layered streets, the high landscapes around Kazbegi, Kakheti's food and wine traditions, and the different character of the country's regions. The appeal is in the contrast between city, mountain, table, and road.",
     "highlights": [
       { "title": "Tbilisi", "description": "Wander through a capital where historic streets, bath districts, balconies, and contemporary creative life sit side by side.", "image": "https://images.unsplash.com/photo-1759506346306-5370eb85ae62", "alt": "Old Town and the Kura River in Tbilisi, Georgia" },

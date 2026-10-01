@@ -110,10 +110,16 @@ export interface Config {
   globals: {
     'site-settings': SiteSetting;
     homepage: Homepage;
+    'about-page': AboutPage;
+    'contact-page': ContactPage;
+    'destinations-page': DestinationsPage;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
+    'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
+    'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
+    'destinations-page': DestinationsPageSelect<false> | DestinationsPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -157,6 +163,7 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
@@ -183,6 +190,14 @@ export interface Media {
    * Optional photographer/source credit.
    */
   credit?: string | null;
+  /**
+   * Optional source or license page used to verify the image.
+   */
+  sourceUrl?: string | null;
+  /**
+   * Optional short caption for galleries and editorial use.
+   */
+  caption?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -259,6 +274,10 @@ export interface Destination {
   slug: string;
   country: string;
   regionOrCity?: string | null;
+  /**
+   * Short destination hero label displayed above the title.
+   */
+  eyebrow?: string | null;
   summary: string;
   content?: {
     root: {
@@ -281,7 +300,11 @@ export interface Destination {
   overview?: string | null;
   coverImage?: (number | null) | Media;
   /**
-   * Optional remote demo image URL. Prefer a Media upload for production content.
+   * Optional destination-detail hero image. If empty, the primary cover image is used.
+   */
+  heroImage?: (number | null) | Media;
+  /**
+   * Legacy demo URL retained for migration compatibility. Use the Media fields instead.
    */
   imageUrl?: string | null;
   /**
@@ -289,13 +312,16 @@ export interface Destination {
    */
   gallery?: (number | Media)[] | null;
   /**
-   * Structured places or areas to discover. Use approved Media uploads for production imagery.
+   * Structured places or areas to discover. Select Media uploads for images; records without an image remain text-only.
    */
   highlights?:
     | {
         title: string;
         description: string;
         image?: (number | null) | Media;
+        /**
+         * Legacy demo URL retained for migration compatibility. Use the Media image field instead.
+         */
         imageUrl?: string | null;
         alt?: string | null;
         id?: string | null;
@@ -306,7 +332,7 @@ export interface Destination {
         title: string;
         description: string;
         /**
-         * Shared icon key such as city, mountain, waves, or sparkles.
+         * Shared icon key such as city, mountain, waves, sparkles, or compass.
          */
         icon?: string | null;
         id?: string | null;
@@ -337,6 +363,9 @@ export interface Destination {
    * Destination-specific questions that help visitors decide whether to start an inquiry.
    */
   faqs?: (number | Faq)[] | null;
+  /**
+   * Legacy field retained for schema compatibility; programs are not part of the public destination product.
+   */
   relatedPrograms?: (number | TravelProgram)[] | null;
   /**
    * Optional page title, description, social image, and canonical override for this editorial record.
@@ -696,6 +725,8 @@ export interface Testimonial {
   createdAt: string;
 }
 /**
+ * Private travel inquiries submitted through the Contact page, destination forms, and Design Your Trip.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "inquiries".
  */
@@ -846,6 +877,7 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:
@@ -863,6 +895,8 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   credit?: T;
+  sourceUrl?: T;
+  caption?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -946,10 +980,12 @@ export interface DestinationsSelect<T extends boolean = true> {
   slug?: T;
   country?: T;
   regionOrCity?: T;
+  eyebrow?: T;
   summary?: T;
   content?: T;
   overview?: T;
   coverImage?: T;
+  heroImage?: T;
   imageUrl?: T;
   gallery?: T;
   highlights?:
@@ -1272,19 +1308,85 @@ export interface SiteSetting {
   siteName: string;
   tagline: string;
   defaultMarket: number | Market;
+  /**
+   * Legacy value retained for compatibility. Canonical origin comes from NEXT_PUBLIC_SITE_URL.
+   */
   canonicalUrl?: string | null;
+  publicEmail: string;
   contact: {
+    egyptOffice: {
+      label: string;
+      address: string;
+      whatsappDisplay: string;
+      /**
+       * Digits only, including the country code. Used to build WhatsApp links.
+       */
+      whatsappNumber: string;
+    };
+    saudiOfficeDetails: {
+      label: string;
+      address: string;
+      whatsappDisplay: string;
+      /**
+       * Digits only, including the country code. Used to build WhatsApp links.
+       */
+      whatsappNumber: string;
+    };
+    /**
+     * Legacy primary WhatsApp value retained for compatibility. Edit the regional office fields above.
+     */
     whatsappDisplay: string;
+    /**
+     * Legacy primary WhatsApp value retained for compatibility. Edit the regional office fields above.
+     */
     whatsappNumber: string;
+    /**
+     * Legacy field retained for compatibility. Edit the Egypt office fields above.
+     */
     office: string;
+    /**
+     * Legacy field retained for compatibility. Edit the Saudi Arabia office fields above.
+     */
     saudiOffice?: string | null;
+    /**
+     * Legacy email field retained for compatibility. Edit Public Email above.
+     */
     reservationsEmail: string;
+    /**
+     * Legacy email field retained for compatibility. Edit Public Email above.
+     */
     salesEmail: string;
+  };
+  socials?: {
+    egypt?: {
+      instagram?: string | null;
+      facebook?: string | null;
+    };
+    saudi?: {
+      instagram?: string | null;
+      facebook?: string | null;
+    };
+  };
+  /**
+   * Optional approved logo uploads. The site uses the bundled LDC logo when a field is empty.
+   */
+  branding?: {
+    /**
+     * Light-surface logo for the header and mobile drawer.
+     */
+    primaryLogo?: (number | null) | Media;
+    /**
+     * Light logo for the navy footer.
+     */
+    footerLogo?: (number | null) | Media;
   };
   whatsapp?: {
     defaultMessage?: string | null;
     contextTemplate?: string | null;
   };
+  /**
+   * Legacy social array retained for compatibility. Use Regional social accounts above.
+   */
   socialLinks?:
     | {
         label: string;
@@ -1317,7 +1419,7 @@ export interface Homepage {
     supportingCopy: string;
     image?: (number | null) | Media;
     /**
-     * Optional approved demo image URL. Prefer a Media upload for production content.
+     * Legacy demo URL retained for migration compatibility. Use a Media upload instead.
      */
     imageUrl?: string | null;
     primaryCta: {
@@ -1331,6 +1433,14 @@ export interface Homepage {
       url?: string | null;
     };
   };
+  destinationsSection: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+  };
+  /**
+   * Select and order up to the six approved destinations shown on the homepage.
+   */
   featuredDestinations?: (number | Destination)[] | null;
   whyLdc?: {
     eyebrow?: string | null;
@@ -1341,7 +1451,7 @@ export interface Homepage {
           title: string;
           description: string;
           /**
-           * Use a shared icon key such as globe, compass, or message.
+           * Shared interface icon key: globe, compass, or message.
            */
           icon: string;
           id?: string | null;
@@ -1357,9 +1467,17 @@ export interface Homepage {
           title: string;
           label: string;
           description: string;
+          /**
+           * Optional destination link and image source. When selected, this destination supplies the image unless you choose an override.
+           */
+          destination?: (number | null) | Destination;
+          /**
+           * Optional approved internal destination path. Leave blank to link to the selected destination.
+           */
+          href?: string | null;
           image?: (number | null) | Media;
           /**
-           * Optional approved demo image URL. Prefer a Media upload for production content.
+           * Legacy demo URL retained for migration compatibility. Use a Media upload instead.
            */
           imageUrl?: string | null;
           id?: string | null;
@@ -1380,8 +1498,201 @@ export interface Homepage {
       kind: 'whatsapp' | 'internal' | 'external';
       url?: string | null;
     };
+    form: {
+      eyebrow: string;
+      headline: string;
+      description: string;
+      submitLabel: string;
+    };
   };
+  faqSection: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+  };
+  /**
+   * Select and order the enabled questions shown on the homepage.
+   */
   faqs?: (number | Faq)[] | null;
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    socialImage?: (number | null) | Media;
+    canonicalUrl?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page".
+ */
+export interface AboutPage {
+  id: number;
+  masthead: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+  };
+  whoWeAre: {
+    eyebrow: string;
+    headline: string;
+    paragraphs?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image?: (number | null) | Media;
+    imageCaption?: string | null;
+    imageTitle?: string | null;
+  };
+  approach: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    principles?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  support: {
+    eyebrow: string;
+    headline: string;
+    items?:
+      | {
+          title: string;
+          description: string;
+          icon: 'compass' | 'globe' | 'message' | 'sparkles';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  destinationStories: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    items?:
+      | {
+          destination: number | Destination;
+          label: string;
+          /**
+           * Optional editorial crop; otherwise the destination's primary image is used.
+           */
+          image?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  process: {
+    eyebrow: string;
+    headline: string;
+    steps?:
+      | {
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  cta: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    primaryLabel: string;
+    secondaryLabel: string;
+  };
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    socialImage?: (number | null) | Media;
+    canonicalUrl?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page".
+ */
+export interface ContactPage {
+  id: number;
+  masthead: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+  };
+  form: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    submitLabel: string;
+  };
+  details: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    noteHeadline: string;
+    noteDescription: string;
+    noteCtaLabel: string;
+  };
+  social: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+  };
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    socialImage?: (number | null) | Media;
+    canonicalUrl?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "destinations-page".
+ */
+export interface DestinationsPage {
+  id: number;
+  masthead: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    markLabel: string;
+  };
+  listing: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+  };
+  support: {
+    eyebrow: string;
+    headline: string;
+    description: string;
+    ctaLabel: string;
+  };
+  /**
+   * Optional page title, description, social image, and canonical override for this editorial record.
+   */
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    socialImage?: (number | null) | Media;
+    canonicalUrl?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1394,15 +1705,54 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   tagline?: T;
   defaultMarket?: T;
   canonicalUrl?: T;
+  publicEmail?: T;
   contact?:
     | T
     | {
+        egyptOffice?:
+          | T
+          | {
+              label?: T;
+              address?: T;
+              whatsappDisplay?: T;
+              whatsappNumber?: T;
+            };
+        saudiOfficeDetails?:
+          | T
+          | {
+              label?: T;
+              address?: T;
+              whatsappDisplay?: T;
+              whatsappNumber?: T;
+            };
         whatsappDisplay?: T;
         whatsappNumber?: T;
         office?: T;
         saudiOffice?: T;
         reservationsEmail?: T;
         salesEmail?: T;
+      };
+  socials?:
+    | T
+    | {
+        egypt?:
+          | T
+          | {
+              instagram?: T;
+              facebook?: T;
+            };
+        saudi?:
+          | T
+          | {
+              instagram?: T;
+              facebook?: T;
+            };
+      };
+  branding?:
+    | T
+    | {
+        primaryLogo?: T;
+        footerLogo?: T;
       };
   whatsapp?:
     | T
@@ -1458,6 +1808,13 @@ export interface HomepageSelect<T extends boolean = true> {
               url?: T;
             };
       };
+  destinationsSection?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+      };
   featuredDestinations?: T;
   whyLdc?:
     | T
@@ -1486,6 +1843,8 @@ export interface HomepageSelect<T extends boolean = true> {
               title?: T;
               label?: T;
               description?: T;
+              destination?: T;
+              href?: T;
               image?: T;
               imageUrl?: T;
               id?: T;
@@ -1511,8 +1870,223 @@ export interface HomepageSelect<T extends boolean = true> {
               kind?: T;
               url?: T;
             };
+        form?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              description?: T;
+              submitLabel?: T;
+            };
+      };
+  faqSection?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
       };
   faqs?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        socialImage?: T;
+        canonicalUrl?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page_select".
+ */
+export interface AboutPageSelect<T extends boolean = true> {
+  masthead?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+      };
+  whoWeAre?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        paragraphs?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+        imageCaption?: T;
+        imageTitle?: T;
+      };
+  approach?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        principles?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+      };
+  support?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  destinationStories?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        items?:
+          | T
+          | {
+              destination?: T;
+              label?: T;
+              image?: T;
+              id?: T;
+            };
+      };
+  process?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        steps?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        primaryLabel?: T;
+        secondaryLabel?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        socialImage?: T;
+        canonicalUrl?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page_select".
+ */
+export interface ContactPageSelect<T extends boolean = true> {
+  masthead?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+      };
+  form?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        submitLabel?: T;
+      };
+  details?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        noteHeadline?: T;
+        noteDescription?: T;
+        noteCtaLabel?: T;
+      };
+  social?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        socialImage?: T;
+        canonicalUrl?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "destinations-page_select".
+ */
+export interface DestinationsPageSelect<T extends boolean = true> {
+  masthead?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        markLabel?: T;
+      };
+  listing?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+      };
+  support?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        description?: T;
+        ctaLabel?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        socialImage?: T;
+        canonicalUrl?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

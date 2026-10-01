@@ -4,14 +4,14 @@ import Image from "next/image";
 import { useRef } from "react";
 import { useEffect, useState } from "react";
 
-import type { SocialLink } from "../../content/homepage-demo";
+import type { ImageSource, SocialLink } from "../../content/homepage-demo";
 import { DesignYourTripTrigger } from "./DesignYourTripModal";
 import { Icon } from "../homepage/Icon";
 import { SocialIcon } from "./SocialIcon";
 
 type NavItem = { label: string; href: string };
 
-export function MobileNav({ activePath = "/", items, socialLinks }: { activePath?: string; items: NavItem[]; socialLinks: SocialLink[] }) {
+export function MobileNav({ activePath = "/", items, socialLinks, logo, siteName, tagline }: { activePath?: string; items: NavItem[]; socialLinks: SocialLink[]; logo: ImageSource; siteName: string; tagline: string }) {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -81,7 +81,7 @@ export function MobileNav({ activePath = "/", items, socialLinks }: { activePath
           <button type="button" className="mobile-menu-backdrop" tabIndex={-1} aria-label="Close navigation menu" onClick={() => setOpen(false)} />
           <aside id="mobile-navigation" ref={drawerRef} className="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="LDC Travel navigation">
             <div className="mobile-menu-header">
-              <Image src="/brand/ldc-travel-primary.webp" alt="LDC Travel" width={1254} height={1254} sizes="84px" className="mobile-menu-logo" />
+              <Image src={logo.src} alt={logo.alt} width={logo.width ?? 1254} height={logo.height ?? 1254} sizes="84px" className="mobile-menu-logo" />
               <button ref={closeButtonRef} type="button" className="mobile-menu-close" aria-label="Close navigation menu" onClick={() => setOpen(false)}>
                 <Icon name="close" size={21} />
               </button>
@@ -112,8 +112,8 @@ export function MobileNav({ activePath = "/", items, socialLinks }: { activePath
               </div>
             </div>
             <div className="mobile-menu-footer">
-              <strong>LDC Travel</strong>
-              <span>Tourism Marketing</span>
+              <strong>{siteName}</strong>
+              <span>{tagline}</span>
             </div>
           </aside>
         </>

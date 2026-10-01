@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import type { SiteViewModel } from "../../content/homepage-demo";
+import type { AboutPageViewModel } from "../../content/page-content-demo";
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
 import { RevealHeading } from "../motion/RevealHeading";
 import { Icon } from "../homepage/Icon";
@@ -9,59 +10,6 @@ import { DesignYourTripProvider, DesignYourTripTrigger } from "../site/DesignYou
 import { FloatingWhatsApp } from "../site/FloatingWhatsApp";
 import { Footer } from "../site/Footer";
 import { Header } from "../site/Header";
-
-const helpItems = [
-  {
-    title: "Personalized planning",
-    description: "Start with the destination, travel preferences, and ideas that matter to you.",
-    icon: "compass" as const,
-  },
-  {
-    title: "Destination guidance",
-    description: "Explore carefully presented places and find a direction that feels right for your trip.",
-    icon: "globe" as const,
-  },
-  {
-    title: "Human support",
-    description: "Your inquiry goes to the LDC Travel team, who continue the conversation directly with you.",
-    icon: "message" as const,
-  },
-  {
-    title: "Flexible travel ideas",
-    description: "Have another destination in mind? Design Your Trip gives you a simple way to share it.",
-    icon: "sparkles" as const,
-  },
-];
-
-const destinationStories = [
-  {
-    title: "Turkey",
-    label: "Culture and coastlines",
-    image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1200&q=85",
-    alt: "Istanbul skyline with mosque domes beside the Bosphorus",
-    href: "/destinations/turkey",
-  },
-  {
-    title: "Bali",
-    label: "Island rhythm",
-    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=85",
-    alt: "Balinese temple surrounded by tropical greenery",
-    href: "/destinations/bali",
-  },
-  {
-    title: "Georgia",
-    label: "Mountain horizons",
-    image: "https://images.unsplash.com/photo-1569396116180-210c182bedb8?auto=format&fit=crop&w=1200&q=85",
-    alt: "Mountain landscape in Georgia under a clear sky",
-    href: "/destinations/georgia",
-  },
-];
-
-const processSteps = [
-  { title: "Explore", description: "Browse destinations and find the places that match the kind of trip you want." },
-  { title: "Tell us what you have in mind", description: "Use Design Your Trip, a destination inquiry, or contact LDC Travel on WhatsApp." },
-  { title: "Continue with our team", description: "Our customer-service team follows up directly to continue planning your trip." },
-];
 
 export function AboutUnavailable() {
   return (
@@ -76,64 +24,61 @@ export function AboutUnavailable() {
   );
 }
 
-export function AboutPage({ site, whatsappConfig }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
+export function AboutPage({ site, whatsappConfig, page }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig; page: AboutPageViewModel }) {
   return (
     <DesignYourTripProvider whatsappHref={createWhatsAppUrl(whatsappConfig)}>
-      <Header activePath="/about" socialLinks={site.socialLinks} />
+      <Header activePath="/about" site={site} />
       <main>
         <section className="page-title-section about-masthead" aria-labelledby="about-page-title">
           <div className="site-container page-title-inner about-masthead-inner">
             <div className="page-title-copy">
-              <p className="section-eyebrow">About LDC Travel</p>
-              <h1 id="about-page-title">Travel, shaped around you.</h1>
-              <p>LDC Travel helps travelers discover international destinations and turn ideas into thoughtfully planned trips with personal support from our travel team.</p>
+              <p className="section-eyebrow">{page.masthead.eyebrow}</p>
+              <h1 id="about-page-title">{page.masthead.headline}</h1>
+              <p>{page.masthead.description}</p>
             </div>
-            <div className="about-masthead-mark" aria-hidden="true"><span>LDC</span><small>Destination-led<br />travel guidance</small></div>
+            <div className="about-masthead-mark" aria-hidden="true"><span>{site.name}</span><small>{site.tagline}</small></div>
           </div>
         </section>
 
         <section className="content-section about-who-section" aria-labelledby="about-who-heading">
           <div className="site-container about-who-grid">
             <RevealHeading className="about-copy-block">
-              <p className="section-eyebrow" data-reveal-heading>Who we are</p>
-              <h2 id="about-who-heading" data-reveal-heading>A more personal place to begin.</h2>
-              <p data-reveal-heading>LDC Travel is a destination-focused travel company built around a simple idea: planning a trip should feel clear, personal, and exciting from the beginning.</p>
-              <p data-reveal-heading>Rather than asking travelers to choose from rigid online options, we help them explore destinations, share what they have in mind, and connect with our team to shape the right next step.</p>
+              <p className="section-eyebrow" data-reveal-heading>{page.whoWeAre.eyebrow}</p>
+              <h2 id="about-who-heading" data-reveal-heading>{page.whoWeAre.headline}</h2>
+              {page.whoWeAre.paragraphs.map((paragraph) => <p key={paragraph} data-reveal-heading>{paragraph}</p>)}
             </RevealHeading>
             <div className="about-image-card">
-              <Image src="/hero-travel.webp" alt="Calm alpine village beside a clear mountain lake" fill loading="eager" fetchPriority="high" sizes="(max-width: 767px) 100vw, 45vw" />
-              <div className="about-image-card-caption"><span>Start with the place</span><strong>Let the destination set the pace.</strong></div>
+              <Image src={page.whoWeAre.image.src} alt={page.whoWeAre.image.alt} fill sizes="(max-width: 767px) 100vw, 45vw" />
+              <div className="about-image-card-caption"><span>{page.whoWeAre.imageCaption}</span><strong>{page.whoWeAre.imageTitle}</strong></div>
             </div>
           </div>
         </section>
 
-        <section className="content-section about-approach-section" aria-labelledby="about-approach-heading">
+        {page.approach.headline ? <section className="content-section about-approach-section" aria-labelledby="about-approach-heading">
           <div className="site-container about-approach-grid">
             <RevealHeading className="about-copy-block">
-              <p className="section-eyebrow" data-reveal-heading>Our approach</p>
-              <h2 id="about-approach-heading" data-reveal-heading>Travel planning, made personal.</h2>
+              <p className="section-eyebrow" data-reveal-heading>{page.approach.eyebrow}</p>
+              <h2 id="about-approach-heading" data-reveal-heading>{page.approach.headline}</h2>
             </RevealHeading>
             <div className="about-approach-copy">
-              <p>Every traveler starts with a different idea. Some know exactly where they want to go. Others are still exploring. LDC Travel gives both the same thing: a simple way to discover destinations, share what they are looking for, and continue planning with a real travel specialist.</p>
+              <p>{page.approach.description}</p>
               <div className="about-principles" aria-label="LDC Travel approach">
-                <span>Destination first</span>
-                <span>Human follow-up</span>
-                <span>Clear next steps</span>
+                {page.approach.principles.map((principle) => <span key={principle}>{principle}</span>)}
               </div>
             </div>
           </div>
-        </section>
+        </section> : null}
 
-        <section className="content-section about-help-section" aria-labelledby="about-help-heading">
+        {page.support.items.length ? <section className="content-section about-help-section" aria-labelledby="about-help-heading">
           <div className="site-container">
             <RevealHeading className="about-section-heading">
-              <p className="section-eyebrow" data-reveal-heading>What we help with</p>
-              <h2 id="about-help-heading" data-reveal-heading>Useful guidance for the trip ahead.</h2>
+              <p className="section-eyebrow" data-reveal-heading>{page.support.eyebrow}</p>
+              <h2 id="about-help-heading" data-reveal-heading>{page.support.headline}</h2>
             </RevealHeading>
             <div className="about-help-grid">
-              {helpItems.map((item, index) => (
+              {page.support.items.map((item, index) => (
                 <article className="about-help-card" key={item.title}>
-                  <span className="about-help-icon"><Icon name={item.icon} size={22} /></span>
+                  <span className="about-help-icon"><Icon name={item.icon as "compass" | "globe" | "message" | "sparkles"} size={22} /></span>
                   <span className="about-help-number" aria-hidden="true">0{index + 1}</span>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
@@ -141,39 +86,39 @@ export function AboutPage({ site, whatsappConfig }: { site: SiteViewModel; whats
               ))}
             </div>
           </div>
-        </section>
+        </section> : null}
 
-        <section className="about-destination-section" aria-labelledby="about-destination-heading">
+        {page.destinationStories.items.length ? <section className="about-destination-section" aria-labelledby="about-destination-heading">
           <div className="site-container about-destination-grid">
             <div className="about-destination-copy">
-              <p className="section-eyebrow">Start with where you want to go</p>
-              <h2 id="about-destination-heading">Six directions to begin exploring.</h2>
-              <p>Our current destination focus includes Turkey, Russia, Bali, Georgia, Indonesia, and Thailand. If another place is already on your mind, Design Your Trip gives you room to tell us about it.</p>
+              <p className="section-eyebrow">{page.destinationStories.eyebrow}</p>
+              <h2 id="about-destination-heading">{page.destinationStories.headline}</h2>
+              <p>{page.destinationStories.description}</p>
               <div className="about-destination-links">
-                {destinationStories.map((destination) => <Link key={destination.title} href={destination.href}>{destination.title}<Icon name="arrow" size={16} /></Link>)}
+                {page.destinationStories.items.map((destination) => <Link key={destination.title} href={destination.href}>{destination.title}<Icon name="arrow" size={16} /></Link>)}
               </div>
               <Link className="button button-light" href="/destinations">Explore destinations <Icon name="arrow" size={16} /></Link>
             </div>
             <div className="about-story-grid">
-              {destinationStories.map((destination, index) => (
+              {page.destinationStories.items.slice(0, 3).map((destination, index) => (
                 <Link className={`about-story-card about-story-card-${index + 1}`} href={destination.href} key={destination.title}>
-                  <Image src={destination.image} alt={destination.alt} fill sizes="(max-width: 767px) 100vw, 32vw" />
+                  <Image src={destination.image.src} alt={destination.image.alt} fill sizes="(max-width: 767px) 100vw, 32vw" />
                   <span className="about-story-card-scrim" />
                   <span className="about-story-card-copy"><small>{destination.label}</small><strong>{destination.title}</strong></span>
                 </Link>
               ))}
             </div>
           </div>
-        </section>
+        </section> : null}
 
-        <section className="content-section about-process-section" aria-labelledby="about-process-heading">
+        {page.process.steps.length ? <section className="content-section about-process-section" aria-labelledby="about-process-heading">
           <div className="site-container">
             <RevealHeading className="about-section-heading">
-              <p className="section-eyebrow" data-reveal-heading>How it works</p>
-              <h2 id="about-process-heading" data-reveal-heading>From first idea to next conversation.</h2>
+              <p className="section-eyebrow" data-reveal-heading>{page.process.eyebrow}</p>
+              <h2 id="about-process-heading" data-reveal-heading>{page.process.headline}</h2>
             </RevealHeading>
             <ol className="about-process-list">
-              {processSteps.map((step, index) => (
+              {page.process.steps.map((step, index) => (
                 <li className="about-process-item" key={step.title}>
                   <span className="about-process-number" aria-hidden="true">0{index + 1}</span>
                   <div><h3>{step.title}</h3><p>{step.description}</p></div>
@@ -181,14 +126,14 @@ export function AboutPage({ site, whatsappConfig }: { site: SiteViewModel; whats
               ))}
             </ol>
           </div>
-        </section>
+        </section> : null}
 
-        <section className="about-cta-section" aria-labelledby="about-cta-heading">
+        {page.cta.headline ? <section className="about-cta-section" aria-labelledby="about-cta-heading">
           <div className="site-container about-cta-inner">
-            <div><p className="section-eyebrow">Ready when you are</p><h2 id="about-cta-heading">Have a trip in mind?</h2><p>Tell us where you want to go and a member of the LDC Travel team will continue the planning with you.</p></div>
-            <div className="about-cta-actions"><DesignYourTripTrigger className="button button-light" /><Link className="button button-outline-light" href="/destinations">Explore destinations <Icon name="arrow" size={16} /></Link></div>
+            <div><p className="section-eyebrow">{page.cta.eyebrow}</p><h2 id="about-cta-heading">{page.cta.headline}</h2><p>{page.cta.description}</p></div>
+            <div className="about-cta-actions"><DesignYourTripTrigger className="button button-light" label={page.cta.primaryLabel} /><Link className="button button-outline-light" href="/destinations">{page.cta.secondaryLabel} <Icon name="arrow" size={16} /></Link></div>
           </div>
-        </section>
+        </section> : null}
       </main>
       <Footer site={site} whatsappConfig={whatsappConfig} />
       <FloatingWhatsApp whatsappConfig={whatsappConfig} />

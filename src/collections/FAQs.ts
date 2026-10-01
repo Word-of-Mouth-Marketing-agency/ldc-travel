@@ -1,9 +1,13 @@
 import type { CollectionConfig } from "payload";
+import { authenticatedWriteAccess } from "./access";
 
 export const FAQs: CollectionConfig = {
   slug: "faqs",
   admin: { useAsTitle: "question", group: "Content", defaultColumns: ["question", "order", "enabled"] },
-  access: { read: () => true },
+  access: {
+    ...authenticatedWriteAccess,
+    read: ({ req }) => req.user ? true : { enabled: { equals: true } },
+  },
   fields: [
     { name: "question", type: "text", required: true },
     { name: "answer", type: "richText", required: true },

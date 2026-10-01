@@ -33,12 +33,12 @@ function DestinationInquirySection({ destination, whatsappHref }: { destination:
   return <section className="destination-inquiry-section" id="destination-inquiry" aria-labelledby="destination-inquiry-section-heading"><div className="site-container destination-inquiry-grid"><div className="destination-inquiry-intro"><p className="section-eyebrow">Take the next step</p><h2 id="destination-inquiry-section-heading">Plan your {destination.title} trip.</h2><p>Leave your details and the LDC Travel team will contact you to continue planning.</p><div className="destination-inquiry-whatsapp"><span><Icon name="message" size={18} /></span><p><strong>Prefer a quick conversation?</strong><br />WhatsApp the LDC Travel team directly.</p><a href={whatsappHref} target="_blank" rel="noopener noreferrer">Chat on WhatsApp <Icon name="arrow-up-right" size={15} /></a></div></div><DestinationInquiryForm destinationTitle={destination.title} slug={destination.slug} whatsappHref={whatsappHref} /></div></section>;
 }
 
-export function DestinationDetailPage({ destination, relatedDestinations, destinations, site, whatsappConfig }: { destination: DestinationDetailViewModel; relatedDestinations: DestinationViewModel[]; destinations: DestinationViewModel[]; site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
+export function DestinationDetailPage({ destination, relatedDestinations, site, whatsappConfig }: { destination: DestinationDetailViewModel; relatedDestinations: DestinationViewModel[]; site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
   const whatsappHref = createWhatsAppUrl(whatsappConfig, { title: destination.title });
 
   return (
     <DesignYourTripProvider whatsappHref={createWhatsAppUrl(whatsappConfig)}>
-      <Header activePath="/destinations" socialLinks={site.socialLinks} />
+      <Header activePath="/destinations" site={site} />
       <main>
         <DestinationHero destination={destination} whatsappHref={whatsappHref} />
         <DestinationOverview destination={destination} />
@@ -48,7 +48,7 @@ export function DestinationDetailPage({ destination, relatedDestinations, destin
         <DestinationSeasonSection destination={destination} />
         <DestinationGallery destination={destination} />
         <DestinationFaq destination={destination} />
-        <RelatedDestinations destinations={relatedDestinations.length ? relatedDestinations : destinations.filter((item) => item.slug !== destination.slug).slice(0, 2)} />
+        <RelatedDestinations destinations={relatedDestinations} />
       </main>
       <Footer site={site} whatsappConfig={whatsappConfig} />
       <FloatingWhatsApp whatsappConfig={whatsappConfig} />

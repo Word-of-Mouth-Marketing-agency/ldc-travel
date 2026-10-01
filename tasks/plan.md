@@ -130,3 +130,49 @@ Phase 6 preparation completed 2026-09-21 without deployment. Local backup/restor
 55. Record application-side gate results separately from the still-open operator, database, media, VPS, OpenLiteSpeed, DNS, and credential inputs; do not begin deployment.
 
 Phase 6.5 application-side closure completed 2026-09-22 against `8187c61`. The local production build and public route smoke matrix passed, including `#destination-inquiry` placement and the simplified Contact social section. The public origin was not reachable from this environment, and all Phase 7 external deployment gates remain open.
+
+## Final full application audit and CMS completion
+
+Status: source implementation and safe application-side verification are complete against source baseline `09923710369fb921517b42565a8274a8356b5eb1` (`fix: correct destination imagery and hero quality`). This phase is application/source work only; deployment, VPS/OLS/DNS, and production database operations remain prohibited. Preserve untracked workspace instructions `AGENTS.md` and `CLAUDE.md`. The documented local PostgreSQL endpoint at `127.0.0.1:55432` did not accept a connection; previous runtime evidence is historical, not current-schema verification. See `docs/release-qa.md` for exact pass/fail/blocker detail.
+
+### Pre-edit content ownership matrix
+
+| Public content | Current source | Target owner | Migration/seed | Initial risk |
+|---|---|---|---|---|
+| Shared public contact, offices, regional socials, logos, SEO defaults | Site Settings plus code constants | Site Settings global | Add fields and update seed | Generic social array and code constants can diverge from approved Egypt/Saudi details |
+| Homepage hero, section headings, cards, FAQs, CTA | Homepage global plus React literals | Homepage global + referenced Destinations/FAQs | Expand fields; enrich explicit seed | Hardcoded headings and production fallbacks can silently substitute demo copy |
+| About page copy, cards, process, stories, CTA | React components | About Page global | New global + seed | Most editorial copy is not dashboard-managed |
+| Contact page copy | React components | Contact Page global | New global + seed | Page-specific headings and form/social intro are static |
+| Destination-index masthead | React component | Destinations Page global | New global + seed | Public editorial introduction is static |
+| Destination detail copy and imagery | Destinations + JSON + remote URLs | Destinations collection + Media relationships | Add hero/media fields; import seed assets | Runtime still consumes URL/demo imagery; Georgia points at Saint Petersburg |
+| FAQs | FAQ collection + code headings | FAQ collection + Homepage headings | Scope public reads; seed defaults | Anonymous API can read disabled/unpublished entries |
+| Inquiries | Inquiries collection + server actions | Existing collection/server actions | No content seed; preserve schema unless audit finds a gap | Must keep public CRUD denied and logs free of PII/details |
+| Users/admin | Users auth collection | Existing collection | No user seed | Confirm first-admin bootstrap remains manual and registration is not public |
+| Legacy editorial collections and Markets | Existing collections | Preserve; public reads scoped/denied where unused | Access update only | Broad public reads can expose obsolete/other-market data |
+| Media uploads | Media collection/local filesystem | Media collection + persistent `PAYLOAD_MEDIA_DIR` | Add bounded upload settings; docs | No explicit small upload limit; production path must survive releases |
+
+### Ordered implementation
+
+1. Complete route, API/access, action, migration, dependency, environment, and asset audits; preserve all unrelated files.
+2. Finalize the minimal editorial model: complete Site Settings and Homepage, add About/Contact/Destinations Page globals, complete destination Media relationships, and keep legacy collections without destructive drops.
+3. Make anonymous CMS access explicit and least-privilege: publish/launch-market scoped content, enabled FAQs, public Media reads, authenticated admin writes, no public Inquiries or Users CRUD.
+4. Refactor production view-model adapters and pages to consume managed content; use only explicit preview/development fallbacks and render controlled unavailable states for critical missing production content.
+5. Correct Georgia imagery using a verified Georgia source; seed images into Media only during explicit seed execution, with deterministic reuse and no replacement of editor uploads.
+6. Make seed repeatable and non-destructive for all public globals/content; never seed on startup and never seed users, inquiries, or secrets.
+7. Generate and inspect Payload types/import map and a forward-only schema migration. Do not rewrite historical migrations; do not apply to a database that is unavailable or unverified.
+8. Fix justified application, SEO, metadataBase, health/error, dependency, environment, image, and documentation findings without scope expansion or forced upgrades.
+9. Verify DB-free preview, strict no-demo production behavior, public routes/assets, validation/security paths, and all static checks. Record CMS/admin/database/browser checks as blocked where runtime infrastructure is absent.
+10. Review the complete diff, secret audit, local Git identity, stage only intended paths, then commit/push without force only if the validated code and repository state are safe.
+
+### Verification gates
+
+- Payload type generation and import-map generation when schema/config changes.
+- New migration source/SQL review and `migrate:status`; migration application and seed idempotence require the verified local DB and will not be simulated.
+- `pnpm typecheck`, `pnpm lint`, `pnpm build`, `git diff --check`.
+- Preview with `UI_PREVIEW_MODE=true` and no database secrets; strict mode without CMS must render controlled unavailable UI, never demo content.
+- Route/asset/metadata/robots/sitemap/health smoke tests; responsive/browser and real CMS/admin/form/API checks only where runtime permits.
+- Tracked-file secret scan with filenames/categories only; final staged diff review; no VPS/deployment actions.
+
+### Implementation status — 2026-09-30
+
+The editorial globals, route adapters, destination Media relationships, access boundaries, non-destructive seed, SEO/error/health work, and generated forward migrations are implemented. The main CMS migration and Payload 3.90.2 auth compatibility migration were reviewed but not applied. Full dependency audit, typecheck, lint (eight historical migration warnings), a supported Webpack production build, diff/secret checks, and preview/strict route smoke passed; the default local Turbopack build path hit an ignored-cache/font-loader environment problem. PostgreSQL, `/admin` authenticated CRUD, seed execution, migration application, viewport-matrix QA, and production infrastructure were not touched. Database/admin/current-schema and visual viewport gates remain open; details are in `docs/release-qa.md`.

@@ -5,6 +5,8 @@ import { demoDestinations } from "./destinations";
 export type ImageSource = {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
 };
 
 export type SocialLink = {
@@ -21,7 +23,10 @@ export type Cta = {
 export type SiteViewModel = {
   name: string;
   tagline: string;
+  publicEmail: string;
+  egyptOfficeLabel: string;
   office: string;
+  saudiOfficeLabel: string;
   saudiOffice: string;
   whatsappDisplay: string;
   whatsappNumber: string;
@@ -32,6 +37,12 @@ export type SiteViewModel = {
   contextTemplate: string;
   footerCopy: string;
   socialLinks: SocialLink[];
+  regionalSocials: { egypt: SocialLink[]; saudi: SocialLink[] };
+  headerLogo: ImageSource;
+  footerLogo: ImageSource;
+  defaultMetaTitle: string;
+  defaultMetaDescription: string;
+  defaultSocialImage?: string;
 };
 
 export type DestinationViewModel = {
@@ -76,6 +87,7 @@ export type HomepageViewModel = {
     secondaryCta: Cta;
   };
   destinations: DestinationViewModel[];
+  destinationsSection: { eyebrow: string; headline: string; description: string };
   whyLdc: {
     eyebrow: string;
     headline: string;
@@ -94,8 +106,11 @@ export type HomepageViewModel = {
     description: string;
     primaryCta: Cta;
     secondaryCta: Cta;
+    form: { eyebrow: string; headline: string; description: string; submitLabel: string };
   };
+  faqSection: { eyebrow: string; headline: string; description: string };
   faqs: FaqViewModel[];
+  seo: { title: string; description: string; image?: string };
 };
 
 const heroImage = (id: string, alt: string): ImageSource => ({
@@ -121,7 +136,10 @@ export const demoHomepage: HomepageViewModel = {
   site: {
     name: "LDC Travel",
     tagline: "Tourism Marketing",
+    publicEmail: publicContact.email,
+    egyptOfficeLabel: "Egypt",
     office: publicContact.office,
+    saudiOfficeLabel: "Saudi Arabia",
     saudiOffice: publicContact.saudiOffice,
     whatsappDisplay: publicContact.whatsapp.saudi.display,
     whatsappNumber: publicContact.whatsapp.saudi.number,
@@ -134,9 +152,22 @@ export const demoHomepage: HomepageViewModel = {
     socialLinks: [
       { label: "Instagram", url: "https://www.instagram.com/ldctravels.eg/" },
       { label: "Facebook", url: "https://www.facebook.com/profile.php?id=61591627376189" },
-      { label: "TikTok", url: "https://www.tiktok.com/@ldc.travel.agency" },
-      { label: "LinkedIn", url: "https://www.linkedin.com/company/ldctravel/" },
     ],
+    regionalSocials: {
+      egypt: [
+        { label: "Instagram", url: "https://www.instagram.com/ldctravels.eg/" },
+        { label: "Facebook", url: "https://www.facebook.com/profile.php?id=61591627376189" },
+      ],
+      saudi: [
+        { label: "Instagram", url: "https://www.instagram.com/elwajha_elraeda_travels/" },
+        { label: "Facebook", url: "https://www.facebook.com/profile.php?id=61575912646557" },
+      ],
+    },
+    headerLogo: { src: "/brand/ldc-travel-primary.webp", alt: "LDC Travel", width: 1254, height: 1254 },
+    footerLogo: { src: "/brand/ldc-travel-white.webp", alt: "LDC Travel — Tourism Marketing", width: 1254, height: 1254 },
+    defaultMetaTitle: "LDC Travel — Tourism Marketing",
+    defaultMetaDescription: "Explore international destinations with LDC Travel and get personal guidance for your next journey.",
+    defaultSocialImage: "https://images.unsplash.com/photo-1534008897995-27a23e859048",
   },
   whatsappConfig: demoWhatsappConfig,
   hero: {
@@ -155,6 +186,11 @@ export const demoHomepage: HomepageViewModel = {
     { slug: "indonesia", title: "Indonesia", country: "Indonesia", regionOrCity: "Java, Bali, and beyond", summary: "Island landscapes, ancient places, and vivid everyday life.", image: destinationHeroImage("indonesia"), href: "/destinations/indonesia" },
     { slug: "thailand", title: "Thailand", country: "Thailand", regionOrCity: "Bangkok and the islands", summary: "Street-side flavor, temple mornings, and blue-water escapes.", image: destinationHeroImage("thailand"), href: "/destinations/thailand" },
   ],
+  destinationsSection: {
+    eyebrow: "The world, in focus",
+    headline: "Choose a place that feels like you.",
+    description: "Six destinations to start with, each offering a different way to see more of the world.",
+  },
   whyLdc: {
     eyebrow: "Why travel with LDC",
     headline: "A clearer way to choose your next destination.",
@@ -182,6 +218,17 @@ export const demoHomepage: HomepageViewModel = {
     description: "Have a destination in mind or still choosing? Send your details and the LDC Travel team will follow up with a useful direction.",
       primaryCta: { label: "Explore destinations", href: "/destinations" },
     secondaryCta: whatsappCta("Start a conversation"),
+    form: {
+      eyebrow: "Start a conversation",
+      headline: "Tell us what you’re planning.",
+      description: "Share a few details and we’ll help shape the right next step.",
+      submitLabel: "Send inquiry",
+    },
+  },
+  faqSection: {
+    eyebrow: "Good to know",
+    headline: "Questions, answered simply.",
+    description: "Still choosing? Start a conversation with the LDC Travel team.",
   },
   faqs: [
     { question: "How do I start planning with LDC Travel?", answer: "Start with a WhatsApp message or the contact form. Tell us which destination interests you and what kind of experience you are imagining." },
@@ -190,4 +237,9 @@ export const demoHomepage: HomepageViewModel = {
     { question: "What happens after I send an inquiry?", answer: "A member of the LDC Travel team will follow up directly to understand your request and answer your questions." },
     { question: "Can I ask about a destination that is not listed yet?", answer: "Absolutely. The destinations shown here are our current focus, but you can still message us with another idea and we will let you know how we can help." },
   ],
+  seo: {
+    title: "International Destinations from Egypt | LDC Travel",
+    description: "Explore Turkey, Russia, Bali, Georgia, Indonesia, and Thailand with LDC Travel, then start a clear conversation about your next destination.",
+    image: "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=1200&q=80",
+  },
 };

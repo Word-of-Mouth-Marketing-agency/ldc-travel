@@ -6,13 +6,13 @@ This repository contains the application foundation, Payload CMS schema, officia
 
 ## Stack
 
-- Next.js 16.3.3 (App Router)
+- Next.js 16.3.7 (App Router)
 - React 19.2.8
 - TypeScript 5.9.3
 - Tailwind CSS 4.3.3
-- Payload CMS 3.88.0
-- PostgreSQL through `@payloadcms/db-postgres` 3.88.0
-- Lexical rich text through `@payloadcms/richtext-lexical` 3.88.0
+- Payload CMS 3.90.2
+- PostgreSQL through `@payloadcms/db-postgres` 3.90.2
+- Lexical rich text through `@payloadcms/richtext-lexical` 3.90.2
 - GSAP 3.15.0 for coordinated homepage text reveals
 - Sharp 0.35.4 for media processing
 - pnpm 11.1.1
@@ -103,14 +103,18 @@ The homepage prefers uploaded Payload Media for editorial imagery. Optional `ima
 - Email: `info@ldc-tourism.com`
 - Instagram: <https://www.instagram.com/ldctravels.eg/>
 - Facebook: <https://www.facebook.com/profile.php?id=61591627376189>
-- TikTok: <https://www.tiktok.com/@ldc.travel.agency>
-- LinkedIn: <https://www.linkedin.com/company/ldctravel/>
 
 ## Research and content safety
 
 Phase 2 destination copy is concise original paraphrase based on official tourism authorities and UNESCO where relevant. The source list is maintained in [docs/destination-sources.md](docs/destination-sources.md). Image subjects and source pages are maintained in [docs/destination-image-sources.md](docs/destination-image-sources.md). Unstable visa, entry, safety, and border guidance is intentionally omitted from the public destination pages.
 
 Phase 4 editorial SEO QA keeps the six destination pages differentiated, uses source-backed stable context, and maintains meaningful image alt text. The confirmed production canonical origin is `https://ldc-tourism.com`; set `NEXT_PUBLIC_SITE_URL` to that value during the approved deployment so canonical links and `sitemap.xml` resolve to the real host. Explicit `UI_PREVIEW_MODE=true` previews are noindex/nofollow and disallowed in `robots.txt`; normal production mode remains crawlable for public routes.
+
+## Final application audit status — 2026-09-30 (historical snapshot)
+
+The Phase 3 local CMS runtime note below is historical evidence from 2026-09-21, not proof that the local database is currently available. The final CMS audit generated two forward migrations, but did not apply them because the local PostgreSQL endpoint was unavailable during this pass. Current schema runtime, seed execution, and authenticated dashboard CRUD remain unverified for this schema revision. Production and WOM-VPS-01 remain untouched.
+
+The 2026-10-01 local-runtime continuation below supersedes that point-in-time status for the local CMS schema and application gates. The operator reports that PostgreSQL 17 was positively identified as the dedicated LDC database, all six migrations were applied, the seed passed twice, CMS-backed routes and inquiry persistence/access controls passed, and responsive/browser QA was clean. This is local validation only; production infrastructure remains untouched.
 
 ## Source assets
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import type { SocialLink } from "../../content/homepage-demo";
+import type { SiteViewModel } from "../../content/homepage-demo";
 import { DesignYourTripTrigger } from "./DesignYourTripModal";
 import { MobileNav } from "./MobileNav";
 
@@ -12,12 +12,12 @@ const navItems = [
   { label: "Contact", href: "/contact" },
 ];
 
-export function Header({ activePath = "/", socialLinks }: { activePath?: string; socialLinks: SocialLink[] }) {
+export function Header({ activePath = "/", site }: { activePath?: string; site: SiteViewModel }) {
   return (
     <header className="site-header">
       <div className="site-container header-inner">
         <Link className="brand-link" href="/" aria-label="LDC Travel home">
-          <Image className="brand-logo" src="/brand/ldc-travel-primary.webp" alt="LDC Travel" width={1254} height={1254} sizes="84px" priority />
+          <Image className="brand-logo" src={site.headerLogo.src} alt={site.headerLogo.alt} width={site.headerLogo.width ?? 1254} height={site.headerLogo.height ?? 1254} sizes="84px" priority />
         </Link>
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navItems.map((item) => (
@@ -27,7 +27,7 @@ export function Header({ activePath = "/", socialLinks }: { activePath?: string;
           ))}
         </nav>
         <DesignYourTripTrigger className="header-cta" />
-        <MobileNav activePath={activePath} items={navItems} socialLinks={socialLinks} />
+        <MobileNav activePath={activePath} items={navItems} socialLinks={site.socialLinks} logo={site.headerLogo} siteName={site.name} tagline={site.tagline} />
       </div>
     </header>
   );

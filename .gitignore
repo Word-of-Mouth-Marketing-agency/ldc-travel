@@ -9,6 +9,8 @@ coverage/
 !.env.example
 
 public/media/
+# Local Payload uploads and generated image derivatives.
+/media/
 .DS_Store
 Thumbs.db
 

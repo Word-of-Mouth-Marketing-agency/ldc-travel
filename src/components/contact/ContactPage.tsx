@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { regionalSocialLinks, type RegionalSocialLink } from "../../content/regional-social";
-import type { SiteViewModel } from "../../content/homepage-demo";
+import type { SiteViewModel, SocialLink } from "../../content/homepage-demo";
+import type { ContactPageViewModel } from "../../content/page-content-demo";
 import { createPublicWhatsAppConfig } from "../../lib/public-contact";
 import { createWhatsAppUrl, type WhatsAppConfig } from "../../lib/whatsapp";
 import { Icon } from "../homepage/Icon";
@@ -26,25 +26,25 @@ export function ContactUnavailable() {
   );
 }
 
-function ContactDetails({ site, whatsappHref, egyptWhatsappHref }: { site: SiteViewModel; whatsappHref: string; egyptWhatsappHref: string }) {
+function ContactDetails({ site, page, whatsappHref, egyptWhatsappHref }: { site: SiteViewModel; page: ContactPageViewModel; whatsappHref: string; egyptWhatsappHref: string }) {
   return (
     <aside className="contact-details" aria-labelledby="contact-details-heading">
-      <p className="section-eyebrow">Good to know</p>
-      <h2 id="contact-details-heading">A thoughtful trip starts with a thoughtful conversation.</h2>
-      <p>Tell us what matters to you: the destination, pace, occasion, or people you’re traveling with. We’ll help turn the idea into a clear plan.</p>
+      <p className="section-eyebrow">{page.details.eyebrow}</p>
+      <h2 id="contact-details-heading">{page.details.headline}</h2>
+      <p>{page.details.description}</p>
       <dl className="contact-details-list">
-        <div><dt>Egypt office</dt><dd><Icon name="pin" />{site.office}</dd></div>
-        <div><dt>Saudi Arabia office</dt><dd className="contact-office-address"><Icon name="pin" /><span>{site.saudiOffice}</span></dd></div>
-        <div><dt>Egypt WhatsApp</dt><dd><WhatsAppIcon /><a href={egyptWhatsappHref} target="_blank" rel="noopener noreferrer">{site.egyptWhatsappDisplay}</a></dd></div>
-        <div><dt>Saudi WhatsApp</dt><dd><WhatsAppIcon /><a href={whatsappHref} target="_blank" rel="noopener noreferrer">{site.whatsappDisplay}</a></dd></div>
+        <div><dt>{site.egyptOfficeLabel} office</dt><dd><Icon name="pin" />{site.office}</dd></div>
+        <div><dt>{site.saudiOfficeLabel} office</dt><dd className="contact-office-address"><Icon name="pin" /><span>{site.saudiOffice}</span></dd></div>
+        <div><dt>{site.egyptOfficeLabel} WhatsApp</dt><dd><WhatsAppIcon /><a href={egyptWhatsappHref} target="_blank" rel="noopener noreferrer">{site.egyptWhatsappDisplay}</a></dd></div>
+        <div><dt>{site.saudiOfficeLabel} WhatsApp</dt><dd><WhatsAppIcon /><a href={whatsappHref} target="_blank" rel="noopener noreferrer">{site.whatsappDisplay}</a></dd></div>
         <div><dt>Email</dt><dd><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
       </dl>
-      <div className="contact-details-note"><strong>Prefer a quick answer?</strong><span>WhatsApp is the fastest way to start.</span><a className="text-link" href={whatsappHref} target="_blank" rel="noopener noreferrer">Chat with us <Icon name="arrow" /></a></div>
+      <div className="contact-details-note"><strong>{page.details.noteHeadline}</strong><span>{page.details.noteDescription}</span><a className="text-link" href={whatsappHref} target="_blank" rel="noopener noreferrer">{page.details.noteCtaLabel} <Icon name="arrow" /></a></div>
     </aside>
   );
 }
 
-function RegionalSocialLinks({ market, links }: { market: string; links: readonly RegionalSocialLink[] }) {
+function RegionalSocialLinks({ market, links }: { market: string; links: readonly SocialLink[] }) {
   return (
     <div className="contact-social-market">
       <h3>{market}</h3>
@@ -60,48 +60,49 @@ function RegionalSocialLinks({ market, links }: { market: string; links: readonl
   );
 }
 
-function SocialConnect() {
+function SocialConnect({ page, site }: { page: ContactPageViewModel; site: SiteViewModel }) {
+  if (!site.regionalSocials.egypt.length && !site.regionalSocials.saudi.length) return null;
   return (
     <section className="contact-social-section" aria-labelledby="contact-social-heading">
       <div className="site-container contact-social-inner">
         <div className="contact-social-heading">
-          <p className="section-eyebrow">Stay connected</p>
-          <h2 id="contact-social-heading">Find a little more inspiration.</h2>
-          <p>Follow LDC Travel for travel ideas and updates.</p>
+          <p className="section-eyebrow">{page.social.eyebrow}</p>
+          <h2 id="contact-social-heading">{page.social.headline}</h2>
+          <p>{page.social.description}</p>
         </div>
         <div className="contact-social-markets">
-          <RegionalSocialLinks market="Egypt" links={regionalSocialLinks.Egypt} />
-          <RegionalSocialLinks market="Saudi Arabia" links={regionalSocialLinks["Saudi Arabia"]} />
+          <RegionalSocialLinks market={site.egyptOfficeLabel} links={site.regionalSocials.egypt} />
+          <RegionalSocialLinks market={site.saudiOfficeLabel} links={site.regionalSocials.saudi} />
         </div>
       </div>
     </section>
   );
 }
 
-export function ContactPage({ site, whatsappConfig }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig }) {
+export function ContactPage({ site, whatsappConfig, page }: { site: SiteViewModel; whatsappConfig: WhatsAppConfig; page: ContactPageViewModel }) {
   const whatsappHref = createWhatsAppUrl(whatsappConfig, { message: "Hi LDC Travel, I'd like to ask about a travel inquiry." });
   const egyptWhatsappHref = createWhatsAppUrl(createPublicWhatsAppConfig(site.egyptWhatsappNumber), { message: "Hi LDC Travel, I'd like to ask about a travel inquiry." });
 
   return (
     <DesignYourTripProvider whatsappHref={createWhatsAppUrl(whatsappConfig)}>
-      <Header activePath="/contact" socialLinks={site.socialLinks} />
+      <Header activePath="/contact" site={site} />
       <main>
         <section className="page-title-section" aria-labelledby="contact-page-title">
           <div className="site-container page-title-inner">
             <div className="page-title-copy">
-              <p className="section-eyebrow">Get in touch</p>
-              <h1 id="contact-page-title">Contact Us</h1>
-              <p>Let’s talk about your next journey.</p>
+              <p className="section-eyebrow">{page.masthead.eyebrow}</p>
+              <h1 id="contact-page-title">{page.masthead.headline}</h1>
+              <p>{page.masthead.description}</p>
             </div>
           </div>
         </section>
         <section className="content-section contact-inquiry-section" id="inquiry" aria-labelledby="inquiry-heading">
           <div className="site-container contact-inquiry-grid">
-            <ContactForm whatsappHref={whatsappHref} />
-            <ContactDetails site={site} whatsappHref={whatsappHref} egyptWhatsappHref={egyptWhatsappHref} />
+            <ContactForm whatsappHref={whatsappHref} copy={page.form} />
+            <ContactDetails site={site} page={page} whatsappHref={whatsappHref} egyptWhatsappHref={egyptWhatsappHref} />
           </div>
         </section>
-        <SocialConnect />
+        <SocialConnect page={page} site={site} />
       </main>
       <Footer site={site} whatsappConfig={whatsappConfig} />
       <FloatingWhatsApp whatsappConfig={whatsappConfig} />

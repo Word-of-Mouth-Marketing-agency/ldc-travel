@@ -1,4 +1,5 @@
-import type { CollectionConfig } from "payload";
+import type { CollectionConfig, Where } from "payload";
+import { authenticatedWriteAccess } from "./access";
 
 export const Markets: CollectionConfig = {
   slug: "markets",
@@ -8,7 +9,18 @@ export const Markets: CollectionConfig = {
     defaultColumns: ["name", "code", "isActive", "isPublic"],
   },
   access: {
-    read: () => true,
+    ...authenticatedWriteAccess,
+    read: ({ req }) => {
+      if (req.user) return true;
+      const publicMarketWhere: Where = {
+        and: [
+        { code: { equals: process.env.NEXT_PUBLIC_LAUNCH_MARKET_CODE?.trim() || "EG" } },
+        { isActive: { equals: true } },
+        { isPublic: { equals: true } },
+        ],
+      };
+      return publicMarketWhere;
+    },
   },
   fields: [
     { name: "name", type: "text", required: true },

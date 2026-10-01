@@ -32,6 +32,8 @@ The favicon and Apple icon use a transparent, square crop of the recognizable em
 
 Payload owns editorial and global configuration data. Collections for older features (Travel Programs, Events, and Offers) remain registered for safe later migration, but they are no longer read by the homepage or created by the destination-first demo seed.
 
+The globals are Site Settings, Homepage, About Page, Contact Page, and Destinations Page. Site Settings owns shared public brand/contact/social/SEO values and optional logo Media relationships; bundled logo files remain the fallback. The page-specific globals own editable editorial copy and SEO metadata without exposing layout mechanics, CSS, environment variables, or access policy.
+
 The Homepage global now owns:
 
 - hero copy, image, and two CTAs
@@ -77,6 +79,14 @@ Destination pages are researched from official tourism authorities, government p
 
 The Destinations collection now supports structured overview, highlights, experiences, best-time guidance, useful information, gallery uploads, related destinations, and FAQ relationships. The public template remains server-rendered, while the inquiry form is the only destination-specific client island.
 
+## CMS access and media
+
+Read access is explicit: public queries can read the intended public globals, enabled FAQs, and published destinations scoped to the launch market. User and Inquiry collection operations are not public; public forms validate on the server and persist through controlled server actions. Legacy program/event/offer/editorial collections remain registered for compatibility but are not used as public homepage content.
+
+Media accepts raster web images only (JPEG, PNG, WebP, AVIF), with a 5 MiB upload cap and thumbnail/card/hero derivatives at 480/960/2400 pixels. Production uploads must use `PAYLOAD_MEDIA_DIR` on durable storage outside release directories. Database records and files both need backup. Upload behavior has not been verified through an authenticated dashboard session in the latest audit.
+
+The repeatable seed is an explicit command, merge-missing/non-destructive, and never runs at startup. It supplies the approved six destinations and page/global demo content when explicitly invoked on a configured database; it creates no users or inquiries. Production seeding requires a separately reviewed one-time opt-in and must not overwrite existing editorial fields.
+
 ## Production-readiness boundaries
 
 The production start script uses Next's native server with `--hostname 127.0.0.1`; deployment, OpenLiteSpeed, WOM-VPS-01, PostgreSQL credentials, DNS, and SSL remain deferred. `PAYLOAD_MEDIA_DIR` is deployment-managed and no production storage configuration is part of this redesign. Phase 6 preparation documents are maintained in `docs/production-environment.md`, `docs/deployment-runbook.md`, and `docs/launch-checklist.md`.
@@ -90,3 +100,9 @@ The local CMS runtime was verified on 2026-09-21 against the user-provided isola
 Production-style local HTTP checks passed for the homepage, Contact, destination listing, all six CMS-backed detail routes, `/admin`, favicon assets, WhatsApp links, and configured social links. The server actions persisted and then removed marked local contact/destination test inquiries; anonymous collection creation returned `403`. Preview mode rendered all public routes with empty database credentials and returned explicit non-success form notices. Preview-disabled empty-credential checks rendered the strict unavailable state. Numeric Payload relationship IDs are normalized before market visibility checks so valid CMS records do not fall back silently.
 
 Phase 6 verified a local `pg_dump -Fc` archive with `pg_restore --list`, restored it into a disposable database, checked the six destinations, homepage/inquiries schema, and migration records, and removed only the disposable database and temporary archive. Authenticated admin CRUD/media upload remains pending because the local Payload instance still requires first-user creation. The read-only WOM-VPS-01 audit could not connect from this environment, so prior Brain server notes are treated as stale planning context rather than current production evidence. No native PostgreSQL or production system was changed, and production deployment remains deferred.
+
+## Final application audit status — 2026-09-30 (historical snapshot)
+
+The CMS completion and Payload 3.90.2 authentication compatibility migrations are generated and registered, but were not applied because the local PostgreSQL endpoint was unavailable. Do not treat the historical 2026-09-21 runtime evidence above as verification of the newer migration/schema revision. The 2026-09-30 audit completed typecheck, lint, dependency audit, a supported Webpack production build, and preview/strict HTTP smoke tests; the default local Turbopack path encountered a stale locked cache/font-loader issue. Database/admin/seed/current-schema runtime and viewport-level responsive QA remain unverified. Full evidence and limits are recorded in `docs/release-qa.md`.
+
+The 2026-10-01 local-runtime continuation in `docs/release-qa.md` supersedes the database and application-gate status above: the operator reports that all six migrations were applied to the positively identified dedicated local LDC database, the seed passed twice, CMS routes/forms/access controls passed, and responsive/browser QA passed. This does not represent production database or deployment verification.

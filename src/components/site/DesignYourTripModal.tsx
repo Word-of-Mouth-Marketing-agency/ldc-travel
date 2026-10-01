@@ -51,7 +51,7 @@ export function DesignYourTripProvider({ children, whatsappHref }: { children: R
   );
 }
 
-export function DesignYourTripTrigger({ className, onOpen, returnFocusRef }: { className: string; onOpen?: () => void; returnFocusRef?: RefObject<HTMLElement | null> }) {
+export function DesignYourTripTrigger({ className, label = "Design Your Trip", onOpen, returnFocusRef }: { className: string; label?: string; onOpen?: () => void; returnFocusRef?: RefObject<HTMLElement | null> }) {
   const { openDesignYourTrip } = useDesignYourTrip();
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -66,7 +66,7 @@ export function DesignYourTripTrigger({ className, onOpen, returnFocusRef }: { c
         openDesignYourTrip(triggerRef.current, returnFocusRef?.current);
       }}
     >
-      <span>Design Your Trip</span>
+      <span>{label}</span>
       <Icon name="arrow" size={16} />
     </button>
   );

@@ -20,6 +20,9 @@ import { TravelPrograms } from "./src/collections/TravelPrograms";
 import { Users } from "./src/collections/Users";
 import { Homepage } from "./src/globals/Homepage";
 import { SiteSettings } from "./src/globals/SiteSettings";
+import { AboutPage } from "./src/globals/AboutPage";
+import { ContactPage } from "./src/globals/ContactPage";
+import { DestinationsPage } from "./src/globals/DestinationsPage";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -66,7 +69,12 @@ export default buildConfig({
     Inquiries,
   ],
   editor: lexicalEditor(),
-  globals: [SiteSettings, Homepage],
+  globals: [SiteSettings, Homepage, AboutPage, ContactPage, DestinationsPage],
+  upload: {
+    limits: {
+      fileSize: 5 * 1024 * 1024,
+    },
+  },
   secret: process.env.PAYLOAD_SECRET ?? "",
   typescript: {
     outputFile: path.resolve(dirname, "src/payload-types.ts"),

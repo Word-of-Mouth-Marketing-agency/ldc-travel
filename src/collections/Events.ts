@@ -1,11 +1,12 @@
 import type { CollectionConfig } from "payload";
 
 import { contentFields, marketVisibilityField, seoFields, slugField, statusField } from "../fields/shared";
+import { authenticatedCollectionAccess } from "./access";
 
 export const Events: CollectionConfig = {
   slug: "events",
   admin: { useAsTitle: "title", group: "Content" },
-  access: { read: () => true },
+  access: authenticatedCollectionAccess,
   fields: [
     { name: "title", type: "text", required: true },
     slugField(),

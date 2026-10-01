@@ -54,6 +54,7 @@ export async function submitDestinationInquiry(
       where: { and: [{ slug: { equals: slug } }, { status: { equals: "published" } }] },
       limit: 1,
       depth: 0,
+      overrideAccess: false,
     });
     const destination = destinationResult.docs[0];
 
@@ -81,8 +82,8 @@ export async function submitDestinationInquiry(
       fieldErrors: {},
       values: {},
     };
-  } catch (error) {
-    console.error("Destination inquiry submission failed.", error instanceof Error ? error.message : "Unknown error");
+  } catch {
+    console.error("Destination inquiry submission failed.");
     return {
       status: "error",
       message: "We couldn’t send your inquiry right now. Please contact us on WhatsApp.",

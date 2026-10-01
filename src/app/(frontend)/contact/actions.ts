@@ -54,8 +54,8 @@ export async function submitInquiry(_previousState: ContactFormState, formData: 
       fieldErrors: {},
       values: {},
     };
-  } catch (error) {
-    console.error("Contact inquiry submission failed.", error instanceof Error ? error.message : "Unknown error");
+  } catch {
+    console.error("Contact inquiry submission failed.");
 
     return {
       status: "error",

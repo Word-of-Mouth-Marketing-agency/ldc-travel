@@ -9,12 +9,21 @@ import { Icon } from "../homepage/Icon";
 
 const initialState: ContactFormState = { status: "idle", message: "", fieldErrors: {}, values: {} };
 
-function SubmitButton() {
+export type ContactFormCopy = { eyebrow: string; headline: string; description: string; submitLabel: string };
+
+const defaultCopy: ContactFormCopy = {
+  eyebrow: "Start a conversation",
+  headline: "Tell us what you’re planning.",
+  description: "Share a few details and we’ll help shape the right next step.",
+  submitLabel: "Send inquiry",
+};
+
+function SubmitButton({ label }: { label: string }) {
   const { pending } = useFormStatus();
 
   return (
     <button className="button button-primary contact-submit" type="submit" disabled={pending}>
-      {pending ? "Sending…" : "Send inquiry"}
+      {pending ? "Sending…" : label}
     </button>
   );
 }
@@ -23,7 +32,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   return message ? <p className="form-field-error" id={id} role="alert">{message}</p> : null;
 }
 
-export function ContactForm({ whatsappHref }: { whatsappHref: string }) {
+export function ContactForm({ whatsappHref, copy = defaultCopy }: { whatsappHref: string; copy?: ContactFormCopy }) {
   const [state, formAction] = useActionState(submitInquiry, initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -56,9 +65,9 @@ export function ContactForm({ whatsappHref }: { whatsappHref: string }) {
   return (
     <form key={`contact-form-${state.status}-${JSON.stringify(state.values)}`} ref={formRef} className="contact-form" action={formAction} noValidate>
       <div className="contact-form-heading">
-        <p className="section-eyebrow">Start a conversation</p>
-        <h2 id="inquiry-heading">Tell us what you’re planning.</h2>
-        <p>Share a few details and we’ll help shape the right next step.</p>
+        <p className="section-eyebrow">{copy.eyebrow}</p>
+        <h2 id="inquiry-heading">{copy.headline}</h2>
+        <p>{copy.description}</p>
       </div>
       {state.message ? (
         <div className="contact-form-message" role="alert">
@@ -118,7 +127,7 @@ export function ContactForm({ whatsappHref }: { whatsappHref: string }) {
       </div>
       <div className="contact-form-footer">
         <p><span aria-hidden="true">*</span> Required fields</p>
-        <SubmitButton />
+        <SubmitButton label={copy.submitLabel} />
       </div>
     </form>
   );

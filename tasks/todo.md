@@ -160,3 +160,33 @@ Payload `3.88.0` applied `20260921_112401_initial_schema`, the seed created exac
 - [x] Confirm no tracked environment files, database dumps, private keys, or other release secrets are present.
 - [x] Attempt public-origin smoke testing; record the environment-level refusal without treating it as production evidence.
 - [ ] Obtain the remaining Phase 7 human/operator inputs: dedicated production PostgreSQL and credentials, `PAYLOAD_SECRET`, persistent media path, admin ownership, process/port choice, backup/restore owner, deployment window, fresh VPS/OLS audit, and explicit OLS/DNS approval.
+
+## Final full application audit and CMS completion — baseline 0992371
+
+- [x] Audit public routes/source, Payload models, APIs/actions, media, environment, SEO, migrations, dependencies, docs, and tracked files; preserve untracked `AGENTS.md` and `CLAUDE.md`. Database/admin/current-schema checks are recorded as blocked.
+- [x] Build a pre-edit content ownership/risk matrix and update the ordered implementation plan.
+- [x] Complete Site Settings, Homepage, About Page, Contact Page, and Destinations Page editorial globals.
+- [x] Move appropriate homepage/about/contact/destination-listing editorial copy into Payload without exposing layout/security controls.
+- [x] Complete destination image management through Media relationships and correct all six destination image/source mismatches, especially Georgia.
+- [x] Add raster-only upload limits and useful media derivatives; document release-independent media persistence.
+- [x] Make collection/global access explicit; keep public reads limited to intended published launch-market content and deny public Inquiry/Users CRUD.
+- [x] Tighten production normalization so empty/partial CMS records never silently substitute demo copy or imagery.
+- [x] Extend the explicit non-destructive seed for managed globals, FAQs, six destinations, and reusable Media; no startup seeding or user/inquiry secrets.
+- [x] Generate Payload types/import map and forward-only migrations; inspect source. Applying migrations is blocked until the verified local PostgreSQL endpoint is available.
+- [x] Audit server-action validation, PII-safe logs, health/errors, metadataBase, unique SEO, robots/sitemap, preview and strict behavior.
+- [x] Audit dependencies/advisories and apply evidence-backed compatible lockfile overrides; full registry audit reports no known vulnerabilities.
+- [x] Update production environment, migration, seed, media persistence, backup/restore, admin, smoke, rollback, and launch documentation; refresh this plan/checklist and durable Brain project note.
+- [x] Run preview/strict HTTP route checks, typecheck, lint, supported Webpack production build, diff and secret audits. Viewport matrix/DevTools, form persistence, API CRUD, and current-schema checks remain blocked or unverified as recorded in `docs/release-qa.md`.
+- [ ] Review selective staged diff; commit and push to `origin/main` only after final safe validation and identity/upstream checks.
+- [x] Record READY/BLOCKED/NOT APPLICABLE gates, explicitly separating application readiness from untouched infrastructure/deployment.
+
+### Local gate continuation — 2026-10-01
+
+- [x] Make the normal `pnpm build` deterministic with a self-hosted Montserrat font and pass it twice, including a clean generated-output repeat.
+- [x] Re-run Payload type/import-map generation, typecheck, lint, and `git diff --check`.
+- [x] Exercise strict unavailable and database-free preview behavior locally; check the 10-route responsive matrix at nine viewport widths, mobile navigation, modal dismissal, image rendering, and preview-safe form notices.
+- [x] Confirm the temporary local preview server is stopped and no database/production system was changed.
+- [ ] Identify/access the dedicated LDC local database before any DB connection; the current port owner is native PostgreSQL and Docker Engine inspection is permission-blocked.
+- [ ] Apply/verify migrations, run the seed twice, and exercise actual CMS/admin, persistence, media, and anonymous API behavior only after the database is positively identified.
+- [x] Re-run `pnpm audit` with read-only network permission; completed with no known vulnerabilities.
+- [ ] Commit/push only after every mandatory application gate passes. No commit or push was made in this continuation.
