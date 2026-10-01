@@ -176,3 +176,14 @@ Status: source implementation and safe application-side verification are complet
 ### Implementation status — 2026-09-30
 
 The editorial globals, route adapters, destination Media relationships, access boundaries, non-destructive seed, SEO/error/health work, and generated forward migrations are implemented. The main CMS migration and Payload 3.90.2 auth compatibility migration were reviewed but not applied. Full dependency audit, typecheck, lint (eight historical migration warnings), a supported Webpack production build, diff/secret checks, and preview/strict route smoke passed; the default local Turbopack build path hit an ignored-cache/font-loader environment problem. PostgreSQL, `/admin` authenticated CRUD, seed execution, migration application, viewport-matrix QA, and production infrastructure were not touched. Database/admin/current-schema and visual viewport gates remain open; details are in `docs/release-qa.md`.
+
+## Release-preparation closure — 2026-10-01
+
+- [x] Confirm current source baseline `ab856225549b0fb5482761a70b1c4886607df0a4` matches `origin/main`; preserve untracked `AGENTS.md` and `CLAUDE.md`.
+- [x] Reconcile push-time Dependabot notice read-only: API reports zero open and nine fixed historical alerts; operator `pnpm audit` was clean; no dependency changes required.
+- [x] Complete strict-host-key/key-only WOM-VPS-01 read-only identity and infrastructure audit; record actual host/DNS/TLS/vhost/runtime/database/process/port/filesystem/capacity findings and limits.
+- [x] Recommend a dedicated unprivileged systemd app, isolated PostgreSQL 17, compatible off-host Linux build, release symlink, persistent media, and verified DB+media recovery set without creating any of them.
+- [x] Update the six allowed local release documents and inspect the documentation-only diff/secret scan.
+- [ ] Resolve explicit operator/customer approvals and production prerequisites: correct certificate and LDC vhost, dedicated DB/secrets, media and backup/restore, admin owner, app user/systemd/port, deployment window, then separately authorize deployment.
+
+Release-preparation decision: **DEPLOYMENT NOT READY**. The LDC domain resolves to the VPS, but TLS hostname validation fails and no LDC vhost/certificate mapping exists. No production mutation or deployment was performed. Detailed evidence and the next authorization gate are recorded in `docs/release-qa.md`.

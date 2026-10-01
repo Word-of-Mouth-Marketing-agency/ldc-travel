@@ -7,7 +7,7 @@ This is a variable-name-only contract for the future WOM-VPS-01 deployment. Neve
 | `DATABASE_URL` | Yes | Yes | Dedicated LDC PostgreSQL database only; never reuse another workload's database or credentials. | `postgresql://<LDC_DB_USER>:<PASSWORD>@127.0.0.1:<PORT>/ldc_travel_prod` |
 | `PAYLOAD_SECRET` | Yes | Yes | Long, random Payload auth/session secret stored in the deployment secret store. | `<GENERATED_RANDOM_SECRET>` |
 | `NEXT_PUBLIC_SITE_URL` | Yes | No | Final canonical HTTPS origin. Confirmed production value: `https://ldc-tourism.com`. | `https://ldc-tourism.com` |
-| `PAYLOAD_MEDIA_DIR` | Yes | No | Persistent media directory outside release folders. | `/srv/ldc-travel/media` |
+| `PAYLOAD_MEDIA_DIR` | Yes | No | Persistent media directory outside release folders. | `/var/www/ldc-travel/shared/media` |
 | `PORT` | Yes | No | Localhost-only application port selected after a fresh VPS port audit. | `31xx` |
 | `HOSTNAME` | Optional | No | Keep the app bound to loopback; the current start script explicitly passes `127.0.0.1`. | `127.0.0.1` |
 | `NODE_ENV` | Yes | No | Must be `production`. | `production` |
@@ -25,13 +25,13 @@ This is a variable-name-only contract for the future WOM-VPS-01 deployment. Neve
 
 ## Current application contract
 
-The repository requires Node `>=20.9.0` and pnpm `11.1.1` through `package.json`. The exact current development runtime was Node `v24.13.1`; production should use a pinned supported Node LTS release, preferably Node 20 or another explicitly approved compatible version, rather than inheriting the workstation version. The app currently pins Payload and `@payloadcms/*` packages to `3.90.2`, Next and `eslint-config-next` to `16.3.7`, and React to `19.2.8`.
+The repository requires Node `>=20.9.0` and pins pnpm `11.1.1` through `package.json`. The last reported local validation used Node `v24.13.1` and pnpm `11.1.1`. The read-only WOM-VPS-01 audit on 2026-10-01 found Node `v22.23.0` at `/usr/bin/node` and pnpm `11.7.0` at `/usr/bin/pnpm`; Node meets the repository minimum, but pnpm differs from the exact project pin. Pin the CI/release toolchain to the repository contract and decide separately whether to patch the shared server Node runtime; no server software was changed. The app currently pins Payload and `@payloadcms/*` packages to `3.90.2`, Next and `eslint-config-next` to `16.3.7`, and React to `19.2.8`.
 
 The start command is `pnpm start -- -p <PORT>`, and the package script forces `--hostname 127.0.0.1`. The production flow is therefore: locked install → `pnpm build` → process manager starts `pnpm start -- -p <PORT>` with the production environment.
 
 ## Media policy
 
-Payload currently uses local storage with `PAYLOAD_MEDIA_DIR` or the development fallback `media`. Payload Media is preferred over remote demo URLs. Production should use a path such as `/srv/ldc-travel/media`, with ownership and permissions limited to the app runtime and deployment operators. Back up the database before media changes, then capture the persistent media tree as part of the same recovery set. Never store uploads inside a release directory.
+Payload currently uses local storage with `PAYLOAD_MEDIA_DIR` or the development fallback `media`. Payload Media is preferred over remote demo URLs. The fresh host audit found existing app roots under `/var/www` and no LDC media path. Recommended (not created) path: `/var/www/ldc-travel/shared/media`, with ownership and permissions limited to the dedicated LDC runtime user and deployment operators. Back up the database before media changes, then capture the persistent media tree as part of the same recovery set. Never store uploads inside a release directory.
 
 The Media collection accepts JPEG, PNG, WebP, and AVIF only, rejects SVG, caps each upload at 5 MiB, and generates thumbnail/card/hero derivatives at 480/960/2400 pixels while retaining the original. No authenticated upload test was run because admin access and the current local database were unavailable during the final audit. Verify the configured application and reverse-proxy request limits agree with the collection cap before launch.
 
@@ -49,6 +49,16 @@ The CMS now includes Site Settings, Homepage, About Page, Contact Page, and Dest
 
 Required environment names are listed in `.env.example`; values remain deployment-owned. `UI_PREVIEW_MODE=true` is only for a temporary database-free preview and must be false/absent for the real site. `LDC_ALLOW_PRODUCTION_SEED` is an optional one-command safety gate for an explicitly approved content seed, not a persistent required production variable.
 
+## Read-only production prerequisite snapshot — 2026-10-01
+
+The host was positively identified over strict-host-key, key-only SSH as `mail.wordofmoutheg.com` (`72.60.47.33`), AlmaLinux 9.8, kernel `5.14.0-687.51.1.el9_8.x86_64`, 2 vCPU. Point-in-time observations: load `1.18 / 0.83 / 0.82`; 7.5 GiB RAM with 3.4 GiB available; 4.0 GiB swap with 3.4 GiB used; root XFS 99 GiB with 25 GiB free (76% used), inodes 4% used. Three short `vmstat` interval samples showed no swap-in/out, but CPU steal varied 3–15%; these brief samples are not a long-term capacity baseline. Do not plan a production build on this host.
+
+OpenLiteSpeed 1.9.0 and CyberPanel are active. The main configuration uses CyberPanel-managed vhost files under `/usr/local/lsws/conf/vhosts/<domain>/vhost.conf`; existing examples use an External App and `/` proxy context. No LDC vhost or certificate mapping was found. DNS currently resolves `ldc-tourism.com` to `72.60.47.33` and `www` as a CNAME to the apex, but TLS-verified requests to both names failed with a certificate hostname mismatch. Preserve DNS; certificate/vhost setup and external smoke tests remain blockers requiring a separately approved change.
+
+No LDC production application, database, media path, or release tree exists. Native PostgreSQL 13.23 is active on loopback; separate application containers use PostgreSQL 16, 17, and 18. Do not reuse any of them. Recommend an isolated, dedicated PostgreSQL 17 service for LDC after approval. Root PM2 is active but is not an appropriate shared app owner; recommend one dedicated systemd unit under an unprivileged LDC user, running a single loopback-bound Next process. Ports 3150, 3151, and 3152 were free only at audit time; 3150 is the preferred candidate, to be rechecked immediately before an approved release.
+
+Restic is installed, but no LDC backup job or successful restore was verified. CyberPanel-managed backup schedules were not inspected, so host-wide backup status is unknown. `/var/backups` exists but that alone is not evidence of a usable recovery set. Recommend database `pg_dump -Fc` plus `pg_restore --list`, persistent-media backup, and an encrypted off-host copy with retention and a tested restore owner. See `docs/release-qa.md` for the detailed evidence, limitations, and unaffected-site baselines.
+
 ## Sources
 
-The Payload/Postgres adapter and migration model follow the official [Postgres adapter documentation](https://payloadcms.com/docs/database/postgres), [migration documentation](https://payloadcms.com/docs/database/migrations), and [production deployment guidance](https://payloadcms.com/docs/production/deployment). Payload documents Node.js `20.9.0+` as a supported baseline.
+The Payload/Postgres adapter and migration model follow the official [Postgres adapter documentation](https://payloadcms.com/docs/database/postgres), [migration documentation](https://payloadcms.com/docs/database/migrations), and [production deployment guidance](https://payloadcms.com/docs/production/deployment). Runtime compatibility was checked against the official [Next.js 16 upgrade guide](https://nextjs.org/docs/app/guides/upgrading/version-16), [Node.js release schedule](https://nodejs.org/en/about/previous-releases), and [Sharp install requirements](https://sharp.pixelplumbing.com/install/). These sources do not authorize changing shared server software.

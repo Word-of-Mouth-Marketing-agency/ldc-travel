@@ -190,3 +190,14 @@ Payload `3.88.0` applied `20260921_112401_initial_schema`, the seed created exac
 - [ ] Apply/verify migrations, run the seed twice, and exercise actual CMS/admin, persistence, media, and anonymous API behavior only after the database is positively identified.
 - [x] Re-run `pnpm audit` with read-only network permission; completed with no known vulnerabilities.
 - [ ] Commit/push only after every mandatory application gate passes. No commit or push was made in this continuation.
+
+## Release-preparation closure — 2026-10-01
+
+- [x] Reconcile the prior GitHub push warning: Dependabot API currently shows 0 open alerts and nine historical alerts fixed on current main; operator-provided `pnpm audit` exited 0 with no known vulnerabilities. No package changes were needed.
+- [x] Verify release baseline `ab856225549b0fb5482761a70b1c4886607df0a4` and preserve unrelated untracked `AGENTS.md` / `CLAUDE.md`.
+- [x] Complete a strictly read-only WOM-VPS-01 audit using strict host verification and key-only SSH; no production files, services, network settings, or data were changed.
+- [x] Document verified server baseline, existing service/database landscape, free-at-snapshot ports, OLS conventions, DNS/TLS mismatch, deployment recommendations, and existing-site regression targets.
+- [x] Keep all application changes out of scope; update only `docs/production-environment.md`, `docs/deployment-runbook.md`, `docs/launch-checklist.md`, `docs/release-qa.md`, `tasks/plan.md`, and `tasks/todo.md`.
+- [ ] Do not deploy until certificate hostname mismatch and absent LDC vhost are resolved under explicit approval, and dedicated DB/secrets/admin/media/service/backup/restore/port/deployment-window gates are closed.
+
+Final gate: **DEPLOYMENT READY: NO**. The exact unresolved production blockers and next operator decision are in `docs/release-qa.md`. No Brain update or deployment was performed.
