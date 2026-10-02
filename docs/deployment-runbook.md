@@ -1,6 +1,6 @@
 # LDC Travel Production Deployment Runbook
 
-Status: preparation only; **DEPLOYMENT NOT READY**. A strict read-only WOM-VPS-01 audit was completed on 2026-10-01 after the dependency-alert gate was reconciled. No VPS mutation, database creation, DNS change, OpenLiteSpeed edit/reload, service creation, release upload, or production migration was performed. This runbook is not authorization to deploy.
+Status: **PRODUCTION DEPLOYED** on 2026-10-02. Approved commit `1c6344b2f87e8407414a849a43fb3e87a9dceaab` is live at `https://ldc-tourism.com` through OpenLiteSpeed → `127.0.0.1:3150`. See `docs/production-environment.md` for the non-secret production record, backups, public QA, and operator follow-ups. This runbook remains the operational procedure; historical pre-deploy audit notes below are retained for context and are superseded by live production evidence where they conflict.
 
 ## Pre-deploy gate
 

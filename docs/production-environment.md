@@ -59,6 +59,68 @@ No LDC production application, database, media path, or release tree exists. Nat
 
 Restic is installed, but no LDC backup job or successful restore was verified. CyberPanel-managed backup schedules were not inspected, so host-wide backup status is unknown. `/var/backups` exists but that alone is not evidence of a usable recovery set. Recommend database `pg_dump -Fc` plus `pg_restore --list`, persistent-media backup, and an encrypted off-host copy with retention and a tested restore owner. See `docs/release-qa.md` for the detailed evidence, limitations, and unaffected-site baselines.
 
+## Production deployment record — 2026-10-02
+
+Status: **PRODUCTION LIVE.** Public HTTPS smoke, forms QA, final database backup, and protected-site regression passed on WOM-VPS-01 (`72.60.47.33`).
+
+| Fact | Production value |
+|---|---|
+| Deployment date | 2026-10-02 (UTC cutover ~21:38) |
+| Deployed commit | `1c6344b2f87e8407414a849a43fb3e87a9dceaab` |
+| Release root | `/var/www/ldc-travel/releases/1c6344b2f87e8407414a849a43fb3e87a9dceaab-verified-nolf-20261001T142213Z` |
+| Active symlink | `/var/www/ldc-travel/current` |
+| Application port | `127.0.0.1:3150` (loopback-only) |
+| Process manager | systemd `ldc-travel.service` as user `ldc-travel` (not PM2) |
+| Database | Dedicated Docker PostgreSQL 17 container `ldc-travel-postgres` |
+| DB endpoint | `127.0.0.1:55434` (loopback-only) |
+| Database name / user | `ldc_travel` / `ldc_travel` |
+| Persistent media | `/var/www/ldc-travel/shared/media` |
+| Protected env | `/var/www/ldc-travel/shared/.env` (never printed) |
+| Backups | `/var/backups/ldc-travel/` |
+| OLS vhost | `/usr/local/lsws/conf/vhosts/ldc-tourism.com/vhost.conf` |
+| OLS External App | `ldc_travel_proxy` → `127.0.0.1:3150` |
+| TLS | Let's Encrypt cert `/etc/letsencrypt/live/ldc-tourism.com/` covers apex + www |
+| Canonical origin | `https://ldc-tourism.com` |
+| WWW behavior | `https://www.ldc-tourism.com` → 301 to apex |
+| HTTP behavior | apex/www HTTP → 301 to HTTPS apex |
+| Launch market | EG only |
+
+### Public verification (2026-10-02)
+
+- All 10 public routes returned HTTPS 200 with valid TLS: `/`, `/about`, `/contact`, `/destinations`, and `/destinations/{turkey,russia,bali,georgia,indonesia,thailand}`.
+- `/api/health` returned `{"status":"ok","service":"ldc-travel"}`.
+- `/admin` returned the Payload admin shell (HTTP 200); **no production admin user exists yet**.
+- `/robots.txt` allows public pages and disallows `/admin` and `/api`.
+- `/sitemap.xml` contains exactly the 10 intended public URLs.
+- `/icon.png` and `/apple-icon.png` returned HTTP 200.
+- Canonical, OpenGraph, Twitter, Organization, WebSite, BreadcrumbList, and TouristDestination markup were present on checked pages.
+- Form QA with clearly marked records succeeded for Contact, Destination inquiry, and Design Your Trip; records persisted in production DB and marked QA rows were removed afterward. Users remained 0.
+- Protected sites SleepyWear, Arise, and Tejaru remained HTTP 200 with valid TLS via local OLS/SNI and public checks after the LDC OLS reload.
+
+### OLS cutover notes
+
+- On-disk rewrite rules used correct single-escaped regex dots (`\.`), not over-escaped `\\.`.
+- Runtime OLS workers were stale until a graceful `lswsctrl reload` on 2026-10-02T21:38Z loaded the final LDC vhost (proxy + TLS + redirects + ACME context).
+- Fresh OLS pre-edit backup: `/var/backups/ldc-travel-cutover-20261002T213659Z/`.
+- Prior cutover evidence retained at `/var/backups/ldc-travel-cutover-20261002T155241Z/`.
+- Graquamarine retirement backup retained at `/var/backups/graquamarine-retired-20261002T140652Z/`.
+
+### Backups after launch
+
+| Backup | Path / note |
+|---|---|
+| Pre-migration DB | `/var/backups/ldc-travel/20261001T1307Z-pre-migration-empty-host-verified.dump` |
+| Post-seed DB | `/var/backups/ldc-travel/post-seed-20261001T151205Z.dump` |
+| Post-seed media | `/var/backups/ldc-travel/media-20261001T151205Z.tar.gz` + `.sha256` (90 files, tar verified) |
+| Final post-deploy DB | `/var/backups/ldc-travel/final-post-deploy-20261002T214809Z.dump` (`pg_dump -Fc`, `pg_restore --list` rc=0, 529 TOC entries) |
+
+### Operator follow-ups
+
+1. **First Payload admin:** owner must manually create the first admin at `https://ldc-tourism.com/admin`. Do not invent or automate credentials.
+2. **Authenticated media QA** after admin creation: JPEG/WebP upload, alt text, derivatives, shared persistent media, SVG rejection, >5 MiB rejection.
+3. **Graquamarine Unix-account cleanup** may remain as a separate maintenance task; it does not block LDC.
+4. **Off-host encrypted backup** of DB + media remains an operator/DevOps follow-up.
+
 ## Sources
 
 The Payload/Postgres adapter and migration model follow the official [Postgres adapter documentation](https://payloadcms.com/docs/database/postgres), [migration documentation](https://payloadcms.com/docs/database/migrations), and [production deployment guidance](https://payloadcms.com/docs/production/deployment). Runtime compatibility was checked against the official [Next.js 16 upgrade guide](https://nextjs.org/docs/app/guides/upgrading/version-16), [Node.js release schedule](https://nodejs.org/en/about/previous-releases), and [Sharp install requirements](https://sharp.pixelplumbing.com/install/). These sources do not authorize changing shared server software.

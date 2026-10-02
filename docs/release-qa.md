@@ -170,3 +170,18 @@ Scope: reconcile the push-time Dependabot notification, run the final authorized
 **DEPLOYMENT READY: NO.** Application/source readiness is distinct from production infrastructure readiness. Remaining blockers: TLS certificate hostname mismatch and absent LDC OLS vhost; dedicated production PostgreSQL 17 and secure credentials; `PAYLOAD_SECRET`; production admin owner/bootstrap; approved unprivileged LDC account/systemd service and freshly verified port; release/media/backup paths and permissions; backup retention/offsite/restore proof; authenticated production CMS/media QA; deployment window and explicit approval for infrastructure changes; and full HTTPS plus unaffected-site smoke tests. No deploy, host mutation, DNS change, OLS change/reload, DB operation, package installation, service change, or firewall review was performed.
 
 **Next step:** obtain operator approval and ownership decisions for the TLS/vhost change and dedicated DB/secrets/media/backup/service prerequisites; only then schedule a separately authorized deployment plan. Do not deploy as part of this closure. Brain `Current State.md` is dated before this audit and is **STALE CURRENT STATE — verify before relying on mutable facts**; this task intentionally made no Brain changes.
+
+## Production deployment closure — 2026-10-02
+
+This section records the completed production cutover. Non-secret operational facts are also summarized in `docs/production-environment.md`.
+
+- **Host / access:** WOM-VPS-01 `72.60.47.33` via approved `root@` SSH with strict host-key verification.
+- **Application:** `ldc-travel.service` active as user `ldc-travel`; loopback listener `127.0.0.1:3150`; release symlink points to commit `1c6344b2f87e8407414a849a43fb3e87a9dceaab-verified-nolf-20261001T142213Z`.
+- **Database:** dedicated Docker PostgreSQL 17 container `ldc-travel-postgres` on `127.0.0.1:55434`; database/user `ldc_travel`; healthy; loopback-only.
+- **OpenLiteSpeed:** LDC vhost maps apex + www on Default :80, SSL *:443, and SSL IPv6 [ANY]:443. External App `ldc_travel_proxy` proxies `/` to `127.0.0.1:3150`. Dedicated LE cert covers both hostnames. On-disk rewrite rules used correct `\.` escaping; the runtime OLS process was stale until graceful `lswsctrl reload` at 2026-10-02T21:38Z. Validation: 0 ERROR, 0 FATAL, 14 unrelated pre-existing warnings.
+- **TLS / public:** apex HTTPS 200 with valid TLS; www HTTPS 301 to apex; HTTP apex/www 301 to HTTPS apex. All 10 public routes, `/api/health`, `/admin` shell, robots, sitemap (10 URLs), and icons returned 200. Canonical/OG/Twitter/JSON-LD present.
+- **Forms:** Contact, Destination inquiry, and Design Your Trip submitted successfully with marked QA records; persisted in production DB; marked QA rows deleted; users remained 0.
+- **Backups:** final `pg_dump -Fc` at `/var/backups/ldc-travel/final-post-deploy-20261002T214809Z.dump` verified with `pg_restore --list` (rc=0). Media backup archive + manifest retained. Fresh OLS pre-edit backup at `/var/backups/ldc-travel-cutover-20261002T213659Z/`.
+- **Protected sites:** SleepyWear, Arise, and Tejaru remained healthy through local OLS/SNI and public checks after reload. No unrelated regressions observed.
+- **Graquamarine:** already retired earlier; backup retained; Unix-account cleanup remains optional follow-up and did not block LDC.
+- **Not done by design:** first Payload admin not created; authenticated media upload QA pending admin; no source hot-fix; no DB recreate; no seed rerun; no cert reissue.
